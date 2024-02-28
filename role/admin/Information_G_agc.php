@@ -11,6 +11,7 @@
 
     <title>Infor_Group_agriculturist</title>
 
+    <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -32,8 +33,13 @@
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">ข้อมูลกลุ่มเกษตรกร</h6>
+                        <div class="card-header py-3 text-center">
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลกลุ่มเกษตรกร</h3>
+                        </div>
+                        <div class="row mt-4 ml-2">
+                            <div class="col">
+                                <a class="btn btn-primary" style="border-radius: 30px;" type="submit" data-toggle="modal" data-target="#AddFooodModal">เพิ่มข้อมูลกลุ่มเกษตรกร</a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -70,7 +76,7 @@
                                                 ?>
                                                 นายสมพร สะอาด
                                             </td>
-                                            <td><a href="Edit_fg.php?edit_id=<?= $fg['fg_id']; ?>" class="btn btn-warning" name="edit_id"><i class="fa-solid fa-pen-to-square"></i>เพิ่มเติม</a></td>
+                                            <td><a href="Edit_fg.php?edit_id=<?= $fg['fg_id']; ?>" class="btn btn-warning" name="edit_id"></i>เพิ่มเติม</a></td>
                                             
                                         </tr>
                                         <!-- <?php $count++; ?> -->
@@ -128,6 +134,7 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $.extend(true, $.fn.dataTable.defaults, {
