@@ -1,8 +1,8 @@
 <div id="topbar" class="d-flex align-items-center fixed-top">
         <div class="container d-flex justify-content-between">
             <div class="contact-info d-flex align-items-center">
-                <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">tubpud_11@gmail.com</a>
-                <i class="bi bi-phone"></i> 062-375-3324
+                <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">xxxxxxxxx@gmail.com</a>
+                <i class="bi bi-phone"></i> xxx-xxx-xxxx
             </div>
             <div class="d-none d-lg-flex social-links align-items-center">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>

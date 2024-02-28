@@ -80,7 +80,7 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 996;
-  background: #1977cc;
+  background: #069C54;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -94,7 +94,7 @@ h6 {
 }
 
 .back-to-top:hover {
-  background: #298ce5;
+  background: #069C54;
   color: #fff;
 }
 
@@ -129,7 +129,7 @@ h6 {
 }
 
 #topbar .contact-info a:hover {
-  color: #1977cc;
+  color: #069C54;
 }
 
 #topbar .contact-info i {
@@ -198,7 +198,7 @@ h6 {
 */
 .appointment-btn {
   margin-left: 25px;
-  background: #1977cc;
+  background: #069C54;
   color: #fff;
   border-radius: 50px;
   padding: 8px 25px;
@@ -209,7 +209,7 @@ h6 {
 }
 .reserve-btn {
   /* margin-left: 0px; */
-  background: #1977cc;
+  background: #069C54;
   color: #fff;
   border-radius: 50px;
   padding: 8px 25px;
@@ -220,7 +220,7 @@ h6 {
 }
 
 .appointment-btn:hover {
-  background: #166ab5;
+  background: #069C54;
   color: #fff;
 }
 
@@ -283,8 +283,8 @@ h6 {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover>a {
-  color: #1977cc;
-  border-color: #1977cc;
+  color: #069C54;
+  border-color: #069C54;
 }
 
 .navbar .dropdown ul {
@@ -322,7 +322,7 @@ h6 {
 .navbar .dropdown ul a:hover,
 .navbar .dropdown ul .active:hover,
 .navbar .dropdown ul li:hover>a {
-  color: #1977cc;
+  color: #069C54;
 }
 
 .navbar .dropdown:hover>ul {
@@ -426,7 +426,7 @@ h6 {
 .navbar-mobile a:hover,
 .navbar-mobile .active,
 .navbar-mobile li:hover>a {
-  color: #1977cc;
+  color: #069C54;
 }
 
 .navbar-mobile .getstarted,
@@ -461,7 +461,7 @@ h6 {
 .navbar-mobile .dropdown ul a:hover,
 .navbar-mobile .dropdown ul .active:hover,
 .navbar-mobile .dropdown ul li:hover>a {
-  color: #1977cc;
+  color: #069C54;
 }
 
 .navbar-mobile .dropdown>.dropdown-active {
@@ -473,10 +473,10 @@ h6 {
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 110vh;
-  background: url("../img/hero-bg.jpg") top center;
-  background-size: cover;
-  margin-bottom: -200px;
+  height: auto;
+  /* background: url("../img/hero-bg.jpg") top center; */
+  /* background-size: cover; */
+  /* margin-bottom: -200px; */
 }
 
 #hero .container {
@@ -510,11 +510,11 @@ h6 {
   border-radius: 50px;
   transition: 0.5s;
   color: #fff;
-  background: #1977cc;
+  background: #069C54;
 }
 
 #hero .btn-get-started:hover {
-  background: #3291e6;
+  background: #069C54;
 }
 
 @media (min-width: 1024px) {
@@ -594,7 +594,7 @@ section {
   display: block;
   width: 40px;
   height: 3px;
-  background: #1977cc;
+  background: #069C54;
   bottom: 0;
   left: calc(50% - 20px);
 }
@@ -665,12 +665,98 @@ section {
   }
 }
 
+
+.menu__container{
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+}
+
+.menu__content{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--container-color);
+  border-radius: .5rem;
+  box-shadow: 0 2px 4px rgba(3,74,40,.15);
+  padding: .75rem;
+}
+
+.menu__img{
+  width: 100px;
+  align-self: center;
+  margin-bottom: 15px;
+}
+
+.menu__name, .menu__preci{
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+.menu__name{
+  align-self: center;
+  font-size: var(--normal-font-size);
+}
+
+.menu__detail, .menu__preci{
+  align-self: center;
+  font-size: var(--small-font-size);
+}
+
+.menu__detail{
+  margin-bottom: var(--mb-1);
+}
+
+.menu__button{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  padding: .625rem .813rem;
+  border-radius: .5rem 0 .5rem 0;
+}
+.bd-container{
+  max-width: 960px;
+  width: calc(100% - 2rem);
+  margin-left: var(--mb-2);
+  margin-right: var(--mb-2);
+}
+
+.bd-grid{
+  display: grid;
+  gap: 1.5rem;
+}
+
+.services__container,
+  .menu__container{
+    margin-top: var(--mb-6);
+  }
+
+  .menu__container{
+    grid-template-columns: repeat(5, 210px);
+    column-gap: 2rem;
+  }
+  .menu__content{
+    padding: 1.5rem;
+  }
+  .menu__img{
+    width: 130px;
+  }
+
+.button{
+  display: inline-block;
+  background-color: var(--first-color);
+  color: #FFF;
+  padding: .75rem 1rem;
+  border-radius: .5rem;
+  transition: .3s;
+}
+
 /*--------------------------------------------------------------
 # Why Us
 --------------------------------------------------------------*/
 .why-us .content {
   padding: 30px;
-  background: #1977cc;
+  background: #069C54;
   border-radius: 4px;
   color: #fff;
 }
@@ -699,7 +785,7 @@ section {
 }
 
 .why-us .content .more-btn:hover {
-  color: #1977cc;
+  color: #069C54;
   background: #fff;
 }
 
@@ -1097,7 +1183,7 @@ section {
 }
 
 .appointment .php-email-form button[type=submit] {
-  background: #1977cc;
+  background: #069C54;
   border: 0;
   padding: 10px 35px;
   color: #fff;
@@ -1106,7 +1192,7 @@ section {
 }
 
 .appointment .php-email-form button[type=submit]:hover {
-  background: #1c84e3;
+  background: #069C54;
 }
 
 /*--------------------------------------------------------------

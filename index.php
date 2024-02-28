@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>ระบบจองคิวทันตกรรมทับปุด</title>
+  <title>ร้านค้ารัฐวิสาหกิจชุมชน</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   
@@ -45,152 +45,102 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container">
-      <h1>ยินดีต้อนรับสู่ ทันตกรรมทับปุด</h1>
-      <a href="register.php" class="appointment-btn scrollto">ลงทะเบียนเข้าใข้งานระบบ</a>
-      <br><br><br><br><br><br><br><br>
+      <h1>ยินดีต้อนรับสู่ ร้านค้ารัฐวิสาหกิจชุมชน</h1>
+      <a class="appointment-btn nav-link scrollto" href="#services">เลือกดูสินค้า</a>
     </div>
   </section>
 
   <main id="main">
 
-    <!-- ======= Why Us Section ======= -->
-    <!-- <section id="why-us" class="why-us">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="content">
-              <h3>ทำไมคุณต้องเลือก ???<br>ทันตกรรมทับปุด</h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
-              </p>
-              <div class="text-center">
-                <a href="#" class="more-btn">ข้อมูลเพิ่มเติม <i class="bx bx-chevron-right"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-8 d-flex align-items-stretch">
-            <div class="icon-boxes d-flex flex-column justify-content-center">
-              <div class="row">
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-receipt"></i>
-                    <h4>Corporis voluptates sit</h4>
-                    <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-cube-alt"></i>
-                    <h4>Ullamco laboris ladore pan</h4>
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-images"></i>
-                    <h4>Labore consequatur</h4>
-                    <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
-    <!-- End Why Us Section -->
-
-    <!-- ======= About Section ======= -->
-    <br><br><br><br><br><br><br><br><br><br><br>
-    <section id="about" class="about">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox play-btn mb-4"></a>
-          </div>
-
-          <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-            <h3>เกี่ยวกับ</h3>
-            <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi. Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
-
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-fingerprint"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-            </div>
-
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-gift"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-            </div>
-
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-atom"></i></div>
-              <h4 class="title"><a href="">Dine Pad</a></h4>
-              <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End About Section -->
-
-    <!-- ======= Counts Section ======= -->
-    <!-- <section id="counts" class="counts">
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="fas fa-user-md"></i>
-              <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Doctors</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-            <div class="count-box">
-              <i class="far fa-hospital"></i>
-              <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Departments</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="fas fa-flask"></i>
-              <span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Research Labs</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="fas fa-award"></i>
-              <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Awards</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
-    <!-- End Counts Section -->
-
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
       <div class="container">
         <div class="section-title">
-          <h2>ประเภทการบริการ</h2>
+          <h2>สินค้าภายในร้าน</h2>
         </div>
-        <br>
         <div class="row">
-          <div class="col-lg-2 col-md-6 d-flex align-items-stretch"></div>
+          <div class="menu__container bd-grid">
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">กะปิขัดน้ำ</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 22.00 </span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">ซอสกะปิ</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 12.00</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+              
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">กุ้งแห้ง</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 9.50</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">น้ำปลา</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 9.50</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">น้ำปลา</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 9.50</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">น้ำปลา</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 9.50</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">กะปิขัดน้ำ</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 22.00 </span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">ซอสกะปิ</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 12.00</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+              
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">กุ้งแห้ง</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 9.50</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+
+              <div class="menu__content">
+                  <img src="img/shopping-cart.png" alt="" class="menu__img">
+                  <h3 class="menu__name">น้ำปลา</h3>
+                  <!-- <span class="menu__detail">Delicious dish</span> -->
+                  <span class="menu__preci">฿ 9.50</span>
+                  <a href="#" class="btn menu__button btn-success"><i class='bx bx-cart-alt'></i></a>
+              </div>
+          </div>
+          <!-- <div class="col-lg-2 col-md-6 d-flex align-items-stretch"></div>
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="icon-box">
               <div class="icon"><i class="fas fa-heartbeat"></i></div>
@@ -204,14 +154,13 @@
               <h4><a href="">ทันตกรรมความงาม</a></h4>
               <p>ดัดฟัน ครอบฟัน ฟันครอบ เครือบสีฟัน ปรึกษาทันตแพทย์</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
     <!-- End Services Section -->
-<br><br><br><br><br><br>
     <!-- ======= Doctors Section ======= -->
-    <section id="doctors" class="doctors">
+    <!-- <section id="doctors" class="doctors">
       <div class="container">
         <div class="section-title">
           <h2>ทีมคณะแพทย์</h2>
@@ -223,7 +172,6 @@
             $docs = $stmt->fetchAll();
             foreach($docs as $doc) {
               $doc_pre = $doc['doc_pre'];
-              // echo "doc_pre = ".$doc_pre;
               $doc_name = $doc['doc_name'];
               $doc_tel = $doc['doc_tel'];
               $doc_passDoc = $doc['doc_passDoctor'];
@@ -252,7 +200,6 @@
                         }
                       ?>
                     </span>
-                    <!-- <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p> -->
                     <p>เบอร์ติดต่อ
                       <?= $doc_tel; ?>
                     </p>
@@ -260,18 +207,17 @@
                       <a href=""><i class="ri-twitter-fill"></i></a>
                       <a href=""><i class="ri-facebook-fill"></i></a>
                       <a href=""><i class="ri-instagram-fill"></i></a>
-                      <!-- <a href=""> <i class="ri-linkedin-box-fill"></i> </a> -->
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- <div class="col-lg-1"></div> -->
             <?php 
               }
             ?>
         </div>
       </div>
-    </section><br>
+    </section> -->
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     <!-- End Doctors Section -->
 

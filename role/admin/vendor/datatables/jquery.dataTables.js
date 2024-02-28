@@ -7590,7 +7590,7 @@
 	 * Set the current page length.
 	 *
 	 * @param {integer} Page length to set. Use `-1` to show all records.
-	 * @returns {DataTables.Api} thiszzzzzzzzzz
+	 * @returns {DataTables.Api} this
 	 */
 	_api_register( 'page.len()', function ( len ) {
 		// Note that we can't call this function 'length()' because `length`
