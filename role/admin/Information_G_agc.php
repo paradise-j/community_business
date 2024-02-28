@@ -39,33 +39,43 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                        <tr align="center">
+                                            <!-- <th>ลำดับ</th> -->
+                                            <th>ชื่อ-สกุล</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                 
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
+                                        <?php 
+                                            // $stmt = $db->query("SELECT * FROM `fg_data`");
+                                            // $stmt->execute();
+                                            // $fgs = $stmt->fetchAll();
+                                            // $count = 1;
+                                            // if (!$fgs) {
+                                            //     echo "<p><td colspan='6' class='text-center'>No data available</td></p>";
+                                            // } else {
+                                            // foreach($fgs as $fg)  {  
+                                        ?>
+                                        <tr align="center">
+                                            <td>
+                                                <?php
+                                                    // if($fg['fg_type'] == 1){
+                                                    //     echo "อาหารธรรมชาติ";
+                                                    // }elseif($fg['fg_type'] == 2){
+                                                    //     echo "อาหารข้น";
+                                                    // }else{
+                                                    //     echo "อาหาร TMR";
+                                                    // }
+                                                ?>
+                                                นายสมพร สะอาด
+                                            </td>
+                                            <td><a href="Edit_fg.php?edit_id=<?= $fg['fg_id']; ?>" class="btn btn-warning" name="edit_id"><i class="fa-solid fa-pen-to-square"></i>เพิ่มเติม</a></td>
+                                            
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
+                                        <!-- <?php $count++; ?> -->
+                                        <?php   
+                                             ?>
                                     </tbody>
                                 </table>
                             </div>

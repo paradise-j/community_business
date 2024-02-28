@@ -12,21 +12,6 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>จัดการข้อมูล</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="buttons.html">ข้อมูลกลุ่มเกษตรกร</a>
-                <a class="collapse-item" href="cards.html">ข้อมูลผลิตภัณฑ์</a>
-                <a class="collapse-item" href="cards.html">ข้อมูลผู้ประสานงาน</a>
-            </div>
-        </div>
-    </li> -->
 
     <li class="nav-item">
         <a class="nav-link" href="index.php">
@@ -34,41 +19,39 @@
             <span>หน้าหลัก</span></a>
     </li>
 
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>จัดการข้อมูล</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="Information_G_agc.php">ข้อมูลกลุ่มเกษตรกร</a>
+                <a class="collapse-item" href="Product.php">ข้อมูลผลิตภัณฑ์</a>
+                <a class="collapse-item" href="Raw_material.php">ข้อมูลวัตถุดิบ</a>
+                <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
+                <a class="collapse-item" href="Mem_regis.php">ข้อมูลทะเบียนสมาชิก</a>
+                <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
+            </div>
+        </div>
+    </li>
+
+    
+
     <li class="nav-item">
         <a class="nav-link" href="Information_G_agc.php">
             <i class="fas fa-fw fa-cog"></i>
-            <span>ข้อมูลกลุ่มเกษตรกร</span></a>
+            <span>การเพาะปลูกสินค้า</span></a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="Product.php">
             <i class="fas fa-fw fa-cog"></i>
-            <span>ข้อมูลผลิตภัณฑ์</span></a>
+            <span>งานบริการการท่องเที่ยว</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="Raw_material.php">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>ข้อมูลวัตถุดิบ</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="Fixed_assets.php">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>ข้อมูลสินทรัพย์ถาวร</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>ข้อมูลทะเบียนสมาชิก</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>ข้อมูลหุ้น</span></a>
-    </li>
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
