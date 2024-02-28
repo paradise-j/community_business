@@ -29,27 +29,45 @@
     </li> -->
 
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="index.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>หน้าหลัก</span></a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="Information_G_agc.php">
             <i class="fas fa-fw fa-cog"></i>
             <span>ข้อมูลกลุ่มเกษตรกร</span></a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="Product.php">
             <i class="fas fa-fw fa-cog"></i>
             <span>ข้อมูลผลิตภัณฑ์</span></a>
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="Raw_material.php">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>ข้อมูลวัตถุดิบ</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="Fixed_assets.php">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>ข้อมูลสินทรัพย์ถาวร</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="tables.html">
             <i class="fas fa-fw fa-cog"></i>
-            <span>ข้อมูลผู้ประสานงาน</span></a>
+            <span>ข้อมูลทะเบียนสมาชิก</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>ข้อมูลหุ้น</span></a>
     </li>
 
     <!-- Nav Item - Tables -->
