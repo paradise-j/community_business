@@ -14,7 +14,7 @@
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -38,7 +38,7 @@
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px;" type="submit" data-toggle="modal" data-target="#AddFooodModal">เพิ่มข้อมูลกลุ่มเกษตรกร</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddFooodModal">เพิ่มข้อมูลกลุ่มเกษตรกร</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -48,7 +48,7 @@
                                         <tr align="center">
                                             <!-- <th>ลำดับ</th> -->
                                             <th>ชื่อ-สกุล</th>
-                                            <th></th>
+                                            <th>ข้อมูลเพิ่มเติม</th>
                                         </tr>
                                     </thead>
                                 
@@ -76,7 +76,7 @@
                                                 ?>
                                                 นายสมพร สะอาด
                                             </td>
-                                            <td><a href="Edit_fg.php?edit_id=<?= $fg['fg_id']; ?>" class="btn btn-warning" name="edit_id"></i>เพิ่มเติม</a></td>
+                                            <td><a href="Edit_fg.php?edit_id=<?= $fg['fg_id']; ?>" class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" name="edit_id">เพิ่มเติม</a></td>
                                             
                                         </tr>
                                         <!-- <?php $count++; ?> -->
