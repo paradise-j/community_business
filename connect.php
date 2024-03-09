@@ -2,7 +2,7 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "TP_Dentistry";
+    $dbname = "comen_db";
 
     try {
         $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
