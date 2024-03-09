@@ -101,61 +101,8 @@
         </div>
     </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    <?php 
-        // if (isset($_GET['show_id'])) {
-            // $delete_id = $_GET['show_id'];
-            // echo $delete_id;
-            $stmt = $db->query("SELECT * FROM `group_comen`");
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            extract($row);
-        // }
-    ?>
-    <div class="modal fade" id="showdataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลกลุ่มวิสาหกิจ</h4>
-                    <span class="close">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-2">
-                        <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่ม : </b><?= $group_name ?></label>
-                    </div>
-                    <div class="mb-2">
-                        <?php 
-                            $stmt = $db->query("SELECT `name_th` as pv FROM `provinces` WHERE `id` = $group_pv");
-                            $stmt->execute();
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                            extract($row);
-                        ?>
-                        <label for="" class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $pv ?></label>
-                    </div>
-                    <div class="mb-2">
-                        <?php 
-                            $stmt = $db->query("SELECT `name_th` as dis FROM `amphures` WHERE `id` = $group_dis");
-                            $stmt->execute();
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                            extract($row);
-                        ?>
-                        <label for="" class="col-form-label" style="font-size: 1.25rem;"><b>อำเภอ : </b><?= $dis?></label>
-                    </div>
-                    <div class="mb-2">
-                        <?php 
-                            $stmt = $db->query("SELECT `name_th` as subdis FROM `districts` WHERE `id` = $group_subdis");
-                            $stmt->execute();
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                            extract($row);
-                        ?>
-                        <label for="firstname" class="col-form-label" style="font-size: 1.25rem;"><b>ตำบล : </b><?= $subdis?></label>
-                    </div>
-                    <div class="mb-2">
-                        <label for="firstname" class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $group_zip ?></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -191,17 +138,44 @@
                                             if (!$gcoms) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                            foreach($gcoms as $gcom)  {  
+                                             foreach($gcoms as $gcom)  {  
                                         ?>
                                         <tr>
                                             <td><?= $gcom['group_name']; ?></td>
-                                            <!-- <td><a data-id="<?= $gcom['group_id']; ?>" href="?show_id=<?= $gcom['group_id']; ?>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td> -->
-                                            <td align="center"><a data-id="<?= $gcom['group_id']; ?>" href="?show_id=<?= $gcom['group_id']; ?>" class="btn btn-info dalate-btn" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal"><i class="fas fa-eye"></i></a></td>
+                                            <!-- <td align="center"><a data-id="<?= $gcom['group_id']; ?>" href="?show_id=<?= $gcom['group_id']; ?>" class="btn btn-info dalate-btn" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal"><i class="fas fa-eye"></i></a></td> -->
+                                            <td align="center"><button class="btn btn-info dalate-btn" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $gcom['group_id']?>"><i class="fas fa-eye"></i></button></td>
                                             <td align="center"><a href="Edit_gcom.php?edit_id=<?= $gcom['group_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td>
                                             
                                         </tr>
+
+                                        <div class="modal fade" id="showdataModal<?= $gcom['group_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลกลุ่มวิสาหกิจ</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่ม : </b><?= $gcom['group_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $gcom['group_pv']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>อำเภอ : </b><?= $gcom['group_dis']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ตำบล : </b><?= $gcom['group_subdis']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $gcom['group_zip']; ?></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <?php
-                                            }      
+                                             }      
                                             }?>
                                     </tbody>
                                 </table>
