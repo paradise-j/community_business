@@ -6,12 +6,28 @@
 
     if (isset($_POST['submit'])) {
         $namegf = $_POST['namegf'];
+
         $provinces = $_POST['provinces'];
+        $stmt = $db->query("SELECT `name_th` as pv FROM `provinces` WHERE `id` = $provinces");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
         $amphures = $_POST['amphures'];
+        $stmt = $db->query("SELECT `name_th` as dis FROM `amphures` WHERE `id` = $amphures");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
         $districts = $_POST['districts'];
+        $stmt = $db->query("SELECT `name_th` as subdis FROM `districts` WHERE `id` = $districts");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
         $zipcode = $_POST['zipcode'];
         $sql = $db->prepare("INSERT INTO `group_comen`(`group_name`, `group_subdis`, `group_dis`, `group_pv`, `group_zip`)
-                             VALUES ('$namegf','$districts','$amphures','$provinces','$zipcode')");
+                             VALUES ('$namegf','$subdis','$dis','$pv','$zipcode')");
         $sql->execute();
 
         if ($sql) {
