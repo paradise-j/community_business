@@ -51,7 +51,6 @@
                                             <th>ข้อมูลเพิ่มเติม</th>
                                         </tr>
                                     </thead>
-                                
                                     <tbody>
                                         <?php 
                                             // $stmt = $db->query("SELECT * FROM `fg_data`");

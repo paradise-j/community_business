@@ -42,7 +42,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-store"></i>
             <span>งานขาย</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -58,13 +58,13 @@
 
     <li class="nav-item">
         <a class="nav-link" href="Information_G_agc.php">
-            <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-seedling"></i>
             <span>การเพาะปลูกสินค้า</span></a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="Product.php">
-            <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-map-marked-alt"></i>
             <span>งานบริการการท่องเที่ยว</span></a>
     </li>
 
@@ -72,7 +72,7 @@
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
+        <i class="fas fa-solid fa-clipboard-list"></i>
             <span>ออกรายงาน</span></a>
     </li>
 
