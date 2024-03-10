@@ -1,7 +1,4 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-
-    <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
@@ -28,12 +25,12 @@
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="Information_G_agc.php">ข้อมูเกษตรกร</a>
+                <!-- <a class="collapse-item" href="agc.php">ข้อมูทะเบียน</a> -->
                 <a class="collapse-item" href="Information_G_agc.php">ข้อมูลกลุ่มวิสาหกิจ</a>
                 <a class="collapse-item" href="Product.php">ข้อมูลผลิตภัณฑ์</a>
                 <a class="collapse-item" href="Raw_material.php">ข้อมูลวัตถุดิบ</a>
                 <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
-                <a class="collapse-item" href="Mem_regis.php">ข้อมูลทะเบียนสมาชิก</a>
+                <a class="collapse-item" href="agc_regis.php">ข้อมูลทะเบียนสมาชิก</a>
                 <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>
