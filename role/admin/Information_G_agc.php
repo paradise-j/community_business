@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php 
     session_start();
     // if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
@@ -6,17 +8,27 @@
     // }
     require_once '../../connect.php';
 
-    // if (isset($_GET['show_id'])) {
-        // $delete_id = $_GET['show_id'];
-        // echo $delete_id;
-        // $deletestmt = $db->query("DELETE FROM `agriculturist` WHERE `agc_id` = '$delete_id'");
-        // $deletestmt->execute();
+    if (isset($_GET['delete'])) {
+        $delete_id = $_GET['delete'];
+        $deletestmt = $db->query("DELETE FROM `group_comen` WHERE `group_id` = '$delete_id'");
+        $deletestmt->execute();
         
-        // if ($deletestmt) {
-        //     echo "<script>alert('Data has been deleted successfully');</script>";
-        //     header("refresh:1; url=Manage_agc.php");
-        // }
-    // }
+        if ($deletestmt) {
+            // echo "<script>alert('Data has been deleted successfully');</script>";
+            echo "<script>
+                $(document).ready(function() {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ลบข้อมูลเรียบร้อยแล้ว',
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false
+                    });
+                })
+            </script>";
+            header("refresh:1; url=information_G_agc.php");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -127,6 +139,7 @@
                                             <th>ชื่อกลุ่มวิสาหกิจ</th>
                                             <th>ข้อมูลเพิ่มเติม</th>
                                             <th>แก้ไข</th>
+                                            <th>ลบ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -142,9 +155,9 @@
                                         ?>
                                         <tr>
                                             <td><?= $gcom['group_name']; ?></td>
-                                            <!-- <td align="center"><a data-id="<?= $gcom['group_id']; ?>" href="?show_id=<?= $gcom['group_id']; ?>" class="btn btn-info dalate-btn" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal"><i class="fas fa-eye"></i></a></td> -->
-                                            <td align="center"><button class="btn btn-info dalate-btn" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $gcom['group_id']?>"><i class="fas fa-eye"></i></button></td>
+                                            <td align="center"><button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $gcom['group_id']?>"><i class="fas fa-eye"></i></button></td>
                                             <td align="center"><a href="Edit_gcom.php?edit_id=<?= $gcom['group_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td>
+                                            <td align="center"><a data-id="<?= $gcom['group_id']; ?>" href="?delete=<?= $gcom['group_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td>
                                             
                                         </tr>
 
@@ -194,7 +207,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -229,13 +242,53 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script>
-        function showdataModal() {
-            var showdata = document.getelementbyid("show").value;
-            console.log(showdata);
+        $(".delete-btn").click(function(e) {
+            var userId = $(this).data('id');
+            e.preventDefault();
+            deleteConfirm(userId);
+        })
+
+        function deleteConfirm(userId) {
+            Swal.fire({
+                title: 'ลบข้อมูล',
+                text: "คุณแน่ใจใช่หรือไม่ที่จบลบข้อมูลนี้",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ลบข้อมูล',
+                showLoaderOnConfirm: true,
+                preConfirm: function() {
+                    return new Promise(function(resolve) {
+                        $.ajax({
+                                url: 'information_G_agc.php',
+                                type: 'GET',
+                                data: 'delete=' + userId,
+                            })
+                            .done(function() {
+                                Swal.fire({
+                                    title: 'สำเร็จ',
+                                    text: 'ลบข้อมูลเรียบร้อยแล้ว',
+                                    icon: 'success',
+                                }).then(() => {
+                                    document.location.href = 'information_G_agc.php';
+                                })
+                            })
+                            .fail(function() {
+                                Swal.fire({
+                                    title: 'ไม่สำเร็จ',
+                                    text: 'ลบข้อมูลไม่สำเร็จ',
+                                    icon: 'danger',
+                                })
+                                window.location.reload();
+                            });
+                    });
+                },
+            });
         }
+        
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {
                     "sProcessing": "กำลังดำเนินการ...",
