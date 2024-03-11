@@ -43,7 +43,7 @@
 
     <title>Infor_Group_agriculturist</title>
 
-    <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
+    <link rel="icon" type="image/png" href="img/home-solid.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"

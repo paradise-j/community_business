@@ -12,6 +12,7 @@
     <title>ระบบจัดการข้อมูลร้านค้ารัฐวิสาหกิจชุมชน</title>
 
     <!-- Custom fonts for this template-->
+    <link rel="icon" type="image/png" href="img/home-solid.svg">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -42,11 +43,12 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">จำนวนผลิตภัณฑ์</div>
+                                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">จำนวนกลุ่มวิสาหกิจ</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                                            <i class="fas fa-store fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -59,11 +61,11 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-lg font-weight-bold text-success text-uppercase mb-1"></div>
+                                            <div class="text-lg font-weight-bold text-success text-uppercase mb-1">จำนวนสมาชิก</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
