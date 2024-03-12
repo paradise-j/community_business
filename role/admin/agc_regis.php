@@ -165,8 +165,8 @@
                                             <!-- <th>เลขทะเบียน</th> -->
                                             <th>ชื่อ-สกุล</th>
                                             <th></th>
-                                            <th></th>
-                                            <th></th>
+                                            <!-- <th></th> -->
+                                            <!-- <th></th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -183,9 +183,13 @@
                                         <tr>
                                             <!-- <td align="center"><?= $agc['agc_reid']; ?></td> -->
                                             <td><?= $agc['agc_Fname']." ".$agc['agc_Lname']; ?></td>
-                                            <td align="center"><button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $agc['agc_id']?>"><i class="fas fa-eye"></i></button></td>
-                                            <td align="center"><a href="Edit_agc.php?edit_id=<?= $agc['agc_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td>
-                                            <td align="center"><a data-id="<?= $agc['agc_id']; ?>" href="?delete=<?= $agc['agc_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td>
+                                            <td align="center">
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $agc['agc_id']?>"><i class="fas fa-eye"></i></button>
+                                                <a href="Edit_agc.php?edit_id=<?= $agc['agc_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
+                                                <a data-id="<?= $agc['agc_id']; ?>" href="?delete=<?= $agc['agc_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                            </td>
+                                            <!-- <td align="center"><a href="Edit_agc.php?edit_id=<?= $agc['agc_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
+                                            <!-- <td align="center"><a data-id="<?= $agc['agc_id']; ?>" href="?delete=<?= $agc['agc_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
                                             
                                         </tr>
 
