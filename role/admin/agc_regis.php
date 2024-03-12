@@ -70,26 +70,32 @@
                     <form action="Check_Add_Gcomen.php" method="POST">
                         <div class="mb-1">
                             <label for="" class="col-form-label">เลขทะเบียน</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <input type="text" required class="form-control" name="reid" style="border-radius: 30px;">
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">ชื่อ</label>
-                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                <input type="text" required class="form-control" name="Fname" style="border-radius: 30px;">
                             </div>
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">สกุล</label>
-                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                <input type="text" required class="form-control" name="Lnamegf" style="border-radius: 30px;">
                             </div>
                         </div>
-                        <div class="mb-1">
-                            <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                        <div class="row mb-1">
+                            <div class="col-md-5">
+                                <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
+                                <input type="text" required class="form-control" name="perid" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-7">
+                                <label for="" class="col-form-label">ที่อยู่</label>
+                                <input type="text" required class="form-control" name="address" style="border-radius: 30px;">
+                            </div>
                         </div>
-
-                        <div class="mb-1">
-                            <label for="" class="col-form-label">จังหวัด</label>
-                            <select class="form-control" aria-label="Default select example" id="provinces" name="provinces" style="border-radius: 30px;" required>
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">จังหวัด</label>
+                                <select class="form-control" aria-label="Default select example" id="provinces" name="provinces" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกจังหวัด....</option>
                                 <?php 
                                     $stmt = $db->query("SELECT * FROM `provinces`");
@@ -103,22 +109,25 @@
                                     }
                                 ?>
                             </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">อำเภอ</label>
+                                <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
+                                    <option selected disabled>กรุณาเลือกอำเภอ....</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="mb-1">
-                            <label for="" class="col-form-label">อำเภอ</label>
-                            <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกอำเภอ....</option>
-                            </select>
-                        </div>
-                        <div class="mb-1">
-                            <label for="firstname" class="col-form-label">ตำบล</label>
-                            <select class="form-control" aria-label="Default select example" id="districts" name="districts" style="border-radius: 30px;" required>
+                        <div class="row mb-1">
+                            <div class="col-md-7">
+                                <label for="" class="col-form-label">ตำบล</label>
+                                <select class="form-control" aria-label="Default select example" id="districts" name="districts" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกตำบล....</option>
                             </select>
-                        </div>
-                        <div class="mb-1">
-                            <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
-                            <input type="text" required class="form-control" id="zipcode" name="zipcode" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-5">
+                                <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
+                                <input type="text" required class="form-control" id="zipcode" name="zipcode" style="border-radius: 30px;">
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border-radius: 30px;">ยกเลิก</button>
