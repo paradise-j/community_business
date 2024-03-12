@@ -1,3 +1,12 @@
+<?php 
+    session_start();
+    // if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
+    //     header("location: ../../index.php");
+    //     exit;
+    // }
+    require_once '../../connect.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,7 +45,17 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">จำนวนกลุ่มวิสาหกิจ</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT COUNT(`group_id`) as total FROM `group_comen`");
+                                                    $stmt->execute();
+                                                    $agcs = $stmt->fetchAll();
+                                                    foreach($agcs as $agc){
+                                                        echo $agc['total'];
+                                                    }
+                                                ?>
+                                                กลุ่ม
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-store fa-2x text-gray-300"></i>
@@ -52,7 +71,17 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-lg font-weight-bold text-success text-uppercase mb-1">จำนวนสมาชิก</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT COUNT(`agc_id`) as total FROM `agc_data`");
+                                                    $stmt->execute();
+                                                    $agcs = $stmt->fetchAll();
+                                                    foreach($agcs as $agc){
+                                                        echo $agc['total'];
+                                                    }
+                                                ?>
+                                                คน
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -95,9 +124,18 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">
-                                                    Pending Requests</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">ผลิตภัณฑ์</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product`");
+                                                    $stmt->execute();
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo $pd['total'];
+                                                    }
+                                                ?>
+                                                รายการ
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-comments fa-2x text-gray-300"></i>
