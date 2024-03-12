@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `group_comen` WHERE `group_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=Product.php");
         }
     }
 ?>
@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_Group_agriculturist</title>
+    <title>Product</title>
 
     <link rel="icon" type="image/png" href="img/product-hunt.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -231,7 +231,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'information_G_agc.php',
+                                url: 'Product.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -241,7 +241,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'information_G_agc.php';
+                                    document.location.href = 'Product.php';
                                 })
                             })
                             .fail(function() {
