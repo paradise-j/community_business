@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `group_comen` WHERE `group_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=Product.php");
         }
     }
 ?>
@@ -41,9 +41,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_Group_agriculturist</title>
+    <title>เพาะปลูก</title>
 
-    <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
+    <link rel="icon" type="image/png" href="img/seedling-solid.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -62,47 +62,27 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลกลุ่มวิสาหกิจ</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการเพาะปลูก</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_Gcomen.php" method="POST">
+                    <form action="Check_Add_product.php" method="POST">
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ชื่อกลุ่ม</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">ชื่อการเพาะปลูก</label>
+                            <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">จังหวัด</label>
-                            <select class="form-control" aria-label="Default select example" id="provinces" name="provinces" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกจังหวัด....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `provinces`");
-                                    $stmt->execute();
-                                    $pvs = $stmt->fetchAll();
-                                    
-                                    foreach($pvs as $pv){
-                                ?>
-                                <option value="<?= $pv['id']?>"><?= $pv['name_th']?></option>
-                                <?php
-                                    }
-                                ?>
-                            </select>
+                            <label for="" class="col-form-label">จำนวน</label>
+                            <input type="number" required class="form-control" name="quan" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">อำเภอ</label>
-                            <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกอำเภอ....</option>
-                            </select>
+                            <label for="firstname" class="col-form-label">ราคาทุน</label>
+                            <input type="number" required class="form-control" name="cost" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="firstname" class="col-form-label">ตำบล</label>
-                            <select class="form-control" aria-label="Default select example" id="districts" name="districts" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกตำบล....</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
-                            <input type="text" required class="form-control" id="zipcode" name="zipcode" style="border-radius: 30px;">
+                            <?php $date = date('Y-m-d'); ?>
+                            <label for="firstname" class="col-form-label">วันที่รับของ</label>
+                            <input type="date" required class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -123,11 +103,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลกลุ่มวิสาหกิจชุมชน</h3>
+                            <h4 class="m-0 font-weight-bold text-primary">ข้อมูลการเพาะปลูก</h4>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลกลุ่มวิสาหกิจ</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการเพาะปลูก</a>
                             </div>
                         </div>
                         
@@ -136,56 +116,61 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>ชื่อกลุ่มวิสาหกิจ</th>
-                                            <th></th>
-                                            <!-- <th>แก้ไข</th> -->
-                                            <!-- <th>ลบ</th> -->
+                                            <th>ชื่อพืชที่เพาะปลูก</th>
+                                            <!-- <th>วันที่</th> -->
+                                            <th>ข้อมูลเพิ่มเติม</th>
+                                            <th>แก้ไข</th>
+                                            <th>ลบ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `group_comen`");
+                                            $stmt = $db->query("SELECT * FROM `planting`");
                                             $stmt->execute();
-                                            $gcoms = $stmt->fetchAll();
+                                            $pts = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$gcoms) {
+                                            if (!$pts) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($gcoms as $gcom)  {  
+                                             foreach($pts as $pt)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $gcom['group_name']; ?></td>
-                                            <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $gcom['group_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_gcom.php?edit_id=<?= $gcom['group_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $gcom['group_id']; ?>" href="?delete=<?= $gcom['group_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
-                                            </td>
-                                            <!-- <td align="center"><a href="Edit_gcom.php?edit_id=<?= $gcom['group_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $gcom['group_id']; ?>" href="?delete=<?= $gcom['group_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
+                                            <td><?= $pt['plant_name']; ?></td>
+                                            <!-- <td class="date_th"><?= $pt['plant_date']; ?></td> -->
+                                            <td align="center"><button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $pt['plant_id']?>"><i class="fas fa-eye"></i></button></td>
+                                            <td align="center"><a href="Edit_pd.php?edit_id=<?= $pt['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td>
+                                            <td align="center"><a data-id="<?= $pt['plant_id']; ?>" href="?delete=<?= $pt['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td>
                                             
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $gcom['group_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $pt['plant_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลกลุ่มวิสาหกิจ</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการเพาะปลูก</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่ม : </b><?= $gcom['group_name']; ?></label>
+                                                            <?php 
+                                                                $date = $pt['plant_date'];
+                                                                $newDate = date("d-m-Y", strtotime($date));
+                                                            ?>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับของ : </b><?=$newDate; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $gcom['group_pv']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการเพาะปลูก : </b><?= $pt['plant_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>อำเภอ : </b><?= $gcom['group_dis']; ?></label>
+                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($pt['plant_quan']); ?> </label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ตำบล : </b><?= $gcom['group_subdis']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุน : </b><?= number_format($pt['plant_cost']);?> บาท</label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $gcom['group_zip']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($pt['plant_unitcost'],2); ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาขายต่อหน่วย : </b><?=number_format($pt['plant_unitprice']); ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -209,27 +194,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -267,7 +231,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'information_G_agc.php',
+                                url: 'Product.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -277,7 +241,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'information_G_agc.php';
+                                    document.location.href = 'Product.php';
                                 })
                             })
                             .fail(function() {
@@ -292,6 +256,24 @@
                 },
             });
         }
+
+
+
+        
+        const dom_date = document.querySelectorAll('.date_th')
+        dom_date.forEach((elem)=>{
+
+            const my_date = elem.textContent
+            const date = new Date(my_date)
+            const result = date.toLocaleDateString('th-TH', {
+
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+
+            }) 
+            elem.textContent=result
+        })
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {
@@ -314,45 +296,6 @@
         });
         $('.table').DataTable();
 
-
-        $('#provinces').change(function(){
-            var id_provnce = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_provnce,function:'provinces'},     
-                success: function(data){
-                    $('#amphures').html(data);
-                    $('#districts').html(' ');
-                    $('#zipcode').val(' ');
-                }
-            });
-        });
-
-        $('#amphures').change(function(){
-            var id_amphures = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_amphures,function:'amphures'},
-                success: function(data){
-                    $('#districts').html(data);
-                    $('#zipcode').val(' ');
-                }
-            });
-        });
-
-        $('#districts').change(function(){
-            var id_districts = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_districts,function:'districts'},
-                success: function(data){
-                    $('#zipcode').val(data)
-                }
-            });
-        });
 
     </script>
 

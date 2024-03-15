@@ -54,13 +54,13 @@
     
 
     <li class="nav-item">
-        <a class="nav-link" href="Information_G_agc.php">
+        <a class="nav-link" href="Planting.php">
             <i class="fas fa-seedling"></i>
             <span>การเพาะปลูกสินค้า</span></a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="Product.php">
+        <a class="nav-link" href="Travel.php">
             <i class="fas fa-map-marked-alt"></i>
             <span>งานบริการการท่องเที่ยว</span></a>
     </li>
@@ -68,7 +68,7 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="Report.php">
         <i class="fas fa-solid fa-clipboard-list"></i>
             <span>ออกรายงาน</span></a>
     </li>
