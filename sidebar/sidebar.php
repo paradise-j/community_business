@@ -44,7 +44,7 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="Information_G_agc.php">ขายปลีก/ส่ง</a>
+                <a class="collapse-item" href="Sale.php">ขายปลีก/ส่ง</a>
                 <a class="collapse-item" href="Product.php">จัดบูธออกงาน</a>
                 <a class="collapse-item" href="Raw_material.php">ฝากขาย</a>
                 <a class="collapse-item" href="Fixed_assets.php">ขายออนไลน์</a>
