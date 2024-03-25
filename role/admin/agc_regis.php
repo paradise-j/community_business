@@ -213,7 +213,16 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่อยู่ : </b><?= $agc['agc_num']." ตำบล".$agc['agc_subdis']." อำเภอ".$agc['agc_dis']." จังหวัด".$agc['agc_pv']." รหัสไปรษณีย์ ".$agc['agc_zip']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <!-- <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $agc['agc_zip']; ?></label> -->
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>สถานะสมาชิก :  </b>
+                                                                <?php
+                                                                    if ($agc['agc_status'] == 1) {
+                                                                        echo "เป็นสมาชิก";
+                                                                    }else{
+                                                                        echo "ไม่เป็นสมาชิก";
+                                                                    }
+                                                                 ?>
+                                                            
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
