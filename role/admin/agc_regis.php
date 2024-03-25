@@ -67,7 +67,7 @@
                     <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_Gcomen.php" method="POST">
+                    <form action="Check_Add_regisAgc.php" method="POST">
                         <div class="mb-1">
                             <label for="" class="col-form-label">เลขทะเบียน</label>
                             <input type="text" required class="form-control" name="reid" style="border-radius: 30px;">
@@ -79,7 +79,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">สกุล</label>
-                                <input type="text" required class="form-control" name="Lnamegf" style="border-radius: 30px;">
+                                <input type="text" required class="form-control" name="Lname" style="border-radius: 30px;">
                             </div>
                         </div>
                         <div class="row mb-1">
