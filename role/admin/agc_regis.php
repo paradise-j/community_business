@@ -68,9 +68,25 @@
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_regisAgc.php" method="POST">
-                        <div class="mb-1">
-                            <label for="" class="col-form-label">เลขทะเบียน</label>
-                            <input type="text" required class="form-control" name="reid" style="border-radius: 30px;">
+                        <div class="row mb-1">
+                            <div class="col-md-5">
+                                <label for="" class="col-form-label">เลขทะเบียน</label>
+                                <input type="text" required class="form-control" name="reid" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-7">
+                                <label for="" class="col-form-label">ตำแหน่ง</label>
+                                <select class="form-control" aria-label="Default select example" id="position" name="position" style="border-radius: 30px;" required>
+                                    <option selected disabled>กรุณาเลือกตำแหน่ง....</option>
+                                    <option value="1">ประธานกลุ่ม</option>
+                                    <option value="2">รองประธานกลุ่ม</option>
+                                    <option value="3">เหรัญญิก</option>
+                                    <option value="4">รองเหรัญญิก</option>
+                                    <option value="5">เลขานุการ</option>
+                                    <option value="6">ผู้ช่วยเลขานุการ</option>
+                                    <option value="7">ประชาสัมพันธ์</option>
+                                    <option value="8">ฝ่ายผลิต</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
@@ -88,7 +104,7 @@
                                 <input type="text" required class="form-control" name="perid" style="border-radius: 30px;">
                             </div>
                             <div class="col-md-7">
-                                <label for="" class="col-form-label">ที่อยู่</label>
+                                <label for="" class="col-form-label">บ้านเลขที่</label>
                                 <input type="text" required class="form-control" name="address" style="border-radius: 30px;">
                             </div>
                         </div>

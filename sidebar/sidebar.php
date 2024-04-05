@@ -25,46 +25,53 @@
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <a class="collapse-item" href="agc.php">ข้อมูทะเบียน</a> -->
                 <a class="collapse-item" href="Information_G_agc.php">ข้อมูลกลุ่มวิสาหกิจ</a>
                 <a class="collapse-item" href="Product.php">ข้อมูลผลิตภัณฑ์</a>
                 <a class="collapse-item" href="Raw_material.php">ข้อมูลวัตถุดิบ</a>
                 <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
-                <a class="collapse-item" href="agc_regis.php">ข้อมูลทะเบียนสมาชิก</a>
+                <a class="collapse-item" href="agc_regis.php">ข้อมูลทะเบียนสมาชิก</a>>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMN"
+            aria-expanded="true" aria-controls="collapseMN">
+            <i class="fas fa-money-bill"></i>
+            <span>การเงิน-การลงทุน</span>
+        </a>
+        <div id="collapseMN" class="collapse" aria-labelledby="headingMN" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="Information_G_agc.php">รายรับ-รายจ่าย</a>
+                <a class="collapse-item" href="Information_G_agc.php">ยืม-คืน</a>
                 <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link" href="Sale.php">
             <i class="fas fa-store"></i>
-            <span>งานขาย</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="Sale.php">ขายปลีก/ส่ง</a>
-                <a class="collapse-item" href="Product.php">จัดบูธออกงาน</a>
-                <a class="collapse-item" href="Raw_material.php">ฝากขาย</a>
-                <a class="collapse-item" href="Fixed_assets.php">ขายออนไลน์</a>
-            </div>
-        </div>
+            <span>การซื้อ-ขายสิ้นค้า</span></a>
     </li>
-    
 
     <li class="nav-item">
-        <a class="nav-link" href="Planting.php">
+        <a class="nav-link" href="manufacture.php">
             <i class="fas fa-seedling"></i>
-            <span>การเพาะปลูกสินค้า</span></a>
+            <span>การผลิตสินค้า</span></a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="Travel.php">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>งานบริการการท่องเที่ยว</span></a>
+            <i class="fas fa-taxi"></i>
+            <span>การท่องเที่ยวและบริการ</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="PlanFollow.php">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>วางแผนและติดตามการผลิต</span></a>
+    </li>
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">

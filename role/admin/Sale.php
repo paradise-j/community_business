@@ -146,7 +146,7 @@
                                             
                                             <div class="col-md-3">
                                                 <label class="form-label">ชื่อผลิตภัณฑ์</label>
-                                                <select class="form-control" aria-label="Default select example"  id="gg_type" name="gg_type" style="border-radius: 30px;" required>
+                                                <select class="form-control" aria-label="Default select example"  id="pname" name="pname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
                                                         $stmt = $db->query("SELECT * FROM `product`");
@@ -167,10 +167,10 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="number" class="form-control" id="personid" name="weight" style="border-radius: 30px;" required>
+                                                <input type="text" class="form-control" id="price" name="price" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-3">
-                                                <label class="form-label">ส่วนลด (ในกรณีที่ลดราคาสินค้า)</label>
+                                                <label class="form-label">ส่วนลด</label>
                                                 <input type="number" class="form-control" id="phone" name="pricekg" style="border-radius: 30px;" required>
                                             </div>
                                         </div>
@@ -344,7 +344,34 @@
             });
         }
 
+        $('#pname').change(function(){
+            var id_pname = $(this).val();
+            // console.log(id_pname);
+            $.ajax({
+                type : "post",
+                url : "pname.php",
+                data : {id:id_pname,function:'pname'},     
+                success: function(data){
+                    console.log(data);
+                    $('#price').html(data);
 
+                }
+            });
+        });
+
+        // $('#provinces').change(function(){
+        //     var id_provnce = $(this).val();
+        //     $.ajax({
+        //         type : "post",
+        //         url : "../../address.php",
+        //         data : {id:id_provnce,function:'provinces'},     
+        //         success: function(data){
+        //             $('#amphures').html(data);
+        //             $('#districts').html(' ');
+        //             $('#zipcode').val(' ');
+        //         }
+        //     });
+        // });
 
         
         const dom_date = document.querySelectorAll('.date_th')
