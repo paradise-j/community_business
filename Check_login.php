@@ -6,14 +6,14 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         try {
-            $select_stmt = $db->prepare("SELECT * FROM `user_login` WHERE `user_name` = '$username' AND `user_password` = '$password'");
+            $select_stmt = $db->prepare("SELECT * FROM `agc_data` WHERE `agc_reid` = '$username' AND `agc_phone` = '$password'");
             $select_stmt->execute(); 
 
             while($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-                $dbid = $row['user_id'];
-                $dbusername = $row['user_name'];
-                $dbpassword = $row['user_password'];
-                $dbrole = $row['user_role'];
+                $dbid = $row['agc_id'];
+                $dbusername = $row['agc_reid'];
+                $dbpassword = $row['agc_phone'];
+                $dbrole = $row['agc_status'];
             }
 
             if ($username != null AND $password != null) {
@@ -36,7 +36,30 @@
                                 $_SESSION['success'] = "director... Successfully Login...";
                                 header("location: role/director/index.php");
                             break;
-                            
+                            case '3':
+                                $_SESSION['id'] = $dbid;
+                                $_SESSION['username'] = $dbusername;
+                                $_SESSION['password'] = $dbpassword;
+                                $_SESSION['permission'] = $dbrole;
+                                $_SESSION['success'] = "offficer... Successfully Login...";
+                                header("location: role/officer/index.php");
+                            break;
+                            case '4':
+                                $_SESSION['id'] = $dbid;
+                                $_SESSION['username'] = $dbusername;
+                                $_SESSION['password'] = $dbpassword;
+                                $_SESSION['permission'] = $dbrole;
+                                $_SESSION['success'] = "head_agc... Successfully Login...";
+                                header("location: role/head_agc/index.php");
+                            break;
+                            case '5':
+                                $_SESSION['id'] = $dbid;
+                                $_SESSION['username'] = $dbusername;
+                                $_SESSION['password'] = $dbpassword;
+                                $_SESSION['permission'] = $dbrole;
+                                $_SESSION['success'] = "agriculturist... Successfully Login...";
+                                header("location: role/agriculturist/index.php");
+                            break;
                             default:
                                 $_SESSION['error'] = "Wrong email or password or role";
                                 header("location: agriculturist/index.php");

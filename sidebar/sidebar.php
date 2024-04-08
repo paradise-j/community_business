@@ -42,8 +42,8 @@
         </a>
         <div id="collapseMN" class="collapse" aria-labelledby="headingMN" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="Information_G_agc.php">รายรับ-รายจ่าย</a>
-                <a class="collapse-item" href="Information_G_agc.php">ยืม-คืน</a>
+                <a class="collapse-item" href="InEx.php">รายรับ-รายจ่าย</a>
+                <a class="collapse-item" href="BorRe.php">ยืม-คืน</a>
                 <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>

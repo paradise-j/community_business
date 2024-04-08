@@ -2,10 +2,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php 
     session_start();
-    // if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
-    //     header("location: ../../index.php");
-    //     exit;
-    // }
+    if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
+        header("location: ../../index.php");
+        exit;
+    }
     require_once '../../connect.php';
 
     if (isset($_GET['delete'])) {

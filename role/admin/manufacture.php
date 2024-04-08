@@ -2,10 +2,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php 
     session_start();
-    // if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
-    //     header("location: ../../index.php");
-    //     exit;
-    // }
+    if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
+        header("location: ../../index.php");
+        exit;
+    }
     require_once '../../connect.php';
 
     if (isset($_GET['delete'])) {
@@ -67,6 +67,10 @@
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_product.php" method="POST">
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">วันที่ในการผลิต</label>
+                            <input type="date" required class="form-control" name="namegf" style="border-radius: 30px;">
+                        </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อรายการผลิต</label>
                             <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">

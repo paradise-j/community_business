@@ -2,89 +2,70 @@
     require_once 'connect.php';
     session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+	<title>Login 10</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700&display=swap" rel="stylesheet" />
 
-    <title>เข้าสู่ระบบ</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <link rel="icon" type="image/png" href="img/login2.png">
-
-    <link
-        href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="./bootrap/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+	<link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body class="bg-gradient-primary">
+<body class="img js-fullheight" style="background-image: url(img/bg.jpg)">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center my-5">
+				<div class="col-md-6 text-center ">
+					<h2 class="heading-section">ลงชื่อเข้าใช้งานระบบ</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4 ">
+					<div class="login-wrap p-0">
+						<form action="Check_login.php"  method="POST">
+							<div class="form-group">
+								<input type="tel"name="username" class="form-control" placeholder="ชื่อผู้ใช้งาน" required />
+							</div>
+							<div class="form-group">
+								<input id="password-field" name="password" type="password" class="form-control" placeholder="รหัสผ่าน"
+									required />
+								<span toggle="#password-field"
+									class="fa fa-eye-slash field-icon toggle-password"></span>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="form-control btn btn-primary submit px-3" name="btn_login">
+									เข้าสู่ระบบ
+								</button>
+							</div>
+							<div class="form-group d-md-flex">
+								<!-- <div class="w-50">
+									<label class="checkbox-wrap checkbox-primary">Remember Me
+										<input type="checkbox" checked />
+										<span class="checkmark"></span>
+									</label>
+								</div> -->
+								<div class="w-100 text-md-right">
+									<a href="#" style="color: #fff">ลืมรหัสผ่าน</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center mt-5">
-            <div class="col-lg-5">
-                <div class="card o-hidden border-0 shadow-lg my-5 ">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
-                            <div class="col">
-                                <div class="p-4">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">ลงทะเบียนเข้าใข้งานระบบ</h1>
-                                    </div>
-                                    <form class="user" name="login" action="Check_login.php" method="POST">
-                                        <div class="form-group">
-                                            <input type="text" name="username" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="ชื่อผู้ใช้งาน">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="รหัสผ่าน">
-                                        </div>
-
-                                        <button class="btn btn-success btn-user btn-block " style="font-size: 15px;" type="submit" name="btn_login">เข้าสู่ระบบ</button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a href="register.php" class="btn btn-primary btn-user btn-block" style="border-radius: 25px; font-size: 15px;">ลงทะเบียนเข้าใข้งานระบบ</a>
-                                    </div>
-                                    <hr>
-                                    <!-- <a href="index.php" class="btn btn-secondary" style="border-radius: 30px; font-size: 10px;"><i class='bx bx-arrow-back'></i>  กลับสู่หน้าหลัก</a> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="./bootrap/vendor/jquery/jquery.min.js"></script>
-    <script src="./bootrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="./bootrap/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="./bootrap/js/sb-admin-2.min.js"></script>
-
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>
