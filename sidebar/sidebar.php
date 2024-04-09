@@ -29,7 +29,8 @@
                 <a class="collapse-item" href="Product.php">ข้อมูลผลิตภัณฑ์</a>
                 <a class="collapse-item" href="Raw_material.php">ข้อมูลวัตถุดิบ</a>
                 <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
-                <a class="collapse-item" href="agc_regis.php">ข้อมูลทะเบียนสมาชิก</a>>
+                <a class="collapse-item" href="agc_regis.php">ข้อมูลทะเบียนสมาชิก</a>
+                <a class="collapse-item" href="grower_regis.php">ข้อมูลทะเบียนลูกสวน</a>
             </div>
         </div>
     </li>
