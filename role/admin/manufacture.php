@@ -121,10 +121,7 @@
                                     <thead>
                                         <tr align="center">
                                             <th>รายการผลิต</th>
-                                            <!-- <th>วันที่</th> -->
-                                            <th>ข้อมูลเพิ่มเติม</th>
-                                            <th>แก้ไข</th>
-                                            <th>ลบ</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -141,9 +138,13 @@
                                         <tr>
                                             <td><?= $pt['plant_name']; ?></td>
                                             <!-- <td class="date_th"><?= $pt['plant_date']; ?></td> -->
-                                            <td align="center"><button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $pt['plant_id']?>"><i class="fas fa-eye"></i></button></td>
-                                            <td align="center"><a href="Edit_pd.php?edit_id=<?= $pt['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td>
-                                            <td align="center"><a data-id="<?= $pt['plant_id']; ?>" href="?delete=<?= $pt['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td>
+                                            <td align="center">
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $pt['plant_id']?>"><i class="fas fa-eye"></i></button>
+                                                <a href="Edit_pd.php?edit_id=<?= $pt['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a>
+                                                <a data-id="<?= $pt['plant_id']; ?>" href="?delete=<?= $pt['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a>
+                                            </td>
+                                            <!-- <td align="center"><a href="Edit_pd.php?edit_id=<?= $pt['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
+                                            <!-- <td align="center"><a data-id="<?= $pt['plant_id']; ?>" href="?delete=<?= $pt['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
                                             
                                         </tr>
 
