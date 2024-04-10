@@ -9,30 +9,84 @@
         $quan = $_POST['quan'];
         $cost = $_POST['cost'];
         $date = $_POST['date'];
-        $unitcost = $cost/$quan;
-        $unitprice = $unitcost+50;
+        $avgprice = $cost/$quan;
 
-        $sql = $db->prepare("INSERT INTO `product`(`pd_name`, `pd_date`, `pd_quan`, `pd_cost`, `pd_unitcost`, `pd_unitprice`)
-                             VALUES ('$pdname','$date','$quan','$cost','$unitcost','$unitprice')");
-        $sql->execute();
+        $pd = $db->prepare("SELECT `pd_name` FROM `product`");
+        $pd->execute();
 
-        if ($sql) {
-            $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อยแล้ว";
-            echo "<script>
-                $(document).ready(function() {
-                    Swal.fire({
-                        title: 'สำเร็จ',
-                        text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
-                        icon: 'success',
-                        timer: 5000,
-                        showConfirmButton: false
-                    });
-                })
-            </script>";
-            header("refresh:1; url=Product.php");
-        } else {
-            $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
-            header("location: Product.php");
+        $check = array();
+        while ($row = $pd->fetch(PDO::FETCH_ASSOC)){
+            $name = $row["pd_name"];
+            array_push($check,$name);
+            
         }
+        // print_r($check);
+        echo $pdname;
+
+        if(!in_array("$pdname", $check)){
+            echo "Match not found";
+            $sql = $db->prepare("INSERT INTO `product`(`pd_name`, `pd_date`, `pd_quan`, `pd_cost`, `pd_avgprice`)
+                             VALUES ('$pdname','$date','$quan','$cost','$avgprice')");
+            $sql->execute();
+
+            if ($sql) {
+                $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อยแล้ว";
+                echo "<script>
+                    $(document).ready(function() {
+                        Swal.fire({
+                            title: 'สำเร็จ',
+                            text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
+                            icon: 'success',
+                            timer: 5000,
+                            showConfirmButton: false
+                        });
+                    })
+                </script>";
+                header("refresh:1; url=Product.php");
+            } else {
+                $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
+                header("location: Product.php");
+            }
+
+        }else{
+            echo "Match found";
+
+            $pd = $db->prepare("SELECT * FROM `product` WHERE `pd_name` = '$pdname'");
+            $pd->execute();
+            $row = $pd->fetch(PDO::FETCH_ASSOC);
+            extract($row);
+
+
+            $Nquan = $quan + $pd_quan;
+            $Ncost = $cost + $pd_cost;
+            $Navgcost = $Ncost/$Nquan;
+            
+            
+
+            $sql = $db->prepare("UPDATE `product` SET `pd_name`='$pdname',`pd_date`='$date',
+                                                      `pd_quan`='$Nquan',`pd_cost`='$Ncost',`pd_avgprice`='$Navgcost'
+                                 WHERE `pd_id`='$pd_id'");
+            $sql->execute();
+
+            if ($sql) {
+                $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อยแล้ว";
+                echo "<script>
+                    $(document).ready(function() {
+                        Swal.fire({
+                            title: 'สำเร็จ',
+                            text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
+                            icon: 'success',
+                            timer: 5000,
+                            showConfirmButton: false
+                        });
+                    })
+                </script>";
+                header("refresh:1; url=Product.php");
+            } else {
+                $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
+                header("location: Product.php");
+            }
+            
+        } 
     }
 ?>
