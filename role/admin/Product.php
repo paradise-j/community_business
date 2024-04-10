@@ -168,10 +168,7 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุน : </b><?= number_format($pd['pd_cost']);?> บาท</label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($pd['pd_unitcost'],2); ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาขายต่อหน่วย : </b><?=number_format($pd['pd_unitprice']); ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนเฉลี่ยปัจจุบัน : </b><?= number_format($pd['pd_avgprice'],2); ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
