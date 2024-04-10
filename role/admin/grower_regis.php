@@ -63,9 +63,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลลูกสวน</h5>
-                    <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
                 </div>
+                
                 <div class="modal-body">
                     <form action="Check_Add_regisAgc.php" method="POST">
                         <div class="row mb-1">
@@ -81,11 +80,11 @@
                         <div class="row mb-1">
                             <div class="col-md-5">
                                 <label for="" class="col-form-label">ชื่อเล่น</label>
-                                <input type="text" required class="form-control" name="perid" style="border-radius: 30px;">
+                                <input type="text" required class="form-control" name="nickn" style="border-radius: 30px;">
                             </div>
                             <div class="col-md-7">
                                 <label for="" class="col-form-label">เบอร์โทร</label>
-                                <input type="text" required class="form-control" name="address" style="border-radius: 30px;">
+                                <input type="text" required class="form-control" name="phone" style="border-radius: 30px;">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -97,8 +96,26 @@
             </div>
         </div>
     </div>
-    <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
     
+    <!-- ---------------------------------------      importdataModal ---------------------------------------------------------------------->
+    <div class="modal fade" id="ImportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลลูกสวนจากไฟล์ Excel</h5>
+                </div>
+                
+                <div class="modal-body">
+                    <form action="./import/f_save.php" method="POST" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+                        <input type="file" style="border-radius: 20px;" name="file" id="file" accept=".xls,.xlsx">
+                        <div class="modal-footer">
+                            <button type="submit" name="import" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -112,8 +129,10 @@
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสมาชิก</a>
+                                <a class="btn btn-primary" style="border-radius: 25px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสมาชิก</a>
+                                <a href="#" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#ImportModal"><i class="fas fa-download fa-sm text-white-50"></i> เพิ่มข้อมูลจาก Excel</a>
                             </div>
+                            
                         </div>
                         
                         <div class="card-body">
@@ -121,7 +140,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>เลขทะเบียน</th>
+                                            <!-- <th>เลขทะเบียน</th> -->
                                             <th>ชื่อ-สกุล</th>
                                             <th></th>
                                             <!-- <th></th> -->
@@ -141,7 +160,7 @@
                                         ?>
                                         <tr>
                                             <!-- <td><?= $gw['gw_Fname']." ".$gw['gw_Lname']; ?></td> -->
-                                            <td><?= $gw['gw_id']?></td>
+                                            <!-- <td><?= $gw['gw_id']?></td> -->
                                             <td><?= $gw['gw_name']?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 1rem;" data-toggle="modal" data-target="#showdataModal<?= $gw['gw_id']?>"><i class="fas fa-eye"></i></button>
@@ -158,28 +177,16 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อ-สกุล : </b><?= $gw['gw_Fname']." ".$gw['gw_Lname']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เลขทะเบียนลูกสวน : </b><?= $gw['gw_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เลขทะเบียน : </b><?= $gw['gw_reid']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อ-สกุล : </b><?= $gw['gw_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสบัตรประชาชน : </b><?= $gw['gw_perid']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อเล่น : </b><?= $gw['gw_nickn']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่อยู่ : </b><?= $gw['gw_num']." ตำบล".$gw['gw_subdis']." อำเภอ".$gw['gw_dis']." จังหวัด".$gw['gw_pv']." รหัสไปรษณีย์ ".$gw['gw_zip']; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>สถานะสมาชิก :  </b>
-                                                                <?php
-                                                                    if ($gw['gw_status'] == 1) {
-                                                                        echo "เป็นสมาชิก";
-                                                                    }else{
-                                                                        echo "ไม่เป็นสมาชิก";
-                                                                    }
-                                                                 ?>
-                                                            
-                                                            </label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เบอร์โทรศัพท์ : </b><?= $gw['gw_phone']; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
