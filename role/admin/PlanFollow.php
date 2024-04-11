@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_Group_agriculturist</title>
+    <title>วางแผนและติดตามการผลิต</title>
 
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -62,31 +62,42 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลรายรับ-รายจ่าย</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการวางแผนการปลูก</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_inexen.php" method="POST">
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">วันที่ทำรายการ</label>
-                            <input type="date" required class="form-control" name="namegf" style="border-radius: 30px;">
+                        <div class="mb-2">
+                            <?php $date = date('Y-m-d'); ?>
+                            <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
+                            <input type="date" required class="form-control" name="Sdate" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="" class="col-form-label">วันที่เก็บเกี่ยว</label>
+                            <input type="date" required class="form-control" name="Edate" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ประเภทรายการ</label>
-                            <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกประเภท....</option>
-                                <option value="1">รายรับ</option>
-                                <option value="2">รายจ่าย</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">รายการ</label>
+                            <label for="" class="col-form-label">ชื่อผัก</label>
                             <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">ราคา</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                        <div class="d-flex justify-content-end">
+                                <button type="submit" name="add-input" class="btn btn-success add_item" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
+                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
+                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
@@ -143,9 +154,6 @@
                                                 <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
                                                 <a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
                                             </td>
-                                            <!-- <td align="center"><a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
-                                            
                                         </tr>
 
                                         <div class="modal fade" id="showdataModal<?= $inex['inex_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -192,26 +200,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -298,42 +286,39 @@
         $('.table').DataTable();
 
 
-        $('#provinces').change(function(){
-            var id_provnce = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_provnce,function:'provinces'},     
-                success: function(data){
-                    $('#amphures').html(data);
-                    $('#districts').html(' ');
-                    $('#zipcode').val(' ');
-                }
-            });
-        });
+        // $('#provinces').change(function(){
+        //     var id_provnce = $(this).val();
+        //     $.ajax({
+        //         type : "post",
+        //         url : "../../address.php",
+        //         data : {id:id_provnce,function:'provinces'},     
+        //         success: function(data){
+        //             $('#amphures').html(data);
+        //             $('#districts').html(' ');
+        //             $('#zipcode').val(' ');
+        //         }
+        //     });
+        // });
 
-        $('#amphures').change(function(){
-            var id_amphures = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_amphures,function:'amphures'},
-                success: function(data){
-                    $('#districts').html(data);
-                    $('#zipcode').val(' ');
-                }
-            });
-        });
-
-        $('#districts').change(function(){
-            var id_districts = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_districts,function:'districts'},
-                success: function(data){
-                    $('#zipcode').val(data)
-                }
+        $(document).ready(function() {
+            $(".add_item").click(function(e){
+                e.preventDefualt();
+                $("#show_item").prepend(
+                    <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-2">
+                                    <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
+                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
+                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                </div>
+                            </div>
+                        </div>
+                );
             });
         });
 
