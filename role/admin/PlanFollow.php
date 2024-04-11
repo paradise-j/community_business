@@ -305,19 +305,19 @@
                 e.preventDefualt();
                 $("#show_item").prepend(
                     <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
-                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mb-2">
-                                    <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
-                                </div>
+                        `<div class="col-md-4">
+                            <div class="mb-2">
+                                <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
+                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
+                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                    </div>`
                 );
             });
         });
