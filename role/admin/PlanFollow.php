@@ -81,23 +81,38 @@
                             <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
                         </div>
                         <div class="d-flex justify-content-end">
-                                <button type="submit" name="add-input" class="btn btn-success add_item" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
+                        <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="mb-2">
-                                    <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
-                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                        <div id="show_item">
+                            <div class="row mb-1">
+                                <div class="col-md-4">
+                                    <div class="mb-2">
+                                        <label for="" class="col-form-label">รหัสลูกสวน</label>
+                                        <select class="form-control" aria-label="Default select example" id="provinces" name="provinces" style="border-radius: 30px;" required>
+                                            <option selected disabled>กรุณาเลือกลูกสวน....</option>
+                                            <?php 
+                                                $stmt = $db->query("SELECT * FROM `grower`");
+                                                $stmt->execute();
+                                                $pvs = $stmt->fetchAll();
+                                                
+                                                foreach($pvs as $pv){
+                                            ?>
+                                            <option value="<?= $pv['id']?>"><?= $pv['name_th']?></option>
+                                            <?php
+                                                }
+                                            ?>
+                                        </select>
+                                        <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-2">
+                                        <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
+                                        <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="mb-2">
-                                    <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                    <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
-                                </div>
-                            </div>
                         </div>
-                        
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
@@ -218,6 +233,32 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+    <script>
+        $(document).ready(function() {  
+            $(".add_item").click(function(e) {
+                console.log("111");
+                e.preventDefault();
+                $("#show_item").prepend(`
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-2">
+                                <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
+                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
+                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                    </div>`
+                    
+                );
+            });
+        });
+    </script>
+
 
     <script>
         $(".delete-btn").click(function(e) {
@@ -300,29 +341,11 @@
         //     });
         // });
 
-        $(document).ready(function() {
-            $(".add_item").click(function(e){
-                e.preventDefualt();
-                $("#show_item").prepend(
-                    <div class="row">
-                        `<div class="col-md-4">
-                            <div class="mb-2">
-                                <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
-                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-2">
-                                <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                    </div>`
-                );
-            });
-        });
+
 
     </script>
+
+
 
 </body>
 
