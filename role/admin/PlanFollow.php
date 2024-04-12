@@ -88,27 +88,33 @@
                                 <div class="col-md-4">
                                     <div class="mb-2">
                                         <label for="" class="col-form-label">รหัสลูกสวน</label>
-                                        <select class="form-control" aria-label="Default select example" id="provinces" name="provinces" style="border-radius: 30px;" required>
-                                            <option selected disabled>กรุณาเลือกลูกสวน....</option>
+                                        <select class="form-control" aria-label="Default select example" id="grower" name="grower" style="border-radius: 30px;" required>
+                                            <option selected disabled>เลือกรหัส....</option>
                                             <?php 
                                                 $stmt = $db->query("SELECT * FROM `grower`");
                                                 $stmt->execute();
-                                                $pvs = $stmt->fetchAll();
+                                                $gws = $stmt->fetchAll();
                                                 
-                                                foreach($pvs as $pv){
+                                                foreach($gws as $gw){
                                             ?>
-                                            <option value="<?= $pv['id']?>"><?= $pv['name_th']?></option>
+                                            <option value="<?= $gw['gw_id']?>"><?= $gw['gw_id']?></option>
                                             <?php
                                                 }
                                             ?>
                                         </select>
-                                        <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                        <!-- <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;"> -->
                                     </div>
                                 </div>
-                                <div class="col">
+                                <div class="col-md-6">
                                     <div class="mb-2">
                                         <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                        <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                        <input type="text" required class="form-control" name="gw_name" id="gw_name" style="border-radius: 30px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="mt-3">
+                                        <br>
+                                        <button class="btn btn-danger remove_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +138,7 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลรายรับ-รายจ่าย</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลการวางแผนการปลูก</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
@@ -147,8 +153,6 @@
                                         <tr align="center">
                                             <th>รายการ</th>
                                             <th></th>
-                                            <!-- <th>แก้ไข</th> -->
-                                            <!-- <th>ลบ</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -175,11 +179,11 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลกลุ่มวิสาหกิจ</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการวางแผนการปลูก</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่ม : </b><?= $inex['inex_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $inex['inex_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $inex['inex_pv']; ?></label>
@@ -236,26 +240,52 @@
     <script>
         $(document).ready(function() {  
             $(".add_item").click(function(e) {
-                console.log("111");
+                // console.log("111");
                 e.preventDefault();
                 $("#show_item").prepend(`
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-2">
                                 <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
-                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                <select class="form-control" aria-label="Default select example" id="grower" name="grower" style="border-radius: 30px;" required>
+                                    <option selected disabled>เลือกรหัส....</option>
+                                    <?php 
+                                        $stmt = $db->query("SELECT * FROM `grower`");
+                                        $stmt->execute();
+                                        $gws = $stmt->fetchAll();
+                                        
+                                        foreach($gws as $gw){
+                                    ?>
+                                    <option value="<?= $gw['gw_id']?>"><?= $gw['gw_id']?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-md-6">
                             <div class="mb-2">
                                 <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                                <input type="text" required class="form-control" name="gw_name" id="gw_name" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="mt-3">
+                                <br>
+                                <button class="btn btn-danger remove_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
                             </div>
                         </div>
                     </div>`
                     
                 );
             });
+
+            $(document).on('click', '.remove_item', function(e) {
+                e.preventDefault();
+                let row_item = $(this).parent().parent().parent();
+                $(row_item).remove();
+            });
+
         });
     </script>
 
@@ -327,19 +357,17 @@
         $('.table').DataTable();
 
 
-        // $('#provinces').change(function(){
-        //     var id_provnce = $(this).val();
-        //     $.ajax({
-        //         type : "post",
-        //         url : "../../address.php",
-        //         data : {id:id_provnce,function:'provinces'},     
-        //         success: function(data){
-        //             $('#amphures').html(data);
-        //             $('#districts').html(' ');
-        //             $('#zipcode').val(' ');
-        //         }
-        //     });
-        // });
+         $('#grower').change(function(){
+             var id_gw = $(this).val();
+             $.ajax({
+                 type : "post",
+                 url : "../../api/grower.php",
+                 data : {id:id_gw,function:'grower'},     
+                 success: function(data){
+                     $('#gw_name').val(data);
+                 }
+             });
+         });
 
 
 
