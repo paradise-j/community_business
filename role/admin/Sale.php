@@ -359,35 +359,21 @@
             });
         });
 
-        // $('#provinces').change(function(){
-        //     var id_provnce = $(this).val();
-        //     $.ajax({
-        //         type : "post",
-        //         url : "../../address.php",
-        //         data : {id:id_provnce,function:'provinces'},     
-        //         success: function(data){
-        //             $('#amphures').html(data);
-        //             $('#districts').html(' ');
-        //             $('#zipcode').val(' ');
-        //         }
-        //     });
-        // });
-
         
-        const dom_date = document.querySelectorAll('.date_th')
-        dom_date.forEach((elem)=>{
+        // const dom_date = document.querySelectorAll('.date_th')
+        // dom_date.forEach((elem)=>{
 
-            const my_date = elem.textContent
-            const date = new Date(my_date)
-            const result = date.toLocaleDateString('th-TH', {
+        //     const my_date = elem.textContent
+        //     const date = new Date(my_date)
+        //     const result = date.toLocaleDateString('th-TH', {
 
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
+        //     year: 'numeric',
+        //     month: 'long',
+        //     day: 'numeric',
 
-            }) 
-            elem.textContent=result
-        })
+        //     }) 
+        //     elem.textContent=result
+        // })
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {

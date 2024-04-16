@@ -68,7 +68,7 @@
                 <div class="modal-body">
                     <form action="Check_Add_inexen.php" method="POST">
                         <div class="mb-2">
-                            <?php $date = date('Y-m-d'); ?>
+                            <?php $date = date('d-m-Y'); ?>
                             <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
                             <input type="date" required class="form-control" name="Sdate" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
@@ -105,7 +105,7 @@
                                         <!-- <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;"> -->
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     <div class="mb-2">
                                         <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
                                         <input type="text" required class="form-control" name="gw_name" id="gw_name" style="border-radius: 30px;">
