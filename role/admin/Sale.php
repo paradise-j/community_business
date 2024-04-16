@@ -167,7 +167,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="text" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label">ส่วนลด</label>
@@ -346,13 +346,14 @@
 
         $('#pdname').change(function(){
             var id_pname = $(this).val();
-            console.log(id_pname);
+            console.log("pd = ",id_pname);
             $.ajax({
                 type : "post",
                 url : "../../api/pdname.php",
                 data : {id:id_pname,function:'pdname'},     
                 success: function(data){
-                    $('#pricepd').html(data);
+                    console.log("price = ",data);
+                    $('#pricepd').val(data);
 
                 }
             });
