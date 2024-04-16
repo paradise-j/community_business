@@ -146,7 +146,7 @@
                                             
                                             <div class="col-md-3">
                                                 <label class="form-label">ชื่อผลิตภัณฑ์</label>
-                                                <select class="form-control" aria-label="Default select example"  id="pname" name="pname" style="border-radius: 30px;" required>
+                                                <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
                                                         $stmt = $db->query("SELECT * FROM `product`");
@@ -167,7 +167,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="text" class="form-control" id="price" name="price" style="border-radius: 30px;" required>
+                                                <input type="text" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label">ส่วนลด</label>
@@ -191,7 +191,7 @@
                                     <div class="card-header py-3 text-center mb-4">
                                         <h5 class="m-0 font-weight-bold text-primary">รายการขายผลิตภัณฑ์</h5>
                                     </div>
-                                    <form action="Check_Add_salegoat.php" method="post">
+                                    <form action="Check_Add_salepd.php" method="post">
         
                                         <div class="row mb-4">
                                             <div class="col-md-2">
@@ -344,16 +344,15 @@
             });
         }
 
-        $('#pname').change(function(){
+        $('#pdname').change(function(){
             var id_pname = $(this).val();
-            // console.log(id_pname);
+            console.log(id_pname);
             $.ajax({
                 type : "post",
-                url : "pname.php",
-                data : {id:id_pname,function:'pname'},     
+                url : "../../api/pdname.php",
+                data : {id:id_pname,function:'pdname'},     
                 success: function(data){
-                    console.log(data);
-                    $('#price').html(data);
+                    $('#pricepd').html(data);
 
                 }
             });

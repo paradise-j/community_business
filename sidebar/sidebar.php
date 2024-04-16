@@ -68,10 +68,24 @@
             <span>การท่องเที่ยวและบริการ</span></a>
     </li>
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="PlanFollow.php">
             <i class="fas fa-map-marked-alt"></i>
             <span>วางแผนและติดตามการผลิต</span></a>
+    </li> -->
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlan"
+            aria-expanded="true" aria-controls="collapsePlan">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>วางแผนและติดตามการผลิต</span></a>
+        </a>
+        <div id="collapsePlan" class="collapse" aria-labelledby="headingPlan" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="PlanFollow.php">วางแผนแการเพาะปลูก</a>
+                <a class="collapse-item" href="Bproduce.php">รับซื้อผลผลิต</a>
+            </div>
+        </div>
     </li>
 
     <!-- Nav Item - Tables -->
