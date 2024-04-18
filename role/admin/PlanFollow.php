@@ -66,19 +66,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_inexen.php" method="POST">
+                    <form action="Check_Add_Plan.php" method="POST">
                         <div class="mb-2">
                             <?php $date = date('d-m-Y'); ?>
                             <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
-                            <input type="date" required class="form-control" name="Sdate" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="Sdate" id="Sdate" placeholder="yyy-mm-dd" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-2">
                             <label for="" class="col-form-label">วันที่เก็บเกี่ยว</label>
-                            <input type="date" required class="form-control" name="Edate" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="Edate" id="Edate" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อผัก</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <input type="text" required class="form-control" name="name" style="border-radius: 30px;">
                         </div>
                         <!-- <div class="d-flex justify-content-end">
                             <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
@@ -128,7 +128,20 @@
         </div>
     </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    
+
+    <?php
+        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+            global $dayTH,$monthTH;   
+            $thai_date_return = date("j",$time);   
+            $thai_date_return.=" ".$monthTH[date("n",$time)];   
+            $thai_date_return.= " ".(date("Y",$time)+543);   
+            return $thai_date_return;   
+        } 
+    ?>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -157,45 +170,44 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `inex_data`");
+                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_date`,`plant_harvest`,`plant_grower`,grower.gw_name
+                                                                FROM `planting` 
+                                                                INNER JOIN `grower` ON grower.gw_id = planting.plant_grower");
                                             $stmt->execute();
-                                            $inexs = $stmt->fetchAll();
+                                            $plants = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$inexs) {
+                                            if (!$plants) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($inexs as $inex)  {  
+                                             foreach($plants as $plant)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $inex['inex_name']; ?></td>
+                                            <td><?= $plant['plant_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $inex['inex_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>"><i class="fas fa-eye"></i></button>
+                                                <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
+                                                <a data-id="<?= $plant['plant_id']; ?>" href="?delete=<?= $plant['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $inex['inex_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $plant['plant_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการวางแผนการปลูก</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $inex['inex_name']; ?></label>
+                                                        <div class="mb-2">                         
+                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เริ่มปลูก : </b><?= thai_date_fullmonth(strtotime($plant['plant_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $inex['inex_pv']; ?></label>
+                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เก็บผลผลิต : </b><?= thai_date_fullmonth(strtotime($plant['plant_harvest'])); ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>อำเภอ : </b><?= $inex['inex_dis']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ตำบล : </b><?= $inex['inex_subdis']; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $inex['inex_zip']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผู้รับผิดชอบ : </b><?= $plant['gw_name']; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -222,6 +234,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- <script src="vendor/jquery/jquery-ui.min.js"></script> -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -291,11 +304,34 @@
 
 
     <script>
+        // $(document).ready(function () {
+        //     $('#Sdate').datepicker({
+        //         dateFormat: 'dd-mm-yy'
+        //     });
+        // });
+
+        function thai_date($datetime,$format,$clock){
+            list($date,$time) = split(' ',$datetime);
+            // list($H,$i,$s) = split(':',$time);
+            list($Y,$m,$d) = split('-',$date);
+            $Y = $Y+543;
+
+            $month = array(
+            '0' => array('01'=>'มกราคม','02'=>'กุมภาพันธ์','03'=>'มีนาคม','04'=>'เมษายน','05'=>'พฤษภาคม','06'=>'มิถุนายน','07'=>'กรกฏาคม','08'=>'สิงหาคม','09'=>'กันยายน','10'=>'ตุลาคม','11'=>'พฤษจิกายน','12'=>'ธันวาคม'),
+            '1' => array('01'=>'ม.ค.','02'=>'ก.พ.','03'=>'มี.ค.','04'=>'เม.ย.','05'=>'พ.ค.','06'=>'มิ.ย.','07'=>'ก.ค.','08'=>'ส.ค.','09'=>'ก.ย.','10'=>'ต.ค.','11'=>'พ.ย.','12'=>'ธ.ค.')
+            );
+            if ($clock == false)
+            return $d.' '.$month[$format][$m].' '.$Y;
+            else
+            return $d.' '.$month[$format][$m].' '.$time;
+        }
+
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
             e.preventDefault();
             deleteConfirm(userId);
         })
+
 
         function deleteConfirm(userId) {
             Swal.fire({
@@ -334,6 +370,21 @@
                 },
             });
         }
+
+        const dom_date = document.querySelectorAll('.date_th')
+        dom_date.forEach((elem)=>{
+
+            const my_date = elem.textContent
+            const date = new Date(my_date)
+            const result = date.toLocaleDateString('th-TH', {
+
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+
+            }) 
+            elem.textContent=result
+        })
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {
