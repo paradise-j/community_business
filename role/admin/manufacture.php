@@ -122,6 +122,8 @@
                                         <tr align="center">
                                             <th>รายการผลิต</th>
                                             <th></th>
+                                            <th></th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -137,7 +139,7 @@
                                         ?>
                                         <tr>
                                             <td><?= $pt['plant_name']; ?></td>
-                                            <!-- <td class="date_th"><?= $pt['plant_date']; ?></td> -->
+                                            <td class="date_th"><?= $pt['plant_date']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $pt['plant_id']?>"><i class="fas fa-eye"></i></button>
                                                 <a href="Edit_pd.php?edit_id=<?= $pt['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a>
