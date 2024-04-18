@@ -68,8 +68,9 @@
                 <div class="modal-body">
                     <form action="Check_Add_product.php" method="POST">
                         <div class="mb-3">
+                            <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่ในการผลิต</label>
-                            <input type="date" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="date" min="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อรายการผลิต</label>
@@ -83,11 +84,6 @@
                             <label for="firstname" class="col-form-label">ราคาทุน</label>
                             <input type="number" required class="form-control" name="cost" style="border-radius: 30px;">
                         </div>
-                        <!-- <div class="mb-3">
-                            <?php $date = date('Y-m-d'); ?>
-                            <label for="firstname" class="col-form-label">วันที่รับของ</label>
-                            <input type="date" required class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;">
-                        </div> -->
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>

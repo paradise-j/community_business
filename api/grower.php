@@ -2,7 +2,7 @@
     require_once '../connect.php';
     session_start();
 
-    if(isset($_POST['function']) and $_POST['function'] == 'grower'){
+    if(isset($_POST['function']) and $_POST['function'] == 'g_id'){
         $id = $_POST['id'];
         $stmt = $db->query("SELECT * FROM `grower` WHERE `gw_id` = '$id'");
         $stmt->execute();

@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `inex_comen` WHERE `inex_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `planting` WHERE `plant_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=PlanFollow.php");
         }
     }
 ?>
@@ -68,13 +68,13 @@
                 <div class="modal-body">
                     <form action="Check_Add_Plan.php" method="POST">
                         <div class="mb-2">
-                            <?php $date = date('d-m-Y'); ?>
+                            <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
-                            <input type="date" required class="form-control" name="Sdate" id="Sdate" placeholder="yyy-mm-dd" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="Sdate" id="Sdate" min="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-2">
                             <label for="" class="col-form-label">วันที่เก็บเกี่ยว</label>
-                            <input type="date" required class="form-control" name="Edate" id="Edate" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="Edate" id="Edate" min="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อผัก</label>
@@ -88,7 +88,7 @@
                                 <div class="col-md-4">
                                     <div class="mb-2">
                                         <label for="" class="col-form-label">รหัสลูกสวน</label>
-                                        <select class="form-control" aria-label="Default select example" id="grower" name="grower" style="border-radius: 30px;" required>
+                                        <select class="form-control" aria-label="Default select example" id="g_id" name="g_id" style="border-radius: 30px;" required>
                                             <option selected disabled>เลือกรหัส....</option>
                                             <?php 
                                                 $stmt = $db->query("SELECT * FROM `grower`");
@@ -108,7 +108,7 @@
                                 <div class="col-md-7">
                                     <div class="mb-2">
                                         <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                        <input type="text" required class="form-control" name="gw_name" id="gw_name" style="border-radius: 30px;">
+                                        <input type="text" required class="form-control" name="g_name" id="g_name" style="border-radius: 30px;">
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-1">
@@ -164,7 +164,9 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>รายการ</th>
+                                            
+                                            <th>ชื่อผัก</th>
+                                            <th>ผู้รับผิดชอบ</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -182,7 +184,9 @@
                                              foreach($plants as $plant)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $plant['plant_name']; ?></td>
+                                            
+                                            <td align="center"><?= $plant['plant_name']; ?></td>
+                                            <td><?= $plant['gw_name']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>"><i class="fas fa-eye"></i></button>
                                                 <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
@@ -310,21 +314,19 @@
         //     });
         // });
 
-        function thai_date($datetime,$format,$clock){
-            list($date,$time) = split(' ',$datetime);
-            // list($H,$i,$s) = split(':',$time);
-            list($Y,$m,$d) = split('-',$date);
-            $Y = $Y+543;
-
-            $month = array(
-            '0' => array('01'=>'มกราคม','02'=>'กุมภาพันธ์','03'=>'มีนาคม','04'=>'เมษายน','05'=>'พฤษภาคม','06'=>'มิถุนายน','07'=>'กรกฏาคม','08'=>'สิงหาคม','09'=>'กันยายน','10'=>'ตุลาคม','11'=>'พฤษจิกายน','12'=>'ธันวาคม'),
-            '1' => array('01'=>'ม.ค.','02'=>'ก.พ.','03'=>'มี.ค.','04'=>'เม.ย.','05'=>'พ.ค.','06'=>'มิ.ย.','07'=>'ก.ค.','08'=>'ส.ค.','09'=>'ก.ย.','10'=>'ต.ค.','11'=>'พ.ย.','12'=>'ธ.ค.')
-            );
-            if ($clock == false)
-            return $d.' '.$month[$format][$m].' '.$Y;
-            else
-            return $d.' '.$month[$format][$m].' '.$time;
-        }
+        $('#g_id').change(function(){
+             var id_gw = $(this).val();
+             console.log(id_gw);
+             $.ajax({
+                 type : "post",
+                 url : "../../api/grower.php",
+                 data : {id:id_gw,function:'g_id'},     
+                 success: function(data){
+                    console.log(data);
+                     $('#g_name').val(data);
+                 }
+             });
+         });
 
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
@@ -345,7 +347,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'information_G_agc.php',
+                                url: 'PlanFollow.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -355,7 +357,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'information_G_agc.php';
+                                    document.location.href = 'PlanFollow.php';
                                 })
                             })
                             .fail(function() {
@@ -408,17 +410,7 @@
         $('.table').DataTable();
 
 
-         $('#grower').change(function(){
-             var id_gw = $(this).val();
-             $.ajax({
-                 type : "post",
-                 url : "../../api/grower.php",
-                 data : {id:id_gw,function:'grower'},     
-                 success: function(data){
-                     $('#gw_name').val(data);
-                 }
-             });
-         });
+
 
 
 
