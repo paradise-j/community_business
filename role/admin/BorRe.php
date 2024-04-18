@@ -298,45 +298,6 @@
         $('.table').DataTable();
 
 
-        $('#provinces').change(function(){
-            var id_provnce = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_provnce,function:'provinces'},     
-                success: function(data){
-                    $('#amphures').html(data);
-                    $('#districts').html(' ');
-                    $('#zipcode').val(' ');
-                }
-            });
-        });
-
-        $('#amphures').change(function(){
-            var id_amphures = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_amphures,function:'amphures'},
-                success: function(data){
-                    $('#districts').html(data);
-                    $('#zipcode').val(' ');
-                }
-            });
-        });
-
-        $('#districts').change(function(){
-            var id_districts = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../address.php",
-                data : {id:id_districts,function:'districts'},
-                success: function(data){
-                    $('#zipcode').val(data)
-                }
-            });
-        });
-
     </script>
 
 </body>
