@@ -93,7 +93,19 @@
         </div>
     </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    
+    <?php
+        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+            global $dayTH,$monthTH;   
+            $thai_date_return = date("j",$time);   
+            $thai_date_return.=" ".$monthTH[date("n",$time)];   
+            $thai_date_return.= " ".(date("Y",$time)+543);   
+            return $thai_date_return;   
+        } 
+    ?>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -124,29 +136,29 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `planting`");
+                                            $stmt = $db->query("SELECT * FROM `mf_data`");
                                             $stmt->execute();
-                                            $pts = $stmt->fetchAll();
+                                            $mfs = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$pts) {
+                                            if (!$mfs) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($pts as $pt)  {  
+                                             foreach($mfs as $mf)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $pt['plant_name']; ?></td>
-                                            <td class="date_th"><?= $pt['plant_date']; ?></td>
+                                            <td><?= $mf['mf_name']; ?></td>
+                                            <td class="date_th"><?= $mf['mf_date']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $pt['plant_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_pd.php?edit_id=<?= $pt['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $pt['plant_id']; ?>" href="?delete=<?= $pt['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: .75rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>"><i class="fas fa-eye"></i></button>
+                                                <a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a>
+                                                <a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a>
                                             </td>
-                                            <!-- <td align="center"><a href="Edit_pd.php?edit_id=<?= $pt['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $pt['plant_id']; ?>" href="?delete=<?= $pt['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
+                                            <!-- <td align="center"><a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
+                                            <!-- <td align="center"><a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
                                             
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $pt['plant_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $mf['mf_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -155,25 +167,25 @@
                                                     <div class="modal-body">
                                                         <div class="mb-2">
                                                             <?php 
-                                                                $date = $pt['plant_date'];
-                                                                $newDate = date("d-m-Y", strtotime($date));
+                                                                // $date = $mf['mf_date'];
+                                                                // $newDate = date("d-m-Y", strtotime($date));
                                                             ?>
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับของ : </b><?=$newDate; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับของ : </b><?= thai_date_fullmonth(strtotime($mf['mf_date'])); ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการเพาะปลูก : </b><?= $pt['plant_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการเพาะปลูก : </b><?= $mf['mf_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($pt['plant_quan']); ?> </label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ส่วนผสม : </b><?= $mf['mf_detail']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุน : </b><?= number_format($pt['plant_cost']);?> บาท</label>
+                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($mf['mf_quan']); ?> </label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($pt['plant_unitcost'],2); ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุน : </b><?= number_format($mf['mf_cost']);?> บาท</label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาขายต่อหน่วย : </b><?=number_format($pt['plant_unitprice']); ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($mf['mf_cost']/$mf['mf_quan'],2)." "."บาท"; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
