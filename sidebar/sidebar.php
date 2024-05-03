@@ -26,13 +26,34 @@
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="Information_G_agc.php">ข้อมูลกลุ่มวิสาหกิจ</a>
-                <a class="collapse-item" href="Product.php">ข้อมูลผลิตภัณฑ์</a>
+                <a class="collapse-item" href="Product.php">ข้อมูลสินค้าชุมชน</a>
                 <a class="collapse-item" href="Raw_material.php">ข้อมูลวัตถุดิบ</a>
                 <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
                 <a class="collapse-item" href="agc_regis.php">ข้อมูลทะเบียนสมาชิก</a>
                 <a class="collapse-item" href="grower_regis.php">ข้อมูลทะเบียนลูกสวน</a>
             </div>
         </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="manufacture.php">
+            <i class="fas fa-seedling"></i>
+            <span>การผลิตสินค้า</span></a>
+    </li>
+
+
+    <li class="nav-item">
+        <a class="nav-link" href="Sale.php">
+            <i class="fas fa-store"></i>
+            <span>การซื้อ-ขายสิ้นค้า</span></a>
+    </li>
+
+
+
+    <li class="nav-item">
+        <a class="nav-link" href="Travel.php">
+            <i class="fas fa-taxi"></i>
+            <span>การท่องเที่ยวและบริการ</span></a>
     </li>
 
     <li class="nav-item">
@@ -48,24 +69,6 @@
                 <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="Sale.php">
-            <i class="fas fa-store"></i>
-            <span>การซื้อ-ขายสิ้นค้า</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="manufacture.php">
-            <i class="fas fa-seedling"></i>
-            <span>การผลิตสินค้า</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="Travel.php">
-            <i class="fas fa-taxi"></i>
-            <span>การท่องเที่ยวและบริการ</span></a>
     </li>
 
     <!-- <li class="nav-item">
