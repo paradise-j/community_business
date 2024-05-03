@@ -2,13 +2,13 @@
     require_once '../connect.php';
     session_start();
 
-    if(isset($_POST['function']) and $_POST['function'] == 'g_id'){
+    if(isset($_POST['function']) and $_POST['function'] == 'g_name'){
         $id = $_POST['id'];
         $stmt = $db->query("SELECT * FROM `grower` WHERE `gw_id` = '$id'");
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        echo $row["gw_name"];
+        echo $row["gw_id"];
 
         // $gws = $stmt->fetchAll();
         // foreach($gws as $gw){
