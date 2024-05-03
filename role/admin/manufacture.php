@@ -73,15 +73,15 @@
                             <input type="date" required class="form-control" name="date" min="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ชื่อรายการผลิต</label>
+                            <label for="" class="col-form-label">ชื่อสินค้าที่ผลิต</label>
                             <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">จำนวน</label>
+                            <label for="" class="col-form-label">จำนวนที่ผลิตได้</label>
                             <input type="number" required class="form-control" name="quan" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="firstname" class="col-form-label">ราคาทุน</label>
+                            <label for="firstname" class="col-form-label">ทุนรวมในการผลิต</label>
                             <input type="number" required class="form-control" name="cost" style="border-radius: 30px;">
                         </div>
                         <div class="modal-footer">
