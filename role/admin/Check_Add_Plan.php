@@ -8,11 +8,12 @@
         $Sdate = $_POST['Sdate'];
         $Edate = $_POST['Edate'];
         $name = $_POST['name'];
+        $target = $_POST['target'];
         $g_id = $_POST['g_id'];
 
     
-        $sql = $db->prepare("INSERT INTO `planting`(`plant_name`, `plant_date`, `plant_harvest`, `plant_grower`)
-                             VALUES ('$name','$Sdate','$Edate','$g_id')");
+        $sql = $db->prepare("INSERT INTO `planting`(`plant_name`, `plant_target`, `plant_date`, `plant_harvest`, `plant_grower`)
+                             VALUES ('$name',$target ,'$Sdate','$Edate','$g_id')");
         $sql->execute();
 
         if ($sql) {
