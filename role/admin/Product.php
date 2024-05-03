@@ -62,16 +62,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลผลิตภัณฑ์</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลสินค้าชุมชน</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_product.php" method="POST">
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ชื่อผลิตภัณฑ์</label>
+                            <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
                             <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="" class="col-form-label">จำนวน</label>
                             <input type="number" required class="form-control" name="quan" style="border-radius: 30px;">
                         </div>
@@ -83,7 +83,7 @@
                             <?php $date = date('Y-m-d'); ?>
                             <label for="firstname" class="col-form-label">วันที่รับของ</label>
                             <input type="date" required class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;">
-                        </div>
+                        </div> -->
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
@@ -93,7 +93,19 @@
         </div>
     </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    
+    <?php
+        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+            global $dayTH,$monthTH;   
+            $thai_date_return = date("j",$time);   
+            $thai_date_return.=" ".$monthTH[date("n",$time)];   
+            $thai_date_return.= " ".(date("Y",$time)+543);   
+            return $thai_date_return;   
+        } 
+    ?>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -103,11 +115,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลผลิตภัณฑ์</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลสินค้าชุมชน</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลผลิตภัณฑ์</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินค้าชุมชน</a>
                             </div>
                         </div>
                         
@@ -116,7 +128,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>ชื่อผลิตภัณฑ์</th>
+                                            <th>ชื่อสินค้าชุมชน</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -148,20 +160,16 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลผลิตภัณฑ์</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลสินค้าชุมชน</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <?php 
-                                                                $date = $pd['pd_date'];
-                                                                $newDate = date("d-m-Y", strtotime($date));
-                                                            ?>
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับของ : </b><?=$newDate; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่เพิ่มข้อมูลสินค้า : </b><?= thai_date_fullmonth(strtotime($pd['pd_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผลิตภัณฑ์ : </b><?= $pd['pd_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินค้าชุมชน : </b><?= $pd['pd_name']; ?></label>
                                                         </div>
-                                                        <div class="mb-2">
+                                                        <!-- <div class="mb-2">
                                                             <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($pd['pd_quan']); ?> </label>
                                                         </div>
                                                         <div class="mb-2">
@@ -169,7 +177,7 @@
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนเฉลี่ยปัจจุบัน : </b><?= number_format($pd['pd_avgprice'],2); ?></label>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
