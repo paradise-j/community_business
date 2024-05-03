@@ -69,9 +69,9 @@
                 <div class="modal-body">
                     <form action="Check_Add_regisAgc.php" method="POST">
                         <div class="row mb-1">
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
-                                <select class="form-control" aria-label="Default select example" id="community" name="community" style="border-radius: 30px;" required>
+                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option>
                                 <?php 
                                     $stmt = $db->query("SELECT * FROM `group_comen`");
@@ -115,6 +115,12 @@
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">สกุล</label>
                                 <input type="text" required class="form-control" name="Lname" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
+                                <input type="text" required class="form-control" name="phone" style="border-radius: 30px;">
                             </div>
                         </div>
                         <div class="row mb-1">

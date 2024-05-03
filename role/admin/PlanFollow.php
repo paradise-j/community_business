@@ -88,7 +88,7 @@
                                     
                                     foreach($vgs as $vg){
                                 ?>
-                                <option value="<?= $vg['veget_id']?>"><?= $vg['veget_name']?></option>
+                                <option value="<?= $vg['veget_name']?>"><?= $vg['veget_name']?></option>
                                 <?php
                                     }
                                 ?>

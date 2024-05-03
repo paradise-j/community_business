@@ -8,8 +8,9 @@
         $reid = $_POST['reid'];
         $Fname = $_POST['Fname'];
         $Lname = $_POST['Lname'];
+        $phone = $_POST['phone']; 
         $perid = $_POST['perid'];
-        $address = $_POST['address'];
+        $address = $_POST['address']; 
 
         $provinces = $_POST['provinces'];
         $stmt = $db->query("SELECT `name_th` as pv FROM `provinces` WHERE `id` = $provinces");
@@ -30,8 +31,10 @@
         extract($row);
 
         $zipcode = $_POST['zipcode'];
-        $sql = $db->prepare("INSERT INTO `agc_data`(`agc_reid`, `agc_Fname`, `agc_Lname`, `agc_perid`, `agc_num`, `agc_subdis`, `agc_dis`, `agc_pv`, `agc_zip`)
-                             VALUES ('$reid','$Fname','$Lname','$perid','$address','$subdis','$dis','$pv','$zipcode')");
+        $group_id = $_POST['group_id'];
+
+        $sql = $db->prepare("INSERT INTO `agc_data`(`agc_reid`, `agc_Fname`, `agc_Lname`, `agc_perid`, `agc_phone` , `agc_num`, `agc_subdis`, `agc_dis`, `agc_pv`, `agc_zip`, `group_id`)
+                             VALUES ('$reid','$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$group_id')");
         $sql->execute();
 
         if ($sql) {

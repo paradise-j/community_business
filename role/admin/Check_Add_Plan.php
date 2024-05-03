@@ -7,7 +7,15 @@
     if (isset($_POST['submit'])) {
         $Sdate = $_POST['Sdate'];
         $Edate = $_POST['Edate'];
+
         $name = $_POST['name'];
+        // $pd = $db->prepare("SELECT `veget_name` FROM `vegetable`");
+        // $pd->execute();
+        // $row = $pd->fetch(PDO::FETCH_ASSOC);
+        // extract($row);
+        // echo $veget_name ;
+
+
         $target = $_POST['target'];
         $g_id = $_POST['g_id'];
 
