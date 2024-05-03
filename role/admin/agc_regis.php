@@ -69,6 +69,25 @@
                 <div class="modal-body">
                     <form action="Check_Add_regisAgc.php" method="POST">
                         <div class="row mb-1">
+                            <div class="col-md-8">
+                                <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
+                                <select class="form-control" aria-label="Default select example" id="community" name="community" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT * FROM `group_comen`");
+                                    $stmt->execute();
+                                    $cms = $stmt->fetchAll();
+                                    
+                                    foreach($cms as $cm){
+                                ?>
+                                <option value="<?= $cm['group_id']?>"><?= $cm['group_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
                             <div class="col-md-5">
                                 <label for="" class="col-form-label">เลขทะเบียน</label>
                                 <input type="text" required class="form-control" name="reid" style="border-radius: 30px;">
