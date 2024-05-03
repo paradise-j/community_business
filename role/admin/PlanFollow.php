@@ -78,7 +78,27 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อผัก</label>
-                            <input type="text" required class="form-control" name="name" style="border-radius: 30px;">
+                            <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกผัก....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT * FROM `vegetable`");
+                                    $stmt->execute();
+                                    $vgs = $stmt->fetchAll();
+                                    
+                                    foreach($vgs as $vg){
+                                ?>
+                                <option value="<?= $vg['veget_id']?>"><?= $vg['veget_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">เป้าหมายการผลิต &nbsp&nbsp&nbsp
+                                <label style="color:red;" >** หน่วยเป็น กิโลกรัม **</label>
+                            </label>
+                            <input type="text" required class="form-control" name="target" style="border-radius: 30px;">
                         </div>
                         <!-- <div class="d-flex justify-content-end">
                             <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
@@ -88,8 +108,14 @@
                                 <div class="col-md-4">
                                     <div class="mb-2">
                                         <label for="" class="col-form-label">รหัสลูกสวน</label>
-                                        <select class="form-control" aria-label="Default select example" id="g_id" name="g_id" style="border-radius: 30px;" required>
-                                            <option selected disabled>เลือกรหัส....</option>
+                                        <input type="text" required class="form-control" id="g_id" name="g_id" style="border-radius: 30px;" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="mb-2">
+                                        <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
+                                        <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                            <option selected disabled>เลือกชื่อผู้รับผิดชอบ....</option>
                                             <?php 
                                                 $stmt = $db->query("SELECT * FROM `grower`");
                                                 $stmt->execute();
@@ -97,18 +123,11 @@
                                                 
                                                 foreach($gws as $gw){
                                             ?>
-                                            <option value="<?= $gw['gw_id']?>"><?= $gw['gw_id']?></option>
+                                            <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option>
                                             <?php
                                                 }
                                             ?>
                                         </select>
-                                        <!-- <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;"> -->
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="mb-2">
-                                        <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                        <input type="text" required class="form-control" name="g_name" id="g_name" style="border-radius: 30px;">
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-1">
@@ -172,7 +191,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_date`,`plant_harvest`,`plant_grower`,grower.gw_name
+                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_target`,`plant_date`,`plant_harvest`,`plant_grower`,grower.gw_name
                                                                 FROM `planting` 
                                                                 INNER JOIN `grower` ON grower.gw_id = planting.plant_grower");
                                             $stmt->execute();
@@ -188,9 +207,9 @@
                                             <td align="center"><?= $plant['plant_name']; ?></td>
                                             <td><?= $plant['gw_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit">แก้ไข</a>
-                                                <a data-id="<?= $plant['plant_id']; ?>" href="?delete=<?= $plant['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;">ลบ</a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>">ดูข้อมูล</button>
+                                                <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <a data-id="<?= $plant['plant_id']; ?>" href="?delete=<?= $plant['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
 
@@ -209,6 +228,12 @@
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เป้าหมายการผลิต : </b><?= $plant['plant_target']." "."กิโลกรัม"; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสลูกสวน : </b><?= $plant['plant_grower']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ผู้รับผิดชอบ : </b><?= $plant['gw_name']; ?></label>
@@ -314,16 +339,16 @@
         //     });
         // });
 
-        $('#g_id').change(function(){
+        $('#g_name').change(function(){
              var id_gw = $(this).val();
-             console.log(id_gw);
+            //  console.log(id_gw);
              $.ajax({
                  type : "post",
                  url : "../../api/grower.php",
-                 data : {id:id_gw,function:'g_id'},     
+                 data : {id:id_gw,function:'g_name'},     
                  success: function(data){
-                    console.log(data);
-                     $('#g_name').val(data);
+                    // console.log(data);
+                     $('#g_id').val(data);
                  }
              });
          });

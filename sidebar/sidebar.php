@@ -65,7 +65,7 @@
         <div id="collapseMN" class="collapse" aria-labelledby="headingMN" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="InEx.php">รายรับ-รายจ่าย</a>
-                <a class="collapse-item" href="BorRe.php">ยืม-คืน</a>
+                <a class="collapse-item" href="BorRe.php">ลูกค้าเครดิต</a>
                 <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>
@@ -85,8 +85,10 @@
         </a>
         <div id="collapsePlan" class="collapse" aria-labelledby="headingPlan" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="PlanFollow.php">รายการการสั่งซื้อ</a>
                 <a class="collapse-item" href="PlanFollow.php">วางแผนแการเพาะปลูก</a>
                 <a class="collapse-item" href="Bproduce.php">รับซื้อผลผลิต</a>
+                <a class="collapse-item" href="Bproduce.php">ส่งออกผลผลิต</a>
             </div>
         </div>
     </li>
