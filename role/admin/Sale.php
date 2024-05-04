@@ -230,7 +230,7 @@
                                                         <tr>
                                                             <td align="center"><?php echo $value['item_pdname'];?></td>
                                                             <td align="right"><?php echo number_format($value['item_quantity'],2);?></td>
-                                                            <td align="right"><?php echo number_format($value['item_pricepd'],2);?> กก.</td>
+                                                            <td align="right">฿ <?php echo number_format($value['item_pricepd'],2);?> กก.</td>
                                                             <td align="right">฿ <?php echo number_format($value['item_price'],2);?> บาท</td>
                                                             <!-- <td align="right">฿ <?php echo number_format($value['item_pricekg']*$value['item_weight'],2);?> บาท</td> -->
                                                             <td align="center"><a href="Sale.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
