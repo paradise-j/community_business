@@ -32,57 +32,55 @@
 
 
 
-    // if(isset($_POST["add_sale"])){
-    //     $gg_type = $_POST['gg_type'];
-    //     $id_user = $_SESSION["id"];
-    //     $agc = $db->prepare("SELECT `agc_id` FROM `user_login` WHERE `user_id` = '$id_user'");
-    //     $agc->execute();
-    //     $row = $agc->fetch(PDO::FETCH_ASSOC);
-    //     extract($row);
+    if(isset($_POST["add_sale"])){
+        $pdname = $_POST['pdname'];
+        // $id_user = $_SESSION["id"];
+        // $agc = $db->prepare("SELECT `agc_id` FROM `user_login` WHERE `user_id` = '$id_user'");
+        // $agc->execute();
+        // $row = $agc->fetch(PDO::FETCH_ASSOC);
+        // extract($row);
 
 
-    //     $gg = $db->prepare("SELECT * FROM `group_g` WHERE `agc_id` = '$agc_id'");
-    //     $gg->execute();
-    //     while ($row = $gg->fetch(PDO::FETCH_ASSOC)) {
-    //         if($gg_type == $row["gg_type"]){
-    //             $gg_id = $row["gg_id"]; 
-    //             break;
-    //         }
-    //     }
+        // $gg = $db->prepare("SELECT * FROM `group_g` WHERE `agc_id` = '$agc_id'");
+        // $gg->execute();
+        // while ($row = $gg->fetch(PDO::FETCH_ASSOC)) {
+        //     if($gg_type == $row["gg_type"]){
+        //         $gg_id = $row["gg_id"]; 
+        //         break;
+        //     }
+        // }
 
-    //     $gg2 = $db->prepare("SELECT * FROM `group_g` WHERE `agc_id` = '$agc_id' AND `gg_id` = '$gg_id'");
-    //     $gg2->execute();
-    //     $row = $gg2->fetch(PDO::FETCH_ASSOC);
-    //     extract($row);
+        $pd = $db->prepare("SELECT `mf_name` as Namepd FROM `mf_data` WHERE `mf_id` = '$pdname'");
+        $pd->execute();
+        $row = $pd->fetch(PDO::FETCH_ASSOC);
+        extract($row);
 
-    //     if($_POST["quantity"] > $gg_quantity){
-    //         $_SESSION['error'] = 'ยอดแพะของท่านไม่เพียงพอ';
-    //         header("refresh:2; url=add_salegoat.php");
-    //     }else{
-    //         $item_array = array(
+        // if($_POST["quantity"] > $gg_quantity){
+        //     $_SESSION['error'] = 'ยอดสินค้าของท่านไม่เพียงพอ';
+        //     header("refresh:2; url=Sale.php");
+        // }else{
+            $item_array = array(
 
-    //             'item_gg_type'       =>     $_POST["gg_type"],
-    //             'item_id_gg'         =>     $gg_id,
-    //             'item_quantity'      =>     $_POST["quantity"],
-    //             'item_weight'        =>     $_POST["weight"],
-    //             'item_pricekg'       =>     $_POST["pricekg"],
-    //             'item_price'         =>     $_POST["pricekg"]*$_POST["weight"]
-    //             );
-    //             $_SESSION["shopping_cart"][] =  $item_array;
-    //         header("location:add_salegoat.php");
-    //         exit;
-    //     }
-    // }
+                'item_pdname'       =>     $Namepd,
+                'item_quantity'      =>     $_POST["quantity"],
+                'item_pricepd'       =>     $_POST["pricepd"],
+                'item_price'         =>     $_POST["quantity"]*$_POST["pricepd"]
+                );
+                $_SESSION["shopping_cart"][] =  $item_array;
+            header("location:Sale.php");
+            exit;
+        // }
+    }
 
-    // if(isset($_GET['action'])){
-    //     if($_GET['action']=="delete"){
-    //         $id = $_GET["id"];
-    //         unset($_SESSION["shopping_cart"][$id]);
-    //         header("location:add_salegoat.php");
-    //         exit;
-    //         $total = $total-($_SESSION["shopping_cart"]['item_weight']*$_SESSION["shopping_cart"]['item_pricekg']);
-    //       }
-    // }
+    if(isset($_GET['action'])){
+        if($_GET['action']=="delete"){
+            $id = $_GET["id"];
+            unset($_SESSION["shopping_cart"][$id]);
+            header("location:Sale.php");
+            exit;
+            $total = $total-($_SESSION["shopping_cart"]['item_pricepd']*$_SESSION["shopping_cart"]['item_quantity']);
+          }
+    }
 
     
 ?>
@@ -149,29 +147,29 @@
                                                 <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `product`");
+                                                        $stmt = $db->query("SELECT * FROM `mf_data`");
                                                         $stmt->execute();
-                                                        $pds = $stmt->fetchAll();
+                                                        $mfs = $stmt->fetchAll();
                                                         
-                                                        foreach($pds as $pd){
+                                                        foreach($mfs as $mf){
                                                     ?>
-                                                    <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
+                                                    <option value="<?= $mf['mf_id']?>"><?= $mf['mf_name']?></option>
                                                     <?php
                                                         }
                                                     ?>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="form-label">จำนวน</label>
-                                                <input type="number" class="form-control" id="Gname" name="quantity" style="border-radius: 30px;" required>
+                                                <label class="form-label">ราคาทุน</label>
+                                                <input type="text" class="form-control" id="pdcost" name="pdcost" style="border-radius: 30px;" required readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">ราคาขาย</label>
                                                 <input type="number" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
                                             </div>
-                                            <div class="col-md-3">
-                                                <label class="form-label">ส่วนลด</label>
-                                                <input type="number" class="form-control" id="phone" name="pricekg" style="border-radius: 30px;" required>
+                                            <div class="col-md-2">
+                                                <label class="form-label">จำนวนที่ขาย</label>
+                                                <input type="number" class="form-control" id="quantity" name="quantity" step="0.01" style="border-radius: 30px;" required>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -189,7 +187,7 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="card-header py-3 text-center mb-4">
-                                        <h5 class="m-0 font-weight-bold text-primary">รายการขายผลิตภัณฑ์</h5>
+                                        <h5 class="m-0 font-weight-bold text-primary">สรุปการขายสินค้า</h5>
                                     </div>
                                     <form action="Check_Add_salepd.php" method="post">
         
@@ -207,15 +205,18 @@
                                                 <?php $date = date('Y-m-d'); ?>
                                                 <input type="date" class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;" required>
                                             </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label">ส่วนลดต่อบิล</label>
+                                                <input type="number" class="form-control" id="phone" name="pricekg" step="0.01" style="border-radius: 30px;" required>
+                                            </div>
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead class="thead-light">
-                                                    <tr>
-                                                        <th>ชื่อผลิตภัณฑ์</th>
+                                                    <tr align="center">
+                                                        <th>ชื่อสินค้า</th>
                                                         <th>จำนวน</th>
                                                         <th>ราคา</th>
-                                                        <th>ส่วนลด</th>
                                                         <th>ยอดจ่าย</th>
                                                         <th></th>
                                                     </tr>
@@ -227,29 +228,19 @@
                                                         foreach ($_SESSION['shopping_cart'] as $key => $value) { 
                                                     ?>
                                                         <tr>
-                                                            <td>
-                                                                <?php
-                                                                    if($value['item_gg_type'] == 1){
-                                                                        echo "พ่อพันธุ์";
-                                                                    }elseif($value['item_gg_type'] == 2){
-                                                                        echo "แม่พันธุ์";
-                                                                    }else{
-                                                                        echo "แพะขุน";
-                                                                    }
-                                                                ?>
-                                                            </td>
-                                                            <td align="right"><?php echo number_format($value['item_quantity'],2);?> ตัว</td>
-                                                            <td align="right"><?php echo number_format($value['item_weight'],2);?> กก.</td>
-                                                            <td align="right">฿ <?php echo number_format($value['item_pricekg'],2);?> บาท</td>
-                                                            <td align="right">฿ <?php echo number_format($value['item_pricekg']*$value['item_weight'],2);?> บาท</td>
-                                                            <td><a href="add_salegoat.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
+                                                            <td align="center"><?php echo $value['item_pdname'];?></td>
+                                                            <td align="right"><?php echo number_format($value['item_quantity'],2);?></td>
+                                                            <td align="right"><?php echo number_format($value['item_pricepd'],2);?> กก.</td>
+                                                            <td align="right">฿ <?php echo number_format($value['item_price'],2);?> บาท</td>
+                                                            <!-- <td align="right">฿ <?php echo number_format($value['item_pricekg']*$value['item_weight'],2);?> บาท</td> -->
+                                                            <td align="center"><a href="Sale.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
                                                         </tr>
                                                     <?php
-                                                        $total=$total+($value['item_weight']*$value['item_pricekg']);
+                                                        $total=$total+($value['item_pricepd']*$value['item_quantity']);
                                                         }
                                                     ?>
                                                     <tr>
-                                                        <td colspan="4" align="right">ราคารวม</td>
+                                                        <td colspan="3" align="right">ราคารวม</td>
                                                         <td align="right">฿ <?php echo number_format($total, 2); ?> บาท</td>
                                                         <td></td>
                                                     </tr>
@@ -262,8 +253,8 @@
                                         </div>
                                         <div class="row mt-4 mb-4">
                                             <div class="col text-right">
-                                                <!-- <a href="add_salegoat.php?type=submit" class="btn btn-blue" style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</a> -->
-                                                <button class="btn btn-blue " style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</button>
+                                                <!-- <a href="Sale.php?type=submit" class="btn btn-blue" style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</a> -->
+                                                <button class="btn btn-primary " style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</button>
                                             </div>  
                                         </div>
                                     </form>
@@ -353,7 +344,7 @@
                 data : {id:id_pname,function:'pdname'},     
                 success: function(data){
                     console.log("price = ",data);
-                    $('#pricepd').val(data);
+                    $('#pdcost').val(data);
 
                 }
             });

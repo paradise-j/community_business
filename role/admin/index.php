@@ -122,7 +122,7 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">ผลิตภัณฑ์</div>
+                                                <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">สินค้าชุมชน</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
                                                     $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product`");

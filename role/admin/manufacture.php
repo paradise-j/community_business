@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>เพาะปลูก</title>
+    <title>ผลิตสินค้าชุมชน</title>
 
     <link rel="icon" type="image/png" href="img/seedling-solid.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -66,7 +66,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_product.php" method="POST">
+                    <form action="Check_Add_mf.php" method="POST">
                         <div class="mb-3">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่ในการผลิต</label>
@@ -74,11 +74,25 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อสินค้าที่ผลิต</label>
-                            <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
+                            <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกสินค้า....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT `pd_name` FROM `product`");
+                                    $stmt->execute();
+                                    $pds = $stmt->fetchAll();
+                                    
+                                    foreach($pds as $pd){
+                                ?>
+                                <option value="<?= $pd['pd_name']?>"><?= $pd['pd_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                            <!-- <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;"> -->
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">จำนวนที่ผลิตได้</label>
-                            <input type="number" required class="form-control" name="quan" style="border-radius: 30px;">
+                            <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
                             <label for="firstname" class="col-form-label">ทุนรวมในการผลิต</label>
@@ -130,7 +144,7 @@
                                         <tr align="center">
                                             <th>รายการผลิต</th>
                                             <th></th>
-                                            <th></th>
+                                            <!-- <th></th> -->
 
                                         </tr>
                                     </thead>
@@ -147,7 +161,7 @@
                                         ?>
                                         <tr>
                                             <td><?= $mf['mf_name']; ?></td>
-                                            <td class="date_th"><?= $mf['mf_date']; ?></td>
+                                            <!-- <td class="date_th"><?= $mf['mf_date']; ?></td> -->
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>"><i class="fas fa-eye"></i></button>
                                                 <a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
@@ -162,7 +176,7 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการเพาะปลูก</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการผลิตสินค้าชุมชน</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
@@ -170,19 +184,16 @@
                                                                 // $date = $mf['mf_date'];
                                                                 // $newDate = date("d-m-Y", strtotime($date));
                                                             ?>
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับของ : </b><?= thai_date_fullmonth(strtotime($mf['mf_date'])); ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ผลิตสินค้า : </b><?= thai_date_fullmonth(strtotime($mf['mf_date'])); ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการเพาะปลูก : </b><?= $mf['mf_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการผลิตสินค้าชุมชน : </b><?= $mf['mf_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ส่วนผสม : </b><?= $mf['mf_detail']; ?></label>
+                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($mf['mf_quan'],2); ?> </label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($mf['mf_quan']); ?> </label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุน : </b><?= number_format($mf['mf_cost']);?> บาท</label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนรวม : </b><?= number_format($mf['mf_cost']);?> บาท</label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($mf['mf_cost']/$mf['mf_quan'],2)." "."บาท"; ?></label>
