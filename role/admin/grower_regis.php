@@ -163,9 +163,9 @@
                                             <!-- <td><?= $gw['gw_id']?></td> -->
                                             <td><?= $gw['gw_name']?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1rem;" data-toggle="modal" data-target="#showdataModal<?= $gw['gw_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_gw.php?edit_id=<?= $gw['gw_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $gw['gw_id']; ?>" href="?delete=<?= $gw['gw_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $gw['gw_id']?>">ดูข้อมูล</button>
+                                                <a href="Edit_gw.php?edit_id=<?= $gw['gw_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <a data-id="<?= $gw['gw_id']; ?>" href="?delete=<?= $gw['gw_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
 
