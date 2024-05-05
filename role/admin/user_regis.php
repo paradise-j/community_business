@@ -412,11 +412,13 @@
 
         $('#provinces').change(function(){
             var id_provnce = $(this).val();
+            console.log(id_provnce);
             $.ajax({
                 type : "post",
                 url : "../../address.php",
                 data : {id:id_provnce,function:'provinces'},     
                 success: function(data){
+                    console.log(data);
                     $('#amphures').html(data);
                     $('#districts').html(' ');
                     $('#zipcode').val(' ');

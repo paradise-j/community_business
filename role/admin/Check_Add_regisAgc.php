@@ -35,11 +35,22 @@
         $group_id = $_POST['group_id'];
 
         $sql = $db->prepare("INSERT INTO `user_data`(`user_reid`, `user_Fname`, `user_Lname`, `user_perid`, `user_phone` , `user_num`, 
-                                                     `user_subdis`, `user_dis`, `user_pv`, `user_zip`, `user_status`, `group_id`)
-                             VALUES ('$reid','$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$permission','$group_id')");
+                                                     `user_subdis`, `user_dis`, `user_pv`, `user_zip`, `group_id`)
+                             VALUES ('$reid','$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$group_id')");
         $sql->execute();
 
-        if ($sql) {
+        $us_id = $db->query("SELECT `user_id` as id FROM `user_data` WHERE `user_perid` = '$perid'");
+        $us_id->execute();
+        $row = $us_id->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
+        $sql2 = $db->prepare("INSERT INTO `user_login`(`ul_username`, `ul_userpassword`, `user_id`)
+                             VALUES ('$phone','123456','$id')");
+        $sql2->execute();
+
+
+
+        if ($sql && $sql) {
             $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อยแล้ว";
             echo "<script>
                 $(document).ready(function() {

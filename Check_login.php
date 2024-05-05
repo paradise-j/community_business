@@ -6,14 +6,14 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         try {
-            $select_stmt = $db->prepare("SELECT * FROM `agc_data` WHERE `agc_reid` = '$username' AND `agc_phone` = '$password'");
+            $select_stmt = $db->prepare("SELECT * FROM `user_data` WHERE `user_reid` = '$username' AND `user_phone` = '$password'");
             $select_stmt->execute(); 
 
             while($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-                $dbid = $row['agc_id'];
-                $dbusername = $row['agc_reid'];
-                $dbpassword = $row['agc_phone'];
-                $dbrole = $row['agc_status'];
+                $dbid = $row['user_id'];
+                $dbusername = $row['user_reid'];
+                $dbpassword = $row['user_phone'];
+                $dbrole = $row['user_status'];
             }
 
             if ($username != null AND $password != null) {
@@ -49,7 +49,7 @@
                                 $_SESSION['username'] = $dbusername;
                                 $_SESSION['password'] = $dbpassword;
                                 $_SESSION['permission'] = $dbrole;
-                                $_SESSION['success'] = "head_agc... Successfully Login...";
+                                $_SESSION['success'] = "head_user... Successfully Login...";
                                 header("location: role/head_agc/index.php");
                             break;
                             case '5':
