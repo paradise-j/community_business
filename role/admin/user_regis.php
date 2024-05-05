@@ -193,8 +193,25 @@
             </div>
         </div>
     </div>
-    <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    
+    <!-- ---------------------------------------  ImportModal ---------------------------------------------------------------------->
+    <div class="modal fade" id="ImportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลสมาชิกจากไฟล์ Excel</h5>
+                </div>
+                
+                <div class="modal-body">
+                    <form action="./import_user/f_save.php" method="POST" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+                        <input type="file" style="border-radius: 20px;" name="file" id="file" accept=".xls,.xlsx">
+                        <div class="modal-footer">
+                            <button type="submit" name="import" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -209,6 +226,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสมาชิก</a>
+                                <a href="#" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#ImportModal"><i class="fas fa-download fa-sm text-white-50"></i> เพิ่มข้อมูลจาก Excel</a>
                             </div>
                         </div>
                         
@@ -226,29 +244,29 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `agc_data`");
+                                            $stmt = $db->query("SELECT * FROM `user_data`");
                                             $stmt->execute();
-                                            $agcs = $stmt->fetchAll();
+                                            $users = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$agcs) {
+                                            if (!$users) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($agcs as $agc)  {  
+                                             foreach($users as $user)  {  
                                         ?>
                                         <tr>
-                                            <!-- <td align="center"><?= $agc['agc_reid']; ?></td> -->
-                                            <td><?= $agc['agc_Fname']." ".$agc['agc_Lname']; ?></td>
+                                            <!-- <td align="center"><?= $user['user_reid']; ?></td> -->
+                                            <td><?= $user['user_Fname']." ".$user['user_Lname']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $agc['agc_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_agc.php?edit_id=<?= $agc['agc_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
-                                                <a data-id="<?= $agc['agc_id']; ?>" href="?delete=<?= $agc['agc_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $user['user_id']?>">ดูข้อมูล</button>
+                                                <a href="Edit_user.php?edit_id=<?= $user['user_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <a data-id="<?= $user['user_id']; ?>" href="?delete=<?= $user['user_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
-                                            <!-- <td align="center"><a href="Edit_agc.php?edit_id=<?= $agc['agc_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $agc['agc_id']; ?>" href="?delete=<?= $agc['agc_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
+                                            <!-- <td align="center"><a href="Edit_user.php?edit_id=<?= $user['user_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
+                                            <!-- <td align="center"><a data-id="<?= $user['user_id']; ?>" href="?delete=<?= $user['user_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
                                             
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $agc['agc_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $user['user_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -256,25 +274,29 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อ-สกุล : </b><?= $agc['agc_Fname']." ".$agc['agc_Lname']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อ-สกุล : </b><?= $user['user_Fname']." ".$user['user_Lname']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เลขทะเบียน : </b><?= $agc['agc_reid']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เลขทะเบียน : </b><?= $user['user_reid']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสบัตรประชาชน : </b><?= $agc['agc_perid']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสบัตรประชาชน : </b><?= $user['user_perid']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่อยู่ : </b><?= $agc['agc_num']." ตำบล".$agc['agc_subdis']." อำเภอ".$agc['agc_dis']." จังหวัด".$agc['agc_pv']." รหัสไปรษณีย์ ".$agc['agc_zip']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่อยู่ : </b><?= $user['user_num']." ตำบล".$user['user_subdis']." อำเภอ".$user['user_dis']." จังหวัด".$user['user_pv']." รหัสไปรษณีย์ ".$user['user_zip']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>สถานะสมาชิก :  </b>
                                                                 <?php
-                                                                    if ($agc['agc_status'] == 1) {
-                                                                        echo "เป็นสมาชิก";
+                                                                    if ($user['user_status'] == 1) {
+                                                                        echo "ผู้ดูแลระบบ";
+                                                                    }elseif ($user['user_status'] == 2) {
+                                                                        echo "สภาเกษตร";
+                                                                    }elseif ($user['user_status'] == 3) {
+                                                                        echo "ประธานกลุ่ม";
                                                                     }else{
-                                                                        echo "ไม่เป็นสมาชิก";
-                                                                    }
+                                                                        echo "สมาชิกทั่วไป";
+                                                                    } 
                                                                  ?>
                                                             
                                                             </label>

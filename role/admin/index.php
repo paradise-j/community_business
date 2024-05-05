@@ -71,11 +71,11 @@
                                                 <div class="text-lg font-weight-bold text-success text-uppercase mb-1">จำนวนสมาชิก</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`agc_id`) as total FROM `agc_data`");
+                                                    $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data`");
                                                     $stmt->execute();
-                                                    $agcs = $stmt->fetchAll();
-                                                    foreach($agcs as $agc){
-                                                        echo $agc['total'];
+                                                    $users = $stmt->fetchAll();
+                                                    foreach($users as $user){
+                                                        echo $user['total'];
                                                     }
                                                 ?>
                                                 คน
