@@ -147,9 +147,9 @@
                                             <td><?= $pd['pd_name']; ?></td>
                                             <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_pd.php?edit_id=<?= $pd['pd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $pd['pd_id']; ?>" href="?delete=<?= $pd['pd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>">ดูข้อมูล</button>
+                                                <a href="Edit_pd.php?edit_id=<?= $pd['pd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <a data-id="<?= $pd['pd_id']; ?>" href="?delete=<?= $pd['pd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                             <!-- <td align="center"><a href="Edit_pd.php?edit_id=<?= $pd['pd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
                                             <!-- <td align="center"><a data-id="<?= $pd['pd_id']; ?>" href="?delete=<?= $pd['pd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
