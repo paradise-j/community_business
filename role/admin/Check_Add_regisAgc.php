@@ -31,10 +31,12 @@
         extract($row);
 
         $zipcode = $_POST['zipcode'];
+        $permission = $_POST['permission'];
         $group_id = $_POST['group_id'];
 
-        $sql = $db->prepare("INSERT INTO `agc_data`(`agc_reid`, `agc_Fname`, `agc_Lname`, `agc_perid`, `agc_phone` , `agc_num`, `agc_subdis`, `agc_dis`, `agc_pv`, `agc_zip`, `group_id`)
-                             VALUES ('$reid','$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$group_id')");
+        $sql = $db->prepare("INSERT INTO `user_data`(`user_reid`, `user_Fname`, `user_Lname`, `user_perid`, `user_phone` , `user_num`, 
+                                                     `user_subdis`, `user_dis`, `user_pv`, `user_zip`, `user_status`, `group_id`)
+                             VALUES ('$reid','$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$permission','$group_id')");
         $sql->execute();
 
         if ($sql) {
@@ -50,10 +52,10 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=agc_regis.php");
+            header("refresh:1; url=user_regis.php");
         } else {
             $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
-            header("location: agc_regis.php");
+            header("location: user_regis.php");
         }
     }
 ?>
