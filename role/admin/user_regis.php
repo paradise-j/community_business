@@ -244,7 +244,8 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `user_data`");
+                                            $stmt = $db->query("SELECT * FROM `user_data`
+                                                                INNER JOIN `user_login` on user_data.user_id = user_login.user_id");
                                             $stmt->execute();
                                             $users = $stmt->fetchAll();
                                             $count = 1;
@@ -288,11 +289,11 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>สถานะสมาชิก :  </b>
                                                                 <?php
-                                                                    if ($user['user_status'] == 1) {
+                                                                    if ($user['ul_status'] == 1) {
                                                                         echo "ผู้ดูแลระบบ";
-                                                                    }elseif ($user['user_status'] == 2) {
+                                                                    }elseif ($user['ul_status'] == 2) {
                                                                         echo "สภาเกษตร";
-                                                                    }elseif ($user['user_status'] == 3) {
+                                                                    }elseif ($user['ul_status'] == 3) {
                                                                         echo "ประธานกลุ่ม";
                                                                     }else{
                                                                         echo "สมาชิกทั่วไป";

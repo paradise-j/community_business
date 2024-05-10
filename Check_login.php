@@ -6,14 +6,14 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         try {
-            $select_stmt = $db->prepare("SELECT * FROM `user_data` WHERE `user_reid` = '$username' AND `user_phone` = '$password'");
+            $select_stmt = $db->prepare("SELECT * FROM `user_login` WHERE `ul_username` = '$username' AND `ul_password` = '$password'");
             $select_stmt->execute(); 
 
             while($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-                $dbid = $row['user_id'];
-                $dbusername = $row['user_reid'];
-                $dbpassword = $row['user_phone'];
-                $dbrole = $row['user_status'];
+                $dbid = $row['ul_id'];
+                $dbusername = $row['ul_username'];
+                $dbpassword = $row['ul_password'];
+                $dbrole = $row['ul_status'];
             }
 
             if ($username != null AND $password != null) {

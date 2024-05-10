@@ -43,9 +43,10 @@
         $us_id->execute();
         $row = $us_id->fetch(PDO::FETCH_ASSOC);
         extract($row);
+        echo $id;
 
-        $sql2 = $db->prepare("INSERT INTO `user_login`(`ul_username`, `ul_userpassword`, `user_id`)
-                             VALUES ('$phone','123456','$id')");
+        $sql2 = $db->prepare("INSERT INTO `user_login`(`ul_username`, `ul_password`, `ul_status`, `user_id`)
+                             VALUES ('$phone','123456','$permission','$id')");
         $sql2->execute();
 
 
