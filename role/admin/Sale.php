@@ -190,8 +190,24 @@
                                         <h5 class="m-0 font-weight-bold text-primary">สรุปการขายสินค้า</h5>
                                     </div>
                                     <form action="Check_Add_salepd.php" method="post">
-        
+                                        <!-- <div class="row mb-4">
+                                            <div class="col-md-2">
+                                                <label class="form-label">ประเภทการขาย</label>
+                                                <select class="form-control" aria-label="Default select example"  id="typeS" name="typeS" style="border-radius: 30px;" required>
+                                                    <option value="1">เครดิต</option>
+                                                    <option value="2">เงินสด</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
                                         <div class="row mb-4">
+                                            <div class="col-md-2">
+                                                <label class="form-label">ประเภทการขาย</label>
+                                                <select class="form-control" aria-label="Default select example"  id="typeS" name="typeS" style="border-radius: 30px;" required>
+                                                <option selected disabled>กรุณาเลือก....</option>    
+                                                    <option value="credit">เครดิต</option>
+                                                    <option value="cash">เงินสด</option>
+                                                </select>
+                                            </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">ชื่อผู้ซื้อ</label>
                                                 <input type="text" class="form-control" name="cus" style="border-radius: 30px;" required>
@@ -207,7 +223,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label">ส่วนลดต่อบิล</label>
-                                                <input type="number" class="form-control" id="phone" name="pricekg" step="0.01" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="phone" name="discount" step="0.01" style="border-radius: 30px;" required>
                                             </div>
                                         </div>
                                         <div class="table-responsive">
