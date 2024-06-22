@@ -12,84 +12,91 @@
     $row = $check_id->fetch(PDO::FETCH_ASSOC);
     extract($row);
     
-    // if(isset($_POST["save_sale"])){
+    // echo '<pre>' . print_r($_SESSION["shopping_cart"], TRUE) . '</pre>';
+    $total = 0;
+    foreach ($_SESSION['shopping_cart'] as $key => $value) { 
+        $total=$total+($value['item_pricepd']*$value['item_quantity']);
+    }
 
-    //     $cus = $_POST["cus"];
-    //     $phone = $_POST["phone"];
-    //     $date = $_POST["date"];
+    echo $total ;
+    
+    if(isset($_POST["save_sale"])){
 
-    //     $cu = $db->prepare("SELECT * FROM `customer`");
-    //     $cu->execute();
+        $typeS = $_POST["typeS"];
+        $cus = $_POST["cus"];
+        $phone = $_POST["phone"];
+        $date = $_POST["date"];
+        $discount = $_POST["discount"];
+        
 
-    //     $check = array();
-    //     while ($row = $cu->fetch(PDO::FETCH_ASSOC)){
-    //         $name = $row["cus_name"];
-    //         array_push($check,$name);
-    //     }
+        $cu = $db->prepare("SELECT * FROM `customer`");
+        $cu->execute();
 
-    //     if(!in_array($cus, $check)){
-    //         $sql = $db->prepare("INSERT INTO `customer`(`cus_name`, `cus_phone`) VALUES ('$cus', '$phone')");
-    //         $sql->execute();
-    //     }
+        $check = array();
+        while ($row = $cu->fetch(PDO::FETCH_ASSOC)){
+            $name = $row["cus_name"];
+            array_push($check,$name);
+        }
+
+        if(!in_array($cus, $check)){
+            $sql = $db->prepare("INSERT INTO `customer`(`cus_name`, `cus_phone`) VALUES ('$cus', '$phone')");
+            $sql->execute();
+        }
             
         
-    //     // ----------------------------- customer -----------------------------
-    //     $cuss = $db->prepare("SELECT * FROM `customer`");
-    //     $cuss->execute();
-    //     while ($row = $cuss->fetch(PDO::FETCH_ASSOC)) {
-    //         if($cus == $row["cus_name"]){
-    //             $cus_id = $row["cus_id"]; 
-    //             break;
-    //         }
-    //     }
+        // ----------------------------- customer -----------------------------
+        $cuss = $db->prepare("SELECT * FROM `customer`");
+        $cuss->execute();
+        while ($row = $cuss->fetch(PDO::FETCH_ASSOC)) {
+            if($cus == $row["cus_name"]){
+                $cus_id = $row["cus_id"]; 
+                break;
+            }
+        }
 
-    //     $sql = $db->prepare("INSERT INTO `sale`(`sale_date`, `agc_id`, `cus_id`) VALUES ('$date', '$agc_id', '$cus_id')");
-    //     $sql->execute();
+   
 
-    //     $sales = $db->prepare("SELECT * FROM `sale`");
-    //     $sales->execute();
-    //     while ($row = $sales->fetch(PDO::FETCH_ASSOC)) {
-    //         if($cus_id == $row["cus_id"] and $agc_id == $row["agc_id"]){
-    //             $sale_id = $row["sale_id"]; 
-    //             break;
-    //         }
-    //     }
+        $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_date`, `sale_total`, `sale_discount`, `cus_id`)  VALUES ('$typeS', '$date','$total', '$discount', '$cus_id')");
+        $sql->execute();
 
-    //     foreach($_SESSION["shopping_cart"] as $key=>$value){
-    //         $quantity = $value["item_quantity"];
-    //         $weight = $value["item_weight"];
-    //         $pricekg = $value["item_pricekg"];
-    //         $price = $value["item_price"];
-    //         $gg_id = $value["item_id_gg"];
+        $sales = $db->prepare("SELECT * FROM `sales`");
+        $sales->execute();
+        while ($row = $sales->fetch(PDO::FETCH_ASSOC)) {
+            if($cus_id == $row["cus_id"] and $date == $row["sale_date"]){
+                $sale_id = $row["sale_id"]; 
+                break;
+            }
+        }
+        echo $sale_id."<br>";
 
-    //         $sql = $db->prepare("INSERT INTO `salelist`(`slist_quantity`, `slist_weight`, `slist_KgPirce`, `slist_price`, `sale_id`, `gg_id`) 
-    //                             VALUES ($quantity, $weight, $pricekg, $price,'$sale_id','$gg_id')");
-    //         $sql->execute();
+        foreach ($_SESSION['shopping_cart'] as $key => $value){  
+              
+            $pdname = $value["item_pdname"]; echo $pdname." ";
+            $quantity = $value["item_quantity"]; echo $quantity." ";
+            $pricekg = $value["item_pricepd"]; echo $pricekg." ";
+            $price = $value["item_price"]; echo $price." ";
 
-    //         $ggs = $db->prepare("SELECT * FROM `group_g` WHERE `gg_id`= '$gg_id'");
-    //         $ggs->execute();
-    //         $row = $ggs->fetch(PDO::FETCH_ASSOC);
+            echo "<br>";
 
+            $sql = $db->prepare("INSERT INTO `salesdetail` (`sd_pdname`, `sd_quantity` , `sd_pricekg`, `sd_price`, `sale_id`) 
+                                 VALUES ('$pdname', $quantity, $pricekg, $price, '$sale_id')");
+            $sql->execute();
+        }
 
-    //         $totals = $row["gg_quantity"] - $quantity;
-    //         $sql2 = $db->prepare("UPDATE `group_g` SET `gg_quantity`= $totals WHERE `gg_id` = '$gg_id' and `agc_id` = '$agc_id'");
-    //         $sql2->execute();
-    //     }
-
-    //     unset($_SESSION["shopping_cart"]);
-    //     // header("location:add_salegoat.php");
-    //     echo "<script>
-    //         $(document).ready(function() {
-    //             Swal.fire({
-    //                 title: 'สำเร็จ',
-    //                 text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
-    //                 icon: 'success',
-    //                 timer: 5000,
-    //                 showConfirmButton: false
-    //             });
-    //         })
-    //     </script>";
-    //     header("refresh:1; url=Sale.php");
-    // }
+        // unset($_SESSION["shopping_cart"]);
+        // // header("location:add_salegoat.php");
+        // echo "<script>
+        //     $(document).ready(function() {
+        //         Swal.fire({
+        //             title: 'สำเร็จ',
+        //             text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
+        //             icon: 'success',
+        //             timer: 5000,
+        //             showConfirmButton: false
+        //         });
+        //     })
+        // </script>";
+        // header("refresh:1; url=Sale.php");
+    }
     // $db = null; 
 ?>
