@@ -58,7 +58,7 @@
 </head>
 
 <body id="page-top">
-    <div class="modal fade" id="AddGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="AddGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -71,14 +71,14 @@
                             <label for="" class="col-form-label">วันที่ทำรายการ</label>
                             <input type="date" required class="form-control" name="namegf" style="border-radius: 30px;">
                         </div>
-                        <!-- <div class="mb-3">
+                        <div class="mb-3">
                             <label for="" class="col-form-label">ประเภทรายการ</label>
                             <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกประเภท....</option>
                                 <option value="1"></option>
                                 <option value="2"></option>
                             </select>
-                        </div> -->
+                        </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อลูกค้า</label>
                             <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
     <?php
         $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
@@ -120,11 +120,11 @@
                         <div class="card-header py-3 text-center">
                             <h3 class="m-0 font-weight-bold text-primary">ข้อมูลลูกค้าเครดิต</h3>
                         </div>
-                        <div class="row mt-4 ml-2">
+                        <!-- <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลยืม-คืน</a>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <div class="card-body">
                             <div class="table-responsive">
