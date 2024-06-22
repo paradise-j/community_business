@@ -62,7 +62,7 @@
         $sales = $db->prepare("SELECT * FROM `sales`");
         $sales->execute();
         while ($row = $sales->fetch(PDO::FETCH_ASSOC)) {
-            if($cus_id == $row["cus_id"] and $date == $row["sale_date"]){
+            if($cus_id == $row["cus_id"] and $date == $row["sale_date"] and $total == $row["sale_total"]){
                 $sale_id = $row["sale_id"]; 
                 break;
             }
