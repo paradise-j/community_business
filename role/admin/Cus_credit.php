@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_Group_agriculturist</title>
+    <title>ลูกค้าเครดิต</title>
 
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -62,7 +62,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลยืม-คืน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลลูกค้าเครดิต</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -80,7 +80,7 @@
                             </select>
                         </div> -->
                         <div class="mb-3">
-                            <label for="" class="col-form-label">รายการ</label>
+                            <label for="" class="col-form-label">ชื่อลูกค้า</label>
                             <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
@@ -96,7 +96,19 @@
         </div>
     </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    
+    <?php
+        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+            global $dayTH,$monthTH;   
+            $thai_date_return = date("j",$time);   
+            $thai_date_return.=" ".$monthTH[date("n",$time)];   
+            $thai_date_return.= " ".(date("Y",$time)+543);   
+            return $thai_date_return;   
+        } 
+    ?>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -106,7 +118,7 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลยืม-คืน</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลลูกค้าเครดิต</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
@@ -119,7 +131,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>รายการ</th>
+                                            <th>ชื่อลูกค้า</th>
                                             <th></th>
                                             <!-- <th>แก้ไข</th> -->
                                             <!-- <th>ลบ</th> -->
@@ -127,48 +139,44 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `inex_data`");
-                                            $stmt->execute();
-                                            $inexs = $stmt->fetchAll();
+                                            $cd = $db->query("SELECT `cd_id`, `cd_date`, `cd_name`, `cd_pay`, customer.cus_name as cus_name
+                                                              FROM `credit` 
+                                                              INNER JOIN customer ON customer.cus_id = credit.cd_name");
+                                            $cd->execute();
+                                            $cds = $cd->fetchAll();
                                             $count = 1;
-                                            if (!$inexs) {
+                                            if (!$cds) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($inexs as $inex)  {  
+                                             foreach($cds as $cd)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $inex['inex_name']; ?></td>
+                                            <td><?= $cd['cus_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $inex['inex_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $cd['cd_id']?>"><i class="fas fa-eye"></i></button>
+                                                <a href="Edit_cd.php?edit_id=<?= $cd['cd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
+                                                <a data-id="<?= $cd['cd_id']; ?>" href="?delete=<?= $cd['cd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
                                             </td>
-                                            <!-- <td align="center"><a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
+                                            <!-- <td align="center"><a href="Edit_cd.php?edit_id=<?= $cd['cd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
+                                            <!-- <td align="center"><a data-id="<?= $cd['cd_id']; ?>" href="?delete=<?= $cd['cd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
                                             
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $inex['inex_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $cd['cd_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลกลุ่มวิสาหกิจ</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลลูกค้าเครดิต</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่ม : </b><?= $inex['inex_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ทำรายการ : </b><?= thai_date_fullmonth(strtotime($cd['cd_date'])); ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $inex['inex_pv']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อลูกค้า : </b><?= $cd['cus_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>อำเภอ : </b><?= $inex['inex_dis']; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ตำบล : </b><?= $inex['inex_subdis']; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $inex['inex_zip']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ยอดค้างชำระ : </b><?= $cd['cd_pay']; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -192,26 +200,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

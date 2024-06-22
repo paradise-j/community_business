@@ -29,6 +29,7 @@
         $discount = $_POST["discount"];
         
 
+
         $cu = $db->prepare("SELECT * FROM `customer`");
         $cu->execute();
 
@@ -54,7 +55,11 @@
             }
         }
 
-   
+      // ----------------------------- credit -----------------------------
+      if ($typeS == "credit") {
+        $cd = $db->prepare("INSERT INTO `credit`(`cd_name`, `cd_pay`) VALUES ('$cus_id' ,$total)");
+        $cd->execute();
+      }
 
         $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_date`, `sale_total`, `sale_discount`, `cus_id`)  VALUES ('$typeS', '$date','$total', '$discount', '$cus_id')");
         $sql->execute();
@@ -83,20 +88,20 @@
             $sql->execute();
         }
 
-        // unset($_SESSION["shopping_cart"]);
-        // // header("location:add_salegoat.php");
-        // echo "<script>
-        //     $(document).ready(function() {
-        //         Swal.fire({
-        //             title: 'สำเร็จ',
-        //             text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
-        //             icon: 'success',
-        //             timer: 5000,
-        //             showConfirmButton: false
-        //         });
-        //     })
-        // </script>";
-        // header("refresh:1; url=Sale.php");
+        unset($_SESSION["shopping_cart"]);
+        // header("location:add_salegoat.php");
+        echo "<script>
+            $(document).ready(function() {
+                Swal.fire({
+                    title: 'สำเร็จ',
+                    text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
+                    icon: 'success',
+                    timer: 5000,
+                    showConfirmButton: false
+                });
+            })
+        </script>";
+        header("refresh:1; url=Sale.php");
     }
-    // $db = null; 
+    $db = null; 
 ?>

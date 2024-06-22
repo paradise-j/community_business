@@ -65,7 +65,7 @@
         <div id="collapseMN" class="collapse" aria-labelledby="headingMN" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="InEx.php">รายรับ-รายจ่าย</a>
-                <a class="collapse-item" href="BorRe.php">ลูกค้าเครดิต</a>
+                <a class="collapse-item" href="Cus_credit.php">ลูกค้าเครดิต</a>
                 <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>
