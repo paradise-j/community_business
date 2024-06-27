@@ -6,7 +6,7 @@
     require_once '../../connect.php';
 
     $id = $_SESSION['id'];
-    echo $id;
+    // echo $id;
     $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `ul_id` = '$id'");
     $check_id->execute();
     $row = $check_id->fetch(PDO::FETCH_ASSOC);
@@ -18,7 +18,7 @@
         $total=$total+($value['item_pricepd']*$value['item_quantity']);
     }
 
-    echo $total ;
+    // echo $total ;
     
     if(isset($_POST["save_sale"])){
 
@@ -28,6 +28,7 @@
         $date = $_POST["date"];
         $discount = $_POST["discount"];
         
+        $Newtotal = $total - $discount;
 
 
         $cu = $db->prepare("SELECT * FROM `customer`");
@@ -46,6 +47,7 @@
             
         
         // ----------------------------- customer -----------------------------
+
         $cuss = $db->prepare("SELECT * FROM `customer`");
         $cuss->execute();
         while ($row = $cuss->fetch(PDO::FETCH_ASSOC)) {
@@ -54,15 +56,19 @@
                 break;
             }
         }
+        
 
+       
       // ----------------------------- credit -----------------------------
       if ($typeS == "credit") {
+
         $cd = $db->prepare("SELECT `cd_pay` FROM `credit` WHERE `cd_name` = '$cus_id'");
         $cd->execute();
         $rowcd = $cd->fetch(PDO::FETCH_ASSOC);
         extract($rowcd);
 
-        $Newtotal = $total - $discount;
+        // echo $cus_id."<br>";
+        // echo $Newtotal."+".$cd_pay;
         $Newtotal2 = $Newtotal + $cd_pay;
 
 
@@ -89,7 +95,8 @@
 
 
 
-        $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_date`, `sale_total`, `sale_discount`, `cus_id`)  VALUES ('$typeS', '$date','$total', '$discount', '$cus_id')");
+        $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_date`, `sale_total`, `sale_discount`, `sale_Nprice`, `cus_id`)  
+                             VALUES ('$typeS', '$date','$total', '$discount', '$Newtotal', '$cus_id')");
         $sql->execute();
 
         $sales = $db->prepare("SELECT * FROM `sales`");
