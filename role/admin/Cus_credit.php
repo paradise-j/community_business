@@ -66,7 +66,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_inexen.php" method="POST">
+                    <form action="Check_Add_paycredit.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">วันที่ทำรายการ</label>
                             <input type="date" required class="form-control" name="datepay" style="border-radius: 30px;">
@@ -101,8 +101,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="firstname" class="col-form-label">ยอดค้างทั้งหมด</label>
-                            <input type="text" required class="form-control" id="total" name="total" style="border-radius: 30px;">
-                            <!-- <label style="color:red;" id="total" name="total"> บาท</label> -->
+                            <input type="text" class="form-control" id="total" name="total" style="border-radius: 30px; color:red;" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="firstname" class="col-form-label">ยอดชำระ</label>
@@ -175,8 +174,8 @@
                                             <td><?= $cd['cus_name']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $cd['cd_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_cd.php?edit_id=<?= $cd['cd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $cd['cd_id']; ?>" href="?delete=<?= $cd['cd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <!-- <a href="Edit_cd.php?edit_id=<?= $cd['cd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a> -->
+                                                <!-- <a data-id="<?= $cd['cd_id']; ?>" href="?delete=<?= $cd['cd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a> -->
                                             </td>
                                             <!-- <td align="center"><a href="Edit_cd.php?edit_id=<?= $cd['cd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
                                             <!-- <td align="center"><a data-id="<?= $cd['cd_id']; ?>" href="?delete=<?= $cd['cd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->

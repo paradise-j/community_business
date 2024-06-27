@@ -57,9 +57,37 @@
 
       // ----------------------------- credit -----------------------------
       if ($typeS == "credit") {
-        $cd = $db->prepare("INSERT INTO `credit`(`cd_name`, `cd_pay`) VALUES ('$cus_id' ,$total)");
+        $cd = $db->prepare("SELECT `cd_pay` FROM `credit` WHERE `cd_name` = '$cus_id'");
         $cd->execute();
+        $rowcd = $cd->fetch(PDO::FETCH_ASSOC);
+        extract($rowcd);
+
+        $Newtotal = $total - $discount;
+        $Newtotal2 = $Newtotal + $cd_pay;
+
+
+        $check2 = array();
+        $cd = $db->prepare("SELECT `cd_name`, `cd_pay` FROM `credit` ");
+        $cd->execute();
+        while ($row = $cd->fetch(PDO::FETCH_ASSOC)){
+            $name2 = $row["cd_name"];
+            array_push($check2,$name2);
+        }
+
+
+        if(!in_array($cus_id, $check2)){
+            $cd2 = $db->prepare("INSERT INTO `credit`(`cd_date`, `cd_name`, `cd_pay`) VALUES ('$date' , '$cus_id' , $Newtotal)");
+            $cd2->execute();
+        }else{
+            $cd3 = $db->prepare("UPDATE `credit` SET `cd_pay`= '$Newtotal2' WHERE `cd_name` = '$cus_id'");
+            $cd3->execute();
+        }
       }
+
+
+
+
+
 
         $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_date`, `sale_total`, `sale_discount`, `cus_id`)  VALUES ('$typeS', '$date','$total', '$discount', '$cus_id')");
         $sql->execute();
@@ -72,16 +100,13 @@
                 break;
             }
         }
-        echo $sale_id."<br>";
 
         foreach ($_SESSION['shopping_cart'] as $key => $value){  
               
-            $pdname = $value["item_pdname"]; echo $pdname." ";
-            $quantity = $value["item_quantity"]; echo $quantity." ";
-            $pricekg = $value["item_pricepd"]; echo $pricekg." ";
-            $price = $value["item_price"]; echo $price." ";
-
-            echo "<br>";
+            $pdname = $value["item_pdname"]; 
+            $quantity = $value["item_quantity"]; 
+            $pricekg = $value["item_pricepd"]; 
+            $price = $value["item_price"]; 
 
             $sql = $db->prepare("INSERT INTO `salesdetail` (`sd_pdname`, `sd_quantity` , `sd_pricekg`, `sd_price`, `sale_id`) 
                                  VALUES ('$pdname', $quantity, $pricekg, $price, '$sale_id')");
@@ -89,7 +114,6 @@
         }
 
         unset($_SESSION["shopping_cart"]);
-        // header("location:add_salegoat.php");
         echo "<script>
             $(document).ready(function() {
                 Swal.fire({
