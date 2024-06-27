@@ -58,34 +58,55 @@
 </head>
 
 <body id="page-top">
-    <!-- <div class="modal fade" id="AddGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="AddGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลลูกค้าเครดิต</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการชำระยอดค้าง</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_inexen.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">วันที่ทำรายการ</label>
-                            <input type="date" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="datepay" style="border-radius: 30px;">
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="" class="col-form-label">ประเภทรายการ</label>
                             <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกประเภท....</option>
                                 <option value="1"></option>
                                 <option value="2"></option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อลูกค้า</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <!-- <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example"  id="custumer" name="custumer" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือก....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT `cd_pay` , `cd_name` as cus_id , customer.cus_name
+                                                        FROM `credit` 
+                                                        INNER JOIN `customer` ON credit.cd_name = customer.cus_id");
+                                    $stmt->execute();
+                                    $cds = $stmt->fetchAll();
+                                    
+                                    foreach($cds as $cd){
+                                ?>
+                                <option value="<?= $cd['cus_id']?>"><?= $cd['cus_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="firstname" class="col-form-label">ยอดค้างทั้งหมด</label>
+                            <input type="text" required class="form-control" id="total" name="total" style="border-radius: 30px;">
+                            <!-- <label style="color:red;" id="total" name="total"> บาท</label> -->
                         </div>
                         <div class="mb-3">
                             <label for="firstname" class="col-form-label">ยอดชำระ</label>
-                            <input type="text" required class="form-control" id="zipcode" name="zipcode" style="border-radius: 30px;">
+                            <input type="text" required class="form-control" id="amount" name="amount" style="border-radius: 30px;">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">ตกลง</button>
@@ -94,7 +115,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
     <?php
         $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
@@ -120,11 +141,11 @@
                         <div class="card-header py-3 text-center">
                             <h3 class="m-0 font-weight-bold text-primary">ข้อมูลลูกค้าเครดิต</h3>
                         </div>
-                        <!-- <div class="row mt-4 ml-2">
+                        <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลยืม-คืน</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการชำระยอดค้าง</a>
                             </div>
-                        </div> -->
+                        </div>
                         
                         <div class="card-body">
                             <div class="table-responsive">
@@ -263,6 +284,21 @@
                 },
             });
         }
+
+        $('#custumer').change(function(){
+            var id_cname = $(this).val();
+            console.log("cn = ",id_cname);
+            $.ajax({
+                type : "post",
+                url : "../../api/cusname.php",
+                data : {id:id_cname,function:'custumer'},     
+                success: function(data){
+                    console.log("cus = ",data);
+                    $('#total').val(data);
+
+                }
+            });
+        });
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {
