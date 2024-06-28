@@ -85,7 +85,7 @@
         </a>
         <div id="collapsePlan" class="collapse" aria-labelledby="headingPlan" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="PlanFollow.php">รายการการสั่งซื้อ</a>
+                <a class="collapse-item" href="Plant_orderlist.php">รายการการสั่งซื้อ</a>
                 <a class="collapse-item" href="PlanFollow.php">วางแผนแการเพาะปลูก</a>
                 <a class="collapse-item" href="Bproduce.php">รับซื้อผลผลิต</a>
                 <a class="collapse-item" href="Bproduce.php">ส่งออกผลผลิต</a>
