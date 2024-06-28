@@ -66,7 +66,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_Plan.php" method="POST">
+                    <form action="Check_Add_Plant_order.php" method="POST">
                         <div class="mb-2">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่ทำรายการ</label>
@@ -98,7 +98,7 @@
                             <label for="" class="col-form-label">ปริมาณการสั่งซื้อ &nbsp&nbsp&nbsp
                                 <label style="color:red;" >** หน่วยเป็น กิโลกรัม **</label>
                             </label>
-                            <input type="desimal" required class="form-control" name="target" style="border-radius: 30px;">
+                            <input type="decimal" required class="form-control" id="quan" name="quan" style="border-radius: 30px;">
                         </div>
                         <!-- <div class="d-flex justify-content-end">
                             <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
@@ -191,52 +191,44 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_target`,`plant_date`,`plant_harvest`,`plant_grower`,grower.gw_name
-                                                                FROM `planting` 
-                                                                INNER JOIN `grower` ON grower.gw_id = planting.plant_grower");
+                                            $stmt = $db->query("SELECT * FROM `plant_orderlist`");
                                             $stmt->execute();
-                                            $plants = $stmt->fetchAll();
+                                            $plds = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$plants) {
+                                            if (!$plds) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($plants as $plant)  {  
+                                             foreach($plds as $pld)  {  
                                         ?>
                                         <tr>
                                             
-                                            <td align="center"><?= $plant['plant_name']; ?></td>
-                                            <td><?= $plant['gw_name']; ?></td>
+                                            <td align="center"><?= $pld['pld_id']; ?></td>
+                                            <td><?= $pld['pld_nplant']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
-                                                <a data-id="<?= $plant['plant_id']; ?>" href="?delete=<?= $plant['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pld['pld_id']?>">ดูข้อมูล</button>
+                                                <a href="Edit_pld.php?edit_id=<?= $pld['pld_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <a data-id="<?= $pld['pld_id']; ?>" href="?delete=<?= $pld['pld_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $plant['plant_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $pld['pld_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการวางแผนการปลูก</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการสั่งซื้อ</h4>
                                                     </div>
                                                     <div class="modal-body">
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสการสั่งซื้อ : </b><?= $pld['pld_id']; ?></label>
+                                                        </div>
                                                         <div class="mb-2">                         
-                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เริ่มปลูก : </b><?= thai_date_fullmonth(strtotime($plant['plant_date'])) ; ?></label>
+                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เริ่มปลูก : </b><?= thai_date_fullmonth(strtotime($pld['pld_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เก็บผลผลิต : </b><?= thai_date_fullmonth(strtotime($plant['plant_harvest'])); ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $pld['pld_nplant']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เป้าหมายการผลิต : </b><?= $plant['plant_target']." "."กิโลกรัม"; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสลูกสวน : </b><?= $plant['plant_grower']; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผู้รับผิดชอบ : </b><?= $plant['gw_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวนที่ทำการสั่งซื้อ : </b><?= $pld['pld_quan']." "."กิโลกรัม"; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>

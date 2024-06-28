@@ -67,6 +67,28 @@
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_Plan.php" method="POST">
+                        <div class="row mb-1">
+                            <div class="col-md-5">
+                                <div class="mb-2">
+                                    <label for="" class="col-form-label">รหัสการสั่งซื้อ</label>
+                                    <select class="form-control" aria-label="Default select example" id="pld_id" name="pld_id" style="border-radius: 30px;" required>
+                                        <option selected disabled>เลือกรหัสการสั่งซื้อ....</option>
+                                        <?php 
+                                            $stmt = $db->query("SELECT * FROM `plant_orderlist`");
+                                            $stmt->execute();
+                                            $plds = $stmt->fetchAll();
+                                            
+                                            foreach($plds as $pld){
+                                        ?>
+                                        <option value="<?= $pld['pld_id']?>"><?= $pld['pld_id']?></option>
+                                        <?php
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="mb-2">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
