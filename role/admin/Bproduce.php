@@ -62,23 +62,23 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการวางแผนการปลูก</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการรับซื้อผลผลิต</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_inexen.php" method="POST">
                         <div class="mb-2">
                             <?php $date = date('Y-m-d'); ?>
-                            <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
-                            <input type="date" required class="form-control" name="Sdate" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">วันที่รับซื้อผลผลิต</label>
+                            <input type="date" required class="form-control" name="date" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-2">
-                            <label for="" class="col-form-label">วันที่เก็บเกี่ยว</label>
-                            <input type="date" required class="form-control" name="Edate" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">ชื่อผลผลิตที่รับซื้อ</label>
+                            <input type="text" required class="form-control" name="name" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ชื่อผัก</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">จำนวน</label>
+                            <input type="text" required class="form-control" name="quan" style="border-radius: 30px;">
                         </div>
                         <!-- <div class="d-flex justify-content-end">
                             <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
@@ -88,8 +88,14 @@
                                 <div class="col-md-4">
                                     <div class="mb-2">
                                         <label for="" class="col-form-label">รหัสลูกสวน</label>
-                                        <select class="form-control" aria-label="Default select example" id="grower" name="grower" style="border-radius: 30px;" required>
-                                            <option selected disabled>เลือกรหัส....</option>
+                                        <input type="text" required class="form-control" id="g_id" name="g_id" style="border-radius: 30px;" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="mb-2">
+                                        <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
+                                        <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                            <option selected disabled>เลือกชื่อผู้รับผิดชอบ....</option>
                                             <?php 
                                                 $stmt = $db->query("SELECT * FROM `grower`");
                                                 $stmt->execute();
@@ -97,18 +103,11 @@
                                                 
                                                 foreach($gws as $gw){
                                             ?>
-                                            <option value="<?= $gw['gw_id']?>"><?= $gw['gw_id']?></option>
+                                            <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option>
                                             <?php
                                                 }
                                             ?>
                                         </select>
-                                        <!-- <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;"> -->
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-2">
-                                        <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                        <input type="text" required class="form-control" name="gw_name" id="gw_name" style="border-radius: 30px;">
                                     </div>
                                 </div>
                                 <!-- <div class="col-md-1">
@@ -138,11 +137,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลการวางแผนการปลูก</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลการรับซื้อผลผลิต</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการวางแผนการปลูก</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรับซื้อผลผลิต</a>
                             </div>
                         </div>
                         
@@ -151,7 +150,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>รายการ</th>
+                                            <th>รายการที่รับซื้อ</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -179,7 +178,7 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการวางแผนการปลูก</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการรับซื้อผลผลิต</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
@@ -291,6 +290,21 @@
 
 
     <script>
+
+        $('#g_name').change(function(){
+             var id_gw = $(this).val();
+            //  console.log(id_gw);
+             $.ajax({
+                 type : "post",
+                 url : "../../api/grower.php",
+                 data : {id:id_gw,function:'g_name'},     
+                 success: function(data){
+                    // console.log(data);
+                     $('#g_id').val(data);
+                 }
+             });
+        });
+
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
             e.preventDefault();
@@ -368,6 +382,7 @@
                  }
              });
          });
+         
 
 
 
