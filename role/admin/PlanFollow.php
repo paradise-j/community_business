@@ -230,7 +230,7 @@
                                             <td><?= $plant['gw_name']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <!-- <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
                                                 <a data-id="<?= $plant['plant_id']; ?>" href="?delete=<?= $plant['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
@@ -257,8 +257,13 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสลูกสวน : </b><?= $plant['plant_grower']; ?></label>
                                                         </div>
-                                                        <div class="mb-2">
+                                                        <div class="mb-3">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ผู้รับผิดชอบ : </b><?= $plant['gw_name']; ?></label>
+                                                        </div>
+                                                            <h4 class="small font-weight-bold">เป้าหมายการส่งผลผลิต <span class="float-right">20%</span></h4>
+                                                        <div class="progress mb-2">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>

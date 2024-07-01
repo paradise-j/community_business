@@ -3,7 +3,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i>ผูู้ดูแลระบบ</a>
+        <a class="nav-link" href="index.php"><i class="fas fa-fw fa-tachometer-alt"></i>ผูู้ดูแลระบบ</a>
     </li>
 
     <!-- Divider -->
