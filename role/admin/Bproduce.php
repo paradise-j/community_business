@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `inex_comen` WHERE `inex_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `bp_comen` WHERE `bp_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -66,47 +66,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_inexen.php" method="POST">
-                        <div class="mb-2">
+                    <form action="Check_Add_Bproduce.php" method="POST">
+                        <div class="mb-1">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่รับซื้อผลผลิต</label>
                             <input type="date" required class="form-control" name="date" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
-                        <div class="mb-2">
-                            <label for="" class="col-form-label">ผลผลิตที่รับซื้อ</label>
-                            <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
-                            <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกผัก....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `vegetable`");
-                                    $stmt->execute();
-                                    $vgs = $stmt->fetchAll();
-                                    
-                                    foreach($vgs as $vg){
-                                ?>
-                                <option value="<?= $vg['veget_name']?>"><?= $vg['veget_name']?></option>
-                                <?php
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">จำนวน</label>
-                            <input type="text" required class="form-control" name="quan" style="border-radius: 30px;">
-                        </div>
-                        <!-- <div class="d-flex justify-content-end">
-                            <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
-                        </div> -->
                         <div id="show_item">
                             <div class="row mb-1">
                                 <div class="col-md-4">
-                                    <div class="mb-2">
+                                    <div class="mb-1">
                                         <label for="" class="col-form-label">รหัสลูกสวน</label>
                                         <input type="text" required class="form-control" id="g_id" name="g_id" style="border-radius: 30px;" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <div class="mb-2">
+                                <div class="col-md-8">
+                                    <div class="mb-1">
                                         <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
                                         <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
                                             <option selected disabled>เลือกชื่อผู้รับผิดชอบ....</option>
@@ -132,7 +107,47 @@
                                 </div> -->
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="mb-1">
+                            <label for="" class="col-form-label">ผลผลิตที่รับซื้อ</label>
+                            <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกผัก....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT * FROM `vegetable`");
+                                    $stmt->execute();
+                                    $vgs = $stmt->fetchAll();
+                                    
+                                    foreach($vgs as $vg){
+                                ?>
+                                <option value="<?= $vg['veget_name']?>"><?= $vg['veget_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="" class="col-form-label">จำนวน **หน่วยเป็นกิโลกรัม**</label>
+                                    <input type="text" required class="form-control"  id="quan" name="quan" style="border-radius: 30px;">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="" class="col-form-label">ราคาต่อกิโลกรัม</label>
+                                    <input type="text" required class="form-control" id="price" name="price" style="border-radius: 30px;">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="mb-2">
+                            <button onclick="myFunction()" name="submit" class="btn btn-primary" style="border-radius: 30px; font-size: 0.8rem;">คิดเงิน</button>
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="" class="col-form-label">รวมเงินสุทธิ</label>
+                            <input type="text" required class="form-control"  id="total" name="total" style="border-radius: 30px;" readonly>
+                        </div> -->
+                        <!-- <div class="d-flex justify-content-end">
+                            <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
+                        </div> -->
+                        <div class="modal-footer mt-2">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
                     </form>
@@ -141,7 +156,19 @@
         </div>
     </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    
+    <?php
+        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+            global $dayTH,$monthTH;   
+            $thai_date_return = date("j",$time);   
+            $thai_date_return.=" ".$monthTH[date("n",$time)];   
+            $thai_date_return.= " ".(date("Y",$time)+543);   
+            return $thai_date_return;   
+        } 
+    ?>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -170,25 +197,25 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `inex_data`");
+                                            $stmt = $db->query("SELECT * FROM `bproduce`");
                                             $stmt->execute();
-                                            $inexs = $stmt->fetchAll();
+                                            $bps = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$inexs) {
+                                            if (!$bps) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($inexs as $inex)  {  
+                                             foreach($bps as $bp)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $inex['inex_name']; ?></td>
+                                            <td><?= $bp['veget_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $inex['inex_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>"><i class="fas fa-eye"></i></button>
+                                                <a href="Edit_bp.php?edit_id=<?= $bp['bp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
+                                                <a data-id="<?= $bp['bp_id']; ?>" href="?delete=<?= $bp['bp_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $inex['inex_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $bp['bp_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -196,19 +223,22 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $inex['inex_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับซื้อผลผลิต : </b><?= thai_date_fullmonth(strtotime($bp['bp_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $inex['inex_pv']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อเจ้าของสวน : </b><?= $bp['gw_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>อำเภอ : </b><?= $inex['inex_dis']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่รับซื้อ : </b><?= $bp['veget_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ตำบล : </b><?= $inex['inex_subdis']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ปริมาณที่รับซื้อ : </b><?= $bp['bp_quan']." กิโลกรัม"; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $inex['inex_zip']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาต่อกิโลกรัม : </b><?= $bp['bp_pricekg']." บาท"; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาสุทธิ : </b><?= $bp['bp_totalprice']." บาท"; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -250,61 +280,10 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-    <!-- <script>
-        $(document).ready(function() {  
-            $(".add_item").click(function(e) {
-                // console.log("111");
-                e.preventDefault();
-                $("#show_item").prepend(`
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="mb-2">
-                                <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
-                                <select class="form-control" aria-label="Default select example" id="grower" name="grower" style="border-radius: 30px;" required>
-                                    <option selected disabled>เลือกรหัส....</option>
-                                    <?php 
-                                        $stmt = $db->query("SELECT * FROM `grower`");
-                                        $stmt->execute();
-                                        $gws = $stmt->fetchAll();
-                                        
-                                        foreach($gws as $gw){
-                                    ?>
-                                    <option value="<?= $gw['gw_id']?>"><?= $gw['gw_id']?></option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-2">
-                                <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                <input type="text" required class="form-control" name="gw_name" id="gw_name" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="mt-3">
-                                <br>
-                                <button class="btn btn-danger remove_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>`
-                    
-                );
-            });
 
-            $(document).on('click', '.remove_item', function(e) {
-                e.preventDefault();
-                let row_item = $(this).parent().parent().parent();
-                $(row_item).remove();
-            });
-
-        });
-    </script> -->
 
 
     <script>
-
         $('#g_name').change(function(){
              var id_gw = $(this).val();
             //  console.log(id_gw);
