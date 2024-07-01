@@ -73,8 +73,22 @@
                             <input type="date" required class="form-control" name="date" min="<?= $date; ?>" max="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-2">
-                            <label for="" class="col-form-label">ชื่อผลผลิตที่รับซื้อ</label>
-                            <input type="text" required class="form-control" name="name" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">ผลผลิตที่รับซื้อ</label>
+                            <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกผัก....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT * FROM `vegetable`");
+                                    $stmt->execute();
+                                    $vgs = $stmt->fetchAll();
+                                    
+                                    foreach($vgs as $vg){
+                                ?>
+                                <option value="<?= $vg['veget_name']?>"><?= $vg['veget_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">จำนวน</label>
