@@ -18,7 +18,7 @@
         $pb->execute();
 
 
-        if ($cd && $pb) {
+        if ($pb) {
             $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อย";
             echo "<script>
                 $(document).ready(function() {
