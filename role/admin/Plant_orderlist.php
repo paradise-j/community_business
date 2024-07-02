@@ -204,7 +204,7 @@
                                         <tr>
                                             
                                             <td align="center"><?= $pld['pld_id']; ?></td>
-                                            <td><?= $pld['pld_nplant']; ?></td>
+                                            <td><?= $pld['cus_id']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pld['pld_id']?>">ดูข้อมูล</button>
                                                 <a href="Edit_pld.php?edit_id=<?= $pld['pld_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
