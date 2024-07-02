@@ -67,7 +67,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_Plan.php" method="POST">
-                        <div class="row mb-1">
+                        <!-- <div class="row mb-1">
                             <div class="col-md-5">
                                 <div class="mb-2">
                                     <label for="" class="col-form-label">รหัสการสั่งซื้อ</label>
@@ -87,7 +87,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <div class="mb-2">
                             <?php $date = date('Y-m-d'); ?>

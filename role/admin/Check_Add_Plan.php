@@ -5,7 +5,7 @@
     require_once "../../connect.php";
 
     if (isset($_POST['submit'])) {
-        $pld_id = $_POST['pld_id'];
+        // $pld_id = $_POST['pld_id'];
         $Sdate = $_POST['Sdate'];
         $Edate = $_POST['Edate'];
         $name = $_POST['name'];
@@ -13,8 +13,8 @@
         $g_id = $_POST['g_id'];
 
     
-        $sql = $db->prepare("INSERT INTO `planting`(`plant_name`, `plant_target`, `plant_date`, `plant_harvest`, `plant_grower`, `pld_id`)
-                             VALUES ('$name',$target ,'$Sdate','$Edate','$g_id','$pld_id')");
+        $sql = $db->prepare("INSERT INTO `planting`(`plant_name`, `plant_target`, `plant_date`, `plant_harvest`, `plant_grower`)
+                             VALUES ('$name',$target ,'$Sdate','$Edate','$g_id')");
         $sql->execute();
 
         if ($sql) {
