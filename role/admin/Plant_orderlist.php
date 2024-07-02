@@ -174,7 +174,8 @@
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลรายการการสั่งซื้อ</a>
+                                <!-- <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลรายการการสั่งซื้อ</a> -->
+                                <a href="PlantOrderList.php" class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit">เพิ่มข้อมูลรายการการสั่งซื้อ</a>
                             </div>
                         </div>
                         
