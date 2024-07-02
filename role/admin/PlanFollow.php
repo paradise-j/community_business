@@ -260,9 +260,16 @@
                                                         <div class="mb-3">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ผู้รับผิดชอบ : </b><?= $plant['gw_name']; ?></label>
                                                         </div>
-                                                            <h4 class="small font-weight-bold">เป้าหมายการส่งผลผลิต <span class="float-right">20%</span></h4>
+                                                        <?php 
+                                                            $gw_id = $plant['plant_grower'];
+                                                            $stmt = $db->query("SELECT  SUM(`bp_quan`) as total  FROM `bproduce` WHERE `gw_id` = '$gw_id'");
+                                                            $stmt->execute();
+                                                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                                            extract($row);
+                                                        ?>
+                                                            <h4 class="small font-weight-bold">เป้าหมายการส่งผลผลิต <span class="float-right"><?= $total; ?> %</span></h4>
                                                         <div class="progress mb-2">
-                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= $total; ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                                             
                                                         </div>
                                                     </div>
