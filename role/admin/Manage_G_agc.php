@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_Group_agriculturist</title>
+    <title>ข้อมูลกลุ่มวิสาหกิจชุมชน</title>
 
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
