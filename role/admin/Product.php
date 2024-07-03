@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Product</title>
+    <title>ข้อมูลสินค้าชุมชน</title>
 
     <link rel="icon" type="image/png" href="img/product-hunt.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
