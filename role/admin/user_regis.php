@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_agriculturist</title>
+    <title>ข้อมูลทะเบียนสมาชิก</title>
 
     <link rel="icon" type="image/png" href="img/seedling-solid.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -259,7 +259,8 @@
                                             <td><?= $user['user_Fname']." ".$user['user_Lname']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $user['user_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_user.php?edit_id=<?= $user['user_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <!-- <a href="Edit_user.php?edit_id=<?= $user['user_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
+                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $user['user_id'];?>">แก้ไข</button>
                                                 <a data-id="<?= $user['user_id']; ?>" href="?delete=<?= $user['user_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                             <!-- <td align="center"><a href="Edit_user.php?edit_id=<?= $user['user_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
@@ -267,7 +268,7 @@
                                             
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $user['user_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $user['user_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -306,6 +307,137 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- ---------------------------------------  EditdataModal ---------------------------------------------------------------------->
+                                        <div class="modal fade" id="editGroupModal<?= $user['user_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลสมาชิก</h5>
+                                                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                                                    </div>
+                                                    <div class="modal-body mt-1">
+                                                        <form action="Check_edit_product.php" method="POST">
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">รหัสสมาชิก</label>
+                                                                <input type="text" required class="form-control" id="Productid" name="Productid" value="<?= $user['user_id'];?>" style="border-radius: 30px;" readonly>
+                                                            </div>
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">ชื่อ</label>
+                                                                    <input type="text" required class="form-control" name="Fname" value="<?= $user['user_Fname'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">สกุล</label>
+                                                                    <input type="text" required class="form-control" name="Lname" value="<?= $user['user_Lname'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
+                                                                    <input type="text" required class="form-control" name="phone" value="<?= $user['user_phone'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-5">
+                                                                    <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
+                                                                    <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" value="<?= $user['user_perid'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    <label for="" class="col-form-label">บ้านเลขที่</label>
+                                                                    <input type="text" required class="form-control" name="address" value="<?= $user['user_num'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">จังหวัด</label>
+                                                                    <select class="form-control" aria-label="Default select example" id="provinces2" name="provinces2" style="border-radius: 30px;" required>
+                                                                    <option selected disabled><?= $user['user_pv'];?></option>
+                                                                    <?php 
+                                                                        $stmt = $db->query("SELECT * FROM `provinces`");
+                                                                        $stmt->execute();
+                                                                        $pvs = $stmt->fetchAll();
+                                                                        
+                                                                        foreach($pvs as $pv){
+                                                                    ?>
+                                                                    <option value="<?= $pv['id']?>"><?= $pv['name_th']?></option>
+                                                                    <?php
+                                                                        }
+                                                                    ?>
+                                                                </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">อำเภอ</label>
+                                                                    <select class="form-control" aria-label="Default select example" id="amphures2" name="amphures2" style="border-radius: 30px;" required>
+                                                                        <option selected disabled><?= $user['user_dis'];?></option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-7">
+                                                                    <label for="" class="col-form-label">ตำบล</label>
+                                                                    <select class="form-control" aria-label="Default select example" id="districts2" name="districts2" style="border-radius: 30px;" required>
+                                                                    <option selected disabled ><?= $user['user_subdis'];?></option>
+                                                                </select>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
+                                                                    <input type="text" required class="form-control" id="zipcode2" name="zipcode2" value="<?= $user['user_zip'];?>"style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+
+                                                            <script>
+                                                                $('#provinces2').change(function(){
+                                                                    var id_provnce = $(this).val();
+                                                                    // console.log("id_provnce = "+id_provnce);
+                                                                    $.ajax({
+                                                                        type : "post",
+                                                                        url : "../../address2.php",
+                                                                        data : {id:id_provnce,function:'provinces2'},     
+                                                                        success: function(data){
+                                                                            // console.log(data);
+                                                                            $('#amphures2').html(data);
+                                                                            $('#districts2').html(' ');
+                                                                            $('#zipcode2').val(' ');
+                                                                        }
+                                                                    });
+                                                                });
+
+                                                                $('#amphures2').change(function(){
+                                                                    var id_amphures = $(this).val();
+                                                                    $.ajax({
+                                                                        type : "post",
+                                                                        url : "../../address2.php",
+                                                                        data : {id:id_amphures,function:'amphures2'},
+                                                                        success: function(data){
+                                                                            $('#districts2').html(data);
+                                                                            $('#zipcode2').val(' ');
+                                                                        }
+                                                                    });
+                                                                });
+
+                                                                $('#districts2').change(function(){
+                                                                    var id_districts = $(this).val();
+                                                                    $.ajax({
+                                                                        type : "post",
+                                                                        url : "../../address2.php",
+                                                                        data : {id:id_districts,function:'districts2'},
+                                                                        success: function(data){
+                                                                            $('#zipcode2').val(data)
+                                                                        }
+                                                                    });
+                                                                });
+                                                            </script>
+
+                                                            <div class="modal-footer">
+                                                                <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <?php
                                              }      
                                             }?>
