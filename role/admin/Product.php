@@ -58,6 +58,7 @@
 </head>
 
 <body id="page-top">
+    <!-- ---------------------------------------      AdddataModal ---------------------------------------------------------------------->
     <div class="modal fade" id="AddGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -71,19 +72,6 @@
                             <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
                             <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="" class="col-form-label">จำนวน</label>
-                            <input type="number" required class="form-control" name="quan" style="border-radius: 30px;">
-                        </div>
-                        <div class="mb-3">
-                            <label for="firstname" class="col-form-label">ราคาทุน</label>
-                            <input type="number" required class="form-control" name="cost" style="border-radius: 30px;">
-                        </div>
-                        <div class="mb-3">
-                            <?php $date = date('Y-m-d'); ?>
-                            <label for="firstname" class="col-form-label">วันที่รับของ</label>
-                            <input type="date" required class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;">
-                        </div> -->
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
@@ -92,6 +80,9 @@
             </div>
         </div>
     </div>
+
+    
+
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
     <?php
         $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
@@ -148,12 +139,10 @@
                                             <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_pd.php?edit_id=<?= $pd['pd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $pd['pd_id']?>">แก้ไข</button>
+                                                <!-- <a href="Edit_pd.php?edit_id=<?= $pd['pd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"  data-toggle="modal" data-target="#editdataModal<?= $pd['pd_id']?>">แก้ไข</a> -->
                                                 <a data-id="<?= $pd['pd_id']; ?>" href="?delete=<?= $pd['pd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
-                                            <!-- <td align="center"><a href="Edit_pd.php?edit_id=<?= $pd['pd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $pd['pd_id']; ?>" href="?delete=<?= $pd['pd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
-                                            
                                         </tr>
 
                                         <div class="modal fade" id="showdataModal<?= $pd['pd_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -169,15 +158,30 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินค้าชุมชน : </b><?= $pd['pd_name']; ?></label>
                                                         </div>
-                                                        <!-- <div class="mb-2">
-                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($pd['pd_quan']); ?> </label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุน : </b><?= number_format($pd['pd_cost']);?> บาท</label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนเฉลี่ยปัจจุบัน : </b><?= number_format($pd['pd_avgprice'],2); ?></label>
-                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- ---------------------------------------  EditdataModal ---------------------------------------------------------------------->
+                                        <div class="modal fade" id="editGroupModal<?= $pd['pd_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลสินค้าชุมชน</h5>
+                                                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                                                    </div>
+                                                    <div class="modal-body mt-1">
+                                                        <form action="Check_edit_product.php" method="POST">
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">ชื่อสินค้าชุมชน  <?= $pd['pd_name']; ?></label>
+                                                                <input type="text" required class="form-control" id="Productname" name="Productname" style="border-radius: 30px;">
+                                                            </div>
+                                                            
+                                                            <div class="modal-footer">
+                                                                <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">แก้ไขข้อมูล</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -219,6 +223,9 @@
 
 
     <script>
+
+ 
+
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
             e.preventDefault();

@@ -173,7 +173,7 @@
                                         <tr>
                                             <td><?= $cd['cus_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $cd['cd_id']?>"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $cd['cd_id']?>">ดูข้อมูล</button>
                                                 <!-- <a href="Edit_cd.php?edit_id=<?= $cd['cd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a> -->
                                                 <!-- <a data-id="<?= $cd['cd_id']; ?>" href="?delete=<?= $cd['cd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a> -->
                                             </td>
