@@ -27,7 +27,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="Manage_G_agc.php">ข้อมูลกลุ่มวิสาหกิจ</a>
                 <a class="collapse-item" href="Product.php">ข้อมูลสินค้าชุมชน</a>
-                <a class="collapse-item" href="Raw_material.php">ข้อมูลวัตถุดิบ</a>
+                <!-- <a class="collapse-item" href="Raw_material.php">ข้อมูลวัตถุดิบ</a> -->
                 <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
                 <a class="collapse-item" href="user_regis.php">ข้อมูลทะเบียนสมาชิก</a>
                 <a class="collapse-item" href="grower_regis.php">ข้อมูลทะเบียนลูกสวน</a>

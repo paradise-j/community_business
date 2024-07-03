@@ -35,7 +35,7 @@
     if(isset($_POST["add_sale"])){
         $vgname = $_POST['vgname'];
 
-        $pd = $db->prepare("SELECT `veget_name` as vgname  FROM `vegetable` WHERE `veget_id` = '$vgname'");
+        $pd = $db->prepare("SELECT `pd_name` as vgname  FROM `product` WHERE `pd_id` = '$vgname'");
         $pd->execute();
         $row = $pd->fetch(PDO::FETCH_ASSOC);
         extract($row);
@@ -129,7 +129,7 @@
                                                 <select class="form-control" aria-label="Default select example"  id="vgname" name="vgname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `vegetable`");
+                                                        $stmt = $db->query("SELECT `pd_id` as veget_id ,`pd_name` as veget_name  FROM `product` WHERE `group_id` = 'CM007'");
                                                         $stmt->execute();
                                                         $vgs = $stmt->fetchAll();
                                                         

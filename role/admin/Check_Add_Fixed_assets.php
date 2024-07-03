@@ -5,23 +5,23 @@
     require_once "../../connect.php";
 
     if (isset($_POST['submit'])) {
-        $pdname = $_POST['pdname'];
+        $fa_name = $_POST['fa_name'];
         $group = $_POST['group'];
 
-        $pd = $db->prepare("SELECT `pd_name` FROM `product` WHERE `group_id` = '$group'");
+        $pd = $db->prepare("SELECT `fa_name` FROM `fixed_asset` WHERE `group_id` = '$group'");
         $pd->execute();
 
         $check = array();
         while ($row = $pd->fetch(PDO::FETCH_ASSOC)){
-            $name = $row["pd_name"];
+            $name = $row["fa_name"];
             array_push($check,$name);
             
         }
 
-        if(!in_array("$pdname", $check)){
+        if(!in_array("$fa_name", $check)){
             // echo "Match not found";
-            $sql = $db->prepare("INSERT INTO `product`(`pd_name`, `group_id`)
-                             VALUES ('$pdname','$group')");
+            $sql = $db->prepare("INSERT INTO `fixed_asset`(`fa_name`, `group_id`)
+                             VALUES ('$fa_name','$group')");
             $sql->execute();
 
             if ($sql) {
@@ -37,10 +37,10 @@
                         });
                     })
                 </script>";
-                header("refresh:1; url=Product.php");
+                header("refresh:1; url=Fixed_assets.php");
             } else {
                 $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
-                header("location: Product.php");
+                header("location: Fixed_assets.php");
             }
 
         }else{
@@ -57,7 +57,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=Product.php");
+            header("refresh:1; url=Fixed_assets.php");
         } 
     }
 ?>

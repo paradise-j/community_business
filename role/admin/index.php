@@ -97,7 +97,7 @@
                                                 <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">ผักทั้งหมดในชุมชน</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`veget_id`) as total FROM `vegetable`");
+                                                    $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product` WHERE `group_id` = 'CM007'");
                                                     $stmt->execute();
                                                     $vegs = $stmt->fetchAll();
                                                     foreach($vegs as $veg){
@@ -120,7 +120,7 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">สินค้าชุมชน</div>
+                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">สินค้าทั้งหมด</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
                                                     $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product`");
@@ -157,7 +157,7 @@
                                                         echo $agc['total'];
                                                     }
                                                 ?>
-                                                กลุ่ม
+                                                ออเดอร์
                                                 </div>
                                             </div>
                                             <div class="col-auto">

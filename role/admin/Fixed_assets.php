@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `product` WHERE `fa_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ข้อมูลสินค้าชุมชน</title>
+    <title>ข้อมูลสินทรัพย์ถาวร</title>
 
     <link rel="icon" type="image/png" href="img/product-hunt.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -63,11 +63,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลสินค้าชุมชน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลสินทรัพย์ถาวร</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_product.php" method="POST">
+                    <form action="Check_Add_Fixed_assets.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
@@ -86,8 +86,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
-                            <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">ชื่อสินทรัพย์ถาวร</label>
+                            <input type="text" required class="form-control" name="fa_name" style="border-radius: 30px;">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -123,11 +123,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลสินค้าชุมชน</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลสินทรัพย์ถาวร</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินค้าชุมชน</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินทรัพย์ถาวร</a>
                             </div>
                         </div>
                         
@@ -136,14 +136,16 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>ชื่อสินค้าชุมชน</th>
+                                            <th>ชื่อสินทรัพย์ถาวร</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT product.pd_id , product.pd_date, product.pd_name , product.group_id , group_comen.group_name as group_name 
-                                                                FROM `product` INNER JOIN `group_comen` ON group_comen.group_id = product.group_id");
+                                            $stmt = $db->query("SELECT fixed_asset.fa_id , fixed_asset.fa_date , fixed_asset.fa_name , 
+                                                                    fixed_asset.group_id , group_comen.group_name as group_name
+                                                                FROM `fixed_asset` 
+                                                                INNER JOIN `group_comen` ON fixed_asset.group_id  = group_comen.group_id");
                                             $stmt->execute();
                                             $pds = $stmt->fetchAll();
                                             $count = 1;
@@ -153,31 +155,34 @@
                                              foreach($pds as $pd)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $pd['pd_name']; ?></td>
+                                            <td><?= $pd['fa_name']; ?></td>
                                             <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>">ดูข้อมูล</button>
-                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $pd['pd_id']?>">แก้ไข</button>
-                                                <!-- <a href="Edit_pd.php?edit_id=<?= $pd['pd_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"  data-toggle="modal" data-target="#editdataModal<?= $pd['pd_id']?>">แก้ไข</a> -->
-                                                <a data-id="<?= $pd['pd_id']; ?>" href="?delete=<?= $pd['pd_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['fa_id']?>">ดูข้อมูล</button>
+                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $pd['fa_id']?>">แก้ไข</button>
+                                                <!-- <a href="Edit_pd.php?edit_id=<?= $pd['fa_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"  data-toggle="modal" data-target="#editdataModal<?= $pd['fa_id']?>">แก้ไข</a> -->
+                                                <a data-id="<?= $pd['fa_id']; ?>" href="?delete=<?= $pd['fa_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $pd['pd_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $pd['fa_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลสินค้าชุมชน</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลสินทรัพย์ถาวร</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่เพิ่มข้อมูลสินค้า : </b><?= thai_date_fullmonth(strtotime($pd['pd_date'])) ; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่เพิ่มข้อมูลสินทรัพย์ถาวร : </b><?= thai_date_fullmonth(strtotime($pd['fa_date'])) ; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสสินทรัพย์ถาวร : </b><?= $pd['fa_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>กลุ่มวิสาหกิจชุมชน : </b><?= $pd['group_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินค้าชุมชน : </b><?= $pd['pd_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินทรัพย์ถาวร : </b><?= $pd['fa_name']; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -185,26 +190,26 @@
                                         </div>
 
                                         <!-- ---------------------------------------  EditdataModal ---------------------------------------------------------------------->
-                                        <div class="modal fade" id="editGroupModal<?= $pd['pd_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="editGroupModal<?= $pd['fa_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลสินค้าชุมชน</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลสินทรัพย์ถาวร</h5>
                                                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                     </div>
                                                     <div class="modal-body mt-1">
                                                         <form action="Check_edit_product.php" method="POST">
                                                             <div class="mb-3">
-                                                                <label for="" class="col-form-label">รหัสสินค้า</label>
-                                                                <input type="text" required class="form-control" id="Productid" name="Productid" value="<?= $pd['pd_id'];?>" style="border-radius: 30px;" readonly>
+                                                                <label for="" class="col-form-label">รหัสสินทรัพย์ถาวร</label>
+                                                                <input type="text" required class="form-control" id=" fa_id" name=" fa_id" value="<?= $pd['fa_id'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                                                                 <input type="text" required class="form-control" id="group_name" name="group_name" value="<?= $pd['group_name'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
-                                                                <input type="text" required class="form-control" id="Productname" name="Productname" value="<?= $pd['pd_name'];?>" style="border-radius: 30px;">
+                                                                <label for="" class="col-form-label">ชื่อสินทรัพย์ถาวร</label>
+                                                                <input type="text" required class="form-control" id="Productname" name="Productname" value="<?= $pd['fa_name'];?>" style="border-radius: 30px;">
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
