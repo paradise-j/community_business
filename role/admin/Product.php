@@ -174,12 +174,15 @@
                                                     <div class="modal-body mt-1">
                                                         <form action="Check_edit_product.php" method="POST">
                                                             <div class="mb-3">
-                                                                <label for="" class="col-form-label">ชื่อสินค้าชุมชน  <?= $pd['pd_name']; ?></label>
-                                                                <input type="text" required class="form-control" id="Productname" name="Productname" style="border-radius: 30px;">
+                                                                <label for="" class="col-form-label">รหัสสินค้า</label>
+                                                                <input type="text" required class="form-control" id="Productid" name="Productid" value="<?= $pd['pd_id'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
-                                                            
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
+                                                                <input type="text" required class="form-control" id="Productname" name="Productname" value="<?= $pd['pd_name'];?>" style="border-radius: 30px;">
+                                                            </div>
                                                             <div class="modal-footer">
-                                                                <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">แก้ไขข้อมูล</button>
+                                                                <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
                                                             </div>
                                                         </form>
                                                     </div>
