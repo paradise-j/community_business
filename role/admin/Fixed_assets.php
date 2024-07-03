@@ -198,7 +198,7 @@
                                                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                     </div>
                                                     <div class="modal-body mt-1">
-                                                        <form action="Check_edit_product.php" method="POST">
+                                                        <form action="Check_edit_Fixed_assets.php" method="POST">
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">รหัสสินทรัพย์ถาวร</label>
                                                                 <input type="text" required class="form-control" id=" fa_id" name=" fa_id" value="<?= $pd['fa_id'];?>" style="border-radius: 30px;" readonly>
@@ -209,7 +209,7 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">ชื่อสินทรัพย์ถาวร</label>
-                                                                <input type="text" required class="form-control" id="Productname" name="Productname" value="<?= $pd['fa_name'];?>" style="border-radius: 30px;">
+                                                                <input type="text" required class="form-control" id="fa_name" name="fa_name" value="<?= $pd['fa_name'];?>" style="border-radius: 30px;">
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>

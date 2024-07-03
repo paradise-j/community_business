@@ -317,10 +317,10 @@
                                                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                     </div>
                                                     <div class="modal-body mt-1">
-                                                        <form action="Check_edit_product.php" method="POST">
+                                                        <form action="Check_edit_user.php" method="POST">
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">รหัสสมาชิก</label>
-                                                                <input type="text" required class="form-control" id="Productid" name="Productid" value="<?= $user['user_id'];?>" style="border-radius: 30px;" readonly>
+                                                                <input type="text" required class="form-control" id="userid" name="Productid" value="<?= $user['user_id'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
                                                             <div class="row mb-1">
                                                                 <div class="col-md-6">
@@ -389,13 +389,13 @@
                                                             <script>
                                                                 $('#provinces2').change(function(){
                                                                     var id_provnce = $(this).val();
-                                                                    // console.log("id_provnce = "+id_provnce);
+                                                                    console.log("id_provnce = "+id_provnce);
                                                                     $.ajax({
                                                                         type : "post",
                                                                         url : "../../address2.php",
                                                                         data : {id:id_provnce,function:'provinces2'},     
                                                                         success: function(data){
-                                                                            // console.log(data);
+                                                                            console.log(data);
                                                                             $('#amphures2').html(data);
                                                                             $('#districts2').html(' ');
                                                                             $('#zipcode2').val(' ');

@@ -163,9 +163,10 @@
                                             <td><?= $mf['mf_name']; ?></td>
                                             <!-- <td class="date_th"><?= $mf['mf_date']; ?></td> -->
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>"><i class="fas fa-eye"></i></button>
-                                                <a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a>
-                                                <a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">กูข้อมูล</i></button>
+                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">แก้ไข</i></button>
+                                                <!-- <a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
+                                                <a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบ</a>
                                             </td>
                                             <!-- <td align="center"><a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
                                             <!-- <td align="center"><a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
