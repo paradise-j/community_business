@@ -144,7 +144,6 @@
                                         <tr align="center">
                                             <th>รายการผลิต</th>
                                             <th></th>
-                                            <!-- <th></th> -->
 
                                         </tr>
                                     </thead>
@@ -168,9 +167,6 @@
                                                 <!-- <a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
                                                 <a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบ</a>
                                             </td>
-                                            <!-- <td align="center"><a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
-                                            
                                         </tr>
 
                                         <div class="modal fade" id="showdataModal<?= $mf['mf_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
