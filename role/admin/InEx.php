@@ -96,7 +96,19 @@
         </div>
     </div>
     <!-- ---------------------------------------      showdataModal ---------------------------------------------------------------------->
-    
+    <?php
+        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+            global $dayTH,$monthTH;   
+            $thai_date_return = date("j",$time);   
+            $thai_date_return.=" ".$monthTH[date("n",$time)];   
+            $thai_date_return.= " ".(date("Y",$time)+543);   
+            return $thai_date_return;   
+        } 
+    ?>
 
     <div id="wrapper">
         <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
@@ -127,7 +139,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `inex_data`");
+                                            $stmt = $db->query("SELECT * FROM `inex_data` INNER JOIN `group_comen` ON inex_data.group_id = group_comen.group_id");
                                             $stmt->execute();
                                             $inexs = $stmt->fetchAll();
                                             $count = 1;
@@ -139,9 +151,9 @@
                                         <tr>
                                             <td><?= $inex['inex_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $inex['inex_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
-                                                <a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $inex['inex_id']?>">ดูข้อมูล</button>
+                                                <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit">แก้ไข</a>
+                                                <a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบ</a>
                                             </td>
                                             <!-- <td align="center"><a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
                                             <!-- <td align="center"><a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
@@ -156,19 +168,19 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่ม : </b><?= $inex['inex_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ทำรายการ : </b><?= thai_date_fullmonth(strtotime($inex['inex_date'])); ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จังหวัด : </b><?= $inex['inex_pv']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่มวิสาหกิจ : </b><?= $inex['group_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>อำเภอ : </b><?= $inex['inex_dis']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ประเภทรายการ : </b><?= $inex['inex_type']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ตำบล : </b><?= $inex['inex_subdis']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อรายการ : </b><?= $inex['inex_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสไปรษณีย์ : </b><?= $inex['inex_zip']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวนเงิน : </b><?= $inex['inex_price']." บาท"; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>

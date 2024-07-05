@@ -173,6 +173,9 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสกลุ่มวิสาหกิจ : </b><?= $gcom['group_id']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่ม : </b><?= $gcom['group_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
