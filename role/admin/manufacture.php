@@ -70,7 +70,7 @@
                         <div class="mb-3">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่ในการผลิต</label>
-                            <input type="date" required class="form-control" name="date" min="<?= $date; ?>" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อสินค้าที่ผลิต</label>

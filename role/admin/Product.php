@@ -67,7 +67,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_product.php" method="POST">
+                    <form action="Check_Add_product.php" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
@@ -88,6 +88,14 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
                             <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
+                        </div>
+                        <div class="col-md-1 text-center">
+                            <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImg" alt="">
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
+                            <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
+                            <input type="file" class="form-control" id="imgInput" style="border-radius: 30px;" name="img" required>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -137,12 +145,13 @@
                                     <thead>
                                         <tr align="center">
                                             <th>ชื่อสินค้าชุมชน</th>
+                                            <th>รูปสินค้า</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT product.pd_id , product.pd_date, product.pd_name , product.group_id , group_comen.group_name as group_name 
+                                            $stmt = $db->query("SELECT product.pd_id , product.pd_date, product.pd_name , product.pd_img, product.group_id , group_comen.group_name as group_name 
                                                                 FROM `product` INNER JOIN `group_comen` ON group_comen.group_id = product.group_id");
                                             $stmt->execute();
                                             $pds = $stmt->fetchAll();
@@ -152,8 +161,9 @@
                                             } else {
                                              foreach($pds as $pd)  {  
                                         ?>
-                                        <tr>
-                                            <td><?= $pd['pd_name']; ?></td>
+                                        <tr align="center">
+                                            <td width="200px"><?= $pd['pd_name']; ?></td>
+                                            <td width="150px"><img class="rounded" width="100%" src="uploads/<?= $pd['pd_img']; ?>" alt=""></td>
                                             <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>">ดูข้อมูล</button>
@@ -193,7 +203,7 @@
                                                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                     </div>
                                                     <div class="modal-body mt-1">
-                                                        <form action="Check_edit_product.php" method="POST">
+                                                        <form action="Check_edit_product.php" method="POST" enctype="multipart/form-data">
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">รหัสสินค้า</label>
                                                                 <input type="text" required class="form-control" id="Productid" name="Productid" value="<?= $pd['pd_id'];?>" style="border-radius: 30px;" readonly>
@@ -206,6 +216,25 @@
                                                                 <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
                                                                 <input type="text" required class="form-control" id="Productname" name="Productname" value="<?= $pd['pd_name'];?>" style="border-radius: 30px;">
                                                             </div>
+                                                            <div class="col-md-1 text-center">
+                                                                <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImgEdit" alt="">
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-7">
+                                                                <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
+                                                                <input type="file" class="form-control" id="imgInputEdit" style="border-radius: 30px;" name="img" required>
+                                                            </div>
+                                                            <script>
+                                                                let imgInputEdit = document.getElementById('imgInputEdit');
+                                                                let previewImgEdit = document.getElementById('previewImgEdit');
+
+                                                                imgInputEdit.onchange = evt => {
+                                                                    const [file] = imgInputEdit.files;
+                                                                        if (file) {
+                                                                            previewImgEdit.src = URL.createObjectURL(file)
+                                                                    }
+                                                                }
+                                                            </script>
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
                                                             </div>
@@ -251,6 +280,15 @@
 
 
     <script>
+        let imgInput = document.getElementById('imgInput');
+        let previewImg = document.getElementById('previewImg');
+
+        imgInput.onchange = evt => {
+            const [file] = imgInput.files;
+                if (file) {
+                    previewImg.src = URL.createObjectURL(file)
+            }
+        }
 
  
 
