@@ -165,7 +165,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="number" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="pricepd" min="" name="pricepd" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label">จำนวนที่ขาย</label>
@@ -190,16 +190,7 @@
                                         <h5 class="m-0 font-weight-bold text-primary">สรุปการขายสินค้า</h5>
                                     </div>
                                     <form action="Check_Add_salepd.php" method="post">
-                                        <!-- <div class="row mb-4">
-                                            <div class="col-md-2">
-                                                <label class="form-label">ประเภทการขาย</label>
-                                                <select class="form-control" aria-label="Default select example"  id="typeS" name="typeS" style="border-radius: 30px;" required>
-                                                    <option value="1">เครดิต</option>
-                                                    <option value="2">เงินสด</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
-                                        <div class="row mb-4">
+                                        <div class="row mb-3">
                                             <div class="col-md-2">
                                                 <label class="form-label">ประเภทการขาย</label>
                                                 <select class="form-control" aria-label="Default select example"  id="typeS" name="typeS" style="border-radius: 30px;" required>
@@ -209,21 +200,27 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="form-label">ชื่อผู้ซื้อ</label>
-                                                <input type="text" class="form-control" name="cus" style="border-radius: 30px;" required>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="form-label">เบอร์โทรศัพท์</label>
-                                                <input type="text" class="form-control" name="phone" style="border-radius: 30px;" required>
-                                            </div>
-                                            <div class="col-md-2">
                                                 <label class="form-label">วันที่ขาย</label>
                                                 <?php $date = date('Y-m-d'); ?>
                                                 <input type="date" class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label">ส่วนลดต่อบิล</label>
-                                                <input type="number" class="form-control" id="phone" name="discount" step="0.01" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="phone" name="discount" step="0.01" value="0" style="border-radius: 30px;" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-2">
+                                                <button class="btn btn-primary " style="border-radius: 30px; font-size: 0.8rem;" type="submit" name="save_sale">ค้นหาข้อมูลสมาชิก</button>
+                                            </div>
+                                            
+                                            <div class="col-md-3">
+                                                <label class="form-label" name="cus">ชื่อผู้ซื้อ</label>
+                                                <!-- <input type="text" class="form-control" name="cus" style="border-radius: 30px;" required> -->
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="form-label" name="phone">เบอร์โทรศัพท์</label>
+                                                <!-- <input type="text" class="form-control" name="phone" style="border-radius: 30px;" required> -->
                                             </div>
                                         </div>
                                         <div class="table-responsive">
@@ -360,7 +357,8 @@
                 data : {id:id_pname,function:'pdname'},     
                 success: function(data){
                     console.log("price = ",data);
-                    $('#pdcost').val(data);
+                    $('#pdcost').val(data); 
+                    $('#pricepd').val(data);
 
                 }
             });
