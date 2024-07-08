@@ -55,10 +55,10 @@
         $row = $pd->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        // if($_POST["quantity"] > $gg_quantity){
-        //     $_SESSION['error'] = 'ยอดสินค้าของท่านไม่เพียงพอ';
-        //     header("refresh:2; url=Sale.php");
-        // }else{
+        if($_POST["pricepd"] < $_POST["pdcost"]){
+            $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
+            header("refresh:2; url=Sale.php");
+        }else{
             $item_array = array(
 
                 'item_pdname'       =>     $Namepd,
@@ -69,7 +69,7 @@
                 $_SESSION["shopping_cart"][] =  $item_array;
             header("location:Sale.php");
             exit;
-        // }
+        }
     }
 
     if(isset($_GET['action'])){
@@ -119,7 +119,7 @@
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-5">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 text-center">
                                     <h5 class="m-0 font-weight-bold text-primary">รายละเอียดการขาย</h5>
@@ -141,8 +141,7 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-1"></div>
-                                            
-                                            <div class="col-md-3">
+                                            <div class="col-md-5">
                                                 <label class="form-label">ชื่อผลิตภัณฑ์</label>
                                                 <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
@@ -159,15 +158,18 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-4">
                                                 <label class="form-label">ราคาทุน</label>
-                                                <input type="text" class="form-control" id="pdcost" name="pdcost" style="border-radius: 30px;" required readonly>
+                                                <input type="text" class="form-control" id="pdcost" name="pdcost" style="border-radius: 30px; color:red;" required readonly>
                                             </div>
-                                            <div class="col-md-2">
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-4">
                                                 <label class="form-label">ราคาขาย</label>
                                                 <input type="number" class="form-control" id="pricepd" min="" name="pricepd" style="border-radius: 30px;" required>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-4">
                                                 <label class="form-label">จำนวนที่ขาย</label>
                                                 <input type="number" class="form-control" id="quantity" name="quantity" step="0.01" style="border-radius: 30px;" required>
                                             </div>
@@ -181,9 +183,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-7">
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="card-header py-3 text-center mb-4">
@@ -191,7 +191,26 @@
                                     </div>
                                     <form action="Check_Add_salepd.php" method="post">
                                         <div class="row mb-3">
-                                            <div class="col-md-2">
+                                            <div class="col-md-3 mb-3">
+                                                <!-- <label class="form-label" name="phone"></label> -->
+                                                <input type="text" class="form-control" id="id_mem" name="id_mem" style="border-radius: 30px;" placeholder="เบอร์โทรศัพท์">
+                                            </div>
+                                            <div class="col-md-3 mb-3 mt-1">
+                                                <button class="btn-primary " style="border-radius: 30px; font-size: 0.9rem;" type="submit" id="show_dataMem" name="show_dataMem">ค้นหาข้อมูลสมาชิก</button>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <!-- <label class="form-label" name="cus">ชื่อผู้ซื้อ</label> -->
+                                                <input type="text" class="form-control" id="cus" name="cus" style="border-radius: 30px;" readonly>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <!-- <label class="form-label" name="phone">เบอร์โทรศัพท์</label> -->
+                                                <input type="text" class="form-control" id="phone" name="phone" style="border-radius: 30px;" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-3">
                                                 <label class="form-label">ประเภทการขาย</label>
                                                 <select class="form-control" aria-label="Default select example"  id="typeS" name="typeS" style="border-radius: 30px;" required>
                                                 <option selected disabled>กรุณาเลือก....</option>    
@@ -199,7 +218,7 @@
                                                     <option value="cash">เงินสด</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-4">
                                                 <label class="form-label">วันที่ขาย</label>
                                                 <?php $date = date('Y-m-d'); ?>
                                                 <input type="date" class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;" required>
@@ -209,20 +228,7 @@
                                                 <input type="number" class="form-control" id="phone" name="discount" step="0.01" value="0" style="border-radius: 30px;" required>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-2">
-                                                <button class="btn btn-primary " style="border-radius: 30px; font-size: 0.8rem;" type="submit" name="save_sale">ค้นหาข้อมูลสมาชิก</button>
-                                            </div>
-                                            
-                                            <div class="col-md-3">
-                                                <label class="form-label" name="cus">ชื่อผู้ซื้อ</label>
-                                                <!-- <input type="text" class="form-control" name="cus" style="border-radius: 30px;" required> -->
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="form-label" name="phone">เบอร์โทรศัพท์</label>
-                                                <!-- <input type="text" class="form-control" name="phone" style="border-radius: 30px;" required> -->
-                                            </div>
-                                        </div>
+                                        
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead class="thead-light">
@@ -275,7 +281,6 @@
                             </div> 
                         </div>
                     </div>
-
                 </div>
             </div>
             <?php include('../../footer/footer.php');?> <!-- Footer -->
@@ -359,6 +364,30 @@
                     console.log("price = ",data);
                     $('#pdcost').val(data); 
                     $('#pricepd').val(data);
+
+                }
+            });
+        });
+
+        $('#show_dataMem').click(function(){
+            var id_mem = $('#id_mem').val();
+            // console.log("id_mem = ",id_mem);
+            $.ajax({
+                type : "post",
+                url : "../../api/id_mem.php",
+                data : {id:id_mem,function:'id_mem'},     
+                success: function(data){
+                    // console.log("price = ",data);
+                    data.forEach(item => {
+                        // console.log("cusname = ",item.cus_name);
+                        // console.log("cusphone = ",item.cus_phone);
+                        $('#cus').val(item.cus_name); 
+                        $('#phone').val(item.cus_phone); 
+
+                    })
+                    
+                    
+                    // $('#phone').val(data[1]);
 
                 }
             });
