@@ -266,10 +266,33 @@
                                                             $stmt->execute();
                                                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
                                                             extract($row);
+                                                            $Newtotal = ($total*100)/$plant['plant_target'];
                                                         ?>
-                                                            <h4 class="small font-weight-bold">เป้าหมายการส่งผลผลิต <span class="float-right"><?= $total; ?> %</span></h4>
+                                                        <div class="mb-3">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่ส่งไปแล้ว : </b>
+                                                                <?php  
+                                                                    if($total == 0){
+                                                                        echo 0;
+                                                                    }else{
+                                                                        echo $total; 
+                                                                    }
+                                                                ?>
+                                                            กิโลกรัม 
+                                                            </label>
+                                                        </div>
+                                                            <h4 class="small font-weight-bold">การส่งผลผลิต 
+                                                                <span class="float-right">
+                                                                    <?php  
+                                                                        if($Newtotal == 0){
+                                                                            echo 0;
+                                                                        }else{
+                                                                            echo $Newtotal; 
+                                                                        }
+                                                                    ?> 
+                                                                %</span>
+                                                            </h4>
                                                         <div class="progress mb-2">
-                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= $total; ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= $Newtotal; ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                                             
                                                         </div>
                                                     </div>
