@@ -40,27 +40,34 @@
             array_push($check,$name);
         }
 
-        if(!in_array($cus, $check)){
+        
+        
+        if(!in_array($cus, $check) && !is_null($cus)){
             $sql = $db->prepare("INSERT INTO `customer`(`cus_name`, `cus_phone`) VALUES ('$cus', '$phone')");
             $sql->execute();
         }
-            
-        
-        // ----------------------------- customer -----------------------------
 
-        $cuss = $db->prepare("SELECT * FROM `customer`");
-        $cuss->execute();
-        while ($row = $cuss->fetch(PDO::FETCH_ASSOC)) {
-            if($cus == $row["cus_name"]){
-                $cus_id = $row["cus_id"]; 
-                break;
+
+
+        if(empty($cus) ){
+            $cus_id = "General";
+            echo $cus_id;
+        }else{
+            $cuss = $db->prepare("SELECT * FROM `customer`");
+            $cuss->execute();
+            while ($row = $cuss->fetch(PDO::FETCH_ASSOC)) {
+                if($cus == $row["cus_name"]){
+                    $cus_id = $row["cus_id"]; 
+                    break;
+                }
             }
         }
-        
 
        
       // ----------------------------- credit -----------------------------
       if ($typeS == "credit") {
+
+        
 
         $cd = $db->prepare("SELECT `cd_pay` FROM `credit` WHERE `cd_name` = '$cus_id'");
         $cd->execute();
