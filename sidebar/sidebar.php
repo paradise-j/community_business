@@ -88,7 +88,7 @@
                 <a class="collapse-item" href="Plant_orderlist.php">รายการการสั่งซื้อ</a>
                 <a class="collapse-item" href="PlanFollow.php">วางแผนแการเพาะปลูก</a>
                 <a class="collapse-item" href="Bproduce.php">รับซื้อผลผลิต</a>
-                <a class="collapse-item" href="Bproduce.php">ส่งออกผลผลิต</a>
+                <a class="collapse-item" href="Export_products.php">ส่งออกผลผลิต</a>
             </div>
         </div>
     </li>

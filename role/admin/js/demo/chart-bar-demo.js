@@ -35,86 +35,240 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     return json;
   }
 
-  // Bar Chart Example
   var ctx = document.getElementById("myBarChart");
+  const data = await get_total_goat();
+  var my_data1 = [];
+  var my_data2 = [];
+  var my_data3 = [];
+  var my_label = [];
+  var Unique_label = [];
+  data.forEach(item => {
+    switch (item.gg_type) {
+      case '1':
+        switch (item.month) {
+          case '1':
+            my_data1.push(item.total)
+            break;
+          case '2':
+            my_data1.push(item.total)
+            break;
+          case '3':
+            my_data1.push(item.total)
+            break;
+          case '4':
+            my_data1.push(item.total)
+            break;
+          case '5':
+            my_data1.push(item.total)
+            break;
+          case '6':
+            my_data1.push(item.total)
+            break;
+          case '7':
+            my_data1.push(item.total)
+            break;
+          case '8':
+            my_data1.push(item.total)
+            break;
+          case '9':
+            my_data1.push(item.total)
+            break;
+          case '10':
+            my_data1.push(item.total)
+            break;
+          case '11':
+            my_data1.push(item.total)
+            break;
+          case '12':
+            my_data1.push(item.total)
+            break;
+        }
+      break;
+      case '2':
+        switch (item.month) {
+          case '1':
+            my_data2.push(item.total)
+            break;
+          case '2':
+            my_data2.push(item.total)
+            break;
+          case '3':
+            my_data2.push(item.total)
+            break;
+          case '4':
+            my_data2.push(item.total)
+            break;
+          case '5':
+            my_data2.push(item.total)
+            break;
+          case '6':
+            my_data2.push(item.total)
+            break;
+          case '7':
+            my_data2.push(item.total)
+            break;
+          case '8':
+            my_data2.push(item.total)
+            break;
+          case '9':
+            my_data2.push(item.total)
+            break;
+          case '10':
+            my_data2.push(item.total)
+            break;
+          case '11':
+            my_data2.push(item.total)
+            break;
+          case '12':
+            my_data2.push(item.total)
+            break;
+        }
+      break;
+      case '3':
+        switch (item.month) {
+          case '1':
+            my_data3.push(item.total)
+            break;
+          case '2':
+            my_data3.push(item.total)
+            break;
+          case '3':
+            my_data3.push(item.total)
+            break;
+          case '4':
+            my_data3.push(item.total)
+            break;
+          case '5':
+            my_data3.push(item.total)
+            break;
+          case '6':
+            my_data3.push(item.total)
+            break;
+          case '7':
+            my_data3.push(item.total)
+            break;
+          case '8':
+            my_data3.push(item.total)
+            break;
+          case '9':
+            my_data3.push(item.total)
+            break;
+          case '10':
+            my_data3.push(item.total)
+            break;
+          case '11':
+            my_data3.push(item.total)
+            break;
+          case '12':
+            my_data3.push(item.total)
+            break;
+        }
+      break;
+      
+    }
+    switch (item.month) {
+      case '1':
+        my_label.push('ม.ค.')
+        break;
+      case '2':
+        my_label.push('ก.พ.')
+        break;
+      case '3':
+        my_label.push('มี.ค.')
+        break;
+      case '4':
+        my_label.push('เม.ษ.')
+        break;
+      case '5':
+        my_label.push('พ.ค.')
+        break;
+      case '6':
+        my_label.push('มิ.ย.')
+        break;
+      case '7':
+        my_label.push('ก.ค.')
+        break;
+      case '8':
+        my_label.push('ส.ค.')
+        break;
+      case '9':
+        my_label.push('ก.ย.')
+        break;
+      case '10':
+        my_label.push('ต.ค.')
+        break;
+      case '11':
+        my_label.push('พ.ย.')
+        break;
+      case '12':
+        my_label.push('ธ.ค.')
+        break; 
+    }
+  });
+
+  for( var i=0; i<my_label.length; i++ ) {
+    if ( Unique_label.indexOf( my_label[i] ) < 0 ) {
+      Unique_label.push( my_label[i] );
+    }
+  } 
+
+  // console.log("my_data1 => "+ my_data1);
+  // console.log("my_data2 => "+ my_data2);
+  // console.log("my_data3 => "+ my_data3);
+  // console.log("my_label => "+ Unique_label);
+
+  // Bar Chart Example
+  var ctx = document.getElementById('myBarChart');
   var myBarChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ["January", "February", "March", "April", "May", "June"],
-      datasets: [{
-        label: "Revenue",
-        backgroundColor: "#4e73df",
-        hoverBackgroundColor: "#2e59d9",
-        borderColor: "#4e73df",
-        data: [4215, 5312, 6251, 7841, 9821, 14984],
-      }],
-    },
-    options: {
-      maintainAspectRatio: false,
-      layout: {
-        padding: {
-          left: 10,
-          right: 25,
-          top: 25,
-          bottom: 0
-        }
+      type: 'bar',
+      data: {
+          labels: Unique_label,
+          datasets: [{
+          label: "ยอดตามเป้าหมาย",
+          backgroundColor: "#2a86e9",
+          borderColor: "#2a86e9",
+          data: my_data1
+          },{
+          label: "ยอดที่ส่งไปแล้ว",
+          backgroundColor: "#2ae955",
+          borderColor: "#2ae955",
+          data: my_data2
+          }],
       },
-      scales: {
-        xAxes: [{
-          time: {
-            unit: 'month'
-          },
-          gridLines: {
-            display: false,
-            drawBorder: false
-          },
-          ticks: {
-            maxTicksLimit: 6
-          },
-          maxBarThickness: 25,
-        }],
-        yAxes: [{
-          ticks: {
-            min: 0,
-            max: 15000,
-            maxTicksLimit: 5,
-            padding: 10,
-            // Include a dollar sign in the ticks
-            callback: function(value, index, values) {
-              return '$' + number_format(value);
+      options: {
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+            left: 10,
+            right: 25,
+            top: 25,
+            bottom: 0
             }
-          },
-          gridLines: {
-            color: "rgb(234, 236, 244)",
-            zeroLineColor: "rgb(234, 236, 244)",
-            drawBorder: false,
-            borderDash: [2],
-            zeroLineBorderDash: [2]
-          }
-        }],
-      },
-      legend: {
-        display: false
-      },
-      tooltips: {
-        titleMarginBottom: 10,
-        titleFontColor: '#6e707e',
-        titleFontSize: 14,
-        backgroundColor: "rgb(255,255,255)",
-        bodyFontColor: "#858796",
-        borderColor: '#dddfeb',
-        borderWidth: 1,
-        xPadding: 15,
-        yPadding: 15,
-        displayColors: false,
-        caretPadding: 10,
-        callbacks: {
-          label: function(tooltipItem, chart) {
-            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-          }
-        }
-      },
+        },
+        scales: {
+            xAxes: [{
+            time: {
+                unit: 'month'
+            },
+            gridLines: {
+                display: false,
+                drawBorder: false
+            },
+            ticks: {
+                maxTicksLimit: 12
+            },
+                maxBarThickness: 50,
+            }],
+            yAxes: [{
+                ticks: {
+                    min: 0,
+                    max: 100000,
+                }
+            }],
+        },
+        legend: {
+            display: true
+        },
     }
   });
 });

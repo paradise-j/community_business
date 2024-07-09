@@ -4,19 +4,10 @@
     session_start();
     require_once "../../connect.php";
 
-    if (isset($_POST['submit'])) {
-        // $pld_id = $_POST['pld_id'];
-        $Sdate = $_POST['Sdate'];
-        $Edate = $_POST['Edate'];
-        $name = $_POST['name'];
-        $latitude = $_POST['latitude'];
-        $longitude = $_POST['longitude'];
-        $target = $_POST['target'];
-        $g_id = $_POST['g_id'];
 
-    
-        $sql = $db->prepare("INSERT INTO `planting`(`plant_name`, `plant_latitude`, `plant_longitude`, `plant_target`, `plant_date`, `plant_harvest`, `plant_grower`)
-                             VALUES ('$name',$latitude ,$longitude ,$target ,'$Sdate','$Edate','$g_id')");
+    if (isset($_REQUEST['update_id'])) {
+        $id = $_REQUEST['update_id'];    
+        $sql = $db->prepare("UPDATE `planting` SET `plant_status`='1' WHERE `plant_id`='$id'");
         $sql->execute();
 
         if ($sql) {

@@ -29,6 +29,28 @@
             header("refresh:1; url=PlanFollow.php");
         }
     }
+
+    if (isset($_GET['update_id'])) {
+        $update_id = $_GET['update_id'];
+        $deletestmt = $db->query("UPDATE `planting` SET `plant_status`='1' WHERE `plant_id` = '$update_id'");
+        $deletestmt->execute();
+        
+        if ($deletestmt) {
+            // echo "<script>alert('Data has been deleted successfully');</script>";
+            echo "<script>
+                $(document).ready(function() {
+                    Swal.fire({
+                        title: 'สำเร็จ',
+                        text: 'ปรับสถานะข้อมูลเรียบร้อยแล้ว',
+                        icon: 'success',
+                        timer: 5000,
+                        showConfirmButton: false
+                    });
+                })
+            </script>";
+            header("refresh:1; url=PlanFollow.php");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,6 +138,17 @@
                                 ?>
                             </select>
                         </div>
+                        <div class="row mb-2">
+                                <div class="col mb-2">
+                                    <label for="" class="col-form-label">ละติจูด ของแปลงที่ปลูก</label>
+                                    <input type="text" required class="form-control" name="latitude" id="latitude" style="border-radius: 30px;">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="" class="col-form-label">ลองจิจูด ของแปลงที่ปลูก</label>
+                                    <input type="text" required class="form-control" name="longitude" id="longitude" style="border-radius: 30px;">
+                                </div>
+                        </div>
+                       
                         <div class="mb-3">
                             <label for="" class="col-form-label">เป้าหมายการผลิต &nbsp&nbsp&nbsp
                                 <label style="color:red;" >** หน่วยเป็น กิโลกรัม **</label>
@@ -213,7 +246,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_target`,`plant_date`,`plant_harvest`,`plant_grower`,grower.gw_name
+                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_target`,`plant_date`,`plant_harvest`,`plant_grower`,`plant_status`,grower.gw_name
                                                                 FROM `planting` 
                                                                 INNER JOIN `grower` ON grower.gw_id = planting.plant_grower");
                                             $stmt->execute();
@@ -280,6 +313,17 @@
                                                             กิโลกรัม 
                                                             </label>
                                                         </div>
+                                                        <div class="mb-3">
+                                                            <label class="col-form-label" style="font-size: 1.25rem; "><b>สถานะการส่งของ : </b>
+                                                                <?php  
+                                                                    if($plant['plant_status'] == 1){
+                                                                        echo "ส่งครบสมบูรณ์";
+                                                                    }else{
+                                                                        echo "ยังส่งไม่ครบสมบูรณ์"; 
+                                                                    }
+                                                                ?>
+                                                            </label>
+                                                        </div>
                                                             <h4 class="small font-weight-bold">การส่งผลผลิต 
                                                                 <span class="float-right">
                                                                     <?php  
@@ -292,8 +336,11 @@
                                                                 %</span>
                                                             </h4>
                                                         <div class="progress mb-2">
-                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= $Newtotal; ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                                            
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= $Newtotal; ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>  
+                                                        </div>
+                                                        <div class="modal-footer mb-2">
+                                                            <!-- <a href="check_update_status.php?update_id=<?= $plant['plant_id']; ?>" class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" name="status">ปรับสถานะ</a> -->
+                                                            <a data-id="<?= $plant['plant_id']; ?>" href="?update_id=<?= $plant['plant_id']; ?>" class="btn btn-info update-btn" style="border-radius: 30px; font-size: 0.9rem;" name="status">ปรับสถานะ</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -336,59 +383,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-    <!-- <script>
-        $(document).ready(function() {  
-            $(".add_item").click(function(e) {
-                // console.log("111");
-                e.preventDefault();
-                $("#show_item").prepend(`
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="mb-2">
-                                <label for="" class="col-form-label">รหัสผู้รับผิดชอบ</label>
-                                <select class="form-control" aria-label="Default select example" id="grower" name="grower" style="border-radius: 30px;" required>
-                                    <option selected disabled>เลือกรหัส....</option>
-                                    <?php 
-                                        $stmt = $db->query("SELECT * FROM `grower`");
-                                        $stmt->execute();
-                                        $gws = $stmt->fetchAll();
-                                        
-                                        foreach($gws as $gw){
-                                    ?>
-                                    <option value="<?= $gw['gw_id']?>"><?= $gw['gw_id']?></option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-2">
-                                <label for="" class="col-form-label">ชื่อผู้รับผิดชอบ</label>
-                                <input type="text" required class="form-control" name="gw_name" id="gw_name" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="mt-3">
-                                <br>
-                                <button class="btn btn-danger remove_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                    </div>`
-                    
-                );
-            });
-
-            $(document).on('click', '.remove_item', function(e) {
-                e.preventDefault();
-                let row_item = $(this).parent().parent().parent();
-                $(row_item).remove();
-            });
-
-        });
-    </script> -->
-
-
+    
     <script>
         // $(document).ready(function () {
         //     $('#Sdate').datepicker({
@@ -410,12 +405,56 @@
              });
          });
 
+         $(".update-btn").click(function(e) {
+            var userId = $(this).data('id');
+            e.preventDefault();
+            updateConfirm(userId);
+        })
+
+
+        function updateConfirm(userId) {
+            Swal.fire({
+                title: 'ปรับสถานะ',
+                text: "คุณแน่ใจใช่หรือไม่ที่จะปรับสถานะข้อมูลนี้",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ปรับสถานะ',
+                showLoaderOnConfirm: true,
+                preConfirm: function() {
+                    return new Promise(function(resolve) {
+                        $.ajax({
+                                url: 'PlanFollow.php',
+                                type: 'GET',
+                                data: 'update_id=' + userId,
+                            })
+                            .done(function() {
+                                Swal.fire({
+                                    title: 'สำเร็จ',
+                                    text: 'ปรับสถานะข้อมูลเรียบร้อยแล้ว',
+                                    icon: 'success',
+                                }).then(() => {
+                                    document.location.href = 'PlanFollow.php';
+                                })
+                            })
+                            .fail(function() {
+                                Swal.fire({
+                                    title: 'ไม่สำเร็จ',
+                                    text: 'ปรับสถานะข้อมูลไม่สำเร็จ',
+                                    icon: 'danger',
+                                })
+                                window.location.reload();
+                            });
+                    });
+                },
+            });
+        }
+
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
             e.preventDefault();
             deleteConfirm(userId);
         })
-
 
         function deleteConfirm(userId) {
             Swal.fire({
