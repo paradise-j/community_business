@@ -181,13 +181,17 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่เพิ่มข้อมูลสินค้า : </b><?= thai_date_fullmonth(strtotime($pd['pd_date'])) ; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่เพิ่มข้อมูลสินค้า : </b> <?= thai_date_fullmonth(strtotime($pd['pd_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>กลุ่มวิสาหกิจชุมชน : </b><?= $pd['group_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>กลุ่มวิสาหกิจชุมชน : </b> <?= $pd['group_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินค้าชุมชน : </b><?= $pd['pd_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินค้าชุมชน : </b> <?= $pd['pd_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพสินค้าชุมชน : </b> </label><br>
+                                                            <img class="rounded" width="50%" src="uploads/<?= $pd['pd_img']; ?>" alt="">
                                                         </div>
                                                     </div>
                                                 </div>
