@@ -126,7 +126,7 @@
                             <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกผัก....</option>
                                 <?php 
-                                    $stmt = $db->query("SELECT * FROM `vegetable`");
+                                    $stmt = $db->query("SELECT `pd_id` as veget_id ,`pd_name` as veget_name  FROM `product` WHERE `group_id` = 'CM007'");
                                     $stmt->execute();
                                     $vgs = $stmt->fetchAll();
                                     

@@ -112,17 +112,6 @@
                             <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
                             <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกผัก....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT `pd_id`,`pd_name` FROM `product` WHERE `group_id` = 'CM007'");
-                                    $stmt->execute();
-                                    $vgs = $stmt->fetchAll();
-                                    
-                                    foreach($vgs as $vg){
-                                ?>
-                                <option value="<?= $vg['pd_id']?>"><?= $vg['pd_name']?></option>
-                                <?php
-                                    }
-                                ?>
                             </select>
                         </div>
                         <div class="mb-2">
@@ -296,7 +285,19 @@
                      $('#g_id').val(data);
                  }
              });
+
+             $.ajax({
+                type : "post",
+                url : "../../api/nameplant.php",
+                data : {id:id_gw,function:'g_id'},     
+                success: function(data){
+                    console.log(data);
+                    $('#name').html(data);
+                    
+                }
+            });
         });
+
 
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
