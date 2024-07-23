@@ -314,9 +314,9 @@
                                                         <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลสมาชิก</h5>
                                                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                     </div>
-                                                    <div class="modal-body mt-1">
+                                                    <div class="modal-body">
                                                         <form action="Check_edit_user.php" method="POST">
-                                                            <div class="mb-3">
+                                                            <div class="mb-1">
                                                                 <label for="" class="col-form-label">รหัสสมาชิก</label>
                                                                 <input type="text" required class="form-control" id="userid" name="Productid" value="<?= $user['user_id'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
@@ -386,12 +386,12 @@
 
                                                             <script>
                                                                 $('#provinces2').change(function(){
-                                                                    var id_provnce = $(this).val();
-                                                                    console.log("id_provnce = "+id_provnce);
+                                                                    var id_provnce2 = $(this).val();
+                                                                    console.log("id_provnce2 = "+id_provnce2);
                                                                     $.ajax({
                                                                         type : "post",
                                                                         url : "../../address2.php",
-                                                                        data : {id:id_provnce,function:'provinces2'},     
+                                                                        data : {id:id_provnce2,function:'provinces2'},     
                                                                         success: function(data){
                                                                             console.log(data);
                                                                             $('#amphures2').html(data);
