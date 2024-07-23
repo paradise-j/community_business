@@ -10,7 +10,8 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `group_comen` WHERE `group_id` = '$delete_id'");
+        echo $delete_id;
+        $deletestmt = $db->query("DELETE FROM `user_data` WHERE `user_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +27,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=user_regis.php");
         }
     }
 ?>
@@ -255,17 +256,14 @@
                                              foreach($users as $user)  {  
                                         ?>
                                         <tr>
-                                            <!-- <td align="center"><?= $user['user_reid']; ?></td> -->
-                                            <td><?= $user['user_Fname']." ".$user['user_Lname']; ?></td>
+                                            <!-- <td align="center"><?= $user['user_id']; ?></td> -->
+                                            <td align="center"><?= $user['user_Fname']." ".$user['user_Lname']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $user['user_id']?>">ดูข้อมูล</button>
                                                 <!-- <a href="Edit_user.php?edit_id=<?= $user['user_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
                                                 <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $user['user_id'];?>">แก้ไข</button>
                                                 <a data-id="<?= $user['user_id']; ?>" href="?delete=<?= $user['user_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
-                                            </td>
-                                            <!-- <td align="center"><a href="Edit_user.php?edit_id=<?= $user['user_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
-                                            <!-- <td align="center"><a data-id="<?= $user['user_id']; ?>" href="?delete=<?= $user['user_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: .75rem;"><i class="fa-solid fa-trash"></i></a></td> -->
-                                            
+                                            </td>                                     
                                         </tr>
 
                                         <div class="modal fade" id="showdataModal<?= $user['user_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -479,6 +477,7 @@
     <script>
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
+            // console.log(userId);
             e.preventDefault();
             deleteConfirm(userId);
         })
@@ -495,7 +494,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'information_G_agc.php',
+                                url: 'user_regis.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -505,7 +504,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'information_G_agc.php';
+                                    document.location.href = 'user_regis.php';
                                 })
                             })
                             .fail(function() {
@@ -583,25 +582,6 @@
                 }
             });
         });
-
-    </script>
-    <script>
-        // function autoTab(obj) {
-        //     var pattern = new String("_-____-_____-_-__"); // กำหนดรูปแบบในนี้
-        //     var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
-        //     var returnText = new String("");
-        //     var obj_l = obj.value.length;
-        //     var obj_l2 = obj_l - 1;
-        //     for (i = 0; i < pattern.length; i++) {
-        //         if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
-        //             returnText += obj.value + pattern_ex;
-        //             obj.value = returnText;
-        //         }
-        //     }
-        //     if (obj_l >= pattern.length) {
-        //         obj.value = obj.value.substr(0, pattern.length);
-        //     }
-        // }
 
     </script>
 
