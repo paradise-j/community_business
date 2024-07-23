@@ -5,7 +5,7 @@
     require_once "../../connect.php";
 
     if (isset($_POST['submit'])) {
-        $reid = $_POST['reid'];
+        // $reid = $_POST['reid'];
         $Fname = $_POST['Fname'];
         $Lname = $_POST['Lname'];
         $phone = $_POST['phone']; 
@@ -34,9 +34,9 @@
         $permission = $_POST['permission'];
         $group_id = $_POST['group_id'];
 
-        $sql = $db->prepare("INSERT INTO `user_data`(`user_reid`, `user_Fname`, `user_Lname`, `user_perid`, `user_phone` , `user_num`, 
+        $sql = $db->prepare("INSERT INTO `user_data`(`user_Fname`, `user_Lname`, `user_perid`, `user_phone` , `user_num`, 
                                                      `user_subdis`, `user_dis`, `user_pv`, `user_zip`, `group_id`)
-                             VALUES ('$reid','$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$group_id')");
+                             VALUES ('$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$group_id')");
         $sql->execute();
 
         $us_id = $db->query("SELECT `user_id` as id FROM `user_data` WHERE `user_perid` = '$perid'");
