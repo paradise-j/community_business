@@ -305,9 +305,9 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่ส่งไปแล้ว : </b>
                                                                 <?php  
                                                                     if($total == 0){
-                                                                        echo 0;
+                                                                        echo 0.00;
                                                                     }else{
-                                                                        echo $total; 
+                                                                        echo  number_format($total,2) ; 
                                                                     }
                                                                 ?>
                                                             กิโลกรัม 
@@ -330,13 +330,13 @@
                                                                         if($Newtotal == 0){
                                                                             echo 0;
                                                                         }else{
-                                                                            echo $Newtotal; 
+                                                                            echo  number_format($Newtotal,2); 
                                                                         }
                                                                     ?> 
                                                                 %</span>
                                                             </h4>
                                                         <div class="progress mb-2">
-                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= $Newtotal; ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>  
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <?= number_format($Newtotal,2); ?>%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>  
                                                         </div>
                                                         <div class="modal-footer mb-2">
                                                             <!-- <a href="check_update_status.php?update_id=<?= $plant['plant_id']; ?>" class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" name="status">ปรับสถานะ</a> -->
