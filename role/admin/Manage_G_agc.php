@@ -157,7 +157,8 @@
                                             <td><?= $gcom['group_name']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $gcom['group_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_gcom.php?edit_id=<?= $gcom['group_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"></i>แก้ไข</a>
+                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $gcom['group_id'];?>">แก้ไข</button>
+                                                <!-- <a href="Edit_gcom.php?edit_id=<?= $gcom['group_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"></i>แก้ไข</a> -->
                                                 <a data-id="<?= $gcom['group_id']; ?>" href="?delete=<?= $gcom['group_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                             <!-- <td align="center"><a href="Edit_gcom.php?edit_id=<?= $gcom['group_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
@@ -194,6 +195,120 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- ---------------------------------------  EditdataModal ---------------------------------------------------------------------->
+                                        <div class="modal fade" id="editGroupModal<?= $gcom['group_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลกลุ่มวิสาหกิจ</h5>
+                                                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="Check_edit_user.php" method="POST">
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-4">
+                                                                    <label for="" class="col-form-label">รหัสกลุ่มวิสาหกิจ</label>
+                                                                    <input type="text" required class="form-control" name="phone" value="<?= $gcom['group_id'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-12">
+                                                                    <label for="" class="col-form-label">ชื่อกลุ่มวิสาหกิจ</label>
+                                                                    <input type="text" required class="form-control" name="phone" value="<?= $gcom['group_name'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">จังหวัด</label>
+                                                                    <select class="form-control" aria-label="Default select example" id="provinces3" name="provinces3" style="border-radius: 30px;" required>
+                                                                        <option selected disabled><?= $gcom['group_pv'];?></option>
+                                                                    <?php 
+                                                                        $stmt = $db->query("SELECT * FROM `provinces`");
+                                                                        $stmt->execute();
+                                                                        $pvs = $stmt->fetchAll();
+                                                                        
+                                                                        foreach($pvs as $pv){
+                                                                    ?>
+                                                                        <option value="<?= $pv['id']?>"><?= $pv['name_th']?></option>
+                                                                    <?php
+                                                                        }
+                                                                    ?>
+                                                                </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">อำเภอ</label>
+                                                                    <select class="form-control" aria-label="Default select example" id="amphures2" name="amphures2" style="border-radius: 30px;" required>
+                                                                        <option selected disabled><?= $gcom['group_dis'];?></option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-7">
+                                                                    <label for="" class="col-form-label">ตำบล</label>
+                                                                    <select class="form-control" aria-label="Default select example" id="districts2" name="districts2" style="border-radius: 30px;" required>
+                                                                    <option selected disabled ><?= $gcom['group_subdis'];?></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
+                                                                    <input type="text" required class="form-control" id="zipcode2" name="zipcode2" value="<?= $gcom['group_zip'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+
+                                                            <script>
+                                                                $('#provinces3').change(function(){
+                                                                    var id_provinces3 = $(this).val();
+
+                                                                    console.log("provinces = "+ id_provinces3);
+                                                                    // $.ajax({
+                                                                    //     type : "post",
+                                                                    //     url : "../../address3.php",
+                                                                    //     data : {id:provinces3,function:'provinces3'},     
+                                                                    //     success: function(data){
+                                                                    //         console.log(data);
+                                                                            // $('#amphures2').html(data);
+                                                                            // $('#districts2').html(' ');
+                                                                            // $('#zipcode2').val(' ');
+                                                                        // }
+                                                                    // });
+                                                                });
+
+                                                                $('#amphures2').change(function(){
+                                                                    var id_amphures = $(this).val();
+                                                                    $.ajax({
+                                                                        type : "post",
+                                                                        url : "../../address3.php",
+                                                                        data : {id:id_amphures,function:'amphures2'},
+                                                                        success: function(data){
+                                                                            $('#districts2').html(data);
+                                                                            $('#zipcode2').val(' ');
+                                                                        }
+                                                                    });
+                                                                });
+
+                                                                $('#districts2').change(function(){
+                                                                    var id_districts = $(this).val();
+                                                                    $.ajax({
+                                                                        type : "post",
+                                                                        url : "../../address3.php",
+                                                                        data : {id:id_districts,function:'districts2'},
+                                                                        success: function(data){
+                                                                            $('#zipcode2').val(data)
+                                                                        }
+                                                                    });
+                                                                });
+                                                            </script>
+
+                                                            <div class="modal-footer">
+                                                                <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <?php
                                              }      
                                             }?>

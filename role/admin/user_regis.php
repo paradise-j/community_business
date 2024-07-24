@@ -70,7 +70,7 @@
                 <div class="modal-body">
                     <form action="Check_Add_regisAgc.php" method="POST">
                         <div class="row mb-1">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
                                 <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option>
@@ -89,10 +89,10 @@
                             </div>
                         </div>
                         <div class="row mb-1">
-                            <div class="col-md-5">
+                            <!-- <div class="col-md-5">
                                 <label for="" class="col-form-label">เลขทะเบียน</label>
                                 <input type="text" required class="form-control" name="reid" minlength="10" maxlength="10" style="border-radius: 30px;">
-                            </div>
+                            </div> -->
                             <div class="col-md-7">
                                 <label for="" class="col-form-label">ตำแหน่ง</label>
                                 <select class="form-control" aria-label="Default select example" id="position" name="position" style="border-radius: 30px;" required>
