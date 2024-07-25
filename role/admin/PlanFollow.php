@@ -281,12 +281,7 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เก็บผลผลิต : </b><?= thai_date_fullmonth(strtotime($plant['plant_harvest'])); ?></label>
                                                         </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เป้าหมายการผลิต : </b><?= $plant['plant_target']." "."กิโลกรัม"; ?></label>
-                                                        </div>
+                                                        
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสลูกสวน : </b><?= $plant['plant_grower']; ?></label>
                                                         </div>
@@ -301,8 +296,14 @@
                                                             extract($row);
                                                             $Newtotal = ($total*100)/$plant['plant_target'];
                                                         ?>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เป้าหมายการผลิต : </b><?= $plant['plant_target']." "."กิโลกรัม"; ?></label>
+                                                        </div>
                                                         <div class="mb-3">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่ส่งไปแล้ว : </b>
+                                                            <label class="col-form-label" style="font-size: 1.25rem; color: green; "><b>ผลผลิตที่ส่งไปแล้ว : </b>
                                                                 <?php  
                                                                     if($total == 0){
                                                                         echo 0.00;
@@ -312,6 +313,9 @@
                                                                 ?>
                                                             กิโลกรัม 
                                                             </label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem; color: red;"><b>คงเหลือที่ยังไม่ได้ส่ง : </b><?= $plant['plant_target']-$total." "."กิโลกรัม"; ?></label>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="col-form-label" style="font-size: 1.25rem; "><b>สถานะการส่งของ : </b>

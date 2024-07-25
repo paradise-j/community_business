@@ -209,16 +209,25 @@
                                         </div>
 
                                         <div class="row mb-3">
-                                            <div class="col-md-1"></div>
                                             <div class="col-md-3">
                                                 <label class="form-label">ประเภทการขาย</label>
                                                 <select class="form-control" aria-label="Default select example"  id="typeS" name="typeS" style="border-radius: 30px;" required>
                                                 <option selected disabled>กรุณาเลือก....</option>    
-                                                    <option value="credit">เครดิต</option>
-                                                    <option value="cash">เงินสด</option>
+                                                    <option value="เครดิต">เครดิต</option>
+                                                    <option value="เงินสด">เงินสด</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
+                                                <label class="form-label">ช่องทางการขาย</label>
+                                                <select class="form-control" aria-label="Default select example"  id="typeEx" name="typeEx" style="border-radius: 30px;" required>
+                                                <option selected disabled>กรุณาเลือก....</option>    
+                                                    <option value="ค้าปลีก">ค้าปลีก</option>
+                                                    <option value="ค้าส่ง">ค้าส่ง</option>
+                                                    <option value="ออนไลน์">ออนไลน์</option>
+                                                    <option value="ออกบูธ">ออกบูธ</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
                                                 <label class="form-label">วันที่ขาย</label>
                                                 <?php $date = date('Y-m-d'); ?>
                                                 <input type="date" class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;" required>

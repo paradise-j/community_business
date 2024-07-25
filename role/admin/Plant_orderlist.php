@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `planting` WHERE `plant_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `plant_orderlist` WHERE `pld_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=PlanFollow.php");
+            header("refresh:1; url=Plant_orderlist.php");
         }
     }
 ?>
@@ -192,7 +192,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `plant_orderlist`");
+                                            $stmt = $db->query("SELECT * FROM `plant_orderlist` INNER JOIN `orderer` ON plant_orderlist.odr_id = orderer.odr_id; ");
                                             $stmt->execute();
                                             $plds = $stmt->fetchAll();
                                             $count = 1;
@@ -204,7 +204,7 @@
                                         <tr>
                                             
                                             <td align="center"><?= $pld['pld_id']; ?></td>
-                                            <td><?= $pld['cus_id']; ?></td>
+                                            <td><?= $pld['odr_id']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pld['pld_id']?>">ดูข้อมูล</button>
                                                 <a href="Edit_pld.php?edit_id=<?= $pld['pld_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
@@ -219,17 +219,38 @@
                                                         <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการสั่งซื้อ</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="mb-2">
+                                                        <div class="mb-1">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสการสั่งซื้อ : </b><?= $pld['pld_id']; ?></label>
                                                         </div>
-                                                        <div class="mb-2">                         
-                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เริ่มปลูก : </b><?= thai_date_fullmonth(strtotime($pld['pld_date'])) ; ?></label>
+                                                        <div class="mb-1">                         
+                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่ทำการสั่งซื้อ : </b><?= thai_date_fullmonth(strtotime($pld['pld_date'])) ; ?></label>
                                                         </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $pld['pld_nplant']; ?></label>
+                                                        <div class="mb-1">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผู้สั่งซื้อ : </b><?= $pld['odr_name']; ?></label>
                                                         </div>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวนที่ทำการสั่งซื้อ : </b><?= $pld['pld_quan']." "."กิโลกรัม"; ?></label>
+                                                        <div class="mb-1">
+                                                            <?php
+                                                                $pld_id = $pld['pld_id'] ;
+                                                                $stmt = $db->query("SELECT `pod_name`,`pod_quan` FROM `plant_orderlist_detail` WHERE `pld_id` = '$pld_id' ");
+                                                                $stmt->execute();
+                                                                
+
+                                                                $check = array();
+                                                                while ($row = $pldds = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                                                    $name = $row["pod_name"]."  จำนวน ".$row["pod_quan"]." "."กิโลกรัม";
+                                                                    // $quan = $row["pod_quan"];
+                                                                    array_push($check,$name);
+                                                                }
+
+                                                            ?>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รายการการสั่งซื้อ : </b>
+                                                            <br>
+                                                                <?php 
+                                                                foreach ($check as $el) {
+                                                                    echo $el."<br>";
+                                                                }
+                                                                ?>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -365,7 +386,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'PlanFollow.php',
+                                url: 'Plant_orderlist.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -375,7 +396,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'PlanFollow.php';
+                                    document.location.href = 'Plant_orderlist.php';
                                 })
                             })
                             .fail(function() {

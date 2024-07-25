@@ -22,44 +22,55 @@
     
     if(isset($_POST["save_order"])){
 
-        $cus = $_POST["cus"];
+        $odr = $_POST["orderer"];
         $phone = $_POST["phone"];
         $date = $_POST["date"];
 
-        $cu = $db->prepare("SELECT * FROM `customer`");
-        $cu->execute();
+        // $cu = $db->prepare("SELECT * FROM `customer`");
+        // $cu->execute();
 
-        $check = array();
-        while ($row = $cu->fetch(PDO::FETCH_ASSOC)){
-            $name = $row["cus_name"];
-            array_push($check,$name);
-        }
+        // $check = array();
+        // while ($row = $cu->fetch(PDO::FETCH_ASSOC)){
+        //     $name = $row["cus_name"];
+        //     array_push($check,$name);
+        // }
 
-        if(!in_array($cus, $check)){
-            $sql = $db->prepare("INSERT INTO `customer`(`cus_name`, `cus_phone`) VALUES ('$cus', '$phone')");
-            $sql->execute();
-        }
+        // if(!in_array($cus, $check)){
+        //     $sql = $db->prepare("INSERT INTO `customer`(`cus_name`, `cus_phone`) VALUES ('$cus', '$phone')");
+        //     $sql->execute();
+        // }
             
         
         // ----------------------------- customer -----------------------------
 
-        $cuss = $db->prepare("SELECT * FROM `customer`");
-        $cuss->execute();
-        while ($row = $cuss->fetch(PDO::FETCH_ASSOC)) {
-            if($cus == $row["cus_name"]){
-                $cus_id = $row["cus_id"]; 
+        // $cuss = $db->prepare("SELECT * FROM `customer`");
+        // $cuss->execute();
+        // while ($row = $cuss->fetch(PDO::FETCH_ASSOC)) {
+        //     if($cus == $row["cus_name"]){
+        //         $cus_id = $row["cus_id"]; 
+        //         break;
+        //     }
+        // }
+
+        $odrs = $db->prepare("SELECT * FROM `orderer`");
+        $odrs->execute();
+        while ($row = $odrs->fetch(PDO::FETCH_ASSOC)) {
+            if($odr == $row["odr_id"]){
+                $odr_id = $row["odr_id"]; 
                 break;
             }
         }
 
-        $sql = $db->prepare("INSERT INTO `plant_orderlist`(`pld_date`, `cus_id`)  
-                             VALUES ('$date','$cus_id')");
+
+
+        $sql = $db->prepare("INSERT INTO `plant_orderlist`(`pld_date`, `odr_id`)  
+                             VALUES ('$date','$odr_id')");
         $sql->execute();
 
         $plds = $db->prepare("SELECT * FROM `plant_orderlist`");
         $plds->execute();
         while ($row = $plds->fetch(PDO::FETCH_ASSOC)) {
-            if($cus_id == $row["cus_id"] and $date == $row["pld_date"]){
+            if($odr_id == $row["odr_id"] and $date == $row["pld_date"]){
                 $pld_id = $row["pld_id"]; 
                 break;
             }
@@ -89,6 +100,6 @@
             })
         </script>";
         header("refresh:1; url=Plant_orderlist.php");
-        }
+    }
     $db = null; 
 ?>

@@ -31,6 +31,7 @@
                 <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
                 <a class="collapse-item" href="user_regis.php">ข้อมูลทะเบียนสมาชิก</a>
                 <a class="collapse-item" href="grower_regis.php">ข้อมูลทะเบียนลูกสวน</a>
+                <a class="collapse-item" href="orderer.php">ข้อมูลผู้สั่งซื้อ</a>
             </div>
         </div>
     </li>

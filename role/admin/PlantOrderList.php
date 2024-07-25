@@ -167,11 +167,25 @@
                                         <div class="row mb-4">
                                             <div class="col-md-4">
                                                 <label class="form-label">ชื่อผู้สั่ง</label>
-                                                <input type="text" class="form-control" name="cus" style="border-radius: 30px;" required>
+                                                <!-- <input type="text" class="form-control" name="cus" style="border-radius: 30px;" required> -->
+                                                <select class="form-control" aria-label="Default select example"  id="orderer" name="orderer" style="border-radius: 30px;" required>
+                                                    <option selected disabled>กรุณาเลือก....</option>
+                                                    <?php 
+                                                        $stmt = $db->query("SELECT `odr_id`, `odr_name` FROM `orderer`");
+                                                        $stmt->execute();
+                                                        $odrs = $stmt->fetchAll();
+                                                        
+                                                        foreach($odrs as $odr){
+                                                    ?>
+                                                    <option value="<?= $odr['odr_id']?>"><?= $odr['odr_name']?></option>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">เบอร์โทรศัพท์</label>
-                                                <input type="text" class="form-control" name="phone" style="border-radius: 30px;" required>
+                                                <input type="text" class="form-control" id="phone" name="phone" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">วันที่ขาย</label>
@@ -254,60 +268,17 @@
 
 
     <script>
-        $(".delete-btn").click(function(e) {
-            var userId = $(this).data('id');
-            e.preventDefault();
-            deleteConfirm(userId);
-        })
 
-        function deleteConfirm(userId) {
-            Swal.fire({
-                title: 'ลบข้อมูล',
-                text: "คุณแน่ใจใช่หรือไม่ที่จบลบข้อมูลนี้",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'ลบข้อมูล',
-                showLoaderOnConfirm: true,
-                preConfirm: function() {
-                    return new Promise(function(resolve) {
-                        $.ajax({
-                                url: 'Product.php',
-                                type: 'GET',
-                                data: 'delete=' + userId,
-                            })
-                            .done(function() {
-                                Swal.fire({
-                                    title: 'สำเร็จ',
-                                    text: 'ลบข้อมูลเรียบร้อยแล้ว',
-                                    icon: 'success',
-                                }).then(() => {
-                                    document.location.href = 'Product.php';
-                                })
-                            })
-                            .fail(function() {
-                                Swal.fire({
-                                    title: 'ไม่สำเร็จ',
-                                    text: 'ลบข้อมูลไม่สำเร็จ',
-                                    icon: 'danger',
-                                })
-                                window.location.reload();
-                            });
-                    });
-                },
-            });
-        }
-
-        $('#pdname').change(function(){
-            var id_pname = $(this).val();
-            console.log("pd = ",id_pname);
+        $('#orderer').change(function(){
+            var id_odr = $(this).val();
+            // console.log("odr = ",id_odr);
             $.ajax({
                 type : "post",
-                url : "../../api/pdname.php",
-                data : {id:id_pname,function:'pdname'},     
+                url : "../../api/orderer.php",
+                data : {id:id_odr,function:'orderer'},     
                 success: function(data){
-                    console.log("price = ",data);
-                    $('#pdcost').val(data);
+                    // console.log("phone = ",data);
+                    $('#phone').val(data);
 
                 }
             });

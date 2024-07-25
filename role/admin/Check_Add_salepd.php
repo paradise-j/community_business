@@ -23,6 +23,7 @@
     if(isset($_POST["save_sale"])){
 
         $typeS = $_POST["typeS"];
+        $typeEx = $_POST["typeEx"];
         $cus = $_POST["cus"];
         $phone = $_POST["phone"];
         $date = $_POST["date"];
@@ -65,7 +66,7 @@
 
        
       // ----------------------------- credit -----------------------------
-      if ($typeS == "credit") {
+      if ($typeS == "เครดิต") {
 
         
 
@@ -102,8 +103,8 @@
 
 
 
-        $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_date`, `sale_total`, `sale_discount`, `sale_Nprice`, `cus_id`)  
-                             VALUES ('$typeS', '$date','$total', '$discount', '$Newtotal', '$cus_id')");
+        $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_typeEx`, `sale_date`, `sale_total`, `sale_discount`, `sale_Nprice`, `cus_id`)  
+                             VALUES ('$typeS','$typeEx', '$date','$total', '$discount', '$Newtotal', '$cus_id')");
         $sql->execute();
 
         $sales = $db->prepare("SELECT * FROM `sales`");
