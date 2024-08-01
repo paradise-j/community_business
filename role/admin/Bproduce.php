@@ -112,6 +112,17 @@
                             <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
                             <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกผัก....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT `pd_id`, `pd_name` FROM `product` WHERE `group_id` = 'CM007'");
+                                    $stmt->execute();
+                                    $pds = $stmt->fetchAll();
+                                    
+                                    foreach($pds as $pd){
+                                ?>
+                                <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
+                                <?php
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div class="mb-2">
@@ -286,16 +297,16 @@
                  }
              });
 
-             $.ajax({
-                type : "post",
-                url : "../../api/nameplant.php",
-                data : {id:id_gw,function:'g_id'},     
-                success: function(data){
-                    console.log(data);
-                    $('#name').html(data);
-                }
+            //  $.ajax({
+            //     type : "post",
+            //     url : "../../api/nameplant.php",
+            //     data : {id:id_gw,function:'g_id'},     
+            //     success: function(data){
+            //         console.log(data);
+            //         $('#name').html(data);
+            //     }
 
-            });
+            // });
         });
 
 

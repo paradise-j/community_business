@@ -37,10 +37,24 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsepd"
+            aria-expanded="true" aria-controls="collapsepd">
+            <i class="fas fa-seedling"></i>
+            <span>คลังสินค้า</span>
+        </a>
+        <div id="collapsepd" class="collapse" aria-labelledby="headingpd" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="manufacture.php">การผลิตสินค้า</a>
+                <a class="collapse-item" href="receivePD.php">การรับสินค้า</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- <li class="nav-item">
         <a class="nav-link" href="manufacture.php">
             <i class="fas fa-seedling"></i>
             <span>การผลิตสินค้า</span></a>
-    </li>
+    </li> -->
 
 
     <li class="nav-item">
