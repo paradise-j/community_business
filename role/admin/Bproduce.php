@@ -67,6 +67,10 @@
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_Bproduce.php" method="POST">
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">รหัสคำสั่งซื้อ</label>
+                            <input type="text" required class="form-control"  id="order_id" name="order_id" style="border-radius: 30px;">
+                        </div>
                         <div class="mb-1">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่รับซื้อผลผลิต</label>
@@ -107,6 +111,7 @@
                                 </div> -->
                             </div>
                         </div>
+
                         <div class="mb-1">
                             <label for="" class="col-form-label">ผลผลิตที่รับซื้อ</label>
                             <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
@@ -136,6 +141,12 @@
                                     <input type="text" required class="form-control" id="price" name="price" style="border-radius: 30px;">
                                 </div>
                             </div>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">ปัญหาการผลิต</label>
+                            <!-- <input type="text" required class="form-control"  id="problem" name="problem" style="border-radius: 30px;"> -->
+                            <textarea class="form-control" aria-label="With textarea" id="problem" name="problem" style="border-radius: 15px;"></textarea>
                         </div>
                         <!-- <div class="mb-2">
                             <button onclick="myFunction()" name="submit" class="btn btn-primary" style="border-radius: 30px; font-size: 0.8rem;">คิดเงิน</button>
@@ -223,6 +234,9 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสคำสั่งซื้อ : </b><?= $bp['bp_order_id']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับซื้อผลผลิต : </b><?= thai_date_fullmonth(strtotime($bp['bp_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
@@ -240,8 +254,11 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาสุทธิ : </b><?= $bp['bp_totalprice']." บาท"; ?></label>
                                                         </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ปัญหาการผลิต : </b><?= $bp['bp_problem']; ?></label>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </div>รหัสคำสั่งซื้อ
                                             </div>
                                         </div>
                                         <?php

@@ -10,11 +10,13 @@
         $name = $_POST['name'];
         $quan = $_POST['quan'];
         $price = $_POST['price'];
+        $order_id = $_POST['order_id'];
+        $problem = $_POST['problem'];
         $total = $quan*$price;
 
 
-        $pb = $db->prepare("INSERT INTO `bproduce`(`bp_date`, `veget_name`, `bp_quan`, `bp_pricekg`, `bp_totalprice`, `gw_id`)
-                            VALUES  ('$date','$name','$quan','$price','$total','$g_id')");
+        $pb = $db->prepare("INSERT INTO `bproduce`(`bp_date`, `veget_name`, `bp_quan`, `bp_pricekg`, `bp_totalprice`, `gw_id`, `bp_order_id`, `bp_problem`)
+                            VALUES  ('$date','$name','$quan','$price','$total','$g_id','$order_id','$problem')");
         $pb->execute();
 
 
