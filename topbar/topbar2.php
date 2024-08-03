@@ -1,3 +1,21 @@
+<?php 
+    // session_start();
+    // require_once '../connect.php';
+
+    $username = $_SESSION["username"];
+    $password = $_SESSION["password"];
+    
+    // echo $username." ".$password;
+    $stmt = $db->prepare("SELECT user_login.ul_id, user_login.user_id, user_data.user_Fname, user_data.user_Lname 
+                          FROM `user_login` 
+                          INNER JOIN `user_data` ON user_login.user_id = user_data.user_id
+                          WHERE user_login.ul_username = '$username' and user_login.ul_password = '$password'");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    extract($row);
+
+?>
+
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
     <!-- Sidebar Toggle (Topbar) -->
@@ -32,16 +50,14 @@
             </div>
         </li>
 
-        <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
+        <!-- Nav Item - Alerts---------------------------------- -->
+        <!-- <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">3+</span>
-            </a>
-            <!-- Dropdown - Alerts -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+            </a> -->
+            <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                     Alerts Center
@@ -81,17 +97,16 @@
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
             </div>
-        </li>
+        </li> -->
 
-        <!-- Nav Item - Messages -->
-        <li class="nav-item dropdown no-arrow mx-1">
+        <!---------------- Nav Item - Messages ----------------------->
+        <!-- <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
                 <span class="badge badge-danger badge-counter">7</span>
             </a>
-            <!-- Dropdown - Messages -->
+
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
@@ -147,7 +162,7 @@
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
             </div>
-        </li>
+        </li> -->
 
         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -155,7 +170,11 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">ชื่อผู้ดูแล</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                <?php
+                    echo $user_Fname." ".$user_Lname."&nbsp&nbsp";
+                ?>
+                </span>
                 <img class="img-profile rounded-circle"
                     src="img/undraw_profile.svg">
             </a>
