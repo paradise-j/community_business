@@ -271,6 +271,7 @@
                                                         <td colspan="3" align="right">ราคารวม</td>
                                                         <td align="right">฿ <?php echo number_format($total, 2); ?> บาท</td>
                                                         <td></td>
+
                                                     </tr>
                                                     <?php
                                                     }
