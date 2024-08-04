@@ -171,7 +171,7 @@
                                 <div class="col-xl-7 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้า</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าในแต่ละเดือน</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
