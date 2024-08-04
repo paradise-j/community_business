@@ -98,6 +98,10 @@
                             <label for="" class="col-form-label">จำนวน</label>
                             <input type="text" required class="form-control" name="rpquan" style="border-radius: 30px;">
                         </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">ราคา</label>
+                            <input type="text" required class="form-control" name="rpprice" style="border-radius: 30px;">
+                        </div>
                         <div class="col-md-1 text-center">
                             <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImg" alt="">
                         </div>
@@ -160,7 +164,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT receivepd.rp_id , receivepd.rp_date, receivepd.rp_name , receivepd.rp_img, receivepd.group_id , group_comen.group_name as group_name 
+                                            $stmt = $db->query("SELECT receivepd.rp_id , receivepd.rp_date, receivepd.rp_name ,receivepd.rp_quan,receivepd.rp_price,receivepd.rp_cost, receivepd.rp_img, receivepd.group_id , group_comen.group_name as group_name 
                                                                 FROM `receivepd` INNER JOIN `group_comen` ON group_comen.group_id = receivepd.group_id");
                                             $stmt->execute();
                                             $rps = $stmt->fetchAll();
@@ -176,7 +180,7 @@
                                             <!-- <td class="date_th"><?= $rp['rp_date']; ?></td> -->
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $rp['rp_id']?>">ดูข้อมูล</button>
-                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $rp['rp_id']?>">แก้ไข</button>
+                                                <!-- <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $rp['rp_id']?>">แก้ไข</button> -->
                                                 <!-- <a href="Edit_rp.php?edit_id=<?= $rp['rp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"  data-toggle="modal" data-target="#editdataModal<?= $rp['rp_id']?>">แก้ไข</a> -->
                                                 <a data-id="<?= $rp['rp_id']; ?>" href="?delete=<?= $rp['rp_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
@@ -197,6 +201,15 @@
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการรับสินค้า : </b> <?= $rp['rp_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวน  : </b> <?= $rp['rp_quan']." **กิโลกรัม/ชิ้น/แพ็ค**"; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคา : </b> <?= $rp['rp_price']." บาท"; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ต้นทุน : </b> <?= $rp['rp_cost']." บาท"; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพการรับสินค้า : </b> </label><br>

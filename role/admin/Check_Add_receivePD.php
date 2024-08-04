@@ -8,6 +8,8 @@
         $rpdate = $_POST['rpdate'];
         $rpname = $_POST['rpname'];
         $rpquan = $_POST['rpquan'];
+        $rpprice = $_POST['rpprice'];
+        $rpcost = $rpprice/$rpquan;
         $group = $_POST['group'];
         $img = $_FILES['img'];
 
@@ -33,8 +35,8 @@
             if (in_array($fileActExt, $allow)) {
                 if ($img['size'] > 0 && $img['error'] == 0) {
                     if (move_uploaded_file($img['tmp_name'], $filePath)) {
-                                    $sql = $db->prepare("INSERT INTO `receivepd`( `rp_date`, `rp_name`, `rp_quan`, `rp_img`, `group_id`)
-                                                    VALUES ('$rpdate','$rpname','$rpquan','$fileNew','$group')");
+                                    $sql = $db->prepare("INSERT INTO `receivepd`( `rp_date`, `rp_name`, `rp_quan`,`rp_price`,`rp_cost`, `rp_img`, `group_id`)
+                                                    VALUES ('$rpdate','$rpname','$rpquan','$rpprice','$rpcost','$fileNew','$group')");
                                     $sql->execute();
 
                                     if ($sql) {
