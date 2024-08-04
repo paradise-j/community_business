@@ -99,7 +99,7 @@
                                                 
                                                 foreach($pds as $pd){
                                             ?>
-                                            <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
+                                            <option value="<?= $pd['pd_name']?>"><?= $pd['pd_name']?></option>
                                             <?php
                                                 }
                                             ?>
@@ -123,6 +123,8 @@
                                     $start_date = $_POST["start_date"];
                                     // echo $start_date;
                                     $end_date = $_POST["end_date"];
+                                    $Gname = $_POST["Gname"];
+                                    // echo $Gname ;
                                     $count = 1;
 
                                     $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
@@ -140,26 +142,25 @@
 
                                     // echo $dataResult2 ;
 
-                                    // $stmt1 = $db->query("SELECT group_g.gg_type , MONTH(sale.sale_date) as month , SUM(salelist.slist_price) as total
-                                    //                     FROM `salelist` 
-                                    //                     INNER JOIN `sale` ON sale.sale_id = salelist.sale_id
-                                    //                     INNER JOIN `group_g` ON group_g.gg_id = salelist.gg_id 
-                                    //                     WHERE MONTH(sale.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
-                                    //                     GROUP BY  group_g.gg_type , MONTH(sale.sale_date)");
-                                    // $stmt1->execute();
+                                    $stmt1 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
+                                                         FROM `sales` 
+                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
+                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND salesdetail.sd_pdname = '$Gname'
+                                                         GROUP BY MONTH(sale_date)");
+                                    $stmt1->execute();
 
-                                    // $arr = array();
-                                    // while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
-                                    //     $arr[] = $row;
-                                    // }
-                                    // $dataResult = json_encode($arr);
+                                    $arr = array();
+                                    while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
+                                        $arr[] = $row;
+                                    }
+                                    $dataResult = json_encode($arr);
                                 }
                             ?>
                             <div class="row mt-4">
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าในแต่ละเดือน</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าทั้งหมดในแต่ละเดือน</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -168,18 +169,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-xl-6 col-lg-8">
+                                <div class="col-xl-6 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าในแต่ละเดือน</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าที่ต้องการทราบ</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
-                                                <canvas id="myAreaChart" ></canvas>
+                                                <canvas id="myChartBar" ></canvas>
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
 
                         </div>
@@ -212,7 +213,7 @@
     <script src="js/demo/datatables-demo.js"></script>
 
     <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="js/demo/chartjs-plugin-datalabels.js"></script>
+    <script src="js/demo/chartjs-plugin-datalabels.min.js"></script>
 
 
     <script>
@@ -329,6 +330,93 @@
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
                     data: my_data02,
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                legend: {
+                    display: true
+                }
+                
+            },
+            plugins: {ChartDataLabels : true}
+            
+        });
+
+        // ============================================= myAreaChart =============================================
+        const my_dataAll = <?= $dataResult; ?> ; 
+        // comsole.log("my_dataAll2 = "+ my_dataAll2);
+        var my_data1 = [];
+        var my_label1 = [];
+        var Unique_label = [];
+        my_dataAll.forEach(item => {
+            my_data1.push(item.total);
+            switch (item.month) {
+                case 1 :
+                    my_label1.push('มกราคม')
+                    break;
+                case 2 :
+                    my_label1.push('กุมภาพันธ์')
+                    break;
+                case 3 :
+                    my_label1.push('มีนาคม')
+                    break;
+                case 4 :
+                    my_label1.push('เมษายน')
+                    break;
+                case 5 :
+                    my_label1.push('พฤษภาคม')
+                    break;
+                case 6 :
+                    my_label1.push('มิถุนายน')
+                    break;
+                case 7 :
+                    my_label1.push('กรกฎาคม')
+                    break;
+                case 8 :
+                    my_label1.push('สิงหาคม')
+                    break;
+                case 9 :
+                    my_label1.push('กันยายน')
+                    break;
+                case 10 :
+                    my_label1.push('ตุลาคม')
+                    break;
+                case 11 :
+                    my_label1.push('พฤศจิกายน')
+                    break;
+                case 12 :
+                    my_label1.push('ธันวาคม')
+                    break; 
+            }
+            
+        });
+
+        for( var i=0; i<my_label1.length; i++ ) {
+            if ( Unique_label.indexOf( my_label1[i] ) < 0 ) {
+            Unique_label.push( my_label1[i] );
+            }
+        } 
+
+        console.log("my_data1 = "+ my_data1);
+        console.log("my_label1 = "+ my_label1);
+        console.log("Unique_label = "+ Unique_label);
+        
+        var ctx = document.getElementById('myChartBar');
+        var myChartBar = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Unique_label,
+                datasets: [{
+                label: "<?= $Gname ?>",
+                backgroundColor: "#2a86e9",
+                borderColor: "#2a86e9",
+                data: my_data1
                 }],
             },
             options: {
