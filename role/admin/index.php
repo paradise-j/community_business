@@ -176,14 +176,14 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">จำนวนสมาชิก</div>
+                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">จำนวนการจอง</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data`");
+                                                    $stmt = $db->prepare("SELECT COUNT(`tol_id`) as total FROM `travel_orderlist`");
                                                     $stmt->execute();
-                                                    $users = $stmt->fetchAll();
-                                                    foreach($users as $user){
-                                                        echo $user['total'];
+                                                    $tols = $stmt->fetchAll();
+                                                    foreach($tols as $tol){
+                                                        echo $tol['total'];
                                                     }
                                                 ?>
                                                 คน

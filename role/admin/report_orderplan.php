@@ -82,38 +82,106 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการส่งออกตามเป้าหมาย</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการผลิตสินค้า</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
                                 <div class="row mt-2">
-                                    <div class="col-md-4"></div>
-                                    <label class="col-form-label">ชื่อผู้ส่งสินค้า</label>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2"></div>
+                                    <label class="col-form-label">ชื่อสินค้า</label>
+                                    <div class="col-md-2">
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;" required>
-                                            <option selected disabled>กรุณาเลือกชื่อผู้ส่งสินค้า....</option>
+                                            <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
                                             <?php 
-                                                // $stmt = $db->query("SELECT * FROM `group_farm`");
-                                                // $stmt->execute();
-                                                // $gfs = $stmt->fetchAll();
+                                                $stmt = $db->query("SELECT * FROM `product`");
+                                                $stmt->execute();
+                                                $pds = $stmt->fetchAll();
                                                 
-                                                // foreach($gfs as $gf){
+                                                foreach($pds as $pd){
                                             ?>
-                                            <!-- <option value="<?= $gf['gf_id']?>"><?= $gf['gf_name']?></option> -->
+                                            <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
                                             <?php
-                                                // }
+                                                }
                                             ?>
                                         </select>
                                     </div>
+                                    <label for="inputState" class="form-label mt-2">ตั้งแต่วันที่</label>
+                                    <div class="col-md-2">
+                                        <input type="date" style="border-radius: 30px;" id="start_date" name="start_date" class="form-control" required>
+                                    </div>
+                                    <label for="inputState" class="form-label mt-2">ถึงวันที่</label>
+                                    <div class="col-md-2">
+                                        <input type="date" style="border-radius: 30px;" id="end_date" name="end_date" class="form-control" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success" style="border-radius: 30px;" type="submit" name="submit">เรียกดู</button>
+                                    </div>
                                 </div>
                             </form>
+                            <?php 
+                                if(isset($_POST["submit"])){
+                                    $start_date = $_POST["start_date"];
+                                    $end_date = $_POST["end_date"];
+                                    $count = 1;
 
-                            <div class="row mt-3">
-                                <div class="col text-center">
-                                    <label for="inputState" class="form-label mt-2" style="font-size: 2rem;" >ข้อมูลที่แสดง คือ  <?= $gf_name ; ?></label>
+                                    $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
+                                                         FROM `sales` 
+                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
+                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         GROUP BY MONTH(sale_date)"); 
+                                    $stmt2->execute();
+
+                                    $arr2 = array();
+                                    while($row = $stmt2->fetch(PDO::FETCH_ASSOC)){
+                                        $arr2[] = $row;
+                                    }
+                                    $dataResult2 = json_encode($arr2);
+
+                                    echo $dataResult2 ;
+
+                                    // $stmt1 = $db->query("SELECT group_g.gg_type , MONTH(sale.sale_date) as month , SUM(salelist.slist_price) as total
+                                    //                     FROM `salelist` 
+                                    //                     INNER JOIN `sale` ON sale.sale_id = salelist.sale_id
+                                    //                     INNER JOIN `group_g` ON group_g.gg_id = salelist.gg_id 
+                                    //                     WHERE MONTH(sale.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                    //                     GROUP BY  group_g.gg_type , MONTH(sale.sale_date)");
+                                    // $stmt1->execute();
+
+                                    // $arr = array();
+                                    // while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
+                                    //     $arr[] = $row;
+                                    // }
+                                    // $dataResult = json_encode($arr);
+                                }
+                            ?>
+                            <div class="row mt-4">
+                                <div class="col-xl-5 col-lg-4">
+                                    <div class="card shadow">
+                                        <div class="card-header py-3">
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้า</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="chart-area">
+                                                <canvas id="myAreaChart" ></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <!-- <div class="col-xl-7 col-lg-8">
+                                    <div class="card shadow">
+                                        <div class="card-header py-3">
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายแพะในแต่ละเดือน</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="chart-area">
+                                                <canvas id="myAreaChart" ></canvas>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -189,7 +257,86 @@
             });
         }
 
-
+// ============================================= myAreaChart =============================================
+        // const my_dataAll2 = <?= $dataResult2; ?> ; 
+        // var my_data02 = [];
+        // var my_label02 = [];
+        // my_dataAll2.forEach(item => {
+        //     my_data02.push(item.total)
+        //     switch (item.month) {
+        //         case 1:
+        //             my_label02.push('มกราคม')
+        //             break;
+        //         case 2:
+        //             my_label02.push('กุมภาพันธ์')
+        //             break;
+        //         case 3:
+        //             my_label02.push('มีนาคม')
+        //             break;
+        //         case 4:
+        //             my_label02.push('เมษายน')
+        //             break;
+        //         case 5:
+        //             my_label02.push('พฤษภาคม')
+        //             break;
+        //         case 6:
+        //             my_label02.push('มิถุนายน')
+        //             break;
+        //         case 7:
+        //             my_label02.push('กรกฎาคม')
+        //             break;
+        //         case 8:
+        //             my_label02.push('สิงหาคม')
+        //             break;
+        //         case 9:
+        //             my_label02.push('กันยายน')
+        //             break;
+        //         case 10:
+        //             my_label02.push('ตุลาคม')
+        //             break;
+        //         case 11:
+        //             my_label02.push('พฤศจิกายน')
+        //             break;
+        //         case 12:
+        //             my_label02.push('ธันวาคม')
+        //             break; 
+        //     }
+        //     comsole.log("my_data02 = "+my_data02);
+        //     comsole.log("my_label02 = "+my_label02);
+        // });
+        
+        // var ctx = document.getElementById("myAreaChart");
+        // var myLineChart = new Chart(ctx, {
+        //     type: 'line',
+        //     data: {
+        //         labels: my_label02,
+        //         datasets: [{
+        //             label: "ยอดขายสุทธิ",
+        //             lineTension: 0,
+        //             backgroundColor: "rgba(78, 115, 223, 0.07)",
+        //             borderColor: "rgba(78, 115, 223, 1)",
+        //             pointRadius: 5,
+        //             pointBackgroundColor: "rgba(78, 115, 223, 1)",
+        //             pointBorderColor: "rgba(78, 115, 223, 1)",
+        //             pointHoverRadius: 5,
+        //             pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+        //             pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+        //             pointHitRadius: 10,
+        //             pointBorderWidth: 2,
+        //             data: my_data02,
+        //         }],
+        //     },
+        //     options: {
+        //         scales: {
+        //             y: {
+        //                 beginAtZero: true
+        //             }
+        //         },
+        //         legend: {
+        //             display: true
+        //         }
+        //     }
+        // });
 
         
         const dom_date = document.querySelectorAll('.date_th')
