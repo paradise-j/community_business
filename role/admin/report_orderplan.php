@@ -90,7 +90,7 @@
                                     <div class="col-md-2"></div>
                                     <label class="col-form-label">ชื่อสินค้า</label>
                                     <div class="col-md-2">
-                                        <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;" required>
+                                        <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
                                             <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
                                             <?php 
                                                 $stmt = $db->query("SELECT * FROM `product`");
@@ -121,6 +121,7 @@
                             <?php 
                                 if(isset($_POST["submit"])){
                                     $start_date = $_POST["start_date"];
+                                    // echo $start_date;
                                     $end_date = $_POST["end_date"];
                                     $count = 1;
 
@@ -137,7 +138,7 @@
                                     }
                                     $dataResult2 = json_encode($arr2);
 
-                                    echo $dataResult2 ;
+                                    // echo $dataResult2 ;
 
                                     // $stmt1 = $db->query("SELECT group_g.gg_type , MONTH(sale.sale_date) as month , SUM(salelist.slist_price) as total
                                     //                     FROM `salelist` 
@@ -155,7 +156,7 @@
                                 }
                             ?>
                             <div class="row mt-4">
-                                <div class="col-xl-5 col-lg-4">
+                                <!-- <div class="col-xl-5 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
                                             <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้า</h5>
@@ -166,20 +167,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- <div class="col-xl-7 col-lg-8">
+                                </div> -->
+                                <div class="col-xl-7 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายแพะในแต่ละเดือน</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้า</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
                                                 <canvas id="myAreaChart" ></canvas>
-                                                
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
 
                         </div>
@@ -210,6 +210,9 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="js/demo/chartjs-plugin-datalabels.js"></script>
 
 
     <script>
@@ -258,85 +261,87 @@
         }
 
 // ============================================= myAreaChart =============================================
-        // const my_dataAll2 = <?= $dataResult2; ?> ; 
-        // var my_data02 = [];
-        // var my_label02 = [];
-        // my_dataAll2.forEach(item => {
-        //     my_data02.push(item.total)
-        //     switch (item.month) {
-        //         case 1:
-        //             my_label02.push('มกราคม')
-        //             break;
-        //         case 2:
-        //             my_label02.push('กุมภาพันธ์')
-        //             break;
-        //         case 3:
-        //             my_label02.push('มีนาคม')
-        //             break;
-        //         case 4:
-        //             my_label02.push('เมษายน')
-        //             break;
-        //         case 5:
-        //             my_label02.push('พฤษภาคม')
-        //             break;
-        //         case 6:
-        //             my_label02.push('มิถุนายน')
-        //             break;
-        //         case 7:
-        //             my_label02.push('กรกฎาคม')
-        //             break;
-        //         case 8:
-        //             my_label02.push('สิงหาคม')
-        //             break;
-        //         case 9:
-        //             my_label02.push('กันยายน')
-        //             break;
-        //         case 10:
-        //             my_label02.push('ตุลาคม')
-        //             break;
-        //         case 11:
-        //             my_label02.push('พฤศจิกายน')
-        //             break;
-        //         case 12:
-        //             my_label02.push('ธันวาคม')
-        //             break; 
-        //     }
-        //     comsole.log("my_data02 = "+my_data02);
-        //     comsole.log("my_label02 = "+my_label02);
-        // });
+        const my_dataAll2 = <?= $dataResult2; ?> ; 
+        // comsole.log("my_dataAll2 = "+ my_dataAll2);
+        var my_data02 = [];
+        var my_label02 = [];
+        my_dataAll2.forEach(item => {
+            my_data02.push(item.total);
+            switch (item.month) {
+                case 1 :
+                    my_label02.push('มกราคม')
+                    break;
+                case 2 :
+                    my_label02.push('กุมภาพันธ์')
+                    break;
+                case 3 :
+                    my_label02.push('มีนาคม')
+                    break;
+                case 4 :
+                    my_label02.push('เมษายน')
+                    break;
+                case 5 :
+                    my_label02.push('พฤษภาคม')
+                    break;
+                case 6 :
+                    my_label02.push('มิถุนายน')
+                    break;
+                case 7 :
+                    my_label02.push('กรกฎาคม')
+                    break;
+                case 8 :
+                    my_label02.push('สิงหาคม')
+                    break;
+                case 9 :
+                    my_label02.push('กันยายน')
+                    break;
+                case 10 :
+                    my_label02.push('ตุลาคม')
+                    break;
+                case 11 :
+                    my_label02.push('พฤศจิกายน')
+                    break;
+                case 12 :
+                    my_label02.push('ธันวาคม')
+                    break; 
+            }
+            
+        });
+        console.log("my_data02 = "+ my_data02);
+        console.log("my_label02 = "+ my_label02);
         
-        // var ctx = document.getElementById("myAreaChart");
-        // var myLineChart = new Chart(ctx, {
-        //     type: 'line',
-        //     data: {
-        //         labels: my_label02,
-        //         datasets: [{
-        //             label: "ยอดขายสุทธิ",
-        //             lineTension: 0,
-        //             backgroundColor: "rgba(78, 115, 223, 0.07)",
-        //             borderColor: "rgba(78, 115, 223, 1)",
-        //             pointRadius: 5,
-        //             pointBackgroundColor: "rgba(78, 115, 223, 1)",
-        //             pointBorderColor: "rgba(78, 115, 223, 1)",
-        //             pointHoverRadius: 5,
-        //             pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-        //             pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-        //             pointHitRadius: 10,
-        //             pointBorderWidth: 2,
-        //             data: my_data02,
-        //         }],
-        //     },
-        //     options: {
-        //         scales: {
-        //             y: {
-        //                 beginAtZero: true
-        //             }
-        //         },
-        //         legend: {
-        //             display: true
-        //         }
-        //     }
-        // });
+        var ctx = document.getElementById("myAreaChart");
+        var myAreaChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: my_label02,
+                datasets: [{
+                    label: "ยอดขายสุทธิ",
+                    lineTension: 0,
+                    backgroundColor: "rgba(78, 115, 223, 0.07)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: my_data02,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                legend: {
+                    display: true
+                }
+            }
+        });
 
         
         const dom_date = document.querySelectorAll('.date_th')
