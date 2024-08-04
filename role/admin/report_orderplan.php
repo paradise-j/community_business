@@ -118,6 +118,7 @@
                                     </div>
                                 </div>
                             </form>
+                            
                             <?php 
                                 if(isset($_POST["submit"])){
                                     $start_date = $_POST["start_date"];
@@ -154,8 +155,33 @@
                                         $arr[] = $row;
                                     }
                                     $dataResult = json_encode($arr);
+
+
+                                    $stmt3 = $db->query("SELECT salesdetail.sd_pdname, SUM(salesdetail.sd_price) as total , MONTH(sales.sale_date) as month
+                                                         FROM `sales` 
+                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
+                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         GROUP BY salesdetail.sd_pdname , MONTH(sales.sale_date)");
+                                    $stmt3->execute();
+
+                                    $arr3 = array();
+                                    while($row = $stmt3->fetch(PDO::FETCH_ASSOC)){
+                                        $arr3[] = $row;
+                                    }
+                                    $dataResult3 = json_encode($arr3);
                                 }
                             ?>
+                            <div class="md-2">
+                                <h5 class="m-0 font-weight-bold text-primary text-center">ช่วงเวลาที่กำหนดตั้งแต่ 
+                                    <?php 
+                                    if(empty($start_date) and empty($end_date)){
+                                        echo "ยังไม่กำหนดช่วงเวลา";
+                                    }else{
+                                        echo  thai_date_fullmonth(strtotime($start_date))." ถึง ".thai_date_fullmonth(strtotime($end_date));
+                                    }
+                                    ?> 
+                                </h5>
+                            </div>
                             <div class="row mt-4">
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
@@ -183,6 +209,20 @@
                                 </div>
                             </div>
 
+                            <div class="row mt-4">
+                                <div class="col-xl-12 col-lg-4">
+                                    <div class="card shadow">
+                                        <div class="card-header py-3">
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าตามชนิดในแต่ละเดือน</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="chart-area">
+                                                <canvas id="myChartBar2" ></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -308,8 +348,9 @@
             }
             
         });
-        console.log("my_data02 = "+ my_data02);
-        console.log("my_label02 = "+ my_label02);
+        // console.log("my_data02 = "+ my_data02);
+        // console.log("my_label02 = "+ my_label02);
+
         
         var ctx = document.getElementById("myAreaChart");
         var myAreaChart = new Chart(ctx, {
@@ -348,7 +389,7 @@
             
         });
 
-        // ============================================= myAreaChart =============================================
+        // ============================================= myChartBar =============================================
         const my_dataAll = <?= $dataResult; ?> ; 
         // comsole.log("my_dataAll2 = "+ my_dataAll2);
         var my_data1 = [];
@@ -403,9 +444,9 @@
             }
         } 
 
-        console.log("my_data1 = "+ my_data1);
-        console.log("my_label1 = "+ my_label1);
-        console.log("Unique_label = "+ Unique_label);
+        // console.log("my_data1 = "+ my_data1);
+        // console.log("my_label1 = "+ my_label1);
+        // console.log("Unique_label = "+ Unique_label);
         
         var ctx = document.getElementById('myChartBar');
         var myChartBar = new Chart(ctx, {
@@ -431,6 +472,191 @@
                 }
             }
         });
+
+        // ============================================= myChartBar3 =============================================
+        const my_dataAll3 = <?= $dataResult3; ?> ; 
+
+
+        let res_1 = []
+        my_dataAll3.forEach(obj => {
+            let sd_pdname = obj['sd_pdname']
+            let month = ''
+            switch (obj['month']) {
+                case 1 :
+                    month ='มกราคม'
+                    break;
+                case 2 :
+                    month ='กุมภาพันธ์'
+                    break;
+                case 3 :
+                    month ='มีนาคม'
+                    break;
+                case 4 :
+                    month ='เมษายน'
+                    break;
+                case 5 :
+                    month ='พฤษภาคม'
+                    break;
+                case 6 :
+                    month ='มิถุนายน'
+                    break;
+                case 7 :
+                    month ='กรกฎาคม'
+                    break;
+                case 8 :
+                    month ='สิงหาคม'
+                    break;
+                case 9 :
+                    month ='กันยายน'
+                    break;
+                case 10 :
+                    month ='ตุลาคม'
+                    break;
+                case 11 :
+                    month ='พฤศจิกายน'
+                    break;
+                case 12 :
+                    month ='ธันวาคม'
+                    break; 
+            }
+
+            let total = obj['total']
+            res_1[sd_pdname] = res_1[sd_pdname] || []
+            res_1[sd_pdname][month] = res_1[sd_pdname][month] || []
+            res_1[sd_pdname][month] = total
+        })
+        // console.log(res_1)
+
+        var my_data3 = [];
+        var my_label3 = [];
+        var Unique_month3 = [];
+        my_dataAll3.forEach(item => {
+            my_data3.push(item.total);
+            switch (item.month) {
+                case 1 :
+                    my_label3.push('มกราคม')
+                    break;
+                case 2 :
+                    my_label3.push('กุมภาพันธ์')
+                    break;
+                case 3 :
+                    my_label3.push('มีนาคม')
+                    break;
+                case 4 :
+                    my_label3.push('เมษายน')
+                    break;
+                case 5 :
+                    my_label3.push('พฤษภาคม')
+                    break;
+                case 6 :
+                    my_label3.push('มิถุนายน')
+                    break;
+                case 7 :
+                    my_label3.push('กรกฎาคม')
+                    break;
+                case 8 :
+                    my_label3.push('สิงหาคม')
+                    break;
+                case 9 :
+                    my_label3.push('กันยายน')
+                    break;
+                case 10 :
+                    my_label3.push('ตุลาคม')
+                    break;
+                case 11 :
+                    my_label3.push('พฤศจิกายน')
+                    break;
+                case 12 :
+                    my_label3.push('ธันวาคม')
+                    break; 
+            }
+            
+        });
+
+        for( var i=0; i<my_label3.length; i++ ) {
+            if ( Unique_month3.indexOf( my_label3[i] ) < 0 ) {
+            Unique_month3.push( my_label3[i] );
+            }
+        } 
+
+        // console.log("my_data3 = "+ my_data3);
+        // console.log("my_label3 = "+ my_label3);
+        console.log("Unique_month3 = "+ Unique_month3);
+
+
+        function getRandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+
+        let backgroundColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+
+        let borderColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+
+        let labels = Unique_month3
+        let datasets = []
+        let tasrgets = Object.keys(res_1)
+
+
+        let color_index = 0
+
+        tasrgets.forEach(tasrget => {
+            let data = []
+            labels.forEach(month => {
+                let total = res_1[tasrget][month] || "0.00"
+                data.push(total)
+            })
+            datasets.push({
+                label: tasrget,
+                data,
+                backgroundColor: backgroundColor[color_index],
+                borderColor: borderColor[color_index],
+                borderWidth: 1
+            })
+
+            color_index = color_index+1
+        })
+
+        
+
+        let data = { labels, datasets }
+        
+        var ctx = document.getElementById('myChartBar2');
+        var myChartBar2 = new Chart(ctx, {
+            type: 'bar',
+            data,
+            // data: {
+            //     labels: Unique_month3,
+            //     datasets: [{
+            //         label: "<?= $Gname ?>",
+            //         backgroundColor: "#2a86e9",
+            //         borderColor: "#2a86e9",
+            //         data: my_data3
+            //     },{
+            //         label: "<?= $Gname ?>",
+            //         backgroundColor: "#2a86e9",
+            //         borderColor: "#2a86e9",
+            //         data: my_data3
+            //     },{
+            //         label: "<?= $Gname ?>",
+            //         backgroundColor: "#2a86e9",
+            //         borderColor: "#2a86e9",
+            //         data: my_data3
+            //     }],
+            // },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                legend: {
+                    display: true
+                }
+            }
+        });
+
 
         
         const dom_date = document.querySelectorAll('.date_th')
