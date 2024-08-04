@@ -274,6 +274,8 @@
 
                                                     </tr>
                                                     <?php
+                                                    }else{
+                                                        echo "<p><td colspan='5' class='text-center'>ยังไม่มีข้อมูลรายละเอียดการซื้อขาย</td></p>";
                                                     }
                                                     ?>
                                                 </tbody>

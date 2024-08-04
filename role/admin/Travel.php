@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `plant_orderlist` WHERE `pld_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `plant_orderlist` WHERE `tol_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -95,7 +95,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ปริมาณการสั่งซื้อ &nbsp&nbsp&nbsp
+                            <label for="" class="col-form-label">ปริมาณการจอง &nbsp&nbsp&nbsp
                                 <label style="color:red;" >** หน่วยเป็น กิโลกรัม **</label>
                             </label>
                             <input type="decimal" required class="form-control" id="quan" name="quan" style="border-radius: 30px;">
@@ -185,65 +185,65 @@
                                     <thead>
                                         <tr align="center">
                                             
-                                            <th>รหัสการสั่งซื้อ</th>
-                                            <th>ชื่อผัก</th>
+                                            <th>รหัสการจอง</th>
+                                            <th>ชื่อผู้จอง</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `plant_orderlist` INNER JOIN `orderer` ON plant_orderlist.odr_id = orderer.odr_id; ");
+                                            $stmt = $db->query("SELECT * FROM `travel_orderlist`");
                                             $stmt->execute();
-                                            $plds = $stmt->fetchAll();
+                                            $tols = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$plds) {
-                                                echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
+                                            if (!$tols) {
+                                                echo "<p><td colspan='3' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($plds as $pld)  {  
+                                             foreach($tols as $tol)  {  
                                         ?>
                                         <tr>
                                             
-                                            <td align="center"><?= $pld['pld_id']; ?></td>
-                                            <td><?= $pld['odr_id']; ?></td>
+                                            <td align="center"><?= $tol['tol_id']; ?></td>
+                                            <td><?= $tol['tol_cus']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pld['pld_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_pld.php?edit_id=<?= $pld['pld_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
-                                                <a data-id="<?= $pld['pld_id']; ?>" href="?delete=<?= $pld['pld_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $tol['tol_id']?>">ดูข้อมูล</button>
+                                                <a href="Edit_tol.php?edit_id=<?= $tol['tol_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
+                                                <a data-id="<?= $tol['tol_id']; ?>" href="?delete=<?= $tol['tol_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $pld['pld_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $tol['tol_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการสั่งซื้อ</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการจอง</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-1">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสการสั่งซื้อ : </b><?= $pld['pld_id']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสการจอง : </b><?= $tol['tol_id']; ?></label>
                                                         </div>
                                                         <div class="mb-1">                         
-                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่ทำการสั่งซื้อ : </b><?= thai_date_fullmonth(strtotime($pld['pld_date'])) ; ?></label>
+                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่ทำการจอง : </b><?= thai_date_fullmonth(strtotime($tol['tol_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-1">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผู้สั่งซื้อ : </b><?= $pld['odr_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผู้จอง : </b><?= $tol['tol_cus']; ?></label>
                                                         </div>
                                                         <div class="mb-1">
                                                             <?php
-                                                                $pld_id = $pld['pld_id'] ;
-                                                                $stmt = $db->query("SELECT `pod_name`,`pod_quan` FROM `plant_orderlist_detail` WHERE `pld_id` = '$pld_id' ");
+                                                                $tol_id = $tol['tol_id'] ;
+                                                                $stmt = $db->query("SELECT * FROM `travel_orderlist_detail` WHERE `tol_id` = '$tol_id' ");
                                                                 $stmt->execute();
                                                                 
 
                                                                 $check = array();
-                                                                while ($row = $pldds = $stmt->fetch(PDO::FETCH_ASSOC)){
-                                                                    $name = $row["pod_name"]."  จำนวน ".$row["pod_quan"]." "."กิโลกรัม";
+                                                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                                                    $name = $row["tod_name"]."  ".$row["tod_price"]." "."บาท";
                                                                     // $quan = $row["pod_quan"];
                                                                     array_push($check,$name);
                                                                 }
 
                                                             ?>
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>การท่องเที่ยวและบริการ : </b>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รายละเอียดการจอง : </b>
                                                             <br>
                                                                 <?php 
                                                                 foreach ($check as $el) {

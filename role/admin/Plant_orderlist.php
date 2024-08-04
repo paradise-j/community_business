@@ -186,7 +186,7 @@
                                         <tr align="center">
                                             
                                             <th>รหัสการสั่งซื้อ</th>
-                                            <th>ชื่อผัก</th>
+                                            <th>ผู้สั่ง</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -204,7 +204,7 @@
                                         <tr>
                                             
                                             <td align="center"><?= $pld['pld_id']; ?></td>
-                                            <td><?= $pld['odr_id']; ?></td>
+                                            <td><?= $pld['odr_name']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pld['pld_id']?>">ดูข้อมูล</button>
                                                 <a href="Edit_pld.php?edit_id=<?= $pld['pld_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>

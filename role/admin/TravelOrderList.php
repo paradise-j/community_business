@@ -155,16 +155,22 @@
                                         </div>
                                     </form>
                                 </div>
+                               
+                            </div>
+                             <div class="col text-left">
+                                <!-- <button class="btn btn-secondary" style="border-radius: 30px;" type="submit" name="add_sale"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</button> -->
+                                <a href="Travel.php" class="btn btn-secondary" style="border-radius: 30px;"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</a>
                             </div>
                         </div>
+                        
                         <div class="col-lg-7">
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="card-header py-3 text-center mb-4">
                                         <h5 class="m-0 font-weight-bold text-primary">สรุปการจอง
                                     </div>
-                                    <form action="Check_Add_PlantOrderList.php" method="post">
-                                        <div class="row mb-4">
+                                    <form action="Check_Add_TravelOrderList.php" method="post">
+                                        <div class="row mb-2">
                                             <div class="col-md-4">
                                                 <label class="form-label">ชื่อผู้จอง</label>
                                                 <!-- <input type="text" class="form-control" name="cus" style="border-radius: 30px;" required> -->
@@ -192,7 +198,14 @@
                                             <div class="col-md-4">
                                                 <label class="form-label">วันที่ทำการจอง</label>
                                                 <?php $date = date('Y-m-d'); ?>
-                                                <input type="date" class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;" required>
+                                                <input type="date" class="form-control" name="date" min="<?= $date; ?>" style="border-radius: 30px;" required>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-3">
+                                                <label class="form-label">จำนวนนักท่องเที่ยว</label>
+                                                <input type="number" class="form-control" id="quan_pp" name="quan_pp" style="border-radius: 30px;" required>
                                             </div>
                                         </div>
                                         <div class="table-responsive">
@@ -226,6 +239,8 @@
                                                         <!-- <td></td> -->
                                                     </tr>
                                                     <?php
+                                                    }else{
+                                                        echo "<p><td colspan='3' class='text-center'>ยังไม่มีข้อมูลรายละเอียดการจอง</td></p>";
                                                     }
                                                     ?>
                                                 </tbody>
