@@ -82,7 +82,7 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการผลิตสินค้า</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการขายสินค้า</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
@@ -156,10 +156,10 @@
                                 }
                             ?>
                             <div class="row mt-4">
-                                <!-- <div class="col-xl-5 col-lg-4">
+                                <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้า</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าในแต่ละเดือน</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -167,8 +167,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
-                                <div class="col-xl-7 col-lg-8">
+                                </div>
+                                <!-- <div class="col-xl-6 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
                                             <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าในแต่ละเดือน</h5>
@@ -179,7 +179,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                         </div>
@@ -317,7 +317,7 @@
                 labels: my_label02,
                 datasets: [{
                     label: "ยอดขายสุทธิ",
-                    lineTension: 0,
+                    lineTension: 0.3,
                     backgroundColor: "rgba(78, 115, 223, 0.07)",
                     borderColor: "rgba(78, 115, 223, 1)",
                     pointRadius: 5,
@@ -332,6 +332,7 @@
                 }],
             },
             options: {
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true
