@@ -123,7 +123,7 @@
         </a>
         <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="report_orderplan.php">สรุปยอดการส่งออกตามเป้า</a>
+                <a class="collapse-item" href="report_orderplan.php">สรุปยอดการขายสินค้า</a>
                 <!-- <a class="collapse-item" href="PlanFollow.php">วางแผนแการเพาะปลูก</a> -->
                 <!-- <a class="collapse-item" href="Bproduce.php">รับซื้อผลผลิต</a> -->
                 <!-- <a class="collapse-item" href="Export_products.php">ส่งออกผลผลิต</a> -->
