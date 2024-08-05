@@ -43,7 +43,7 @@
 
     <title>ส่งออกผลผลิต</title>
 
-    <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
+    <link rel="icon" type="image/png" href="img/truck-solid.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -78,13 +78,13 @@
                             <select class="form-control" aria-label="Default select example" id="recipient" name="recipient" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกผู้รับผลผลิต....</option>
                                 <?php 
-                                    $stmt = $db->query("SELECT plant_orderlist.pld_id ,plant_orderlist.cus_id ,customer.cus_name FROM `plant_orderlist` INNER JOIN `customer` ON plant_orderlist.cus_id = customer.cus_id; ");
+                                    $stmt = $db->query("SELECT * FROM `orderer` ");
                                     $stmt->execute();
-                                    $vgs = $stmt->fetchAll();
+                                    $odrs = $stmt->fetchAll();
                                     
-                                    foreach($vgs as $vg){
+                                    foreach($odrs as $odr){
                                 ?>
-                                <option value="<?= $vg['cus_id']?>"><?= $vg['cus_name']?></option>
+                                <option value="<?= $odr['odr_id']?>"><?= $odr['odr_name']?></option>
                                 <?php
                                     }
                                 ?>
@@ -180,7 +180,8 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `bproduce`");
+                                            $stmt = $db->query("SELECT `bp_id`,`veget_name`, SUM(`bp_quan`) as total FROM `bproduce` 
+                                                                GROUP BY `veget_name`");
                                             $stmt->execute();
                                             $bps = $stmt->fetchAll();
                                             $count = 1;
@@ -192,9 +193,9 @@
                                         <tr>
                                             <td><?= $bp['veget_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 1.125rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>"><i class="fas fa-eye"></i></button>
-                                                <!-- <a href="Edit_bp.php?edit_id=<?= $bp['bp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 1.125rem;" name="edit"><i class="fas fa-edit"></i></a> -->
-                                                <a data-id="<?= $bp['bp_id']; ?>" href="?delete=<?= $bp['bp_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 1.125rem;"><i class="fa-solid fa-trash"></i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>">ดูข้อมูล</i></button>
+                                                <!-- <a href="Edit_bp.php?edit_id=<?= $bp['bp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
+                                                <a data-id="<?= $bp['bp_id']; ?>" href="?delete=<?= $bp['bp_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบข้อมูล</i></a>
                                             </td>
                                         </tr>
 
@@ -205,24 +206,24 @@
                                                         <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการส่งออกผลผลิต</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="mb-2">
+                                                        <!-- <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ส่งออกผลผลิต : </b><?= thai_date_fullmonth(strtotime($bp['bp_date'])) ; ?></label>
-                                                        </div>
-                                                        <div class="mb-2">
+                                                        </div> -->
+                                                        <!-- <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อเจ้าของสวน : </b><?= $bp['gw_id']; ?></label>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่รับซื้อ : </b><?= $bp['veget_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ปริมาณที่รับซื้อ : </b><?= $bp['bp_quan']." กิโลกรัม"; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวนที่รับซื้อไว้ : </b><?= $bp['total']." กิโลกรัม"; ?></label>
                                                         </div>
-                                                        <div class="mb-2">
+                                                        <!-- <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาต่อกิโลกรัม : </b><?= $bp['bp_pricekg']." บาท"; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาสุทธิ : </b><?= $bp['bp_totalprice']." บาท"; ?></label>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>

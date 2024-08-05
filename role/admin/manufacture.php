@@ -95,7 +95,7 @@
                             <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="firstname" class="col-form-label">ทุนรวมในการผลิต</label>
+                            <label for="firstname" class="col-form-label">ทุนรวมในการผลิต (ผันแปร)</label>
                             <input type="number" required class="form-control" name="cost" style="border-radius: 30px;">
                         </div>
                         <div class="modal-footer">

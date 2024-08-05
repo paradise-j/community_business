@@ -359,7 +359,7 @@
                 labels: my_label02,
                 datasets: [{
                     label: "ยอดขายสุทธิ",
-                    lineTension: 0.3,
+                    lineTension: 0,
                     backgroundColor: "rgba(78, 115, 223, 0.07)",
                     borderColor: "rgba(78, 115, 223, 1)",
                     pointRadius: 5,
