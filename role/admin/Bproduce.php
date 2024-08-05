@@ -218,7 +218,7 @@
                                              foreach($bps as $bp)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $bp['veget_name']; ?></td>
+                                            <td><?= $bp['bp_id']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>">ดูข้อมูล</button>
                                                 <!-- <a href="Edit_bp.php?edit_id=<?= $bp['bp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
