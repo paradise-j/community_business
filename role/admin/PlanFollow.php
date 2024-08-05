@@ -185,12 +185,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-1">
-                                    <div class="mt-3">
+                                <div class="col-md-1">
+                                    <!-- <div class="mt-3">
                                         <br>
                                         <button class="btn btn-danger remove_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div> -->
+                                    </div> -->
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -389,11 +389,6 @@
 
     
     <script>
-        // $(document).ready(function () {
-        //     $('#Sdate').datepicker({
-        //         dateFormat: 'dd-mm-yy'
-        //     });
-        // });
 
         $('#g_name').change(function(){
              var id_gw = $(this).val();
@@ -492,7 +487,7 @@
                                     icon: 'danger',
                                 })
                                 window.location.reload();
-                            });
+                            });     
                     });
                 },
             });
@@ -533,11 +528,6 @@
             }
         });
         $('.table').DataTable();
-
-
-
-
-
 
     </script>
 
