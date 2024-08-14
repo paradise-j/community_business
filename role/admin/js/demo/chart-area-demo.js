@@ -140,7 +140,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
         labels: Unique_label,
         datasets: [{
           label: "รายได้แฝง",
-          lineTension: 0.3,
+          lineTension: 0,
           backgroundColor: "rgba(78, 115, 223, 0.07)",
           borderColor: "rgba(78, 115, 223, 1)",
           pointRadius: 5,
