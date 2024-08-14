@@ -94,9 +94,256 @@
                             <label for="" class="col-form-label">จำนวนที่ผลิตได้</label>
                             <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                         </div>
+                        <hr>
+                        <label class="col-form-label" style="color: black; font-size: 1.3rem;">รายละเอียดทุนผันแปร</label><br>
+                        <div class="row">
+                            <div class="col text-center">
+                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าแรงรวม -------------</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="col-form-label">จำนวนคน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-form-label">ราคารวม</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าน้ำ -------------</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าไฟ -------------</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <!-- ======================================================================ค่าวัตถุดิบหลัก ======================================================================================== -->
+                        <div class="row">
+                            <div class="col text-center">
+                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าวัตถุดิบหลัก -------------</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <label class="col-form-label">รายการวัตถุดิบที่ 1</label>
+                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
+                                    <?php 
+                                        // $stmt = $db->query("SELECT * FROM `grower`");
+                                        // $stmt->execute();
+                                        // $gws = $stmt->fetchAll();
+                                        
+                                        // foreach($gws as $gw){
+                                    ?>
+                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <?php
+                                        // }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <label class="col-form-label">รายการวัตถุดิบที่ 2</label>
+                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
+                                    <?php 
+                                        // $stmt = $db->query("SELECT * FROM `grower`");
+                                        // $stmt->execute();
+                                        // $gws = $stmt->fetchAll();
+                                        
+                                        // foreach($gws as $gw){
+                                    ?>
+                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <?php
+                                        // }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <label class="col-form-label">รายการวัตถุดิบที่ 3</label>
+                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
+                                    <?php 
+                                        // $stmt = $db->query("SELECT * FROM `grower`");
+                                        // $stmt->execute();
+                                        // $gws = $stmt->fetchAll();
+                                        
+                                        // foreach($gws as $gw){
+                                    ?>
+                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <?php
+                                        // }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <label class="col-form-label">รายการวัตถุดิบที่ 4</label>
+                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
+                                    <?php 
+                                        // $stmt = $db->query("SELECT * FROM `grower`");
+                                        // $stmt->execute();
+                                        // $gws = $stmt->fetchAll();
+                                        
+                                        // foreach($gws as $gw){
+                                    ?>
+                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <?php
+                                        // }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <label class="col-form-label">รายการวัตถุดิบที่ 5</label>
+                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
+                                    <?php 
+                                        // $stmt = $db->query("SELECT * FROM `grower`");
+                                        // $stmt->execute();
+                                        // $gws = $stmt->fetchAll();
+                                        
+                                        // foreach($gws as $gw){
+                                    ?>
+                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <?php
+                                        // }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div><label class="col-form-label">อื่น ๆ </label>
+                        <div class="row mb-3">
+                            
+                            <div class="col-md-4">
+                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <!-- ======================================================================ค่าหีบห่อ บรรจุภัณฑ์ ======================================================================================== -->
+                        <div class="row">
+                            <div class="col text-center">
+                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">---------- ค่าหีบห่อ บรรจุภัณฑ์ ----------</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- อื่น ๆ  -------------</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <label class="col-form-label">รายการอื่น ๆ  </label>
+                                <input type="text" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
+                        </div>
                         <div class="mb-3">
-                            <label for="firstname" class="col-form-label">ทุนรวมในการผลิต (ผันแปร)</label>
-                            <input type="number" required class="form-control" name="cost" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">ปัญหาในการผลิต</label>
+                            <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                <option selected disabled>เลือกปัญหาในการผลิต....</option>
+                                <option value="หนี้สิน-เงินทุน">หนี้สิน-เงินทุน</option>
+                                <option value="แหล่งน้ำ">แหล่งน้ำ</option>
+                                <option value="ที่ดิน">ที่ดิน</option>
+                                <option value="สิทธิการเกษตร-สวัสดิการ">สิทธิการเกษตร-สวัสดิการ</option>
+                                <option value="ราคา-การตลาด">ราคา-การตลาด</option>
+                                <option value="สังคม-คุณภาพชีวิต">สังคม-คุณภาพชีวิต</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">รายละเอียดปัญหา</label>
+                            <input type="text" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            <!-- <textarea name="" id="" style="border-radius: 30px;"></textarea> -->
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
