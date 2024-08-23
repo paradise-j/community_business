@@ -115,7 +115,7 @@
             <span>ออกรายงาน</span></a>
     </li> -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
             aria-expanded="true" aria-controls="collapseReport">
             <i class="fas fa-solid fa-clipboard-list"></i>
@@ -124,12 +124,9 @@
         <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="report_orderplan.php">สรุปยอดการขายสินค้า</a>
-                <!-- <a class="collapse-item" href="PlanFollow.php">วางแผนแการเพาะปลูก</a> -->
-                <!-- <a class="collapse-item" href="Bproduce.php">รับซื้อผลผลิต</a> -->
-                <!-- <a class="collapse-item" href="Export_products.php">ส่งออกผลผลิต</a> -->
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
