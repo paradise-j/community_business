@@ -6,6 +6,7 @@
 
     if (isset($_POST['submit'])) {
         $fa_name = $_POST['fa_name'];
+        $fa_price = $_POST['fa_price'];
         $group = $_POST['group'];
 
         $pd = $db->prepare("SELECT `fa_name` FROM `fixed_asset` WHERE `group_id` = '$group'");
@@ -20,8 +21,8 @@
 
         if(!in_array("$fa_name", $check)){
             // echo "Match not found";
-            $sql = $db->prepare("INSERT INTO `fixed_asset`(`fa_name`, `group_id`)
-                             VALUES ('$fa_name','$group')");
+            $sql = $db->prepare("INSERT INTO `fixed_asset`(`fa_name`,`fa_price`, `group_id`)
+                             VALUES ('$fa_name','$fa_price','$group')");
             $sql->execute();
 
             if ($sql) {

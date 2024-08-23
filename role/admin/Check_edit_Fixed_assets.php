@@ -7,8 +7,9 @@
     if (isset($_POST['submit'])) {
         $fa_id = $_POST['fa_id'];
         $fa_name = $_POST['fa_name'];
+        $fa_price = $_POST['fa_price'];
 
-        $sql = $db->prepare("UPDATE `fixed_asset` SET `fa_name`='$fa_name'
+        $sql = $db->prepare("UPDATE `fixed_asset` SET `fa_name`='$fa_name' , `fa_price` = '$fa_price'
                              WHERE `fa_id`='$fa_id'");
         $sql->execute();
 
