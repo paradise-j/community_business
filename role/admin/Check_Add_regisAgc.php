@@ -39,7 +39,7 @@
                              VALUES ('$Fname','$Lname','$perid','$phone','$address','$subdis','$dis','$pv','$zipcode','$group_id')");
         $sql->execute();
 
-        $us_id = $db->query("SELECT `user_id` as id FROM `user_data` WHERE `user_perid` = '$perid'");
+        $us_id = $db->query("SELECT `user_id` as id FROM `user_data` WHERE `user_perid` = '$perid' and  `user_Fname` = '$Fname' and `user_Lname` = '$Lname'");
         $us_id->execute();
         $row = $us_id->fetch(PDO::FETCH_ASSOC);
         extract($row);

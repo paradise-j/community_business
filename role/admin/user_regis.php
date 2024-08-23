@@ -85,6 +85,7 @@
                                 <?php
                                     }
                                 ?>
+                                <option value="other">อื่น ๆ </option>
                             </select>
                             </div>
                         </div>
