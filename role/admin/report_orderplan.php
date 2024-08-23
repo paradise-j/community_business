@@ -309,40 +309,40 @@
         my_dataAll2.forEach(item => {
             my_data02.push(item.total);
             switch (item.month) {
-                case 1 :
+                case "1" :
                     my_label02.push('มกราคม')
                     break;
-                case 2 :
+                case "2" :
                     my_label02.push('กุมภาพันธ์')
                     break;
-                case 3 :
+                case "3" :
                     my_label02.push('มีนาคม')
                     break;
-                case 4 :
+                case "4" :
                     my_label02.push('เมษายน')
                     break;
-                case 5 :
+                case "5" :
                     my_label02.push('พฤษภาคม')
                     break;
-                case 6 :
+                case "6" :
                     my_label02.push('มิถุนายน')
                     break;
-                case 7 :
+                case "7" :
                     my_label02.push('กรกฎาคม')
                     break;
-                case 8 :
+                case "8" :
                     my_label02.push('สิงหาคม')
                     break;
-                case 9 :
+                case "9" :
                     my_label02.push('กันยายน')
                     break;
-                case 10 :
+                case "10" :
                     my_label02.push('ตุลาคม')
                     break;
-                case 11 :
+                case "11" :
                     my_label02.push('พฤศจิกายน')
                     break;
-                case 12 :
+                case "12" :
                     my_label02.push('ธันวาคม')
                     break; 
             }
@@ -398,40 +398,40 @@
         my_dataAll.forEach(item => {
             my_data1.push(item.total);
             switch (item.month) {
-                case 1 :
+                case "1" :
                     my_label1.push('มกราคม')
                     break;
-                case 2 :
+                case "2" :
                     my_label1.push('กุมภาพันธ์')
                     break;
-                case 3 :
+                case "3" :
                     my_label1.push('มีนาคม')
                     break;
-                case 4 :
+                case "4" :
                     my_label1.push('เมษายน')
                     break;
-                case 5 :
+                case "5" :
                     my_label1.push('พฤษภาคม')
                     break;
-                case 6 :
+                case "6" :
                     my_label1.push('มิถุนายน')
                     break;
-                case 7 :
+                case "7" :
                     my_label1.push('กรกฎาคม')
                     break;
-                case 8 :
+                case "8" :
                     my_label1.push('สิงหาคม')
                     break;
-                case 9 :
+                case "9" :
                     my_label1.push('กันยายน')
                     break;
-                case 10 :
+                case "10" :
                     my_label1.push('ตุลาคม')
                     break;
-                case 11 :
+                case "11" :
                     my_label1.push('พฤศจิกายน')
                     break;
-                case 12 :
+                case "12" :
                     my_label1.push('ธันวาคม')
                     break; 
             }
@@ -482,40 +482,40 @@
             let sd_pdname = obj['sd_pdname']
             let month = ''
             switch (obj['month']) {
-                case 1 :
+                case "1" :
                     month ='มกราคม'
                     break;
-                case 2 :
+                case "2" :
                     month ='กุมภาพันธ์'
                     break;
-                case 3 :
+                case "3" :
                     month ='มีนาคม'
                     break;
-                case 4 :
+                case "4" :
                     month ='เมษายน'
                     break;
-                case 5 :
+                case "5" :
                     month ='พฤษภาคม'
                     break;
-                case 6 :
+                case "6" :
                     month ='มิถุนายน'
                     break;
-                case 7 :
+                case "7" :
                     month ='กรกฎาคม'
                     break;
-                case 8 :
+                case "8" :
                     month ='สิงหาคม'
                     break;
-                case 9 :
+                case "9" :
                     month ='กันยายน'
                     break;
-                case 10 :
+                case "10" :
                     month ='ตุลาคม'
                     break;
-                case 11 :
+                case "11" :
                     month ='พฤศจิกายน'
                     break;
-                case 12 :
+                case "12" :
                     month ='ธันวาคม'
                     break; 
             }
@@ -533,40 +533,40 @@
         my_dataAll3.forEach(item => {
             my_data3.push(item.total);
             switch (item.month) {
-                case 1 :
+                case "1" :
                     my_label3.push('มกราคม')
                     break;
-                case 2 :
+                case "2" :
                     my_label3.push('กุมภาพันธ์')
                     break;
-                case 3 :
+                case "3" :
                     my_label3.push('มีนาคม')
                     break;
-                case 4 :
+                case "4" :
                     my_label3.push('เมษายน')
                     break;
-                case 5 :
+                case "5" :
                     my_label3.push('พฤษภาคม')
                     break;
-                case 6 :
+                case "6" :
                     my_label3.push('มิถุนายน')
                     break;
-                case 7 :
+                case "7" :
                     my_label3.push('กรกฎาคม')
                     break;
-                case 8 :
+                case "8" :
                     my_label3.push('สิงหาคม')
                     break;
-                case 9 :
+                case "9" :
                     my_label3.push('กันยายน')
                     break;
-                case 10 :
+                case "10" :
                     my_label3.push('ตุลาคม')
                     break;
-                case 11 :
+                case "11" :
                     my_label3.push('พฤศจิกายน')
                     break;
-                case 12 :
+                case "12" :
                     my_label3.push('ธันวาคม')
                     break; 
             }

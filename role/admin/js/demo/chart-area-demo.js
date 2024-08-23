@@ -29,6 +29,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     }
   
     async function get_sale_All() {
+      // const res = await fetch("api/get_sale_All.php");
       const res = await fetch("/community_business/api/get_sale_All.php");
       const json = await res.json()
       return json;
@@ -43,79 +44,79 @@ window.addEventListener('DOMContentLoaded', async (event) => {
       // console.log("my_data = "+ item.month);
       // console.log("my_data = "+ item.total);
       switch (item.month) {
-          case 1 :
+          case "1 ":
               my_data1.push(item.total)
               break;
-          case 2:
+          case "2":
               my_data1.push(item.total)
               break;
-          case 3:
+          case "3":
               my_data1.push(item.total)
               break;
-          case 4:
+          case "4":
               my_data1.push(item.total)
               break;
-          case 5:
+          case "5":
               my_data1.push(item.total)
               break;
-          case 6:
+          case "6":
               my_data1.push(item.total)
               break;
-          case 7:
+          case "7":
               my_data1.push(item.total)
               break;
-          case 8:
+          case "8":
               my_data1.push(item.total)
               break;
-          case 9:
+          case "9":
               my_data1.push(item.total)
               break;
-          case 10:
+          case "10":
               my_data1.push(item.total)
               break;
-          case 11:
+          case "11":
               my_data1.push(item.total)
               break;
-          case 12:
+          case "12":
               my_data1.push(item.total)
               break;
           }
       
       switch (item.month) {
-        case 1:
+        case "1":
             my_label.push('มกราคม')
             break;
-        case 2:
+        case "2":
             my_label.push('กุมภาพันธ์')
             break;
-        case 3:
+        case "3":
             my_label.push('มีนาคม')
             break;
-        case 4:
+        case "4":
             my_label.push('เมษายน')
             break;
-        case 5:
+        case "5":
             my_label.push('พฤษภาคม')
             break;
-        case 6:
+        case "6":
             my_label.push('มิถุนายน')
             break;
-        case 7:
+        case "7":
             my_label.push('กรกฎาคม')
             break;
-        case 8:
+        case "8":
             my_label.push('สิงหาคม')
             break;
-        case 9:
+        case "9":
             my_label.push('กันยายน')
             break;
-        case 10:
+        case "10":
             my_label.push('ตุลาคม')
             break;
-        case 11:
+        case "11":
             my_label.push('พฤศจิกายน')
             break;
-        case 12:
+        case "12":
             my_label.push('ธันวาคม')
             break; 
       }

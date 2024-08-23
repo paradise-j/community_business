@@ -1,8 +1,13 @@
 <?php
     $servername = "localhost";
-    $username = "motolife_nfcapp";
-    $password = "FGAxvvuSt4jHqKfr6hFP";
-    $dbname = "motolife_nfcapp";
+    $username = "root";
+    $password = "";
+    $dbname = "comen_db";
+
+    // $servername = "localhost";
+    // $username = "motolife_nfcapp";
+    // $password = "FGAxvvuSt4jHqKfr6hFP";
+    // $dbname = "motolife_nfcapp";
 
     try {
         $db = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
