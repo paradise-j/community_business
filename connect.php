@@ -1,5 +1,5 @@
 <?php
-    $servername = "app.nfcsurat.or.th";
+    $servername = "localhost";
     $username = "motolife_nfcapp";
     $password = "FGAxvvuSt4jHqKfr6hFP";
     $dbname = "motolife_nfcapp";
