@@ -376,11 +376,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">ข้อมูลการรอบการผลิต</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">ข้อมูลการรอบการผลิตสินค้าชุมชน</h4>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรอบการผลิต</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a>
                             </div>
                         </div>
                         
@@ -409,7 +409,7 @@
                                             <td><?= $mf['mf_name']; ?></td>
                                             <!-- <td class="date_th"><?= $mf['mf_date']; ?></td> -->
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">กูข้อมูล</i></button>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">ดูข้อมูล</i></button>
                                                 <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">แก้ไข</i></button>
                                                 <!-- <a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
                                                 <a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบ</a>
@@ -428,7 +428,7 @@
                                                                 // $date = $mf['mf_date'];
                                                                 // $newDate = date("d-m-Y", strtotime($date));
                                                             ?>
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ผลิตสินค้า : </b><?= thai_date_fullmonth(strtotime($mf['mf_date'])); ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ผลิตสินค้าชุมชน : </b><?= thai_date_fullmonth(strtotime($mf['mf_date'])); ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการผลิตสินค้าชุมชน : </b><?= $mf['mf_name']; ?></label>

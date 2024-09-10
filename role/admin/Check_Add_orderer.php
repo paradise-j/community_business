@@ -7,6 +7,26 @@
     if (isset($_POST['submit'])) {
         $odr_name = $_POST['odr_name'];
         $odr_phone = $_POST['odr_phone'];
+
+        $provinces = $_POST['provinces'];
+        $stmt = $db->query("SELECT `name_th` as pv FROM `provinces` WHERE `id` = $provinces");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
+        $amphures = $_POST['amphures'];
+        $stmt = $db->query("SELECT `name_th` as dis FROM `amphures` WHERE `id` = $amphures");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
+        $districts = $_POST['districts'];
+        $stmt = $db->query("SELECT `name_th` as subdis FROM `districts` WHERE `id` = $districts");
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+        
+        $zipcode = $_POST['zipcode'];
         $group = $_POST['group'];
 
         $odr = $db->prepare("SELECT `odr_name` FROM `orderer` WHERE `group_id` = '$group'");
@@ -21,8 +41,8 @@
 
         if(!in_array("$odr_name", $check)){
             // echo "Match not found";
-            $sql = $db->prepare("INSERT INTO `orderer`(`odr_name`, `odr_phone` , `group_id`)
-                             VALUES ('$odr_name','$odr_phone','$group')");
+            $sql = $db->prepare("INSERT INTO `orderer`(`odr_name`, `odr_phone`, `odr_subdis`, `odr_dis`, `odr_pv`, `odr_zip` , `group_id`)
+                             VALUES ('$odr_name','$odr_phone','$pv','$dis','$subdis','$zipcode','$group')");
             $sql->execute();
 
             if ($sql) {

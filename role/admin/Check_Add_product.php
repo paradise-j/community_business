@@ -6,6 +6,7 @@
 
     if (isset($_POST['submit'])) {
         $pdname = $_POST['pdname'];
+        $unit = $_POST['unit'];
         $group = $_POST['group'];
         $img = $_FILES['img'];
 
@@ -31,8 +32,8 @@
             if (in_array($fileActExt, $allow)) {
                 if ($img['size'] > 0 && $img['error'] == 0) {
                     if (move_uploaded_file($img['tmp_name'], $filePath)) {
-                                    $sql = $db->prepare("INSERT INTO `product`(`pd_name`, `pd_img`,`group_id`)
-                                                    VALUES ('$pdname','$fileNew','$group')");
+                                    $sql = $db->prepare("INSERT INTO `product`(`pd_name`,`pd_uint`, `pd_img`,`group_id`)
+                                                    VALUES ('$pdname','$unit','$fileNew','$group')");
                                     $sql->execute();
 
                                     if ($sql) {

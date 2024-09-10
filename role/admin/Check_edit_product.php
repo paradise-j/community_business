@@ -6,6 +6,7 @@
 
     if (isset($_POST['submit'])) {
         $Productid = $_POST['Productid'];
+        $Productunit = $_POST['Productunit'];
         $Productname = $_POST['Productname'];
 
         $img = $_FILES['img'];
@@ -19,7 +20,7 @@
         if (in_array($fileActExt, $allow)) {
             if ($img['size'] > 0 && $img['error'] == 0) {
                 if (move_uploaded_file($img['tmp_name'], $filePath)) {
-                                $sql = $db->prepare("UPDATE `product` SET `pd_name`='$Productname' , `pd_img`='$fileNew'
+                                $sql = $db->prepare("UPDATE `product` SET `pd_name`='$Productname' , `pd_unit`='$Productunit', `pd_img`='$fileNew'
                                                      WHERE `pd_id`='$Productid'");
                                 $sql->execute();
 

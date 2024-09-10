@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `odr_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `orderer` WHERE `odr_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=Product.php");
+            header("refresh:1; url=orderer.php");
         }
     }
 ?>
@@ -92,6 +92,43 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
                             <input type="text" class="form-control" maxlength="10" minlength="10" name="odr_phone" style="border-radius: 30px;" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">จังหวัด</label>
+                                <select class="form-control" aria-label="Default select example" id="provinces" name="provinces" style="border-radius: 30px;" required>
+                                    <option selected disabled>กรุณาเลือกจังหวัด....</option>
+                                    <?php 
+                                        $stmt = $db->query("SELECT * FROM `provinces`");
+                                        $stmt->execute();
+                                        $pvs = $stmt->fetchAll();
+                                        
+                                        foreach($pvs as $pv){
+                                    ?>
+                                    <option value="<?= $pv['id']?>"><?= $pv['name_th']?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">อำเภอ</label>
+                                <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
+                                    <option selected disabled>กรุณาเลือกอำเภอ....</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="firstname" class="col-form-label">ตำบล</label>
+                                    <select class="form-control" aria-label="Default select example" id="districts" name="districts" style="border-radius: 30px;" required>
+                                        <option selected disabled>กรุณาเลือกตำบล....</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
+                                    <input type="text" required class="form-control" id="zipcode" name="zipcode" style="border-radius: 30px;">
+                                </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -285,7 +322,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'Product.php',
+                                url: 'orderer.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -295,7 +332,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'Product.php';
+                                    document.location.href = 'orderer.php';
                                 })
                             })
                             .fail(function() {
@@ -349,6 +386,45 @@
             }
         });
         $('.table').DataTable();
+
+        $('#provinces').change(function(){
+            var id_provnce = $(this).val();
+            $.ajax({
+                type : "post",
+                url : "../../address.php",
+                data : {id:id_provnce,function:'provinces'},     
+                success: function(data){
+                    $('#amphures').html(data);
+                    $('#districts').html(' ');
+                    $('#zipcode').val(' ');
+                }
+            });
+        });
+
+        $('#amphures').change(function(){
+            var id_amphures = $(this).val();
+            $.ajax({
+                type : "post",
+                url : "../../address.php",
+                data : {id:id_amphures,function:'amphures'},
+                success: function(data){
+                    $('#districts').html(data);
+                    $('#zipcode').val(' ');
+                }
+            });
+        });
+
+        $('#districts').change(function(){
+            var id_districts = $(this).val();
+            $.ajax({
+                type : "post",
+                url : "../../address.php",
+                data : {id:id_districts,function:'districts'},
+                success: function(data){
+                    $('#zipcode').val(data)
+                }
+            });
+        });
 
 
     </script>

@@ -19,10 +19,13 @@
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body class="img js-fullheight" style="background-image: url(img/bg2.png)">
+<body class="img js-fullheight" style="background-image: url(img/bgGreen.jpg)">
 	<section class="ftco-section">
+		<div class="row justify-content-center" >
+			<img src="img/logoSpon22.png" style="width: 42%; text-align: center;">
+		</div>
 		<div class="container">
-			<div class="row justify-content-center my-5">
+			<div class="row justify-content-center my-3">
 				<div class="col-md-6 text-center ">
 					<h2 class="heading-section">ระบบธุรกิจอัจฉริยะสำหรับกลุ่มวิสาหกิจชุมชน จังหวัดสุราษฎร์ธานี</h2>
 				</div>

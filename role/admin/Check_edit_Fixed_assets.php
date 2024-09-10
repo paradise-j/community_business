@@ -8,8 +8,9 @@
         $fa_id = $_POST['fa_id'];
         $fa_name = $_POST['fa_name'];
         $fa_price = $_POST['fa_price'];
+        $fa_location = $_POST['fa_location'];
 
-        $sql = $db->prepare("UPDATE `fixed_asset` SET `fa_name`='$fa_name' , `fa_price` = '$fa_price'
+        $sql = $db->prepare("UPDATE `fixed_asset` SET `fa_name`='$fa_name' , `fa_price` = '$fa_price' , `fa_location` = '$fa_location'
                              WHERE `fa_id`='$fa_id'");
         $sql->execute();
 

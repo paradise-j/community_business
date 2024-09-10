@@ -89,6 +89,16 @@
                             <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
                             <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;">
                         </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">หน่วยนับ</label>
+                            <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
+                                <option value="กรัม">กรัม</option>
+                                <option value="กิโลกรัม">กิโลกรัม</option>
+                                <option value="กระปุก">กระปุก</option>
+                                <!-- <option value="กรัม">กรัม</option> -->
+                            </select>
+                        </div>
                         <div class="col-md-1 text-center">
                             <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImg" alt="">
                         </div>
@@ -151,7 +161,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT product.pd_id , product.pd_date, product.pd_name , product.pd_img, product.group_id , group_comen.group_name as group_name 
+                                            $stmt = $db->query("SELECT product.pd_id , product.pd_date, product.pd_name, product.pd_unit , product.pd_img, product.group_id , group_comen.group_name as group_name 
                                                                 FROM `product` INNER JOIN `group_comen` ON group_comen.group_id = product.group_id");
                                             $stmt->execute();
                                             $pds = $stmt->fetchAll();
@@ -190,6 +200,9 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินค้าชุมชน : </b> <?= $pd['pd_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>หน่วยนับ : </b> <?= $pd['pd_unit']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพสินค้าชุมชน : </b> </label><br>
                                                             <img class="rounded" width="50%" src="uploads/<?= $pd['pd_img']; ?>" alt="">
                                                         </div>
@@ -219,6 +232,15 @@
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">ชื่อสินค้าชุมชน</label>
                                                                 <input type="text" required class="form-control" id="Productname" name="Productname" value="<?= $pd['pd_name'];?>" style="border-radius: 30px;">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">หน่วยนับ</label>
+                                                                <select class="form-control" aria-label="Default select example" id="Productunit" name="Productunit" style="border-radius: 30px;" required>
+                                                                    <option selected disabled><?= $pd['pd_unit'];?></option>
+                                                                    <option value="กรัม">กรัม</option>
+                                                                    <option value="กิโลกรัม">กิโลกรัม</option>
+                                                                    <option value="กระปุก">กระปุก</option>
+                                                                </select>
                                                             </div>
                                                             <div class="col-md-1 text-center">
                                                                 <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImgEdit" alt="">

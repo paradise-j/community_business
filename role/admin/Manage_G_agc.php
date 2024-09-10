@@ -207,10 +207,10 @@
                                                     <div class="modal-body">
                                                         <form action="Check_edit_user.php" method="POST">
                                                             <div class="row mb-1">
-                                                                <div class="col-md-4">
+                                                                <!-- <div class="col-md-4">
                                                                     <label for="" class="col-form-label">รหัสกลุ่มวิสาหกิจ</label>
                                                                     <input type="text" required class="form-control" name="phone" value="<?= $gcom['group_id'];?>" style="border-radius: 30px;">
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                             <div class="row mb-1">
                                                                 <div class="col-md-12">

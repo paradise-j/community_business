@@ -87,11 +87,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อสินทรัพย์ถาวร</label>
-                            <input type="text" required class="form-control" name="fa_name" style="border-radius: 30px;">
+                            <input type="text"  class="form-control" name="fa_name" style="border-radius: 30px;" required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ราคา</label>
-                            <input type="text" required class="form-control" name="fa_price" style="border-radius: 30px;">
+                            <input type="number"  class="form-control" name="fa_price" style="border-radius: 30px;" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">ที่ตั้ง</label>
+                            <input type="text"  class="form-control" name="fa_location" style="border-radius: 30px;" required>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -146,7 +150,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT fixed_asset.fa_id , fixed_asset.fa_date , fixed_asset.fa_name , fixed_asset.fa_price ,  
+                                            $stmt = $db->query("SELECT fixed_asset.fa_id , fixed_asset.fa_date , fixed_asset.fa_name , fixed_asset.fa_price , fixed_asset.fa_location,  
                                                                     fixed_asset.group_id , group_comen.group_name as group_name
                                                                 FROM `fixed_asset` 
                                                                 INNER JOIN `group_comen` ON fixed_asset.group_id  = group_comen.group_id");
@@ -191,6 +195,9 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคา : </b><?= number_format($pd['fa_price'],2)." บาท" ; ?></label>
                                                         </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่ตั้ง : </b><?= $pd['fa_location']; ?></label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -221,6 +228,10 @@
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">ราคา</label>
                                                                 <input type="text" required class="form-control" id="fa_price" name="fa_price" value="<?= $pd['fa_price'];?>" style="border-radius: 30px;">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">ที่ตั้ง</label>
+                                                                <input type="text" required class="form-control" id="fa_location" name="fa_location" value="<?= $pd['fa_location'];?>" style="border-radius: 30px;">
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
