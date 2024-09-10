@@ -24,7 +24,7 @@
 		<div class="container">
 			<div class="row justify-content-center my-5">
 				<div class="col-md-6 text-center ">
-					<h2 class="heading-section">ลงชื่อเข้าใช้งานระบบ</h2>
+					<h2 class="heading-section">ระบบธุรกิจอัจฉริยะสำหรับกลุ่มวิสาหกิจชุมชน จังหวัดสุราษฎร์ธานี</h2>
 				</div>
 			</div>
 			<div class="row justify-content-center">
