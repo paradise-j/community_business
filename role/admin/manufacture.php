@@ -90,9 +90,15 @@
                             </select>
                             <!-- <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;"> -->
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">จำนวนที่ผลิตได้</label>
-                            <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                        <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <label for="" class="col-form-label">จำนวนที่ผลิตได้</label>
+                                    <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="" class="col-form-label">หน่วยนับ</label>
+                                    <input type="text"  class="form-control" name="unit" style="border-radius: 30px;" required readonly>
+                                </div>
                         </div>
                         <hr>
                         <label class="col-form-label" style="color: black; font-size: 1.3rem;">รายละเอียดทุนผันแปร</label><br>
@@ -104,11 +110,11 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="col-form-label">จำนวนคน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                                <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="col-form-label">ราคารวม</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                                <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;" required>
                             </div>
                         </div>
                         <div class="row">
