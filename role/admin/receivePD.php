@@ -144,11 +144,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลการรับสินค้า</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลการรับสินค้าจากกลุ่มอื่น</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรับสินค้า</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรับสินค้าจากกลุ่มอื่น</a>
                             </div>
                         </div>
                         

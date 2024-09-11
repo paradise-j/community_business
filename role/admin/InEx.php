@@ -84,7 +84,7 @@
                             <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ราคา</label>
+                            <label for="" class="col-form-label">จำนวนเงิน (บาท)</label>
                             <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
                         </div>
                         <div class="modal-footer">

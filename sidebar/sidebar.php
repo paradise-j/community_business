@@ -25,13 +25,14 @@
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="Manage_G_agc.php">ข้อมูลกลุ่มวิสาหกิจ</a>
-                <a class="collapse-item" href="Product.php">ข้อมูลสินค้าชุมชน</a>
-                <a class="collapse-item" href="Fixed_assets.php">ข้อมูลสินทรัพย์ถาวร</a>
-                <a class="collapse-item" href="user_regis.php">ข้อมูลทะเบียนสมาชิก</a>
-                <a class="collapse-item" href="grower_regis.php">ข้อมูลทะเบียนลูกสวน</a>
-                <a class="collapse-item" href="Travel_package.php">ข้อมูลแพ็คเกจการท่องเที่ยว</a>
-                <a class="collapse-item" href="orderer.php">ข้อมูลผู้สั่งซื้อ</a>
+                <a class="collapse-item" href="Manage_G_agc.php">1.ข้อมูลกลุ่มวิสาหกิจ</a>
+                <a class="collapse-item" href="Product.php">2.ข้อมูลสินค้าชุมชน</a>
+                <a class="collapse-item" href="material.php">3.ข้อมูลวัตถุดิบ</a>
+                <a class="collapse-item" href="Fixed_assets.php">4.ข้อมูลสินทรัพย์ถาวร</a>
+                <a class="collapse-item" href="user_regis.php">5.ข้อมูลทะเบียนสมาชิก</a>
+                <a class="collapse-item" href="grower_regis.php">6.ข้อมูลทะเบียนลูกสวน</a>
+                <a class="collapse-item" href="Travel_package.php">7.ข้อมูลแพ็คเกจการท่องเที่ยว</a>
+                <a class="collapse-item" href="orderer.php">8.ข้อมูลผู้สั่งซื้อ</a>
             </div>
         </div>
     </li>
@@ -44,8 +45,8 @@
         </a>
         <div id="collapsepd" class="collapse" aria-labelledby="headingpd" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="manufacture.php">การผลิตสินค้าชุมชน</a>
-                <a class="collapse-item" href="receivePD.php">การรับเข้าสินค้าจากแหล่งอื่น</a>
+                <a class="collapse-item" href="manufacture.php">1.การผลิตสินค้าชุมชน</a>
+                <a class="collapse-item" href="receivePD.php">2.การรับเข้าสินค้าจากแหล่งอื่น</a>
             </div>
         </div>
     </li>
@@ -79,8 +80,8 @@
         </a>
         <div id="collapseMN" class="collapse" aria-labelledby="headingMN" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="InEx.php">รายรับ-รายจ่าย</a>
-                <a class="collapse-item" href="Cus_credit.php">ลูกค้าเครดิต</a>
+                <a class="collapse-item" href="InEx.php">1.รายรับ-รายจ่าย</a>
+                <a class="collapse-item" href="Cus_credit.php">2.ลูกค้าเครดิต</a>
                 <!-- <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a> -->
             </div>
         </div>
@@ -100,12 +101,19 @@
         </a>
         <div id="collapsePlan" class="collapse" aria-labelledby="headingPlan" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="Plant_orderlist.php">รายการการสั่งซื้อ</a>
-                <a class="collapse-item" href="PlanFollow.php">วางแผนแการเพาะปลูก</a>
-                <a class="collapse-item" href="Bproduce.php">รับซื้อผลผลิต</a>
-                <a class="collapse-item" href="Export_products.php">ส่งออกผลผลิต</a>
+                <a class="collapse-item" href="Plant_orderlist.php">1.รายการการสั่งซื้อ</a>
+                <a class="collapse-item" href="PlanFollow.php">2.วางแผนแการเพาะปลูก</a>
+                <a class="collapse-item" href="Bproduce.php">3.รับซื้อผลผลิต</a>
+                <a class="collapse-item" href="Export_products.php">4.ส่งออกผลผลิต</a>
+                <a class="collapse-item" href="Follow_purchase.php">5.ติดตามผลการรับซื้อ</a>
             </div>
         </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="Planning_results.php">
+            <i class="fas fa-taxi"></i>
+            <span>สรุปผลการวางแผนและติดตามผลผลิตพืช</span></a>
     </li>
 
     <!-- Nav Item - Tables -->
@@ -115,7 +123,7 @@
             <span>ออกรายงาน</span></a>
     </li> -->
 
-    <!-- <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
             aria-expanded="true" aria-controls="collapseReport">
             <i class="fas fa-solid fa-clipboard-list"></i>
@@ -126,7 +134,7 @@
                 <a class="collapse-item" href="report_orderplan.php">สรุปยอดการขายสินค้า</a>
             </div>
         </div>
-    </li> -->
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

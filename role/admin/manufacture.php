@@ -159,15 +159,15 @@
                                 <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
                                     <option selected disabled>เลือกรายการวัตถุดิบ....</option>
                                     <?php 
-                                        // $stmt = $db->query("SELECT * FROM `grower`");
-                                        // $stmt->execute();
-                                        // $gws = $stmt->fetchAll();
+                                        $stmt = $db->query("SELECT * FROM `material`");
+                                        $stmt->execute();
+                                        $mats = $stmt->fetchAll();
                                         
-                                        // foreach($gws as $gw){
+                                        foreach($mats as $mat){
                                     ?>
-                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
                                     <?php
-                                        // }
+                                        }
                                     ?>
                                 </select>
                             </div>
@@ -186,15 +186,15 @@
                                 <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
                                     <option selected disabled>เลือกรายการวัตถุดิบ....</option>
                                     <?php 
-                                        // $stmt = $db->query("SELECT * FROM `grower`");
-                                        // $stmt->execute();
-                                        // $gws = $stmt->fetchAll();
+                                        $stmt = $db->query("SELECT * FROM `material`");
+                                        $stmt->execute();
+                                        $mats = $stmt->fetchAll();
                                         
-                                        // foreach($gws as $gw){
+                                        foreach($mats as $mat){
                                     ?>
-                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
                                     <?php
-                                        // }
+                                        }
                                     ?>
                                 </select>
                             </div>
@@ -213,15 +213,15 @@
                                 <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
                                     <option selected disabled>เลือกรายการวัตถุดิบ....</option>
                                     <?php 
-                                        // $stmt = $db->query("SELECT * FROM `grower`");
-                                        // $stmt->execute();
-                                        // $gws = $stmt->fetchAll();
+                                        $stmt = $db->query("SELECT * FROM `material`");
+                                        $stmt->execute();
+                                        $mats = $stmt->fetchAll();
                                         
-                                        // foreach($gws as $gw){
+                                        foreach($mats as $mat){
                                     ?>
-                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
                                     <?php
-                                        // }
+                                        }
                                     ?>
                                 </select>
                             </div>
@@ -240,15 +240,15 @@
                                 <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
                                     <option selected disabled>เลือกรายการวัตถุดิบ....</option>
                                     <?php 
-                                        // $stmt = $db->query("SELECT * FROM `grower`");
-                                        // $stmt->execute();
-                                        // $gws = $stmt->fetchAll();
+                                        $stmt = $db->query("SELECT * FROM `material`");
+                                        $stmt->execute();
+                                        $mats = $stmt->fetchAll();
                                         
-                                        // foreach($gws as $gw){
+                                        foreach($mats as $mat){
                                     ?>
-                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
                                     <?php
-                                        // }
+                                        }
                                     ?>
                                 </select>
                             </div>
@@ -267,15 +267,15 @@
                                 <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
                                     <option selected disabled>เลือกรายการวัตถุดิบ....</option>
                                     <?php 
-                                        // $stmt = $db->query("SELECT * FROM `grower`");
-                                        // $stmt->execute();
-                                        // $gws = $stmt->fetchAll();
+                                        $stmt = $db->query("SELECT * FROM `material`");
+                                        $stmt->execute();
+                                        $mats = $stmt->fetchAll();
                                         
-                                        // foreach($gws as $gw){
+                                        foreach($mats as $mat){
                                     ?>
-                                    <!-- <option value="<?= $gw['gw_id']?>"><?= $gw['gw_name']?></option> -->
+                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
                                     <?php
-                                        // }
+                                        }
                                     ?>
                                 </select>
                             </div>
@@ -344,6 +344,7 @@
                                 <option value="สิทธิการเกษตร-สวัสดิการ">สิทธิการเกษตร-สวัสดิการ</option>
                                 <option value="ราคา-การตลาด">ราคา-การตลาด</option>
                                 <option value="สังคม-คุณภาพชีวิต">สังคม-คุณภาพชีวิต</option>
+                                <option value="อื่น ๆ">อื่น ๆ</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -440,7 +441,7 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อการผลิตสินค้าชุมชน : </b><?= $mf['mf_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($mf['mf_quan'],2); ?> </label>
+                                                            <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($mf['mf_quan'],2)." ".$mf['mf_unit']; ?> </label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนรวม : </b><?= number_format($mf['mf_cost']);?> บาท</label>
