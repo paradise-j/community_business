@@ -35,7 +35,7 @@
 					<div class="login-wrap p-0">
 						<form action="Check_login.php"  method="POST">
 							<div class="form-group">
-								<input type="tel"name="username" class="form-control" placeholder="ชื่อผู้ใช้งาน" required />
+								<input type="text"name="username" class="form-control" placeholder="ชื่อผู้ใช้งาน" required />
 							</div>
 							<div class="form-group">
 								<input id="password-field" name="password" type="password" class="form-control" placeholder="รหัสผ่าน"

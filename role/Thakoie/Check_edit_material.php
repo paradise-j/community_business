@@ -5,23 +5,20 @@
     require_once "../../connect.php";
 
     if (isset($_POST['submit'])) {
-        echo "1";
-        $g_id = $_POST['group'];
-        $mname = $_POST['mname'];
+        $materialid = $_POST['materialid'];
+        $materialname = $_POST['materialname'];
 
+        $sql = $db->prepare("UPDATE `material` SET `mat_name`='$materialname'
+                             WHERE `mat_id`='$materialid'");
+        $sql->execute();
 
-        $pb = $db->prepare("INSERT INTO `material`(`mat_name`, `group_id`)
-                            VALUES  ('$mname','$g_id')");
-        $pb->execute();
-
-
-        if ($pb) {
-            $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อย";
+        if ($sql) {
+            $_SESSION['success'] = "สำเร็จ";
             echo "<script>
                 $(document).ready(function() {
                     Swal.fire({
                         title: 'สำเร็จ',
-                        text: 'เพิ่มข้อมูลเรียบร้อย',
+                        text: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
                         icon: 'success',
                         timer: 5000,
                         showConfirmButton: false
@@ -33,6 +30,5 @@
             $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
             header("location: material.php");
         }
-            
     }
 ?>

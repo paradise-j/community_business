@@ -277,9 +277,9 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อ-สกุล : </b><?= $user['user_Fname']." ".$user['user_Lname']; ?></label>
                                                         </div>
-                                                        <div class="mb-2">
+                                                        <!-- <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสบัตรประชาชน : </b><?= $user['user_perid']; ?></label>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่อยู่ : </b><?= $user['user_num']." ตำบล".$user['user_subdis']." อำเภอ".$user['user_dis']." จังหวัด".$user['user_pv']." รหัสไปรษณีย์ ".$user['user_zip']; ?></label>
                                                         </div>
