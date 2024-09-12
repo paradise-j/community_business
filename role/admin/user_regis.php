@@ -72,8 +72,9 @@
                         <div class="row mb-1">
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
-                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option>
+                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required readonly>
+                                <!-- <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option> -->
+                                
                                 <?php 
                                     $stmt = $db->query("SELECT * FROM `group_comen`");
                                     $stmt->execute();
@@ -106,6 +107,8 @@
                                     <option value="6">ผู้ช่วยเลขานุการ</option>
                                     <option value="7">ประชาสัมพันธ์</option>
                                     <option value="8">ฝ่ายผลิต</option>
+                                    <option value="9">สมาชิก</option>
+                                    <option value="10">ผู้ดแลกลุ่ม</option>
                                 </select>
                             </div>
                         </div>

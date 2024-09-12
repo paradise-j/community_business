@@ -71,17 +71,18 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
+                                <!-- <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option> -->
+                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                                 <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $gcs = $stmt->fetchAll();
+                                    // $stmt = $db->query("SELECT * FROM `group_comen`");
+                                    // $stmt->execute();
+                                    // $gcs = $stmt->fetchAll();
                                     
-                                    foreach($gcs as $gc){
+                                    // foreach($gcs as $gc){
                                 ?>
-                                <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option>
+                                <!-- <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option> -->
                                 <?php
-                                    }
+                                    // }
                                 ?>
                             </select>
                         </div>
@@ -91,7 +92,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
-                            <input type="text" class="form-control" maxlength="10" minlength="10" name="odr_phone" style="border-radius: 30px;" required>
+                            <input type="tel" class="form-control" maxlength="10" minlength="9" name="odr_phone" style="border-radius: 30px;" required>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">

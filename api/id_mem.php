@@ -5,7 +5,7 @@
     
     if(isset($_POST['function']) and $_POST['function'] == 'id_mem'){
         $id = $_POST['id'];
-        $stmt = $db->query("SELECT `cus_name`, `cus_phone` FROM `customer` WHERE `cus_phone` = '$id'");
+        $stmt = $db->query("SELECT `odr_name`, `odr_phone` FROM `orderer` WHERE `odr_phone` = '$id'");
         $stmt->execute();
 
         $arr = array();

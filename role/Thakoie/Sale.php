@@ -195,19 +195,22 @@
                                     </div>
                                     <form action="Check_Add_salepd.php" method="post">
                                         <div class="row mb-3">
-                                            <div class="col-md-3 mb-3">
+                                            <div class="col-md-3">
                                                 <!-- <label class="form-label" name="phone"></label> -->
                                                 <input type="text" class="form-control" id="id_mem" name="id_mem" style="border-radius: 30px;" placeholder="เบอร์โทรศัพท์">
                                             </div>
-                                            <div class="col-md-3 mb-3 mt-1">
+                                            <div class="col-md-3">
                                                 <button class="btn-primary " style="border-radius: 30px; font-size: 0.9rem;" type="submit" id="show_dataMem" name="show_dataMem">ค้นหาข้อมูลสมาชิก</button>
                                             </div>
-                                            <div class="col-md-3 mb-3">
-                                                <!-- <label class="form-label" name="cus">ชื่อผู้ซื้อ</label> -->
+                                            
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-8">
+                                                <label class="form-label" name="cus">ชื่อผู้ซื้อ</label>
                                                 <input type="text" class="form-control" id="cus" name="cus" style="border-radius: 30px;" readonly>
                                             </div>
-                                            <div class="col-md-3 mb-3">
-                                                <!-- <label class="form-label" name="phone">เบอร์โทรศัพท์</label> -->
+                                            <div class="col-md-4">
+                                                <label class="form-label" name="phone">เบอร์โทรศัพท์</label>
                                                 <input type="text" class="form-control" id="phone" name="phone" style="border-radius: 30px;" readonly>
                                             </div>
                                         </div>
@@ -412,8 +415,8 @@
                     data.forEach(item => {
                         // console.log("cusname = ",item.cus_name);
                         // console.log("cusphone = ",item.cus_phone);
-                        $('#cus').val(item.cus_name); 
-                        $('#phone').val(item.cus_phone); 
+                        $('#cus').val(item.odr_name); 
+                        $('#phone').val(item.odr_phone); 
 
                     })
                     

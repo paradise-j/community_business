@@ -70,18 +70,18 @@
                     <form action="Check_Add_product.php" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
+                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
+                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                                 <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $gcs = $stmt->fetchAll();
+                                    // $stmt = $db->query("SELECT * FROM `group_comen`");
+                                    // $stmt->execute();
+                                    // $gcs = $stmt->fetchAll();
                                     
-                                    foreach($gcs as $gc){
+                                    // foreach($gcs as $gc){
                                 ?>
-                                <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option>
+                                <!-- <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option> -->
                                 <?php
-                                    }
+                                    // }
                                 ?>
                             </select>
                         </div>

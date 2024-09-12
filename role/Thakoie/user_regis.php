@@ -72,20 +72,21 @@
                         <div class="row mb-1">
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
-                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option>
+                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required readonly>
+                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
+                                <!-- <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option> -->
                                 <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $cms = $stmt->fetchAll();
+                                    // $stmt = $db->query("SELECT * FROM `group_comen`");
+                                    // $stmt->execute();
+                                    // $cms = $stmt->fetchAll();
                                     
-                                    foreach($cms as $cm){
+                                    // foreach($cms as $cm){
                                 ?>
-                                <option value="<?= $cm['group_id']?>"><?= $cm['group_name']?></option>
+                                <!-- <option value="<?= $cm['group_id']?>"><?= $cm['group_name']?></option> -->
                                 <?php
-                                    }
+                                    // }
                                 ?>
-                                <option value="other">อื่น ๆ </option>
+                                <!-- <option value="other">อื่น ๆ </option> -->
                             </select>
                             </div>
                         </div>
@@ -106,6 +107,8 @@
                                     <option value="6">ผู้ช่วยเลขานุการ</option>
                                     <option value="7">ประชาสัมพันธ์</option>
                                     <option value="8">ฝ่ายผลิต</option>
+                                    <option value="9">สมาชิก</option>
+                                    <option value="10">ผู้ดแลกลุ่ม</option>
                                 </select>
                             </div>
                         </div>
@@ -124,16 +127,17 @@
                                 <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
                                 <input type="text" required class="form-control" name="phone" style="border-radius: 30px;">
                             </div>
-                        </div>
-                        <div class="row mb-1">
-                            <div class="col-md-5">
-                                <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
-                                <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <label for="" class="col-form-label">บ้านเลขที่</label>
                                 <input type="text" required class="form-control" name="address" style="border-radius: 30px;">
                             </div>
+                        </div>
+                        <div class="row mb-1">
+                            <!-- <div class="col-md-5">
+                                <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
+                                <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" style="border-radius: 30px;">
+                            </div> -->
+                            
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">

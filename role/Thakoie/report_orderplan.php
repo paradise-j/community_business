@@ -93,13 +93,13 @@
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
                                             <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
                                             <?php 
-                                                $stmt = $db->query("SELECT * FROM `product`");
+                                                $stmt = $db->query("SELECT * FROM `mf_data`");
                                                 $stmt->execute();
                                                 $pds = $stmt->fetchAll();
                                                 
                                                 foreach($pds as $pd){
                                             ?>
-                                            <option value="<?= $pd['pd_name']?>"><?= $pd['pd_name']?></option>
+                                            <option value="<?= $pd['mf_name']?>"><?= $pd['mf_name']?></option>
                                             <?php
                                                 }
                                             ?>

@@ -38,6 +38,7 @@
 
     if (isset($_POST['submit'])) {
         $pdname = $_POST['pdname'];
+        $unit = $_POST['unit'];
         $quan = $_POST['quan'];
         $cost = $_POST['cost'];
         $date = $_POST['date'];
@@ -56,9 +57,9 @@
         // echo $pdname;
 
         if(!in_array("$pdname", $check)){
-            echo "Match not found";
-            $sql = $db->prepare("INSERT INTO `mf_data`(`mf_date`, `mf_name`, `mf_cost`, `mf_quan`, `mf_tocost`)
-                                            VALUES ('$date','$pdname','$cost','$quan','$avgprice')");
+            // echo "Match not found";
+            $sql = $db->prepare("INSERT INTO `mf_data`(`mf_date`, `mf_name`, `mf_unit`, `mf_cost`, `mf_quan`, `mf_tocost`)
+                                            VALUES ('$date','$pdname','$unit','$cost','$quan','$avgprice')");
             $sql->execute();
 
         if ($sql) {
@@ -81,7 +82,7 @@
         }
 
         }else{
-            echo "Match found";
+            // echo "Match found";
 
             $mf = $db->prepare("SELECT * FROM `mf_data` WHERE `mf_name` = '$pdname'");
             $mf->execute();
