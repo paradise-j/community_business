@@ -72,7 +72,7 @@
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
                                 <!-- <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option> -->
-                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
+                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืช</option>
                                 <?php 
                                     // $stmt = $db->query("SELECT * FROM `group_comen`");
                                     // $stmt->execute();

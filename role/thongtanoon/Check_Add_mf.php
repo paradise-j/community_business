@@ -38,7 +38,7 @@
 
     if (isset($_POST['submit'])) {
         $pdname = $_POST['pdname'];
-        $unit = $_POST['unit'];
+        // $unit = $_POST['unit'];
         $quan = $_POST['quan'];
         $cost = $_POST['cost'];
         $date = $_POST['date'];

@@ -5,13 +5,13 @@
     require_once "../../connect.php";
 
     if (isset($_POST['submit'])) {
-        echo "1";
         $g_id = $_POST['group'];
         $mname = $_POST['mname'];
+        $unit = $_POST['unit'];
 
 
-        $pb = $db->prepare("INSERT INTO `material`(`mat_name`, `group_id`)
-                            VALUES  ('$mname','$g_id')");
+        $pb = $db->prepare("INSERT INTO `material`( `mat_name`,`mat_unit`,`group_id`)
+                            VALUES  ('$mname','$unit','$g_id')");
         $pb->execute();
 
 

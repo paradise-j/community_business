@@ -3,7 +3,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.php"><i class="fas fa-fw fa-tachometer-alt"></i>ท่าเคย</a>
+        <a class="nav-link" href="index.php"><i class="fas fa-fw fa-tachometer-alt"></i>กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืช</a>
     </li>
 
     <!-- Divider -->
@@ -83,7 +83,7 @@
                 <a class="collapse-item" href="InEx.php">1.รายรับ-รายจ่าย</a>
                 <a class="collapse-item" href="Cus_credit.php">2.แหล่งเงินทุน - คืนทุน</a> 
                 <!-- สนับสนุน ยืม คืน -->
-                <a class="collapse-item" href="InEx.php">3.ลูกค้าเครดิต</a>
+                <a class="collapse-item" href="Cus_credit.php">3.ลูกค้าเครดิต</a>
                 <!-- <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a> -->
             </div>
         </div>

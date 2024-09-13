@@ -72,8 +72,8 @@
                         <div class="row mb-1">
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
-                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required readonly>
-                                <!-- <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option> -->
+                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option>
                                 
                                 <?php 
                                     $stmt = $db->query("SELECT * FROM `group_comen`");
@@ -127,16 +127,17 @@
                                 <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
                                 <input type="text" required class="form-control" name="phone" style="border-radius: 30px;">
                             </div>
-                        </div>
-                        <div class="row mb-1">
-                            <div class="col-md-5">
-                                <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
-                                <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <label for="" class="col-form-label">บ้านเลขที่</label>
                                 <input type="text" required class="form-control" name="address" style="border-radius: 30px;">
                             </div>
+                        </div>
+                        <div class="row mb-1">
+                            <!-- <div class="col-md-5">
+                                <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
+                                <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" style="border-radius: 30px;">
+                            </div> -->
+                            
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
@@ -345,10 +346,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-1">
-                                                                <div class="col-md-5">
+                                                                <!-- <div class="col-md-5">
                                                                     <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
                                                                     <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" value="<?= $user['user_perid'];?>" style="border-radius: 30px;">
-                                                                </div>
+                                                                </div> -->
                                                                 <div class="col-md-7">
                                                                     <label for="" class="col-form-label">บ้านเลขที่</label>
                                                                     <input type="text" required class="form-control" name="address" value="<?= $user['user_num'];?>" style="border-radius: 30px;">

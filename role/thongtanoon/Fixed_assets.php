@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `material` WHERE `mat_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `fixed_asset` WHERE `fa_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=material.php");
+            header("refresh:1; url=Fixed_assets.php");
         }
     }
 ?>
@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ข้อมูลวัตถุดิบ</title>
+    <title>ข้อมูลสินทรัพย์ถาวร</title>
 
     <link rel="icon" type="image/png" href="img/product-hunt.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -63,16 +63,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลวัตถุดิบ</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลสินทรัพย์ถาวร</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_material.php" method="POST" >
+                    <form action="Check_Add_Fixed_assets.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <!-- <input type="text" required class="form-control" name="mname" value="CM001" style="border-radius: 30px;" readonly> -->
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
+                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืช</option>
                                 <?php 
                                     // $stmt = $db->query("SELECT * FROM `group_comen`");
                                     // $stmt->execute();
@@ -87,26 +86,21 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">ชื่อวัตถุดิบ</label>
-                            <input type="text" required class="form-control" name="mname" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">ชื่อสินทรัพย์ถาวร</label>
+                            <input type="text"  class="form-control" name="fa_name" style="border-radius: 30px;" required>
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="" class="col-form-label">หน่วยนับ</label>
-                            <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
-                                <option value="กรัม">กรัม</option>
-                                <option value="กิโลกรัม">กิโลกรัม</option>
-                                <option value="กระปุก">กระปุก</option>
-                            </select>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">ราคา</label>
+                            <input type="number"  class="form-control" name="fa_price" style="border-radius: 30px;" required>
                         </div>
-                        <div class="col-md-1 text-center">
-                            <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImg" alt="">
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">ที่ตั้ง</label>
+                            <input type="text"  class="form-control" name="fa_location" style="border-radius: 30px;" required>
                         </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-7">
-                            <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
-                            <input type="file" class="form-control" id="imgInput" style="border-radius: 30px;" name="img" required>
-                        </div> -->
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">แหล่งที่มาสินทรัพย์</label>
+                            <input type="text"  class="form-control" name="fa_location222" style="border-radius: 30px;" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
@@ -141,11 +135,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลวัตถุดิบ</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลสินทรัพย์ถาวร</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลวัตถุดิบ</a>
+                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินทรัพย์ถาวร</a>
                             </div>
                         </div>
                         
@@ -154,113 +148,98 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>ชื่อวัตถุดิบ</th>
-                                            <!-- <th>รูปสินค้า</th> -->
+                                            <th>ชื่อสินทรัพย์ถาวร</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT material.mat_id , material.mat_name, material.group_id , group_comen.group_name as group_name 
-                                                                FROM `material` INNER JOIN `group_comen` ON group_comen.group_id = material.group_id");
+                                            $stmt = $db->query("SELECT fixed_asset.fa_id , fixed_asset.fa_date , fixed_asset.fa_name , fixed_asset.fa_price , fixed_asset.fa_location,  fixed_asset.location222,
+                                                                    fixed_asset.group_id , group_comen.group_name as group_name
+                                                                FROM `fixed_asset` 
+                                                                INNER JOIN `group_comen` ON fixed_asset.group_id  = group_comen.group_id");
                                             $stmt->execute();
-                                            $mats = $stmt->fetchAll();
+                                            $pds = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$mats) {
+                                            if (!$pds) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($mats as $mat)  {  
+                                             foreach($pds as $pd)  {  
                                         ?>
-                                        <tr align="center">
-                                            <td width="200px"><?= $mat['mat_name']; ?></td>
-                                            <!-- <td width="150px"><img class="rounded" width="100%" src="uploads/<?= $mat['mat_img']; ?>" alt=""></td> -->
-                                            <!-- <td class="date_th"><?= $mat['mat_date']; ?></td> -->
+                                        <tr>
+                                            <td><?= $pd['fa_name']; ?></td>
+                                            <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $mat['mat_id']?>">ดูข้อมูล</button>
-                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $mat['mat_id']?>">แก้ไข</button>
-                                                <!-- <a href="Edit_mat.php?edit_id=<?= $mat['mat_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"  data-toggle="modal" data-target="#editdataModal<?= $mat['mat_id']?>">แก้ไข</a> -->
-                                                <a data-id="<?= $mat['mat_id']; ?>" href="?delete=<?= $mat['mat_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['fa_id']?>">ดูข้อมูล</button>
+                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#editGroupModal<?= $pd['fa_id']?>">แก้ไข</button>
+                                                <!-- <a href="Edit_pd.php?edit_id=<?= $pd['fa_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit"  data-toggle="modal" data-target="#editdataModal<?= $pd['fa_id']?>">แก้ไข</a> -->
+                                                <a data-id="<?= $pd['fa_id']; ?>" href="?delete=<?= $pd['fa_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $mat['mat_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $pd['fa_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลวัตถุดิบ</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลสินทรัพย์ถาวร</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <!-- <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่เพิ่มข้อมูลสินค้า : </b> <?= thai_date_fullmonth(strtotime($mat['mat_date'])) ; ?></label>
-                                                        </div> -->
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>กลุ่มวิสาหกิจชุมชน : </b> <?= $mat['group_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่เพิ่มข้อมูลสินทรัพย์ถาวร : </b><?= thai_date_fullmonth(strtotime($pd['fa_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อวัตถุดิบ : </b> <?= $mat['mat_name']; ?></label>
-                                                        </div>
-                                                        <!-- <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>หน่วยนับ : </b> <?= $mat['mat_unit']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสสินทรัพย์ถาวร : </b><?= $pd['fa_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพวัตถุดิบ : </b> </label><br>
-                                                            <img class="rounded" width="50%" src="uploads/<?= $mat['mat_img']; ?>" alt="">
-                                                        </div> -->
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>กลุ่มวิสาหกิจชุมชน : </b><?= $pd['group_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อสินทรัพย์ถาวร : </b><?= $pd['fa_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคา : </b><?= number_format($pd['fa_price'],2)." บาท" ; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่ตั้ง : </b><?= $pd['fa_location']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>แหล่งที่มา : </b><?= $pd['location222']; ?></label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- ---------------------------------------  EditdataModal ---------------------------------------------------------------------->
-                                        <div class="modal fade" id="editGroupModal<?= $mat['mat_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="editGroupModal<?= $pd['fa_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลวัตถุดิบ</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูลสินทรัพย์ถาวร</h5>
                                                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                     </div>
                                                     <div class="modal-body mt-1">
-                                                        <form action="Check_edit_material.php" method="POST" enctype="multipart/form-data">
+                                                        <form action="Check_edit_Fixed_assets.php" method="POST">
                                                             <div class="mb-3">
-                                                                <label for="" class="col-form-label">รหัสสินค้า</label>
-                                                                <input type="text" required class="form-control" id="materialid" name="materialid" value="<?= $mat['mat_id'];?>" style="border-radius: 30px;" readonly>
+                                                                <label for="" class="col-form-label">รหัสสินทรัพย์ถาวร</label>
+                                                                <input type="text" required class="form-control" id=" fa_id" name=" fa_id" value="<?= $pd['fa_id'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                                                                <input type="text" required class="form-control" id="group_name" name="group_name" value="<?= $mat['group_name'];?>" style="border-radius: 30px;" readonly>
+                                                                <input type="text" required class="form-control" id="group_name" name="group_name" value="<?= $pd['group_name'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="" class="col-form-label">ชื่อวัตถุดิบ</label>
-                                                                <input type="text" required class="form-control" id="materialname" name="materialname" value="<?= $mat['mat_name'];?>" style="border-radius: 30px;">
+                                                                <label for="" class="col-form-label">ชื่อสินทรัพย์ถาวร</label>
+                                                                <input type="text" required class="form-control" id="fa_name" name="fa_name" value="<?= $pd['fa_name'];?>" style="border-radius: 30px;">
                                                             </div>
-                                                            <!-- <div class="mb-3">
-                                                                <label for="" class="col-form-label">หน่วยนับ</label>
-                                                                <select class="form-control" aria-label="Default select example" id="materialunit" name="materialunit" style="border-radius: 30px;" required>
-                                                                    <option selected disabled><?= $mat['mat_unit'];?></option>
-                                                                    <option value="กรัม">กรัม</option>
-                                                                    <option value="กิโลกรัม">กิโลกรัม</option>
-                                                                    <option value="กระปุก">กระปุก</option>
-                                                                </select>
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">ราคา</label>
+                                                                <input type="text" required class="form-control" id="fa_price" name="fa_price" value="<?= $pd['fa_price'];?>" style="border-radius: 30px;">
                                                             </div>
-                                                            <div class="col-md-1 text-center">
-                                                                <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImgEdit" alt="">
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">ที่ตั้ง</label>
+                                                                <input type="text" required class="form-control" id="fa_location" name="fa_location" value="<?= $pd['fa_location'];?>" style="border-radius: 30px;">
                                                             </div>
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-7">
-                                                                <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
-                                                                <input type="file" class="form-control" id="imgInputEdit" style="border-radius: 30px;" name="img" required>
-                                                            </div>
-                                                            <script>
-                                                                let imgInputEdit = document.getElementById('imgInputEdit');
-                                                                let previewImgEdit = document.getElementById('previewImgEdit');
-
-                                                                imgInputEdit.onchange = evt => {
-                                                                    const [file] = imgInputEdit.files;
-                                                                        if (file) {
-                                                                            previewImgEdit.src = URL.createObjectURL(file)
-                                                                    }
-                                                                }
-                                                            </script> -->
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
                                                             </div>
@@ -306,15 +285,6 @@
 
 
     <script>
-        let imgInput = document.getElementById('imgInput');
-        let previewImg = document.getElementById('previewImg');
-
-        imgInput.onchange = evt => {
-            const [file] = imgInput.files;
-                if (file) {
-                    previewImg.src = URL.createObjectURL(file)
-            }
-        }
 
  
 
@@ -336,7 +306,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'material.php',
+                                url: 'Fixed_assets.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -346,7 +316,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'material.php';
+                                    document.location.href = 'Fixed_assets.php';
                                 })
                             })
                             .fail(function() {

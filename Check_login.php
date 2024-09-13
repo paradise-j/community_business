@@ -50,7 +50,7 @@
                                 $_SESSION['password'] = $dbpassword;
                                 $_SESSION['permission'] = $dbrole;
                                 $_SESSION['success'] = "head_user... Successfully Login...";
-                                header("location: role/Thakoie/index.php");
+                                header("location: role/thongtanoon/index.php");
                             break;
                             case '5':
                                 $_SESSION['id'] = $dbid;

@@ -1,9 +1,9 @@
 <?php 
     session_start();
-    // if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
-    //     header("location: ../../index.php");
-    //     exit;
-    // }
+    if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 4){
+        header("location: ../../index.php");
+        exit;
+    }
     require_once '../../connect.php';
 ?>
 
@@ -37,7 +37,7 @@
                     <?php include('../../topbar/topbar2.php');?> <!-- Topbar -->
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-xl-3 col-md-6 mb-4">
+                            <!-- <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -45,24 +45,23 @@
                                                 <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">จำนวนกลุ่มวิสาหกิจ</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`group_id`) as total FROM `group_comen`");
-                                                    $stmt->execute();
-                                                    $agcs = $stmt->fetchAll();
-                                                    foreach($agcs as $agc){
-                                                        echo $agc['total'];
-                                                    }
+                                                    // $stmt = $db->prepare("SELECT COUNT(`group_id`) as total FROM `group_comen`");
+                                                    // $stmt->execute();
+                                                    // $agcs = $stmt->fetchAll();
+                                                    // foreach($agcs as $agc){
+                                                    //     echo $agc['total'];
+                                                    // }
                                                 ?>
                                                 กลุ่ม
                                                 </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-solid fa-people-roof fa-2x text-gray-300"></i>
-                                                <!-- <i class="fa-solid fa-people-roof"></i> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
@@ -72,7 +71,7 @@
                                                 <div class="text-lg font-weight-bold text-success text-uppercase mb-1">จำนวนสมาชิก</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data`");
+                                                    $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data` WHERE `group_id` = 'CM003'");
                                                     $stmt->execute();
                                                     $users = $stmt->fetchAll();
                                                     foreach($users as $user){
@@ -144,7 +143,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6 mb-4">
+                            <!-- <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -152,26 +151,25 @@
                                                 <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">ออเดอร์การสั่งของ</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`group_id`) as total FROM `group_comen`");
-                                                    $stmt->execute();
-                                                    $agcs = $stmt->fetchAll();
-                                                    foreach($agcs as $agc){
-                                                        echo $agc['total'];
-                                                    }
+                                                    // $stmt = $db->prepare("SELECT COUNT(`group_id`) as total FROM `group_comen`");
+                                                    // $stmt->execute();
+                                                    // $agcs = $stmt->fetchAll();
+                                                    // foreach($agcs as $agc){
+                                                    //     echo $agc['total'];
+                                                    // }
                                                 ?>
                                                 ออเดอร์
                                                 </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-solid fa-clipboard-list fa-2x text-gray-300"></i>
-                                                <!-- <i class="fa-solid fa-clipboard-list"></i> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-xl-3 col-md-6 mb-4">
+                            <!-- <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-info shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -179,12 +177,12 @@
                                                 <div class="text-lg font-weight-bold text-info text-uppercase mb-1">จำนวนการจอง</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`tol_id`) as total FROM `travel_orderlist`");
-                                                    $stmt->execute();
-                                                    $tols = $stmt->fetchAll();
-                                                    foreach($tols as $tol){
-                                                        echo $tol['total'];
-                                                    }
+                                                    // $stmt = $db->prepare("SELECT COUNT(`tol_id`) as total FROM `travel_orderlist`");
+                                                    // $stmt->execute();
+                                                    // $tols = $stmt->fetchAll();
+                                                    // foreach($tols as $tol){
+                                                    //     echo $tol['total'];
+                                                    // }
                                                 ?>
                                                 คน
                                                 </div>
@@ -195,7 +193,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-warning shadow h-100 py-2">
