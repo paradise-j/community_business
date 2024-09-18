@@ -72,22 +72,10 @@
                         <div class="row mb-1">
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
-                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option>
-                                
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $cms = $stmt->fetchAll();
-                                    
-                                    foreach($cms as $cm){
-                                ?>
-                                <option value="<?= $cm['group_id']?>"><?= $cm['group_name']?></option>
-                                <?php
-                                    }
-                                ?>
-                                <option value="other">อื่น ๆ </option>
-                            </select>
+                                <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
+                                    <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
+                                    <option selected value="CM007">วสช.วสช.กลุ่มเกษตรกรทำสวนผสมผสานแบบยั่งยืนบางท่าข้าม</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -170,7 +158,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row mb-3">
+                        <!-- <div class="row mb-3">
                             <div class="col-md-7">
                                 <label for="" class="col-form-label">สิทธิ์การใช้งาน</label>
                                 <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required>
@@ -179,10 +167,9 @@
                                 <option value="2">สภาเกษตร</option>
                                 <option value="3">ประธานกลุ่มวิสากิจชุมชน</option>
                                 <option value="4">สมาชิกทั่วไป</option>
-                                <!-- <option value="5">ผู้ดูแลระบบ</option> -->
                             </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border-radius: 30px;">ยกเลิก</button>
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -213,7 +200,7 @@
     </div>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar_plant.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -243,9 +230,23 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;
+
                                             $stmt = $db->query("SELECT * FROM `user_data`
                                                                 INNER JOIN `user_login` on user_data.user_id = user_login.user_id
-                                                                INNER JOIN `group_comen` on user_data.group_id = group_comen.group_id ");
+                                                                INNER JOIN `group_comen` on user_data.group_id = group_comen.group_id 
+                                                                WHERE user_data.group_id = '$group_id'");
                                             $stmt->execute();
                                             $users = $stmt->fetchAll();
                                             $count = 1;

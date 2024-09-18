@@ -29,10 +29,10 @@
                 <a class="collapse-item" href="Product.php">1.ข้อมูลสินค้าชุมชน</a>
                 <!-- <a class="collapse-item" href="material.php">3.ข้อมูลวัตถุดิบ</a> -->
                 <a class="collapse-item" href="Fixed_assets.php">2.ข้อมูลสินทรัพย์ถาวร</a>
-                <!-- <a class="collapse-item" href="user_regis.php">5.ข้อมูลทะเบียนสมาชิก</a> -->
-                <a class="collapse-item" href="grower_regis.php">3.ข้อมูลทะเบียนลูกสวน</a>
+                <a class="collapse-item" href="user_regis.php">3.ข้อมูลทะเบียนสมาชิก</a>
+                <a class="collapse-item" href="grower_regis.php">4.ข้อมูลทะเบียนลูกสวน</a>
                 <!-- <a class="collapse-item" href="Travel_package.php">7.ข้อมูลแพ็คเกจการท่องเที่ยว</a> -->
-                <a class="collapse-item" href="orderer.php">4.ข้อมูลผู้สั่งซื้อ</a>
+                <a class="collapse-item" href="orderer.php">5.ข้อมูลผู้สั่งซื้อ</a>
             </div>
         </div>
     </li>
