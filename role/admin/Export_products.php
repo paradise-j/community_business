@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `bp_comen` WHERE `bp_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `Plant_export` WHERE `px_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=Export_products.php");
         }
     }
 ?>
@@ -66,7 +66,25 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_Bproduce.php" method="POST">
+                    <form action="Check_Add_export.php" method="POST">
+                        <div class="mb-1">
+                            <?php $date = date('Y-m-d'); ?>
+                            <label for="" class="col-form-label">รหัสการสั่งซื้อ</label>
+                            <select class="form-control" aria-label="Default select example" id="pldID" name="pldID" style="border-radius: 30px;" required>
+                                <option selected disabled>เลือกรหัสการสั่งซื้อ....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT * FROM `plant_orderlist`");
+                                    $stmt->execute();
+                                    $plds = $stmt->fetchAll();
+                                    
+                                    foreach($plds as $pld){
+                                ?>
+                                <option value="<?= $pld['pld_id']?>"><?= $pld['pld_id']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
                         <div class="mb-1">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่ส่งออกผลผลิต</label>
@@ -75,7 +93,7 @@
                         <div class="mb-1">
                             <label for="" class="col-form-label">ผู้รับผลผลิต</label>
                             <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
-                            <select class="form-control" aria-label="Default select example" id="recipient" name="recipient" style="border-radius: 30px;" required>
+                            <select class="form-control" aria-label="Default select example" id="orderer" name="orderer" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกผู้รับผลผลิต....</option>
                                 <?php 
                                     $stmt = $db->query("SELECT * FROM `orderer` ");
@@ -102,7 +120,7 @@
                                     
                                     foreach($vgs as $vg){
                                 ?>
-                                <option value="<?= $vg['pd_id']?>"><?= $vg['pd_name']?></option>
+                                <option value="<?= $vg['pd_name']?>"><?= $vg['pd_name']?></option>
                                 <?php
                                     }
                                 ?>
@@ -112,11 +130,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="" class="col-form-label">จำนวน **หน่วยเป็นกิโลกรัม**</label>
-                                    <input type="text" required class="form-control"  id="quan" name="quan" style="border-radius: 30px;">
+                                    <input type="number" required class="form-control"  id="quan" name="quan" style="border-radius: 30px;">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="col-form-label">ราคาต่อกิโลกรัม</label>
-                                    <input type="text" required class="form-control" id="price" name="price" style="border-radius: 30px;">
+                                    <input type="number" required class="form-control" id="price" name="price" style="border-radius: 30px;">
                                 </div>
                             </div>
                         </div>
@@ -174,32 +192,33 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
+                                            <th>วันที่ส่งออก</th>
                                             <th>รายการที่ส่งออกผลผลิต</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT `bp_id`,`veget_name`, SUM(`bp_quan`) as total FROM `bproduce` 
-                                                                GROUP BY `veget_name`");
+                                            $stmt = $db->query("SELECT * FROM Plant_export");
                                             $stmt->execute();
-                                            $bps = $stmt->fetchAll();
+                                            $pxs = $stmt->fetchAll();
                                             $count = 1;
-                                            if (!$bps) {
+                                            if (!$pxs) {
                                                 echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                             } else {
-                                             foreach($bps as $bp)  {  
+                                             foreach($pxs as $px)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $bp['veget_name']; ?></td>
+                                            <td align="center" class="date_th"><?= $px['px_date']; ?></td>
+                                            <td><?= $px['px_name']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>">ดูข้อมูล</i></button>
-                                                <!-- <a href="Edit_bp.php?edit_id=<?= $bp['bp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
-                                                <a data-id="<?= $bp['bp_id']; ?>" href="?delete=<?= $bp['bp_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบข้อมูล</i></a>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $px['px_id']?>">ดูข้อมูล</i></button>
+                                                <!-- <a href="Edit_px.php?edit_id=<?= $px['px_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
+                                                <a data-id="<?= $px['px_id']; ?>" href="?delete=<?= $px['px_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบข้อมูล</i></a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $bp['bp_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $px['px_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -207,22 +226,22 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <!-- <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ส่งออกผลผลิต : </b><?= thai_date_fullmonth(strtotime($bp['bp_date'])) ; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่ส่งออกผลผลิต : </b><?= thai_date_fullmonth(strtotime($px['px_date'])) ; ?></label>
                                                         </div> -->
                                                         <!-- <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อเจ้าของสวน : </b><?= $bp['gw_id']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อเจ้าของสวน : </b><?= $px['gw_id']; ?></label>
                                                         </div> -->
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่รับซื้อ : </b><?= $bp['veget_name']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่รับซื้อ : </b><?= $px['px_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวนที่รับซื้อไว้ : </b><?= $bp['total']." กิโลกรัม"; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวนที่รับซื้อไว้ : </b><?= $px['px_quan']." กิโลกรัม"; ?></label>
                                                         </div>
                                                         <!-- <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาต่อกิโลกรัม : </b><?= $bp['bp_pricekg']." บาท"; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาต่อกิโลกรัม : </b><?= $px['px_pricekg']." บาท"; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาสุทธิ : </b><?= $bp['bp_totalprice']." บาท"; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาสุทธิ : </b><?= $px['px_totalprice']." บาท"; ?></label>
                                                         </div> -->
                                                     </div>
                                                 </div>
@@ -300,7 +319,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'information_G_agc.php',
+                                url: 'Export_products.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -310,7 +329,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'information_G_agc.php';
+                                    document.location.href = 'Export_products.php';
                                 })
                             })
                             .fail(function() {
@@ -324,8 +343,24 @@
                     });
                 },
             });
+            
         }
-        
+
+        const dom_date = document.querySelectorAll('.date_th')
+        dom_date.forEach((elem)=>{
+
+            const my_date = elem.textContent
+            const date = new Date(my_date)
+            const result = date.toLocaleDateString('th-TH', {
+
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+
+            }) 
+            elem.textContent=result
+        })
+
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {
                     "sProcessing": "กำลังดำเนินการ...",

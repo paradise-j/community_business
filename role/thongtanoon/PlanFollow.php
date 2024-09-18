@@ -247,7 +247,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_target`,`plant_date`,`plant_harvest`,`plant_grower`,`plant_status`,grower.gw_name
+                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_target`,`plant_date`,`plant_harvest`,`plant_grower`,`plant_status`,`pld_id`,grower.gw_name
                                                                 FROM `planting` 
                                                                 INNER JOIN `grower` ON grower.gw_id = planting.plant_grower");
                                             $stmt->execute();
@@ -276,6 +276,18 @@
                                                         <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการวางแผนการปลูก</h4>
                                                     </div>
                                                     <div class="modal-body">
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสคำสั่งซื้อ : </b><?= $plant['pld_id']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสลูกสวน : </b><?= $plant['plant_grower']; ?></label>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผู้รับผิดชอบ : </b><?= $plant['gw_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
+                                                        </div>
                                                         <div class="mb-2">                         
                                                             <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เริ่มปลูก : </b><?= thai_date_fullmonth(strtotime($plant['plant_date'])) ; ?></label>
                                                         </div>
@@ -283,12 +295,7 @@
                                                             <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เก็บผลผลิต : </b><?= thai_date_fullmonth(strtotime($plant['plant_harvest'])); ?></label>
                                                         </div>
                                                         
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสลูกสวน : </b><?= $plant['plant_grower']; ?></label>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ผู้รับผิดชอบ : </b><?= $plant['gw_name']; ?></label>
-                                                        </div>
+                                                        
                                                         <?php 
                                                             $gw_id = $plant['plant_grower'];
                                                             $stmt = $db->query("SELECT  SUM(`bp_quan`) as total  FROM `bproduce` WHERE `gw_id` = '$gw_id'");
@@ -297,9 +304,7 @@
                                                             extract($row);
                                                             $Newtotal = ($total*100)/$plant['plant_target'];
                                                         ?>
-                                                        <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
-                                                        </div>
+                                                        
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>เป้าหมายการผลิต : </b><?= $plant['plant_target']." "."กิโลกรัม"; ?></label>
                                                         </div>

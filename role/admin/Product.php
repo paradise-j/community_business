@@ -93,10 +93,17 @@
                             <label for="" class="col-form-label">หน่วยนับ</label>
                             <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
-                                <option value="กรัม">กรัม</option>
-                                <option value="กิโลกรัม">กิโลกรัม</option>
-                                <option value="กระปุก">กระปุก</option>
-                                <!-- <option value="กรัม">กรัม</option> -->
+                                <<?php 
+                                    $stmt = $db->query("SELECT * FROM `unit`");
+                                    $stmt->execute();
+                                    $units = $stmt->fetchAll();
+                                    
+                                    foreach($units as $unit){
+                                ?>
+                                <option value="<?= $unit['unit_name']?>"><?= $unit['unit_name']?></option>
+                                <?php
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div class="col-md-1 text-center">
@@ -173,7 +180,7 @@
                                         ?>
                                         <tr align="center">
                                             <td width="200px"><?= $pd['pd_name']; ?></td>
-                                            <td width="150px"><img class="rounded" width="100%" src="uploads/<?= $pd['pd_img']; ?>" alt=""></td>
+                                            <td width="150px"><img class="rounded" width="100%" src="uploads/product/<?= $pd['pd_img']; ?>" alt=""></td>
                                             <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>">ดูข้อมูล</button>
@@ -204,7 +211,7 @@
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพสินค้าชุมชน : </b> </label><br>
-                                                            <img class="rounded" width="50%" src="uploads/<?= $pd['pd_img']; ?>" alt="">
+                                                            <img class="rounded" width="50%" src="uploads/product/<?= $pd['pd_img']; ?>" alt="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -236,19 +243,30 @@
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">หน่วยนับ</label>
                                                                 <select class="form-control" aria-label="Default select example" id="Productunit" name="Productunit" style="border-radius: 30px;" required>
-                                                                    <option selected disabled><?= $pd['pd_unit'];?></option>
-                                                                    <option value="กรัม">กรัม</option>
-                                                                    <option value="กิโลกรัม">กิโลกรัม</option>
-                                                                    <option value="กระปุก">กระปุก</option>
+                                                                    <option selected value="<?= $pd['pd_unit']?>"><?= $pd['pd_unit'];?></option>
+                                                                    <?php 
+                                                                        $stmt = $db->query("SELECT * FROM `unit`");
+                                                                        $stmt->execute();
+                                                                        $units = $stmt->fetchAll();
+                                                                        
+                                                                        foreach($units as $unit){
+                                                                    ?>
+                                                                    <option value="<?= $unit['unit_name']?>"><?= $unit['unit_name']?></option>
+                                                                    <?php
+                                                                        }
+                                                                    ?>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-1 text-center">
                                                                 <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImgEdit" alt="">
                                                             </div>
-                                                            <div class="col-md-1"></div>
+                                                            <div class="mb-2">
+                                                                <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพสินค้าชุมชน : </b> </label><br>
+                                                                <img class="rounded" width="50%" src="uploads/product/<?= $pd['pd_img']; ?>" alt="">
+                                                            </div>
                                                             <div class="col-md-7">
                                                                 <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
-                                                                <input type="file" class="form-control" id="imgInputEdit" style="border-radius: 30px;" name="img" required>
+                                                                <input type="file" class="form-control" id="imgInputEdit" style="border-radius: 30px;" name="img">
                                                             </div>
                                                             <script>
                                                                 let imgInputEdit = document.getElementById('imgInputEdit');
