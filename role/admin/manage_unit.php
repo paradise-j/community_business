@@ -278,17 +278,8 @@
 
 
     <script>
-        let imgInput = document.getElementById('imgInput');
-        let previewImg = document.getElementById('previewImg');
-
-        imgInput.onchange = evt => {
-            const [file] = imgInput.files;
-                if (file) {
-                    previewImg.src = URL.createObjectURL(file)
-            }
-        }
-
- 
+        
+        
 
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
@@ -372,6 +363,16 @@
             }
         });
         $('.table').DataTable();
+        
+        let imgInput = document.getElementById('imgInput');
+        let previewImg = document.getElementById('previewImg');
+
+        imgInput.onchange = evt => {
+            const [file] = imgInput.files;
+                if (file) {
+                    previewImg.src = URL.createObjectURL(file)
+            }
+        }
 
 
     </script>

@@ -123,29 +123,33 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div> -->
+                            <div class="col-md-6">
+                                <label class="col-form-label">ค่าน้ำ จำนวนเงิน(บาท)</label>
                                 <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                             </div>
                             <div class="col-md-6">
-                                <label class="col-form-label">จำนวนเงิน</label>
+                                <label class="col-form-label">ค่าไฟ จำนวนเงิน(บาท)</label>
                                 <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col text-center">
                                 <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าไฟ -------------</label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
                                 <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="col-form-label">จำนวนเงิน</label>
+                            </div> -->
+                            <!-- <div class="col-md-6">
+                                <label class="col-form-label">ค่าไฟ จำนวนเงิน</label>
                                 <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
+                            </div> -->
                         </div>
                         <!-- ======================================================================ค่าวัตถุดิบหลัก ======================================================================================== -->
                         <div class="row">

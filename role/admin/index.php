@@ -143,119 +143,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">ออเดอร์การสั่งของ</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`group_id`) as total FROM `group_comen`");
-                                                    $stmt->execute();
-                                                    $agcs = $stmt->fetchAll();
-                                                    foreach($agcs as $agc){
-                                                        echo $agc['total'];
-                                                    }
-                                                ?>
-                                                ออเดอร์
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-solid fa-clipboard-list fa-2x text-gray-300"></i>
-                                                <!-- <i class="fa-solid fa-clipboard-list"></i> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">จำนวนการจอง</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`tol_id`) as total FROM `travel_orderlist`");
-                                                    $stmt->execute();
-                                                    $tols = $stmt->fetchAll();
-                                                    foreach($tols as $tol){
-                                                        echo $tol['total'];
-                                                    }
-                                                ?>
-                                                คน
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">ผักทั้งหมดในชุมชน</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`veget_id`) as total FROM `vegetable`");
-                                                    $stmt->execute();
-                                                    $vegs = $stmt->fetchAll();
-                                                    foreach($vegs as $veg){
-                                                        echo $veg['total'];
-                                                    }
-                                                ?>
-                                                ชนิด
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">สินค้าชุมชน</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product`");
-                                                    $stmt->execute();
-                                                    $pds = $stmt->fetchAll();
-                                                    foreach($pds as $pd){
-                                                        echo $pd['total'];
-                                                    }
-                                                ?>
-                                                รายการ
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="row">
                             <!-- Pie Chart -->
                             <div class="col-xl-4 col-lg-5">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดจำนวนผักแต่ละชนิด</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดรายรับ-รายจ่าย ภาพรวมทั้งหมด</h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -279,7 +173,7 @@
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายในแต่ละเดือน</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายภาพรวมในแต่ละปี</h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -291,8 +185,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <!-- bar Chart -->
+                        <!-- <div class="row">
                             <div class="col-xl-8 col-lg-7">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
@@ -305,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>    
                 <?php include('../../footer/footer.php');?> <!-- Footer -->
