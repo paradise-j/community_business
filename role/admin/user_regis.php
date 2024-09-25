@@ -124,8 +124,10 @@
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
-                                <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
-                                <input type="text" required class="form-control" name="phone" style="border-radius: 30px;">
+                                <label for="" class="col-form-label">เบอร์โทรศัพท์ &nbsp&nbsp&nbsp
+                                    <label style="color:red;" >** ไม่ต้องใส่ (-) **</label>
+                                </label>
+                                <input type="text" required class="form-control" name="phone" maxlength="10" style="border-radius: 30px;">
                             </div>
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">บ้านเลขที่</label>
@@ -177,10 +179,26 @@
                                 <option selected disabled>กรุณาเลือกสิทธิ์การใช้งาน....</option>
                                 <option value="1">ผู้ดูแลระบบ</option>
                                 <option value="2">สภาเกษตร</option>
-                                <option value="3">ประธานกลุ่มวิสากิจชุมชน</option>
-                                <option value="4">สมาชิกทั่วไป</option>
+                                <option value="3">วสช.แปรรูปอาหารตำบลท่าเคย</option>
+                                <option value="4">วสช.ชีววิถีคลองชะอุ่น</option>
+                                <option value="5">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืชบ้านทุ่งตาหนอน</option>
+                                <option value="6">วสช.ส่งเสริมอาชีพเกษตรกรชาวสวนยาง</option>
+                                <option value="7">วสช.กลุ่มท่องเที่ยวเชิงอนุรักษ์บ้านพุมเรียง</option>
+                                <option value="8">วสช.ศูนย์เรียนรู้บ้านห้วยทราย</option>
+                                <option value="9">วสช.กลุ่มเกษตรกรทำสวนผสมผสานแบบยั่งยืนบางท่าข้าม</option>
+                                <!-- <option value="4">สมาชิกทั่วไป</option> -->
                                 <!-- <option value="5">ผู้ดูแลระบบ</option> -->
                             </select>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">ชื่อผุ้ใช้งาน</label>
+                                <input type="text" required class="form-control" name="username" style="border-radius: 30px;">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">รหัสผ่าน</label>
+                                <input type="text" required class="form-control" name="password" style="border-radius: 30px;">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -285,6 +303,9 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่อยู่ : </b><?= $user['user_num']." ตำบล".$user['user_subdis']." อำเภอ".$user['user_dis']." จังหวัด".$user['user_pv']." รหัสไปรษณีย์ ".$user['user_zip']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เบอร์โทรศัพท์ : </b><?= $user['user_phone']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผู้ใช้งาน : </b><?= $user['ul_username']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
@@ -339,7 +360,17 @@
                                                             <div class="row mb-1">
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
-                                                                    <input type="text" class="form-control" name="phone" value="<?= $user['user_phone'];?>" style="border-radius: 30px;" required>
+                                                                    <input type="tel" class="form-control" name="phone" maxlength="10" value="<?= $user['user_phone'];?>" style="border-radius: 30px;" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-1">
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">ชื่อผู้ใช้งาน</label>
+                                                                    <input type="text" required class="form-control" name="username" value="<?= $user['ul_username'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">รหัสผ่าน</label>
+                                                                    <input type="text" required class="form-control" name="password" value="<?= $user['ul_password'];?>" style="border-radius: 30px;">
                                                                 </div>
                                                             </div>
                                                             <!-- <div class="row mb-1">
@@ -386,7 +417,7 @@
                                                                 </div>
                                                             </div> -->
 
-                                                            <script>
+                                                            <!-- <script>
                                                                 $('#pv_edit').change(function(){
                                                                     var id_pv_edit = $(this).val();
 
@@ -428,7 +459,7 @@
                                                                         }
                                                                     });
                                                                 });
-                                                            </script>
+                                                            </script> -->
 
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>

@@ -15,7 +15,7 @@
         $extension = explode('.', $img['name']);
         $fileActExt = strtolower(end($extension));
         $fileNew = rand() . "." . $fileActExt; 
-        $filePath = 'uploads/'.$fileNew;
+        $filePath = '../admin/uploads/product/'.$fileNew;
 
         if (in_array($fileActExt, $allow)) {
             if ($img['size'] > 0 && $img['error'] == 0) {

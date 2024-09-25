@@ -165,8 +165,22 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+
                                             $stmt = $db->query("SELECT product.pd_id , product.pd_date, product.pd_name, product.pd_unit , product.pd_img, product.group_id , group_comen.group_name as group_name 
-                                                                FROM `product` INNER JOIN `group_comen` ON group_comen.group_id = product.group_id ");
+                                                                FROM `product` INNER JOIN `group_comen` ON group_comen.group_id = product.group_id
+                                                                WHERE product.group_id = '$group_id' ");
                                             $stmt->execute();
                                             $pds = $stmt->fetchAll();
                                             $count = 1;
@@ -177,7 +191,7 @@
                                         ?>
                                         <tr align="center">
                                             <td width="200px"><?= $pd['pd_name']; ?></td>
-                                            <td width="150px"><img class="rounded" width="100%" src="uploads/<?= $pd['pd_img']; ?>" alt=""></td>
+                                            <td width="150px"><img class="rounded" width="100%" src="../admin/uploads/product/<?= $pd['pd_img']; ?>" alt=""></td>
                                             <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>">ดูข้อมูล</button>

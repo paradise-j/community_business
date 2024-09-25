@@ -162,8 +162,23 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;
+
                                             $stmt = $db->query("SELECT material.mat_id , material.mat_name, material.group_id , group_comen.group_name as group_name 
-                                                                FROM `material` INNER JOIN `group_comen` ON group_comen.group_id = material.group_id");
+                                                                FROM `material` INNER JOIN `group_comen` ON group_comen.group_id = material.group_id
+                                                                WHERE material.group_id = '$group_id'");
                                             $stmt->execute();
                                             $mats = $stmt->fetchAll();
                                             $count = 1;

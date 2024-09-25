@@ -154,10 +154,24 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;     
+
                                             $stmt = $db->query("SELECT fixed_asset.fa_id , fixed_asset.fa_date , fixed_asset.fa_name , fixed_asset.fa_price , fixed_asset.fa_location,  fixed_asset.location222,
                                                                     fixed_asset.group_id , group_comen.group_name as group_name
                                                                 FROM `fixed_asset` 
-                                                                INNER JOIN `group_comen` ON fixed_asset.group_id  = group_comen.group_id");
+                                                                INNER JOIN `group_comen` ON fixed_asset.group_id  = group_comen.group_id
+                                                                WHERE fixed_asset.group_id = '$group_id'");
                                             $stmt->execute();
                                             $pds = $stmt->fetchAll();
                                             $count = 1;

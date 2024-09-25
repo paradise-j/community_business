@@ -182,10 +182,8 @@
                                 <label for="" class="col-form-label">สิทธิ์การใช้งาน</label>
                                 <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกสิทธิ์การใช้งาน....</option>
-                                <option value="1">ผู้ดูแลระบบ</option>
-                                <option value="2">สภาเกษตร</option>
-                                <option value="3">ประธานกลุ่มวิสากิจชุมชน</option>
-                                <option value="4">สมาชิกทั่วไป</option>
+                                <option value="1">ประธานกลุ่มวิสากิจชุมชน</option>
+                                <option value="2">สมาชิกทั่วไป</option>
                                 <!-- <option value="5">ผู้ดูแลระบบ</option> -->
                             </select>
                             </div>
@@ -249,9 +247,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
+                                        <?php
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;     
+
+                                            
                                             $stmt = $db->query("SELECT * FROM `user_data`
-                                                                INNER JOIN `user_login` on user_data.user_id = user_login.user_id");
+                                                                INNER JOIN `user_login` on user_data.user_id = user_login.user_id
+                                                                WHERE user_data.group_id = '$group_id'");
                                             $stmt->execute();
                                             $users = $stmt->fetchAll();
                                             $count = 1;
@@ -342,20 +355,24 @@
                                                             <div class="row mb-1">
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
-                                                                    <input type="text" required class="form-control" name="phone" value="<?= $user['user_phone'];?>" style="border-radius: 30px;">
+                                                                    <input type="tel" required class="form-control" name="phone" value="<?= $user['user_phone'];?>" style="border-radius: 30px;">
                                                                 </div>
-                                                            </div>
-                                                            <div class="row mb-1">
-                                                                <div class="col-md-5">
-                                                                    <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
-                                                                    <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" value="<?= $user['user_perid'];?>" style="border-radius: 30px;">
-                                                                </div>
-                                                                <div class="col-md-7">
+                                                                <!-- <div class="col-md-6">
                                                                     <label for="" class="col-form-label">บ้านเลขที่</label>
                                                                     <input type="text" required class="form-control" name="address" value="<?= $user['user_num'];?>" style="border-radius: 30px;">
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                             <div class="row mb-1">
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">ชื่อผู้ใช้งาน</label>
+                                                                    <input type="text" required class="form-control" name="phone" value="<?= $user['ul_username'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="" class="col-form-label">รหัสผ่าน</label>
+                                                                    <input type="text" required class="form-control" name="address" value="<?= $user['ul_password'];?>" style="border-radius: 30px;">
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div class="row mb-1">
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">จังหวัด</label>
                                                                     <select class="form-control" aria-label="Default select example" id="provinces2" name="provinces2" style="border-radius: 30px;" required>
@@ -391,9 +408,9 @@
                                                                     <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
                                                                     <input type="text" required class="form-control" id="zipcode2" name="zipcode2" value="<?= $user['user_zip'];?>"style="border-radius: 30px;">
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
 
-                                                            <script>
+                                                            <!-- <script>
                                                                 $('#provinces2').change(function(){
                                                                     var id_provnce2 = $(this).val();
                                                                     console.log("id_provnce2 = "+id_provnce2);
@@ -434,7 +451,7 @@
                                                                         }
                                                                     });
                                                                 });
-                                                            </script>
+                                                            </script> -->
 
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>

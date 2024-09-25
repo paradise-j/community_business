@@ -22,7 +22,7 @@
 <body class="img js-fullheight" style="background-image: url(img/bgGreen.jpg)">
 	<section class="ftco-section">
 		<div class="row justify-content-center" >
-			<img src="img/logoSpon22.png" style="width: 42%; text-align: center;">
+			<img src="img/logoSpon33.png" style="width: 42%; text-align: center;">
 		</div>
 		<div class="container">
 			<div class="row justify-content-center my-3">

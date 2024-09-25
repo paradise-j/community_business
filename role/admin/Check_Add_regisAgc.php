@@ -29,9 +29,16 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        $zipcode = $_POST['zipcode']; 
+        $zipcode = $_POST['zipcode'];
+
         $permission = $_POST['permission']; 
         $group_id = $_POST['group_id']; 
+        $username = $_POST['username']; 
+        $password = $_POST['password']; 
+        $new_username = $username.$phone ;
+        // echo $new_username ;
+        
+        
 
         $sql = $db->prepare("INSERT INTO `user_data`(`user_Fname`, `user_Lname`, `user_phone` , `user_num`, 
                                                      `user_subdis`, `user_dis`, `user_pv`, `user_zip`, `group_id`)
@@ -42,10 +49,9 @@
         $us_id->execute();
         $row = $us_id->fetch(PDO::FETCH_ASSOC);
         extract($row);
-        // echo $id;
 
         $sql2 = $db->prepare("INSERT INTO `user_login`(`ul_username`, `ul_password`, `ul_status`, `user_id`)
-                             VALUES ('$phone','123456','$permission','$id')");
+                             VALUES ('$new_username','$password','$permission','$id')");
         $sql2->execute();
 
 
