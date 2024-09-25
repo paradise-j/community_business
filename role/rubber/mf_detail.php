@@ -76,7 +76,7 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -108,7 +108,7 @@
                                                 <select class="form-control" aria-label="Default select example" id="mfname" name="mfname" style="border-radius: 30px;" required>
                                                     <option selected disabled>เลือกวัตถุดิบ....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `material`");
+                                                        $stmt = $db->query("SELECT * FROM `material` WHERE group_id = 'CM004'");
                                                         $stmt->execute();
                                                         $mats = $stmt->fetchAll();
                                                         
@@ -164,7 +164,7 @@
                                                 <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือกสินค้า....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `product`");
+                                                        $stmt = $db->query("SELECT * FROM `product`  WHERE group_id = 'CM004'");
                                                         $stmt->execute();
                                                         $pds = $stmt->fetchAll();
                                                         

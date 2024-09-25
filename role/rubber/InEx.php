@@ -73,7 +73,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ประเภทรายการ</label>
-                            <select class="form-control" aria-label="Default select example" id="amphures" name="amphures" style="border-radius: 30px;" required>
+                            <select class="form-control" aria-label="Default select example" id="typeInEx" name="typeInEx" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกประเภท....</option>
                                 <option value="1">รายรับ</option>
                                 <option value="2">รายจ่าย</option>
@@ -81,11 +81,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">รายการ</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <select class="form-control" aria-label="Default select example" id="nameInEX" name="nameInEX" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกรายการ....</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">จำนวนเงิน (บาท)</label>
-                            <input type="text" required class="form-control" name="namegf" style="border-radius: 30px;">
+                            <input type="text" required class="form-control" name="price" style="border-radius: 30px;">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -268,6 +270,18 @@
                 },
             });
         }
+
+        $('#typeInEx').change(function(){
+            var id_typeInEx = $(this).val();
+            $.ajax({
+                type : "post",
+                url : "../../typeInEx.php",
+                data : {id:id_typeInEx,function:'typeInEx'},     
+                success: function(data){
+                    $('#nameInEX').html(data);
+                }
+            });
+        });
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {

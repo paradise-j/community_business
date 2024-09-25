@@ -231,7 +231,7 @@
     </div>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -261,9 +261,24 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;            
+                                            
+                                            
                                             $stmt = $db->query("SELECT * FROM `user_data`
                                                                 INNER JOIN `user_login` on user_data.user_id = user_login.user_id
-                                                                INNER JOIN `group_comen` on user_data.group_id = group_comen.group_id ");
+                                                                INNER JOIN `group_comen` on user_data.group_id = group_comen.group_id 
+                                                                WHERE user_data.group_id = '$group_id'");
                                             $stmt->execute();
                                             $users = $stmt->fetchAll();
                                             $count = 1;
