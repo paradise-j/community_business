@@ -2,17 +2,22 @@
     require_once '../connect.php';
     session_start();
 
-    if(isset($_POST['function']) and $_POST['function'] == 'typeInEx'){
-        $id = $_POST['id'];
-        $stmt = $db->query("SELECT * FROM `amphures` WHERE `province_id` = '$id'");
-        $stmt->execute();
-        $amps = $stmt->fetchAll();
-        echo '<option selected disabled>กรุณาเลือกรายการ....</option>';
-        foreach($amps as $amp){
-            echo '<option value="'.$amp['id'].'">'.$amp["name_th"].'</option>';
+    try {
+        if(isset($_POST['function']) and $_POST['function'] == 'typeInEx'){
+            $id = $_POST['id'];
+            $stmt = $db->query("SELECT `int_name` FROM `inextype` WHERE `int_type` = '$id'");
+            $stmt->execute();
+            $amps = $stmt->fetchAll();
+            echo '<option selected disabled>กรุณาเลือกรายการ....</option>';
+            foreach($amps as $amp){
+                echo '<option value="'.$amp["int_name"].'">'.$amp["int_name"].'</option>';
+            }
+            exit();
         }
-        exit();
+    } catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
     }
+    
 
     
 ?>

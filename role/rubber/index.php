@@ -148,11 +148,11 @@
                             </div>
                         </div>
 
-                        <!-- <div class="row">
+                        <div class="row">
                             <div class="col-xl-8 col-lg-7">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">สรุปยอดการส่งของตามออร์เดอ</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">สรุปยอดการเปรียบเทียบระหว่างยอดขายรวมกับค่าใช้จ่ายในการผลิตรวม</h6>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart-bar">
@@ -161,7 +161,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>    
                 <?php include('../../footer/footer.php');?> <!-- Footer -->

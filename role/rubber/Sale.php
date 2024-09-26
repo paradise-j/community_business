@@ -175,7 +175,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">หน่วยของสินค้า</label>
-                                                <input type="text" class="form-control" id="unit" name="unit" value="ใบ" style="border-radius: 30px;" required readonly>
+                                                <input type="text" class="form-control" id="unit" name="unit" style="border-radius: 30px;" required readonly>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -199,8 +199,8 @@
                                                 <!-- <label class="form-label" name="phone"></label> -->
                                                 <input type="text" class="form-control" id="id_mem" name="id_mem" style="border-radius: 30px;" placeholder="เบอร์โทรศัพท์">
                                             </div>
-                                            <div class="col-md-3 mb-3 mt-1">
-                                                <button class="btn-primary " style="border-radius: 30px; font-size: 0.9rem;" type="submit" id="show_dataMem" name="show_dataMem">ค้นหาข้อมูลสมาชิก</button>
+                                            <div class="col-md-3 mb-3">
+                                                <button class="btn btn-primary " style="border-radius: 30px; font-size: 0.9rem;" id="show_dataMem" name="show_dataMem">ค้นหาข้อมูลสมาชิก</button>
                                             </div>
                                             <div class="col-md-3 mb-3">
                                                 <!-- <label class="form-label" name="cus">ชื่อผู้ซื้อ</label> -->
@@ -371,60 +371,51 @@
 
         $('#pdname').change(function(){
             var id_pAll2 = $(this).val();
-            // console.log("pd2 = ",id_pAll2);
+            console.log("pd2 = ",id_pAll2);
             $.ajax({
                 type : "post",
                 url : "../../api/pdAll.php",
                 data : {id:id_pAll2,function:'pdAll'},     
                 success: function(data){
-                    console.log("pdcost = ",id_pAll2);
-                    // data.forEach(item => {
-                    //     // console.log("cusname = ",item.cus_name);
-                    //     // console.log("cusphone = ",item.cus_phone);
-                    //     $('#pdcost').val(item.mf_cost); 
-                    //     $('#pricepd').val(item.mf_price); 
 
-                    // })
+                    console.log("pdcost = ",data);
                     $('#pdcost').val(data);
                 }
             });
         });
 
-        // $('#pdname').change(function(){
-        //     var id_pname = $(this).val();
-        //     console.log("pd = ",id_pname);
-        //     $.ajax({
-        //         type : "post",
-        //         url : "../../api/pdunit.php",
-        //         data : {id:id_pname,function:'pdunit'},     
-        //         success: function(data){
-        //             console.log("unit = ",data);
-        //             $('#unit').val(data);
+        $('#pdname').change(function(){
+            var id_pname = $(this).val();
+            console.log("pd = ",id_pname);
+            $.ajax({
+                type : "post",
+                url : "../../api/pdunit.php",
+                data : {id:id_pname,function:'pdunit'},     
+                success: function(data){
 
-        //         }
-        //     });
-        // });
+                    console.log("unit = ",data);
+                    $('#unit').val(data);
+
+                }
+            });
+        });
 
         $('#show_dataMem').click(function(){
             var id_mem = $('#id_mem').val();
-            // console.log("id_mem = ",id_mem);
+            console.log("id_mem = ",id_mem);
             $.ajax({
                 type : "post",
                 url : "../../api/id_mem.php",
                 data : {id:id_mem,function:'id_mem'},     
                 success: function(data){
-                    // console.log("price = ",data);
+                    console.log("price = ",data);
                     data.forEach(item => {
-                        // console.log("cusname = ",item.cus_name);
-                        // console.log("cusphone = ",item.cus_phone);
-                        $('#cus').val(item.cus_name); 
-                        $('#phone').val(item.cus_phone); 
+                        // console.log("cusname = ",item.odr_name);
+                        // console.log("cusphone = ",item.odr_phone);
+                        $('#cus').val(item.odr_name); 
+                        $('#phone').val(item.odr_phone); 
 
                     })
-                    
-                    
-                    // $('#phone').val(data[1]);
-
                 }
             });
         });

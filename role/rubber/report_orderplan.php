@@ -579,8 +579,6 @@
             }
         } 
 
-        // console.log("my_data3 = "+ my_data3);
-        // console.log("my_label3 = "+ my_label3);
         console.log("Unique_month3 = "+ Unique_month3);
 
 
@@ -617,33 +615,13 @@
             color_index = color_index+1
         })
 
-        
 
         let data = { labels, datasets }
         
         var ctx = document.getElementById('myChartBar2');
         var myChartBar2 = new Chart(ctx, {
             type: 'bar',
-            data,
-            // data: {
-            //     labels: Unique_month3,
-            //     datasets: [{
-            //         label: "<?= $Gname ?>",
-            //         backgroundColor: "#2a86e9",
-            //         borderColor: "#2a86e9",
-            //         data: my_data3
-            //     },{
-            //         label: "<?= $Gname ?>",
-            //         backgroundColor: "#2a86e9",
-            //         borderColor: "#2a86e9",
-            //         data: my_data3
-            //     },{
-            //         label: "<?= $Gname ?>",
-            //         backgroundColor: "#2a86e9",
-            //         borderColor: "#2a86e9",
-            //         data: my_data3
-            //     }],
-            // },
+            data ,
             options: {
                 maintainAspectRatio: false,
                 scales: {

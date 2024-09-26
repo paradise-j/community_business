@@ -82,8 +82,8 @@
                             <label for="" class="col-form-label">ประเภทรายการ</label>
                             <select class="form-control" aria-label="Default select example" id="typeInEx" name="typeInEx" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกประเภท....</option>
-                                <option value="1">รายรับ</option>
-                                <option value="2">รายจ่าย</option>
+                                <option value="รายรับ">รายรับ</option>
+                                <option value="รายจ่าย">รายจ่าย</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -299,6 +299,7 @@
                 url : "../../typeInEx.php",
                 data : {id:id_typeInEx,function:'typeInEx'},     
                 success: function(data){
+                   console.log(data);
                     $('#nameInEX').html(data);
                 }
             });
