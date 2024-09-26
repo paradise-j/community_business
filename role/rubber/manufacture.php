@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `mf_data` WHERE `mf_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=Product.php");
+            header("refresh:1; url=manufacture.php");
         }
     }
 ?>
@@ -83,7 +83,7 @@
                                     
                                     foreach($pds as $pd){
                                 ?>
-                                <option value="<?= $pd['pd_name']?>"><?= $pd['pd_name']?></option>
+                                <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
                                 <?php
                                     }
                                 ?>
@@ -302,10 +302,10 @@
                                                             <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($mf['mf_quan'],2)." ".$mf['mf_unit']; ?> </label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนรวม : </b><?= number_format($mf['mf_cost']);?> บาท</label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนรวม : </b><?= number_format($mf['mf_price']);?> บาท</label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($mf['mf_cost']/$mf['mf_quan'],2)." "."บาท"; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($mf['mf_cost'],2)." "."บาท"; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -417,7 +417,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'Product.php',
+                                url: 'manufacture.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -427,7 +427,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'Product.php';
+                                    document.location.href = 'manufacture.php';
                                 })
                             })
                             .fail(function() {
