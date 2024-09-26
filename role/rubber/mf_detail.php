@@ -18,10 +18,10 @@
         $row = $pd->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        // if($_POST["price"] < $_POST["cost"]){
-        //     $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
-        //     header("refresh:2; url=mf_detail.php");
-        // }else{
+        if($_POST["price"] < $_POST["cost"]){
+            $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
+            header("refresh:2; url=mf_detail.php");
+        }else{
             $item_array = array(
 
                 'item_name'       =>     $mat_name,
@@ -32,7 +32,7 @@
                 $_SESSION["material_cart"][] =  $item_array;
             header("location:mf_detail.php");
             exit;
-        // }
+        }
     }
 
     if(isset($_GET['action'])){
@@ -132,7 +132,7 @@
                                                 <label class="col-form-label">หน่วย</label>
                                                 <input type="text"  class="form-control" name="unit" id="unit" style="border-radius: 30px;" required readonly>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <label class="col-form-label">จำนวนเงิน</label>
                                                 <input type="number"  class="form-control" name="price" step="0.01" style="border-radius: 30px;"required>
                                             </div>
@@ -187,12 +187,9 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
+                                            
                                             <div class="col-md-3">
-                                                <label class="col-form-label">ค่าแรง จำนวนคน</label>
-                                                <input type="number"  class="form-control" name="lbquan" step="0.01" style="border-radius: 30px;" required>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="col-form-label">ราคารวม</label>
+                                                <label class="col-form-label">ค่าแรง จำนวนเงิน(บาท)</label>
                                                 <input type="number"  class="form-control" name="lbprice" step="0.01" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-3">
@@ -260,15 +257,15 @@
                                                             <td align="center"><a href="mf_detail.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
                                                         </tr>
                                                     <?php
-                                                        // $total=$total+($value['item_price']*$value['item_quantity']);
+                                                        $total=$total+($value['item_price']);
                                                         }
                                                     ?>
-                                                    <!-- <tr>
+                                                    <tr>
                                                         <td colspan="3" align="right">ราคารวม</td>
                                                         <td align="right">฿ <?php echo number_format($total, 2); ?> บาท</td>
                                                         <td></td>
 
-                                                    </tr> -->
+                                                    </tr>
                                                     <?php
                                                     }else{
                                                         echo "<p><td colspan='5' class='text-center'>ยังไม่มีข้อมูลรายละเอียดวัตถุดิบ</td></p>";
@@ -335,7 +332,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'Product.php',
+                                url: 'manufacture.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -345,7 +342,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'Product.php';
+                                    document.location.href = 'manufacture.php';
                                 })
                             })
                             .fail(function() {
