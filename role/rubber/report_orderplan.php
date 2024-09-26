@@ -75,7 +75,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -93,13 +93,13 @@
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
                                             <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
                                             <?php 
-                                                $stmt = $db->query("SELECT * FROM `product`");
+                                                $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='CM004'");
                                                 $stmt->execute();
-                                                $pds = $stmt->fetchAll();
+                                                $mfs = $stmt->fetchAll();
                                                 
-                                                foreach($pds as $pd){
+                                                foreach($mfs as $mf){
                                             ?>
-                                            <option value="<?= $pd['pd_name']?>"><?= $pd['pd_name']?></option>
+                                            <option value="<?= $mf['mf_name']?>"><?= $mf['mf_name']?></option>
                                             <?php
                                                 }
                                             ?>
@@ -131,7 +131,7 @@
                                     $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = 'CM004'
                                                          GROUP BY MONTH(sale_date)"); 
                                     $stmt2->execute();
 
@@ -160,7 +160,7 @@
                                     $stmt3 = $db->query("SELECT salesdetail.sd_pdname, SUM(salesdetail.sd_price) as total , MONTH(sales.sale_date) as month
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = 'CM004'
                                                          GROUP BY salesdetail.sd_pdname , MONTH(sales.sale_date)");
                                     $stmt3->execute();
 

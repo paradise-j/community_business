@@ -167,7 +167,7 @@
                                             <!-- <div class="col-md-1"></div> -->
                                             <div class="col-md-4">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="number" class="form-control" id="pricepd" min="" name="pricepd" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">จำนวนที่ขาย</label>
@@ -175,7 +175,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">หน่วยของสินค้า</label>
-                                                <input type="text" class="form-control" id="unit" name="unit" style="border-radius: 30px;" required readonly>
+                                                <input type="text" class="form-control" id="unit" name="unit" value="ใบ" style="border-radius: 30px;" required readonly>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -370,35 +370,40 @@
         }
 
         $('#pdname').change(function(){
-            var id_pname = $(this).val();
-            console.log("pd = ",id_pname);
+            var id_pAll2 = $(this).val();
+            // console.log("pd2 = ",id_pAll2);
             $.ajax({
                 type : "post",
-                url : "../../api/pdname.php",
-                data : {id:id_pname,function:'pdname'},     
+                url : "../../api/pdAll.php",
+                data : {id:id_pAll2,function:'pdAll'},     
                 success: function(data){
-                    // console.log("price = ",data);
-                    $('#pdcost').val(data); 
-                    $('#pricepd').val(data);
-                    // $('#unit').val(data);
+                    console.log("pdcost = ",id_pAll2);
+                    // data.forEach(item => {
+                    //     // console.log("cusname = ",item.cus_name);
+                    //     // console.log("cusphone = ",item.cus_phone);
+                    //     $('#pdcost').val(item.mf_cost); 
+                    //     $('#pricepd').val(item.mf_price); 
 
+                    // })
+                    $('#pdcost').val(data);
                 }
             });
         });
 
-        $('#pdname').change(function(){
-            var id_pname = $(this).val();
-            console.log("pd = ",id_pname);
-            $.ajax({
-                type : "post",
-                url : "../../api/pdunit.php",
-                data : {id:id_pname,function:'pdunit'},     
-                success: function(data){
-                    $('#unit').val(data);
+        // $('#pdname').change(function(){
+        //     var id_pname = $(this).val();
+        //     console.log("pd = ",id_pname);
+        //     $.ajax({
+        //         type : "post",
+        //         url : "../../api/pdunit.php",
+        //         data : {id:id_pname,function:'pdunit'},     
+        //         success: function(data){
+        //             console.log("unit = ",data);
+        //             $('#unit').val(data);
 
-                }
-            });
-        });
+        //         }
+        //     });
+        // });
 
         $('#show_dataMem').click(function(){
             var id_mem = $('#id_mem').val();

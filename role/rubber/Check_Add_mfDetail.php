@@ -17,7 +17,7 @@
     
     if(isset($_POST["save_sale"])){
         echo "1";
-        $date = $_POST["date"];
+        $date = $_POST["date"];  echo "date = " .$date."<br>" ;
         $pdname = $_POST["pdname"]; 
         $pdquan = $_POST["pdquan"];
         $pdunit = $_POST["pdunit"];
@@ -45,8 +45,8 @@
         
  
 
-        $sql = $db->prepare("INSERT INTO `mf_data`(`mf_date`, `mf_name`, `mf_unit`, `mf_quan`) 
-                                    VALUES ('$date','$pdname', '$pdunit',$pdquan)");
+        $sql = $db->prepare("INSERT INTO `mf_data`( `mf_date`, `mf_name`, `mf_unit`, `mf_quan`, `group_id`)
+                                    VALUES ('$date','$pdname', '$pdunit',$pdquan,'CM004')");
         $sql->execute();
 
 
@@ -73,9 +73,6 @@
             }
         }
 
-        // echo " mfd_id = ".$mfd_id ; 
-
-        // echo '<pre>' . print_r($_SESSION["material_cart"], TRUE) . '</pre>';
 
         foreach ($_SESSION['material_cart'] as $key => $value){  
                 

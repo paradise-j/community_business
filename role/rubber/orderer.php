@@ -70,19 +70,9 @@
                     <form action="Check_Add_orderer.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
+                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
                                 <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $gcs = $stmt->fetchAll();
-                                    
-                                    foreach($gcs as $gc){
-                                ?>
-                                <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option>
-                                <?php
-                                    }
-                                ?>
+                                <option selected value="CM004">วสช.ส่งเสริมอาชีพเกษตรกรชาวสวนยาง</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -408,6 +398,7 @@
                 url : "../../address.php",
                 data : {id:id_provnce,function:'provinces'},     
                 success: function(data){
+                    console.log(data);
                     $('#amphures').html(data);
                     $('#districts').html(' ');
                     $('#zipcode').val(' ');

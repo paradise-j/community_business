@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `material` WHERE `mat_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=Product.php");
+            header("refresh:1; url=material.php");
         }
     }
 ?>
@@ -67,27 +67,35 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_product.php" method="POST" enctype="multipart/form-data">
+                    <form action="Check_Add_material.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
+                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
                                 <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $gcs = $stmt->fetchAll();
-                                    
-                                    foreach($gcs as $gc){
-                                ?>
-                                <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option>
-                                <?php
-                                    }
-                                ?>
+                                <option selected value="CM004">วสช.ส่งเสริมอาชีพเกษตรกรชาวสวนยาง</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อวัตถุดิบ</label>
                             <input type="text" required class="form-control" name="mname" style="border-radius: 30px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">หน่วย</label>
+                            <!-- <input type="text" required class="form-control" name="unit" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
+                                <<?php 
+                                    $stmt = $db->query("SELECT * FROM `unit` WHERE `group_id` = 'CM004'");
+                                    $stmt->execute();
+                                    $units = $stmt->fetchAll();
+                                    
+                                    foreach($units as $unit){
+                                ?>
+                                <option value="<?= $unit['unit_name']?>"><?= $unit['unit_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
                         <!-- <div class="mb-3">
                             <label for="" class="col-form-label">หน่วยนับ</label>
@@ -349,7 +357,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'Product.php',
+                                url: 'material.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -359,7 +367,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'Product.php';
+                                    document.location.href = 'material.php';
                                 })
                             })
                             .fail(function() {

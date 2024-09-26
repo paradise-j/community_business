@@ -26,6 +26,7 @@
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <a class="collapse-item" href="Manage_G_agc.php">1.ข้อมูลกลุ่มวิสาหกิจ</a> -->
+                <a class="collapse-item" href="manage_unit.php">1.ข้อมูลหน่วยนับ</a>
                 <a class="collapse-item" href="Product.php">2.ข้อมูลสินค้าชุมชน</a>
                 <a class="collapse-item" href="material.php">3.ข้อมูลวัตถุดิบ</a>
                 <a class="collapse-item" href="Fixed_assets.php">4.ข้อมูลสินทรัพย์ถาวร</a>

@@ -3,7 +3,7 @@
     require_once('../connect.php');
 
     $result = $db->query("SELECT MONTH(`sale_date`) as month, SUM(`sale_Nprice`) as total
-                          FROM `sales` GROUP BY MONTH(`sale_date`)");
+                          FROM `sales` WHERE `group_id` = 'CM004' GROUP BY MONTH(`sale_date`)");
     $result->execute();
 
     $arr = array();
