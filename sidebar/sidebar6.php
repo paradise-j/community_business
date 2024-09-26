@@ -34,6 +34,7 @@
                 <!-- <a class="collapse-item" href="grower_regis.php">6.ข้อมูลทะเบียนลูกสวน</a> -->
                 <!-- <a class="collapse-item" href="Travel_package.php">7.ข้อมูลแพ็คเกจการท่องเที่ยว</a> -->
                 <a class="collapse-item" href="orderer.php">8.ข้อมูลผู้สั่งซื้อ</a>
+                <a class="collapse-item" href="InExType.php">8.ข้อมูลรายการรายรับ-รายจ่าย</a>
             </div>
         </div>
     </li>
