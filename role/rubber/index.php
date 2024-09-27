@@ -155,8 +155,42 @@
                                         <h6 class="m-0 font-weight-bold text-primary">สรุปยอดการเปรียบเทียบระหว่างยอดขายรวมกับค่าใช้จ่ายในการผลิตรวม</h6>
                                     </div>
                                     <div class="card-body">
-                                        <div class="chart-bar">
+                                        <!-- <div class="chart-bar">
                                             <canvas id="myBarChart"></canvas>
+                                        </div> -->
+                                        <div class="table-responsive scrollbar">
+                                            <table class="table" id="dataTable" width="100%" cellspacing="0" >
+                                                <thead>
+                                                    <tr align="center" style="font-size: 0.8em;">
+                                                        <th>เดือน</th>
+                                                        <th>ชื่อรายการ</th>
+                                                        <th>ยอดต้นทุนรวม</th>
+                                                        <th>ยอดขายรวม</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                        $stmt = $db->query("SELECT MONTH(mf_data.mf_date) as month , mf_data.mf_name , mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price FROM `mf_data` 
+                                                                            INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
+                                                                            WHERE mf_data.group_id = 'CM004' 
+                                                                            GROUP BY mf_data.mf_name; ");
+                                                        $stmt->execute();
+                                                        $ggs = $stmt->fetchAll();
+                                                        if (!$ggs) {
+                                                            echo "<p><td colspan='6' class='text-center'>No data available</td></p>";
+                                                        } else {
+                                                        foreach($ggs as $gg)  {  
+                                                    ?>
+                                                    <tr align="center" style="font-size: 0.8em;">
+                                                        <td><?= $gg['month']; ?></td>
+                                                        <td><?= $gg['mf_name']; ?></td>
+                                                        <td><?= $gg['mf_price']; ?></td>
+                                                        <td><?= $gg['sum_price']; ?></td>
+                                                    </tr>
+                                                    <?php }
+                                                        } ?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
