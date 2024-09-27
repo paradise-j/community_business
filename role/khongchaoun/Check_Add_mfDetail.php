@@ -40,7 +40,7 @@
             $price = $total+$lbprice+$water+$elec+$package+$other;
             $cost = $price/$pdquan;
 
-            $group_id = 'CM004';
+            $group_id = 'CM002';
 
             // echo $price;
             $mf = $db->prepare("SELECT `mf_name` FROM `mf_data`");
