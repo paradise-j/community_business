@@ -98,11 +98,6 @@
         }
       }
 
-
-
-
-
-
         $sql = $db->prepare("INSERT INTO `sales`(`sale_type`, `sale_typeEx`, `sale_date`, `sale_total`, `sale_discount`, `sale_Nprice`, `cus_id`)  
                              VALUES ('$typeS','$typeEx', '$date','$total', '$discount', '$Newtotal', '$cus_id')");
         $sql->execute();
@@ -126,6 +121,11 @@
             $sql = $db->prepare("INSERT INTO `salesdetail` (`sd_pdname`, `sd_quantity` , `sd_pricekg`, `sd_price`, `sale_id`) 
                                  VALUES ('$pdname', $quantity, $pricekg, $price, '$sale_id')");
             $sql->execute();
+
+            $sales = $db->prepare("SELECT * FROM `sales`");
+            $sales->execute();
+
+
         }
 
         unset($_SESSION["shopping_cart"]);

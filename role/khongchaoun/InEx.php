@@ -71,12 +71,12 @@
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
                                 <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <option selected value="CM004">วสช.ส่งเสริมอาชีพเกษตรกรชาวสวนยาง</option>
+                                <option selected value="CM002">วสช.ชีววิถีคลองชะอุ่น</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">วันที่ทำรายการ</label>
-                            <input type="date" required class="form-control" name="namegf" placeholder="dd-mm-yyyy" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="date" placeholder="dd-mm-yyyy" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ประเภทรายการ</label>
@@ -88,9 +88,10 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">รายการ</label>
-                            <select class="form-control" aria-label="Default select example" id="nameInEX" name="nameInEX" style="border-radius: 30px;" required>
+                            <input type="text" required class="form-control" name="nameInEX" style="border-radius: 30px;">
+                            <!-- <select class="form-control" aria-label="Default select example" id="nameInEX" name="nameInEX" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกรายการ....</option>
-                            </select>
+                            </select> -->
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">จำนวนเงิน (บาท)</label>

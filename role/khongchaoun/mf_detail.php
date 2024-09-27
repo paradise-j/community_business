@@ -108,7 +108,7 @@
                                                 <select class="form-control" aria-label="Default select example" id="mfname" name="mfname" style="border-radius: 30px;" required>
                                                     <option selected disabled>เลือกวัตถุดิบ....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `material` WHERE group_id = 'CM004'");
+                                                        $stmt = $db->query("SELECT * FROM `material` WHERE group_id = 'CM002'");
                                                         $stmt->execute();
                                                         $mats = $stmt->fetchAll();
                                                         
@@ -164,7 +164,7 @@
                                                 <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือกสินค้า....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `product`  WHERE group_id = 'CM004'");
+                                                        $stmt = $db->query("SELECT * FROM `product`  WHERE group_id = 'CM002'");
                                                         $stmt->execute();
                                                         $pds = $stmt->fetchAll();
                                                         

@@ -93,7 +93,7 @@
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
                                             <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
                                             <?php 
-                                                $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='CM004'");
+                                                $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='CM002'");
                                                 $stmt->execute();
                                                 $mfs = $stmt->fetchAll();
                                                 
@@ -131,7 +131,7 @@
                                     $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = 'CM004'
+                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = 'CM002'
                                                          GROUP BY MONTH(sale_date)"); 
                                     $stmt2->execute();
 
@@ -160,7 +160,7 @@
                                     $stmt3 = $db->query("SELECT salesdetail.sd_pdname, SUM(salesdetail.sd_price) as total , MONTH(sales.sale_date) as month
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = 'CM004'
+                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = 'CM002'
                                                          GROUP BY salesdetail.sd_pdname , MONTH(sales.sale_date)");
                                     $stmt3->execute();
 

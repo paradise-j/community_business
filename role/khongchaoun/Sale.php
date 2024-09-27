@@ -55,10 +55,10 @@
         $row = $pd->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        if($_POST["pricepd"] < $_POST["pdcost"]){
-            $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
-            header("refresh:2; url=Sale.php");
-        }else{
+        // if($_POST["pricepd"] < $_POST["pdcost"]){
+        //     $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
+        //     header("refresh:2; url=Sale.php");
+        // }else{
             $item_array = array(
 
                 'item_pdname'       =>     $Namepd,
@@ -69,7 +69,7 @@
                 $_SESSION["shopping_cart"][] =  $item_array;
             header("location:Sale.php");
             exit;
-        }
+        // }
     }
 
     if(isset($_GET['action'])){
@@ -146,7 +146,7 @@
                                                 <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM004'");
+                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM002'");
                                                         $stmt->execute();
                                                         $mfs = $stmt->fetchAll();
                                                         
@@ -219,6 +219,7 @@
                                                 <option selected disabled>กรุณาเลือก....</option>    
                                                     <option value="เครดิต">เครดิต</option>
                                                     <option value="เงินสด">เงินสด</option>
+                                                    <option value="แจกฟรี">แจกฟรี</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">

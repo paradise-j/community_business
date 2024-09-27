@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `unit` WHERE `unit_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
