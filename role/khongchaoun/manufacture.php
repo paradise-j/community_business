@@ -251,9 +251,9 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
+                                            <th>วันที่ผลิต</th>
                                             <th>รายการผลิต</th>
-                                            <th>จำนวน</th>
-                                            <th>วันที่ผลิตล่าสุด</th>
+                                            <th>จำนวนคงเหลือ</th>
                                             <th></th>
 
                                         </tr>
@@ -283,9 +283,10 @@
                                              foreach($mfs as $mf)  {  
                                         ?>
                                         <tr>
+                                            <td class="date_th"><?= $mf['mf_date']; ?></td>
                                             <td><?= $mf['mf_name']; ?></td>
                                             <td><?= $mf['mf_quan']." ".$mf['mf_unit']; ?></td>
-                                            <td class="date_th"><?= $mf['mf_date']; ?></td>
+                                            
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">ดูข้อมูล</i></button>
                                                 <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">แก้ไข</i></button>

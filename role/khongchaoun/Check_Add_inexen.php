@@ -8,7 +8,7 @@
         if (isset($_POST['submit'])) {
             $date = $_POST['date'];
             $g_id = $_POST['group'];
-            $typeInEx = $_POST['typeInEx'];
+            $typeInEx = $_POST['type'];
             $nameInEX = $_POST['nameInEX'];
             $price = $_POST['price'];
 

@@ -33,11 +33,12 @@
             $lbprice = $_POST["lbprice"]; 
             $water = $_POST["water"]; 
             $elec = $_POST["elec"]; 
+            $fuel = $_POST["fuel"]; 
             $package = $_POST["package"]; 
             $other = $_POST["other"];
             $problem = $_POST["problem"]; 
 
-            $price = $total+$lbprice+$water+$elec+$package+$other;
+            $price = $total+$lbprice+$water+$elec+$fuel+$package+$other;
             $cost = $price/$pdquan;
 
             $group_id = 'CM002';
@@ -67,8 +68,8 @@
                     }
                 }
 
-                $sql = $db->prepare("INSERT INTO `mf_data_detail` (`mfd_labor_price`, `mfd_water_price`, `mfd_electricity_price`, `mfd_package`, `mfd_problem`, `mf_id`) 
-                                                        VALUES ($lbprice, $water,$elec,$package,'$problem','$mf_id')");
+                $sql = $db->prepare("INSERT INTO `mf_data_detail` (`mfd_labor_price`, `mfd_water_price`, `mfd_electricity_price`, `mfd_fuel_price`,`mfd_package`, `mfd_problem`, `mf_id`) 
+                                                        VALUES ($lbprice, $water,$elec,$fuel,$package,'$problem','$mf_id')");
                 $sql->execute();
 
                 $mfds = $db->prepare("SELECT * FROM `mf_data_detail`");
@@ -139,8 +140,8 @@
                     }
                 }
 
-                $sql = $db->prepare("INSERT INTO `mf_data_detail` (`mfd_labor_price`, `mfd_water_price`, `mfd_electricity_price`, `mfd_package`, `mfd_problem`, `mf_id`) 
-                                                        VALUES ($lbprice, $water,$elec,$package,'$problem','$mf_id')");
+                $sql = $db->prepare("INSERT INTO `mf_data_detail` (`mfd_labor_price`, `mfd_water_price`, `mfd_electricity_price`,`mfd_fuel_price`, `mfd_package`, `mfd_problem`, `mf_id`) 
+                                                        VALUES ($lbprice, $water,$elec,$fuel,$package,'$problem','$mf_id')");
                 $sql->execute();
 
                 $mfds = $db->prepare("SELECT * FROM `mf_data_detail`");

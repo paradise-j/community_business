@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=InEx.php");
         }
     }
 ?>
@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_Group_agriculturist</title>
+    <title>ข้อมูลรายรับ - รายจ่าย</title>
 
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -80,18 +80,18 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ประเภทรายการ</label>
-                            <select class="form-control" aria-label="Default select example" id="typeInEx" name="typeInEx" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกประเภท....</option>
-                                <option value="รายรับ">รายรับ</option>
+                            <select class="form-control" aria-label="Default select example" id="type" name="type" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกประเภท....</option>n
+                                <option value="รายจ่าย">รายรับ</option>
                                 <option value="รายจ่าย">รายจ่าย</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">รายการ</label>
-                            <input type="text" required class="form-control" name="nameInEX" style="border-radius: 30px;">
-                            <!-- <select class="form-control" aria-label="Default select example" id="nameInEX" name="nameInEX" style="border-radius: 30px;" required>
+                            <!-- <input type="text" required class="form-control" name="nameInEX" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="nameInEX" name="nameInEX" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกรายการ....</option>
-                            </select> -->
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">จำนวนเงิน (บาท)</label>
@@ -255,6 +255,21 @@
             deleteConfirm(userId);
         })
 
+        $('#type').change(function(){
+            var id_type = $(this).val();
+            console.log(id_type);
+            $.ajax({
+                type : "post",
+                url : "../../api/typeInEx.php",
+                data : {id:id_type,function:'type'},     
+                success: function(data){
+                //    console.log(data);
+                    $('#nameInEX').html(data);
+                }
+            });
+        });
+
+
         function deleteConfirm(userId) {
             Swal.fire({
                 title: 'ลบข้อมูล',
@@ -267,7 +282,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'information_G_agc.php',
+                                url: 'InEx.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -277,7 +292,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'information_G_agc.php';
+                                    document.location.href = 'InEx.php';
                                 })
                             })
                             .fail(function() {
@@ -293,18 +308,7 @@
             });
         }
 
-        $('#typeInEx').change(function(){
-            var id_typeInEx = $(this).val();
-            $.ajax({
-                type : "post",
-                url : "../../typeInEx.php",
-                data : {id:id_typeInEx,function:'typeInEx'},     
-                success: function(data){
-                   console.log(data);
-                    $('#nameInEX').html(data);
-                }
-            });
-        });
+        
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {

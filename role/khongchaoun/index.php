@@ -121,10 +121,10 @@
                                         </div>
                                         <div class="mt-4 text-center small">
                                             <span class="mr-2">
-                                                <i class="fas fa-circle text-primary"></i> รายได้
+                                                <i class="fas fa-circle text-success"></i> รายรับ
                                             </span>
                                             <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i> รายจ่าย
+                                                <i class="fas fa-circle text-danger"></i> รายจ่าย
                                             </span>
                                         </div>
                                     </div>

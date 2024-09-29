@@ -187,7 +187,6 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            
                                             <div class="col-md-3">
                                                 <label class="col-form-label">ค่าแรง จำนวนเงิน(บาท)</label>
                                                 <input type="number"  class="form-control" name="lbprice" step="0.01" style="border-radius: 30px;" required>
@@ -199,6 +198,10 @@
                                             <div class="col-md-3">
                                                 <label class="col-form-label">ค่าไฟ จำนวนเงิน(บาท)</label>
                                                 <input type="number" required class="form-control" name="elec" step="0.01" style="border-radius: 30px;">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="col-form-label">ค่าเชื้อเพลิง จำนวนเงิน(บาท)</label>
+                                                <input type="number" required class="form-control" name="fuel" step="0.01" style="border-radius: 30px;">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -214,6 +217,7 @@
                                                 <label for="" class="col-form-label">ปัญหาในการผลิต</label>
                                                 <select class="form-control" aria-label="Default select example" name="problem" style="border-radius: 30px;" required>
                                                     <option selected disabled>เลือกปัญหาในการผลิต....</option>
+                                                    <option value="ไม่พบปัญหา">ไม่พบปัญหา</option>
                                                     <option value="หนี้สิน-เงินทุน">หนี้สิน-เงินทุน</option>
                                                     <option value="แหล่งน้ำ">แหล่งน้ำ</option>
                                                     <option value="ที่ดิน">ที่ดิน</option>

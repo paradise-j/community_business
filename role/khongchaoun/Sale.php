@@ -50,15 +50,15 @@
         //     }
         // }
 
-        $pd = $db->prepare("SELECT `mf_name` as Namepd FROM `mf_data` WHERE `mf_id` = '$pdname'");
+        $pd = $db->prepare("SELECT `mf_name` as Namepd , `mf_quan` FROM `mf_data` WHERE `mf_id` = '$pdname'");
         $pd->execute();
         $row = $pd->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        // if($_POST["pricepd"] < $_POST["pdcost"]){
-        //     $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
-        //     header("refresh:2; url=Sale.php");
-        // }else{
+        if($_POST["quantity"] > $mf_quan){
+            $_SESSION['error'] = 'ยอดสินค้าของท่านไม่เพียงพอ';
+            header("refresh:2; url=Sale.php");
+        }else{
             $item_array = array(
 
                 'item_pdname'       =>     $Namepd,
@@ -69,9 +69,9 @@
                 $_SESSION["shopping_cart"][] =  $item_array;
             header("location:Sale.php");
             exit;
-        // }
+        }
     }
-
+    
     if(isset($_GET['action'])){
         if($_GET['action']=="delete"){
             $id = $_GET["id"];
@@ -118,6 +118,7 @@
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
+
                     <div class="row">
                         <div class="col-lg-5">
                             <div class="card shadow mb-4">
@@ -167,7 +168,7 @@
                                             <!-- <div class="col-md-1"></div> -->
                                             <div class="col-md-4">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="number" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="pricepd" name="pricepd" min="1" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">จำนวนที่ขาย</label>

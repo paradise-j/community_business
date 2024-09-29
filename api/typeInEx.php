@@ -3,7 +3,7 @@
     session_start();
 
     try {
-        if(isset($_POST['function']) and $_POST['function'] == 'typeInEx'){
+        if(isset($_POST['function']) and $_POST['function'] == 'type'){
             $id = $_POST['id'];
             $stmt = $db->query("SELECT `int_name` FROM `inextype` WHERE `int_type` = '$id'");
             $stmt->execute();

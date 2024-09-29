@@ -80,7 +80,7 @@
                             <label for="" class="col-form-label">ประเภท</label>
                             <!-- <input type="text" required class="form-control" name="unit" style="border-radius: 30px;"> -->
                             <select class="form-control" aria-label="Default select example" id="type" name="type" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
+                                <option selected disabled>กรุณาเลือกรายการ....</option>
                                 <option value="รายรับ">รายรับ</option>
                                 <option value="รายจ่าย">รายจ่าย</option>
                             </select>
@@ -143,22 +143,21 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $id = $_SESSION['id'];
-                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
-                                            $check_id->execute();
-                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
-                                            extract($row1);
-                                            // echo $user_id;
+                                            // $id = $_SESSION['id'];
+                                            // $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            // $check_id->execute();
+                                            // $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            // extract($row1);
 
-                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
-                                            $check_group->execute();
-                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
-                                            extract($row2);
-                                            // echo $group_id;
+                                            // $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            // $check_group->execute();
+                                            // $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            // extract($row2);
 
                                             $stmt = $db->query("SELECT inextype.int_id , inextype.int_name, inextype.group_id , group_comen.group_name as group_name 
                                                                 FROM `inextype` INNER JOIN `group_comen` ON group_comen.group_id = inextype.group_id
-                                                                WHERE inextype.group_id = '$group_id'");
+                                                                -- WHERE inextype.group_id = '$group_id'
+                                                                ");
                                             $stmt->execute();
                                             $ints = $stmt->fetchAll();
                                             $count = 1;

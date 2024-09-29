@@ -2,8 +2,7 @@
     header('Content-Type: application/json; charset=utf-8');
     require_once('../connect.php');
 
-    $result = $db->query("SELECT MONTH(`sale_date`) as month, SUM(`sale_Nprice`) as total
-                          FROM `sales` WHERE `group_id` = 'CM002' GROUP BY MONTH(`sale_date`)");
+    $result = $db->query("SELECT `inex_type`,SUM(`inex_price`) as money FROM `inex_data` WHERE `group_id` = 'CM002' GROUP BY `inex_type`");
     $result->execute();
 
     $arr = array();
