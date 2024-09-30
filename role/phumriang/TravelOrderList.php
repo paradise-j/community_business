@@ -235,7 +235,7 @@
                                                     ?>
                                                         <tr>
                                                             <td align="center"><?php echo $value['item_tpname'];?></td>
-                                                            <td align="right"><?php echo number_format($value['item_tpquan'],2)." บาท";?></td>
+                                                            <td align="right"><?php echo number_format($value['item_tpquan'],2)." รายการ";?></td>
                                                             <td align="right"><?php echo number_format($value['item_tpprice'],2)." บาท";?></td>
                                                             <!-- <td align="right">฿ <?php echo number_format($value['item_pricekg']*$value['item_weight'],2);?> บาท</td> -->
                                                             <td align="center"><a href="TravelOrderList.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
