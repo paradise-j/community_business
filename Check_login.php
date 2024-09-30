@@ -14,6 +14,7 @@
                 $dbusername = $row['ul_username'];
                 $dbpassword = $row['ul_password'];
                 $dbrole = $row['ul_status'];
+                
             }
 
             if ($username != null AND $password != null) {
