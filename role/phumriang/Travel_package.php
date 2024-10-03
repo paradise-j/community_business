@@ -120,7 +120,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar7.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar8.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->

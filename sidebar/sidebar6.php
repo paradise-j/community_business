@@ -91,42 +91,7 @@
         </div>
     </li>
 
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="PlanFollow.php">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>วางแผนและติดตามการผลิต</span></a>
-    </li> -->
-
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlan"
-            aria-expanded="true" aria-controls="collapsePlan">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>วางแผนและติดตามการผลิต</span></a>
-        </a>
-        <div id="collapsePlan" class="collapse" aria-labelledby="headingPlan" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="Plant_orderlist.php">1.รายการการสั่งซื้อ</a>
-                <a class="collapse-item" href="PlanFollow.php">2.วางแผนแการเพาะปลูก</a>
-                <a class="collapse-item" href="Bproduce.php">3.รับซื้อผลผลิต</a>
-                <a class="collapse-item" href="Export_products.php">4.ส่งออกผลผลิต</a>
-                <a class="collapse-item" href="Follow_purchase.php">5.ติดตามผลการรับซื้อ</a>
-            </div>
-        </div>
-    </li> -->
-
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Planning_results.php">
-            <i class="fas fa-taxi"></i>
-            <span>สรุปผลการวางแผนและติดตามผลผลิตพืช</span></a>
-    </li> -->
-
-    <!-- Nav Item - Tables -->
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Report.php">
-        <i class="fas fa-solid fa-clipboard-list"></i>
-            <span>ออกรายงาน</span></a>
-    </li> -->
-
+  
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
             aria-expanded="true" aria-controls="collapseReport">
