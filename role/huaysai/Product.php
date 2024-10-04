@@ -249,7 +249,7 @@
                                                                 <select class="form-control" aria-label="Default select example" id="Productunit" name="Productunit" style="border-radius: 30px;" required>
                                                                     <option selected value="<?= $pd['pd_unit']?>"><?= $pd['pd_unit'];?></option>
                                                                     <?php 
-                                                                        $stmt = $db->query("SELECT * FROM `unit`");
+                                                                        $stmt = $db->query("SELECT * FROM `unit` WHERE `group_id` = '$group_id'");
                                                                         $stmt->execute();
                                                                         $units = $stmt->fetchAll();
                                                                         
