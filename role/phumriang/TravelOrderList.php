@@ -166,8 +166,7 @@
                                 </div>
                                
                             </div>
-                             <div class="col text-left">
-                                <!-- <button class="btn btn-secondary" style="border-radius: 30px;" type="submit" name="add_sale"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</button> -->
+                            <div class="col text-left">
                                 <a href="Travel.php" class="btn btn-secondary" style="border-radius: 30px;"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</a>
                             </div>
                         </div>
@@ -179,6 +178,26 @@
                                         <h5 class="m-0 font-weight-bold text-primary">สรุปการจอง
                                     </div>
                                     <form action="Check_Add_TravelOrderList.php" method="post">
+                                        <div class="row mb-3">
+                                            <div class="col-md-2">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="tp1" value="เกาะเสร็จ">
+                                                    <label class="form-check-label" for="inlineCheckbox1" style="font-size: 1.2rem;">เกาะเสร็จ</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="tp2" value="ผ้าไหมพุมเรียง">
+                                                    <label class="form-check-label" for="inlineCheckbox1" style="font-size: 1.2rem;">ผ้าไหมพุมเรียง</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="tp3" value="ตามรอยท่านพุทธทาส">
+                                                    <label class="form-check-label" for="inlineCheckbox1" style="font-size: 1.2rem;">ตามรอยท่านพุทธทาส</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row mb-2">
                                             <div class="col-md-4">
                                                 <label class="form-label">ชื่อผู้จอง</label>
@@ -224,6 +243,7 @@
                                                         <th>ชื่อสินค้า</th>
                                                         <th>จำนวน</th>
                                                         <th>ราคา</th>
+                                                        <th>ราคารวม</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -235,17 +255,18 @@
                                                     ?>
                                                         <tr>
                                                             <td align="center"><?php echo $value['item_tpname'];?></td>
-                                                            <td align="right"><?php echo number_format($value['item_tpquan'],2)." รายการ";?></td>
+                                                            <td align="right"><?php echo number_format($value['item_tpquan'])." รายการ";?></td>
                                                             <td align="right"><?php echo number_format($value['item_tpprice'],2)." บาท";?></td>
+                                                            <td align="right"><?php echo number_format($value['item_tpquan']*$value['item_tpprice'],2)." บาท";?></td>
                                                             <!-- <td align="right">฿ <?php echo number_format($value['item_pricekg']*$value['item_weight'],2);?> บาท</td> -->
                                                             <td align="center"><a href="TravelOrderList.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
                                                         </tr>
                                                     <?php
-                                                        $total=$total+($value['item_tpprice']);
+                                                        $total=$total+($value['item_tpquan']*$value['item_tpprice']);
                                                         }
                                                     ?>
                                                     <tr>
-                                                        <td align="right" colspan='2'>ราคารวม</td>
+                                                        <td align="right" colspan='3'>ราคาสุทธิ</td>
                                                         <td align="right">฿ <?php echo number_format($total, 2); ?> บาท</td>
                                                         <!-- <td></td> -->
                                                     </tr>

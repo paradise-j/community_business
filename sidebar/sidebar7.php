@@ -53,18 +53,18 @@
         </div>
     </li> -->
 
-    <!-- <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="manufacture.php">
             <i class="fas fa-seedling"></i>
             <span>การผลิตสินค้า</span></a>
-    </li> -->
+    </li>
 
 
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Sale.php">
+    <li class="nav-item">
+        <a class="nav-link" href="SaleList.php">
             <i class="fas fa-store"></i>
             <span>การซื้อ-ขายสิ้นค้า</span></a>
-    </li> -->
+    </li>
 
 
 

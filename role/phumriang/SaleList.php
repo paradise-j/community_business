@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>การท่องเที่ยวและบริการ</title>
+    <title>การขายสินค้า</title>
 
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -62,7 +62,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการท่องเที่ยวและบริการ</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูลการขายสินค้า</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -170,12 +170,12 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลการท่องเที่ยวและบริการ</h3>
+                            <h3 class="m-0 font-weight-bold text-primary">ข้อมูลการขายสินค้า</h3>
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <!-- <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการท่องเที่ยวและบริการ</a> -->
-                                <a href="TravelOrderList.php" class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit">เพิ่มข้อมูลการท่องเที่ยวและบริการ</a>
+                                <!-- <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการขายสินค้า</a> -->
+                                <a href="Sale.php" class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit">เพิ่มข้อมูลการขายสินค้า</a>
                             </div>
                         </div>
                         
@@ -184,14 +184,30 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>วันทีการจอง</th>
-                                            <th>ชื่อผู้จอง</th>
+                                            <th>รหัสการขาย</th>
+                                            <th>วันทีขายสินค้า</th>
+                                            
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `travel_orderlist`");
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;
+
+                                            $stmt = $db->query("SELECT * FROM `salesdetail` 
+                                                                INNER JOIN `sales` ON sales.sale_id = salesdetail.sale_id
+                                                                WHERE sales.group_id = '$group_id' GROUP BY salesdetail.sale_id ");
                                             $stmt->execute();
                                             $tols = $stmt->fetchAll();
                                             $count = 1;
@@ -202,74 +218,73 @@
                                         ?>
                                         <tr>
                                             
-                                            <td align="center" class="date_th"><?= $tol['tol_date']; ?></td>
-                                            <td><?= $tol['tol_cus']; ?></td>
+                                            
+                                            <td align="center"><?= $tol['sale_id']; ?></td>
+                                            <td align="center" class="date_th"><?= $tol['sale_date']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $tol['tol_id']?>">ดูข้อมูล</button>
+                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $tol['sale_id']?>">ดูข้อมูล</button>
                                                 <!-- <a href="Edit_tol.php?edit_id=<?= $tol['tol_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
-                                                <a data-id="<?= $tol['tol_id']; ?>" href="?delete=<?= $tol['tol_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <a data-id="<?= $tol['sale_id']; ?>" href="?delete=<?= $tol['sale_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
                                             </td>
                                         </tr>
 
-                                        <div class="modal fade" id="showdataModal<?= $tol['tol_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="showdataModal<?= $tol['sale_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการจอง</h4>
+                                                        <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการขาย</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-1">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสการจอง : </b><?= $tol['tol_id']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสการขาย : </b><?= $tol['sale_id']; ?></label>
                                                         </div>
                                                         <div class="mb-1">                         
-                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่ทำการจอง : </b><?= thai_date_fullmonth(strtotime($tol['tol_date'])) ; ?></label>
+                                                            <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่ทำการขาย : </b><?= thai_date_fullmonth(strtotime($tol['sale_date'])) ; ?></label>
                                                         </div>
+                                                       
                                                         <div class="mb-1">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผู้จอง : </b><?= $tol['tol_cus']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ยอดขาย : </b><?= $tol['sale_Nprice']." บาท"; ?></label>
                                                         </div>
-                                                        <div class="mb-1">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>จำนวนผู้จอง : </b><?= $tol['tol_quan']." คน"; ?></label>
-                                                        </div>
-                                                        <div class="mb-1">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>แพ็คเกจการจอง : </b>
+                                                        <!-- <div class="mb-1">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>แพ็คเกจการขาย : </b>
                                                                 <br>
                                                                 <?php 
-                                                                    if($tol['tol_tp1'] != null){
-                                                                        echo $tol['tol_tp1']."<br>";
-                                                                    }
-                                                                    if($tol['tol_tp2'] != null){
-                                                                        echo $tol['tol_tp2']."<br>";
-                                                                    }
-                                                                    if($tol['tol_tp3'] != null){
-                                                                        echo $tol['tol_tp3'];
-                                                                    }
+                                                                    // if($tol['tol_tp1'] != null){
+                                                                    //     echo $tol['tol_tp1']."<br>";
+                                                                    // }
+                                                                    // if($tol['tol_tp2'] != null){
+                                                                    //     echo $tol['tol_tp2']."<br>";
+                                                                    // }
+                                                                    // if($tol['tol_tp3'] != null){
+                                                                    //     echo $tol['tol_tp3'];
+                                                                    // }
                                                                 ?>
                                                             </label>
-                                                        </div>
-                                                        <div class="mb-1">
+                                                        </div> -->
+                                                        <!-- <div class="mb-1"> -->
                                                             <?php
-                                                                $tol_id = $tol['tol_id'] ;
-                                                                $stmt = $db->query("SELECT * FROM `travel_orderlist_detail` WHERE `tol_id` = '$tol_id' ");
-                                                                $stmt->execute();
+                                                                // $tol_id = $tol['tol_id'] ;
+                                                                // $stmt = $db->query("SELECT * FROM `travel_orderlist_detail` WHERE `tol_id` = '$tol_id' ");
+                                                                // $stmt->execute();
                                                                 
 
-                                                                $check = array();
-                                                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                                                                    $name = $row["tod_name"]."  ".$row["tod_price"]." "."บาท";
-                                                                    // $quan = $row["pod_quan"];
-                                                                    array_push($check,$name);
-                                                                }
+                                                                // $check = array();
+                                                                // while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                                                //     $name = $row["tod_name"]."  ".$row["tod_price"]." "."บาท";
+                                                                //     // $quan = $row["pod_quan"];
+                                                                //     array_push($check,$name);
+                                                                // }
 
                                                             ?>
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รายละเอียดการจอง : </b>
-                                                            <br>
+                                                            <!-- <label class="col-form-label" style="font-size: 1.25rem;"><b>รายละเอียดการขาย : </b> -->
+                                                            <!-- <br> -->
                                                                 <?php 
-                                                                foreach ($check as $el) {
-                                                                    echo $el."<br>";
-                                                                }
+                                                                // foreach ($check as $el) {
+                                                                //     echo $el."<br>";
+                                                                // }
                                                                 ?>
-                                                            </label>
-                                                        </div>
+                                                            <!-- </label> -->
+                                                        <!-- </div> -->
                                                     </div>
                                                 </div>
                                             </div>

@@ -85,10 +85,10 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">สินค้าทั้งหมด</div>
+                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">แพ็คเกจทั้งหมด</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product` WHERE `group_id` = '$group_id'");
+                                                    $stmt = $db->prepare("SELECT COUNT(`tp_id`) as total FROM `travel_pack`");
                                                     $stmt->execute();
                                                     $pds = $stmt->fetchAll();
                                                     foreach($pds as $pd){
@@ -136,7 +136,7 @@
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายภาพรวมในแต่ละปี</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดรายได้หลักภาพรวมทั้งหมด (ยอดทั้งหมดที่ยังไม่หักเข้ากลุ่ม) </h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -173,7 +173,7 @@
                                                         $stmt = $db->query("SELECT MONTH(mf_data.mf_date) as month , mf_data.mf_name , mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price FROM `mf_data` 
                                                                             INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
                                                                             WHERE mf_data.group_id = 'CM005' 
-                                                                            GROUP BY mf_data.mf_name; ");
+                                                                            GROUP BY mf_data.mf_name");
                                                         $stmt->execute();
                                                         $ggs = $stmt->fetchAll();
                                                         if (!$ggs) {
@@ -182,7 +182,21 @@
                                                         foreach($ggs as $gg)  {  
                                                     ?>
                                                     <tr align="center" style="font-size: 0.8em;">
-                                                        <td><?= $gg['month']; ?></td>
+                                                        <td>
+                                                            <?php
+                                                                echo $gg['month'] == 1 ? "มกราคม" : 
+                                                                    ($gg['month'] == 2 ? "กุมภาพันธ์" : 
+                                                                    ($gg['month'] == 3 ? "มีนาคม" : 
+                                                                    ($gg['month'] == 4 ? "เมษายน" : 
+                                                                    ($gg['month'] == 5 ? "พฤษภาคม" :
+                                                                    ($gg['month'] == 6 ? "มิถุนายน" : 
+                                                                    ($gg['month'] == 7 ? "กรกฎาคม" : 
+                                                                    ($gg['month'] == 8 ? "สิงหาคม" : 
+                                                                    ($gg['month'] == 9 ? "กันยายน" : 
+                                                                    ($gg['month'] == 10 ? "ตุลาคม" : 
+                                                                    ($gg['month'] == 11 ? "พฤศจิกายน" : "ธันวาคม"))))))))));
+                                                            ?>
+                                                        </td>
                                                         <td><?= $gg['mf_name']; ?></td>
                                                         <td><?= $gg['mf_price']; ?></td>
                                                         <td><?= $gg['sum_price']; ?></td>

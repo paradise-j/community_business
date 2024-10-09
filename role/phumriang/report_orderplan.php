@@ -186,7 +186,7 @@
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าทั้งหมดในแต่ละเดือน</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดรายได้ทั้งหมดในแต่ละเดือน</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -210,7 +210,7 @@
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าตามชนิดในแต่ละเดือน</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปรายได้แยกตามแพ็คเกจ</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">

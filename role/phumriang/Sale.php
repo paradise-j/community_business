@@ -113,7 +113,7 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar7.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -147,7 +147,7 @@
                                                 <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM002'");
+                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM005'");
                                                         $stmt->execute();
                                                         $mfs = $stmt->fetchAll();
                                                         
@@ -186,6 +186,9 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                            <div class="col text-left">
+                                <a href="SaleList.php" class="btn btn-secondary" style="border-radius: 30px;"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</a>
                             </div>
                         </div>
                         <div class="col-lg-7">

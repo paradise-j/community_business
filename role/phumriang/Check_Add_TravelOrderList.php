@@ -15,7 +15,7 @@
     // echo '<pre>' . print_r($_SESSION["shopping_tp"], TRUE) . '</pre>';
     $total = 0;
     foreach ($_SESSION['shopping_tp'] as $key => $value) { 
-        $total=$total+($value['item_tpprice']);
+        $total=$total+($value['item_tpquan']*$value['item_tpprice']);
     }
 
     try{
@@ -25,11 +25,14 @@
             $name = $_POST["name"];
             $phone = $_POST["phone"];
             $date = $_POST["date"];
+            $tp1 = $_POST["tp1"];
+            $tp2 = $_POST["tp2"];
+            $tp3 = $_POST["tp3"];
             $quan_pp = $_POST["quan_pp"];
 
 
-            $sql = $db->prepare("INSERT INTO `travel_orderlist`(`tol_date`, `tol_quan`, `tol_cus`, `tol_phone`,`tol_totalp`)
-                                VALUES ('$date','$quan_pp','$name','$phone','$total')");
+            $sql = $db->prepare("INSERT INTO `travel_orderlist`(`tol_date`, `tol_quan`, `tol_cus`, `tol_phone`, `tol_tp1`, `tol_tp2`, `tol_tp3`,`tol_totalp`)
+                                VALUES ('$date','$quan_pp','$name','$phone','$tp1','$tp2','$tp3','$total')");
             $sql->execute();
 
             $tols = $db->prepare("SELECT * FROM `travel_orderlist`");
@@ -45,7 +48,7 @@
             foreach ($_SESSION['shopping_tp'] as $key => $value){  
                 
                 $tpname = $value["item_tpname"];
-                $tpprice = $value["item_tpprice"]; 
+                $tpprice = $value['item_tpquan']*$value['item_tpprice']; 
 
                 $sql = $db->prepare("INSERT INTO `travel_orderlist_detail`(`tod_name`, `tod_price`, `tol_id`)
                                     VALUES ('$tpname', $tpprice, '$tol_id')");

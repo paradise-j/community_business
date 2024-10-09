@@ -5,12 +5,12 @@
     session_start();
     require_once '../../connect.php';
 
-    // $id = $_SESSION['id'];
+    $id = $_SESSION['id'];
     // echo $id;
-    // $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `ul_id` = '$id'");
-    // $check_id->execute();
-    // $row = $check_id->fetch(PDO::FETCH_ASSOC);
-    // extract($row);
+    $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `ul_id` = '$id'");
+    $check_id->execute();
+    $row = $check_id->fetch(PDO::FETCH_ASSOC);
+    extract($row);
     
     // echo '<pre>' . print_r($_SESSION["material_cart"], TRUE) . '</pre>';
 
@@ -41,7 +41,7 @@
             $price = $total+$lbprice+$water+$elec+$fuel+$package+$other;
             $cost = $price/$pdquan;
 
-            $group_id = 'CM002';
+            $group_id = 'CM005';
 
             // echo $price;
             $mf = $db->prepare("SELECT `mf_name` FROM `mf_data`");
