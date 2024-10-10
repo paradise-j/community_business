@@ -68,23 +68,19 @@
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_Travel_package.php" method="POST">
-                        <!-- <div class="mb-3">
-                            <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $gcs = $stmt->fetchAll();
-                                    
-                                    foreach($gcs as $gc){
-                                ?>
-                                <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option>
-                                <?php
-                                    }
-                                ?>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">ชื่อแพ็คเกจการท่องเที่ยว</label>
+                            <select class="form-control" aria-label="Default select example" id="tp_type" name="tp_type" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกแพ็คเกจ....</option>
+                                <option value="โฮมสเตย์">โฮมสเตย์</option>
+                                <option value="ซาเล้ง">ซาเล้ง</option>
+                                <option value="วิทยากร">วิทยากร</option>
+                                <option value="เรือ">เรือ</option>
+                                <option value="ฐานผลิตภัณฑ์ชุมชน">ฐานผลิตภัณฑ์ชุมชน</option>
+                                <option value="อาหาร">อาหาร</option>
+                                <option value="ธนาคารปู">ธนาคารปู</option>
                             </select>
-                        </div> -->
+                        </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อแพ็คเกจการท่องเที่ยว</label>
                             <input type="text" required class="form-control" name="tp_name" style="border-radius: 30px;">
@@ -120,7 +116,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar8.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar7.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -180,6 +176,9 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสแพ็คเกจการท่องเที่ยว : </b><?= $tp['tp_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ประเภทแพ็คเกจการท่องเที่ยว : </b><?= $tp['tp_type']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อแพ็คเกจการท่องเที่ยว : </b><?= $tp['tp_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
@@ -203,6 +202,20 @@
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">รหัสแพ็คเกจการท่องเที่ยว</label>
                                                                 <input type="text" required class="form-control" id=" tp_id" name=" tp_id" value="<?= $tp['tp_id'];?>" style="border-radius: 30px;" readonly>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="" class="col-form-label">ชื่อแพ็คเกจการท่องเที่ยว</label>
+                                                                <!-- <input type="text" required class="form-control" id="tp_type" name="tp_type" value="<?= $tp['tp_type'];?>" style="border-radius: 30px;"> -->
+                                                                <select class="form-control" aria-label="Default select example" id="tp_type" name="tp_type" style="border-radius: 30px;" required>
+                                                                    <option selected disabled>กรุณาเลือกแพ็คเกจ....</option>
+                                                                    <option value="โฮมสเตย์">โฮมสเตย์</option>
+                                                                    <option value="ซาเล้ง">ซาเล้ง</option>
+                                                                    <option value="วิทยากร">วิทยากร</option>
+                                                                    <option value="เรือ">เรือ</option>
+                                                                    <option value="ฐานผลิตภัณฑ์ชุมชน">ฐานผลิตภัณฑ์ชุมชน</option>
+                                                                    <option value="อาหาร">อาหาร</option>
+                                                                    <option value="ธนาคารปู">ธนาคารปู</option>
+                                                                </select>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">ชื่อแพ็คเกจการท่องเที่ยว</label>

@@ -49,6 +49,7 @@
                 'item_tpname'       =>     $tp_name,
                 'item_tpprice'      =>     $_POST["tpprice"],
                 'item_tpquan'      =>     $_POST["tpquan"],
+                'item_tpdeduct'      =>     $_POST["tpdeduct"],
                 );
                 $_SESSION["shopping_tp"][] =  $item_array;
             header("location:TravelOrderList.php");
@@ -144,17 +145,22 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label">ราคา</label>
-                                                <input type="number" class="form-control" id="tpprice" name="tpprice" step="0.01" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="tpprice" name="tpprice" step="0.01" min="1" style="border-radius: 30px;" required>
                                             </div>
                                             <!-- <div class="col-md-3">
                                                 <label class="form-label">ราคา &nbsp&nbsp&nbsp
                                                 </label>
                                                 <input type="number" class="form-control" id="tpprice" name="tpprice" step="0.01" style="border-radius: 30px;" required>
                                             </div> -->
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-2">
                                                 <label class="form-label">จำนวน &nbsp&nbsp&nbsp
                                                 </label>
-                                                <input type="number" class="form-control" id="tpquan" name="tpquan" step="1" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="tpquan" name="tpquan" step="1" min="1" style="border-radius: 30px;" required>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label class="form-label">ยอดหักเข้ากลุ่ม (บาท) &nbsp&nbsp&nbsp
+                                                </label>
+                                                <input type="number" class="form-control" id="tpdeduct" name="tpdeduct" step="1" min="0"  value="0" style="border-radius: 30px;" required>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -179,7 +185,7 @@
                                     </div>
                                     <form action="Check_Add_TravelOrderList.php" method="post">
                                         <div class="row mb-3">
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" name="tp1" value="เกาะเสร็จ">
                                                     <label class="form-check-label" for="inlineCheckbox1" style="font-size: 1.2rem;">เกาะเสร็จ</label>
@@ -191,7 +197,7 @@
                                                     <label class="form-check-label" for="inlineCheckbox1" style="font-size: 1.2rem;">ผ้าไหมพุมเรียง</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" name="tp3" value="ตามรอยท่านพุทธทาส">
                                                     <label class="form-check-label" for="inlineCheckbox1" style="font-size: 1.2rem;">ตามรอยท่านพุทธทาส</label>
@@ -240,10 +246,12 @@
                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                 <thead class="thead-light">
                                                     <tr align ="center">
-                                                        <th>ชื่อสินค้า</th>
+                                                        <th>ชื่อแพ็คเกจ</th>
                                                         <th>จำนวน</th>
                                                         <th>ราคา</th>
                                                         <th>ราคารวม</th>
+                                                        <th>หักเข้ากลุ่ม</th>
+                                                        <th>คงเหลือ</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -251,6 +259,8 @@
                                                     <?php
                                                     if(!empty($_SESSION["shopping_tp"])){
                                                         $total=0;
+                                                        $totalNet=0;
+                                                        $deduct=0;
                                                         foreach ($_SESSION['shopping_tp'] as $key => $value) { 
                                                     ?>
                                                         <tr>
@@ -258,16 +268,22 @@
                                                             <td align="right"><?php echo number_format($value['item_tpquan'])." รายการ";?></td>
                                                             <td align="right"><?php echo number_format($value['item_tpprice'],2)." บาท";?></td>
                                                             <td align="right"><?php echo number_format($value['item_tpquan']*$value['item_tpprice'],2)." บาท";?></td>
+                                                            <td align="right" style=""><?php echo number_format($value['item_tpdeduct'])." บาท";?></td>
+                                                            <td align="right"><?php echo number_format(($value['item_tpquan']*$value['item_tpprice'])-$value['item_tpdeduct'])." บาท";?></td>
                                                             <!-- <td align="right">฿ <?php echo number_format($value['item_pricekg']*$value['item_weight'],2);?> บาท</td> -->
                                                             <td align="center"><a href="TravelOrderList.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
                                                         </tr>
                                                     <?php
+                                                        $totalNet=$totalNet+(($value['item_tpquan']*$value['item_tpprice'])-$value['item_tpdeduct']);
+                                                        $deduct=$deduct+($value['item_tpdeduct']);
                                                         $total=$total+($value['item_tpquan']*$value['item_tpprice']);
                                                         }
                                                     ?>
                                                     <tr>
-                                                        <td align="right" colspan='3'>ราคาสุทธิ</td>
+                                                        <td align="right" colspan='3'>สรุปยอดรวม</td>
                                                         <td align="right">฿ <?php echo number_format($total, 2); ?> บาท</td>
+                                                        <td align="right">฿ <?php echo number_format($deduct, 2); ?> บาท</td>
+                                                        <td align="right">฿ <?php echo number_format($totalNet, 2); ?> บาท</td>
                                                         <!-- <td></td> -->
                                                     </tr>
                                                     <?php
