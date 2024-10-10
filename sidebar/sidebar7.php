@@ -121,13 +121,13 @@
     </li> -->
 
     <!-- Nav Item - Tables -->
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Report.php">
+    <li class="nav-item">
+        <a class="nav-link" href="report_orderplan.php">
         <i class="fas fa-solid fa-clipboard-list"></i>
             <span>ออกรายงาน</span></a>
-    </li> -->
+    </li>
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
             aria-expanded="true" aria-controls="collapseReport">
             <i class="fas fa-solid fa-clipboard-list"></i>
@@ -138,7 +138,7 @@
                 <a class="collapse-item" href="report_orderplan.php">สรุปยอดการขายสินค้า</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

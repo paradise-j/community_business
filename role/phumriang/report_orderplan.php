@@ -75,7 +75,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar8.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar7.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -87,7 +87,7 @@
                         <div class="card-body">
                             <form action="" method="post">
                                 <div class="row mt-2">
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-3"></div>
                                     <!-- <label class="col-form-label">ชื่อสินค้า</label>
                                     <div class="col-md-2">
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
@@ -143,25 +143,29 @@
 
                                     // echo $dataResult2 ;
 
-                                    // $stmt1 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
-                                    //                      FROM `sales` 
-                                    //                      INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                    //                      WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND salesdetail.sd_pdname = '$Gname'
-                                    //                      GROUP BY MONTH(sale_date)");
-                                    // $stmt1->execute();
+                                    $stmt1 = $db->query("SELECT MONTH(travel_orderlist.tol_date) as month, 
+                                                                travel_orderlist_detail.tod_type as type, 
+                                                                SUM(travel_orderlist_detail.tod_Nprice) as total
+                                                        FROM `travel_orderlist_detail` 
+                                                        INNER JOIN `travel_orderlist` ON travel_orderlist.tol_id = travel_orderlist_detail.tol_id
+                                                        WHERE MONTH(travel_orderlist.tol_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                        GROUP BY MONTH(travel_orderlist.tol_date) , travel_orderlist_detail.tod_type");
+                                    $stmt1->execute();
 
-                                    // $arr = array();
-                                    // while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
-                                    //     $arr[] = $row;
-                                    // }
-                                    // $dataResult = json_encode($arr);
+                                    $arr = array();
+                                    while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
+                                        $arr[] = $row;
+                                    }
+                                    $dataResult = json_encode($arr);
 
 
-                                    $stmt3 = $db->query("SELECT travel_orderlist_detail.tod_name, SUM(travel_orderlist_detail.tod_price) as total , MONTH(`tol_date`) as month 
-                                                        FROM `travel_orderlist`
-                                                        INNER JOIN `travel_orderlist_detail` ON travel_orderlist.tol_id = travel_orderlist_detail.tol_id
-                                                        WHERE MONTH(`tol_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
-                                                        GROUP BY travel_orderlist_detail.tod_name ,MONTH(`tol_date`)");
+                                    $stmt3 = $db->query("SELECT MONTH(travel_orderlist.tol_date) as month, 
+                                                                travel_orderlist_detail.tod_type as type, 
+                                                                SUM(travel_orderlist_detail.tod_deduct) as deduct
+                                                        FROM `travel_orderlist_detail` 
+                                                        INNER JOIN `travel_orderlist` ON travel_orderlist.tol_id = travel_orderlist_detail.tol_id
+                                                        WHERE MONTH(travel_orderlist.tol_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                        GROUP BY MONTH(travel_orderlist.tol_date) , travel_orderlist_detail.tod_type");
                                     $stmt3->execute();
 
                                     $arr3 = array();
@@ -182,6 +186,33 @@
                                     ?> 
                                 </h5>
                             </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="card shadow">
+                                        <div class="card-header py-3">
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปโปรแกรมท่องเที่ยวที่นิยม</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="chart-area">
+                                                <!-- <canvas id="myChartBar3" ></canvas> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-8 col-lg-4">
+                                    <div class="card shadow">
+                                        <div class="card-header py-3">
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดรายได้ที่เข้ากลุ่ม แยกตามประเภท package</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="chart-area">
+                                                <canvas id="myChartBar3" ></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row mt-4">
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
@@ -195,18 +226,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-xl-6 col-lg-8">
-                                    <div class="card shadow">
-                                        <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าที่ต้องการทราบ</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-area">
-                                                <canvas id="myChartBar" ></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
@@ -214,27 +233,15 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
-                                                <canvas id="myChartBar2" ></canvas>
+                                                <canvas id="myChartBar" ></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
 
-                            <!-- <div class="row mt-4">
-                                <div class="col-xl-12 col-lg-4">
-                                    <div class="card shadow">
-                                        <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าตามชนิดในแต่ละเดือน</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-area">
-                                                <canvas id="myChartBar2" ></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
+                            
                         </div>
                     </div>
 
@@ -360,8 +367,8 @@
             }
             
         });
-        console.log("my_data02 = "+ my_data02);
-        console.log("my_label02 = "+ my_label02);
+        // console.log("my_data02 = "+ my_data02);
+        // console.log("my_label02 = "+ my_label02);
 
         
         var ctx = document.getElementById("myAreaChart");
@@ -403,95 +410,10 @@
 
         // ============================================= myChartBar =============================================
         // const my_dataAll = <?= $dataResult; ?> ; 
-        // comsole.log("my_dataAll2 = "+ my_dataAll2);
-        // var my_data1 = [];
-        // var my_label1 = [];
-        // var Unique_label = [];
-        // my_dataAll.forEach(item => {
-        //     my_data1.push(item.total);
-        //     switch (item.month) {
-        //         case "1" :
-        //             my_label1.push('มกราคม')
-        //             break;
-        //         case "2" :
-        //             my_label1.push('กุมภาพันธ์')
-        //             break;
-        //         case "3" :
-        //             my_label1.push('มีนาคม')
-        //             break;
-        //         case "4" :
-        //             my_label1.push('เมษายน')
-        //             break;
-        //         case "5" :
-        //             my_label1.push('พฤษภาคม')
-        //             break;
-        //         case "6" :
-        //             my_label1.push('มิถุนายน')
-        //             break;
-        //         case "7" :
-        //             my_label1.push('กรกฎาคม')
-        //             break;
-        //         case "8" :
-        //             my_label1.push('สิงหาคม')
-        //             break;
-        //         case "9" :
-        //             my_label1.push('กันยายน')
-        //             break;
-        //         case "10" :
-        //             my_label1.push('ตุลาคม')
-        //             break;
-        //         case "11" :
-        //             my_label1.push('พฤศจิกายน')
-        //             break;
-        //         case "12" :
-        //             my_label1.push('ธันวาคม')
-        //             break; 
-        //     }
-            
-        // });
-
-        // for( var i=0; i<my_label1.length; i++ ) {
-        //     if ( Unique_label.indexOf( my_label1[i] ) < 0 ) {
-        //     Unique_label.push( my_label1[i] );
-        //     }
-        // } 
-
-        // console.log("my_data1 = "+ my_data1);
-        // console.log("my_label1 = "+ my_label1);
-        // console.log("Unique_label = "+ Unique_label);
-        
-        // var ctx = document.getElementById('myChartBar');
-        // var myChartBar = new Chart(ctx, {
-        //     type: 'bar',
-        //     data: {
-        //         labels: Unique_label,
-        //         datasets: [{
-        //         label: "<?= $Gname ?>",
-        //         backgroundColor: "#2a86e9",
-        //         borderColor: "#2a86e9",
-        //         data: my_data1
-        //         }],
-        //     },
-        //     options: {
-        //         maintainAspectRatio: false,
-        //         scales: {
-        //             y: {
-        //                 beginAtZero: true
-        //             }
-        //         },
-        //         legend: {
-        //             display: true
-        //         }
-        //     }
-        // });
-
-        // ============================================= myChartBar3 =============================================
-        const my_dataAll3 = <?= $dataResult3; ?> ; 
-
-
-        let res_1 = []
-        my_dataAll3.forEach(obj => {
-            let tod_name = obj['tod_name']
+        const my_dataAll = <?= $dataResult; ?> ; 
+        let res = []
+        my_dataAll.forEach(obj => {
+            let type = obj['type']
             let month = ''
             switch (obj['month']) {
                 case "1" :
@@ -533,17 +455,181 @@
             }
 
             let total = obj['total']
-            res_1[tod_name] = res_1[tod_name] || []
-            res_1[tod_name][month] = res_1[tod_name][month] || []
-            res_1[tod_name][month] = total
+            res[type] = res[type] || []
+            res[type][month] = res[type][month] || []
+            res[type][month] = total
         })
-        // console.log(res_1)
+
+        var my_data = [];
+        var my_label = [];
+        var Unique_month = [];
+        my_dataAll.forEach(item => {
+            my_data.push(item.total);
+            switch (item.month) {
+                case "1" :
+                    my_label.push('มกราคม')
+                    break;
+                case "2" :
+                    my_label.push('กุมภาพันธ์')
+                    break;
+                case "3" :
+                    my_label.push('มีนาคม')
+                    break;
+                case "4" :
+                    my_label.push('เมษายน')
+                    break;
+                case "5" :
+                    my_label.push('พฤษภาคม')
+                    break;
+                case "6" :
+                    my_label.push('มิถุนายน')
+                    break;
+                case "7" :
+                    my_label.push('กรกฎาคม')
+                    break;
+                case "8" :
+                    my_label.push('สิงหาคม')
+                    break;
+                case "9" :
+                    my_label.push('กันยายน')
+                    break;
+                case "10" :
+                    my_label.push('ตุลาคม')
+                    break;
+                case "11" :
+                    my_label.push('พฤศจิกายน')
+                    break;
+                case "12" :
+                    my_label.push('ธันวาคม')
+                    break; 
+            }
+            
+        });
+
+        for( var i=0; i<my_label.length; i++ ) {
+            if ( Unique_month.indexOf( my_label[i] ) < 0 ) {
+            Unique_month.push( my_label[i] );
+            }
+        } 
+
+        console.log("my_data = "+ my_data);
+        // console.log("my_label = "+ my_label);
+        console.log("Unique_month = "+ Unique_month);
+        console.log("------------------------------------------------");
+
+
+        function getRandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+
+        let backgroundColor = ["#87be7e","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6"]
+
+        let borderColor = ["#87be7e","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6"]
+
+        let labels = Unique_month
+        let datasets = []
+        let tasrgets = Object.keys(res)
+
+
+        let color_index = 0
+
+        tasrgets.forEach(tasrget => {
+            let data = []
+            labels.forEach(month => {
+                let total = res[tasrget][month] || "0.00"
+                data.push(total)
+            })
+            datasets.push({
+                label: tasrget,
+                data,
+                backgroundColor: backgroundColor[color_index],
+                borderColor: borderColor[color_index],
+                borderWidth: 1
+            })
+
+            color_index = color_index+1
+        })
+
+
+        let data = { labels, datasets }
+        // console.log("data = "+ data)
+
+        var ctx = document.getElementById('myChartBar');
+        var myChartBar = new Chart(ctx, {
+            type: 'bar',
+            data ,
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                legend: {
+                    display: true
+                }
+            }
+        });
+
+        // ============================================= myChartBar3 =============================================
+        const my_dataAll3 = <?= $dataResult3; ?> ; 
+
+
+        let res_1 = []
+        my_dataAll3.forEach(obj => {
+            let type = obj['type']
+            let month = ''
+            switch (obj['month']) {
+                case "1" :
+                    month ='มกราคม'
+                    break;
+                case "2" :
+                    month ='กุมภาพันธ์'
+                    break;
+                case "3" :
+                    month ='มีนาคม'
+                    break;
+                case "4" :
+                    month ='เมษายน'
+                    break;
+                case "5" :
+                    month ='พฤษภาคม'
+                    break;
+                case "6" :
+                    month ='มิถุนายน'
+                    break;
+                case "7" :
+                    month ='กรกฎาคม'
+                    break;
+                case "8" :
+                    month ='สิงหาคม'
+                    break;
+                case "9" :
+                    month ='กันยายน'
+                    break;
+                case "10" :
+                    month ='ตุลาคม'
+                    break;
+                case "11" :
+                    month ='พฤศจิกายน'
+                    break;
+                case "12" :
+                    month ='ธันวาคม'
+                    break; 
+            }
+
+            let deduct = obj['deduct']
+            res_1[type] = res_1[type] || []
+            res_1[type][month] = res_1[type][month] || []
+            res_1[type][month] = deduct
+        })
 
         var my_data3 = [];
         var my_label3 = [];
         var Unique_month3 = [];
         my_dataAll3.forEach(item => {
-            my_data3.push(item.total);
+            my_data3.push(item.deduct);
             switch (item.month) {
                 case "1" :
                     my_label3.push('มกราคม')
@@ -590,7 +676,8 @@
             Unique_month3.push( my_label3[i] );
             }
         } 
-
+        console.log("my_data3 = "+ my_data3);
+        // console.log("my_label3 = "+ my_label3);
         console.log("Unique_month3 = "+ Unique_month3);
 
 
@@ -599,41 +686,43 @@
         }
 
 
-        let backgroundColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+        let backgroundColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
 
-        let borderColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+        let borderColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
 
-        let labels = Unique_month3
-        let datasets = []
-        let tasrgets = Object.keys(res_1)
+        let labels3 = Unique_month3
+        let datasets3 = []
+        let tasrgets3 = Object.keys(res_1)
 
 
-        let color_index = 0
+        let color_index3 = 0
 
-        tasrgets.forEach(tasrget => {
-            let data = []
-            labels.forEach(month => {
-                let total = res_1[tasrget][month] || "0.00"
-                data.push(total)
+        tasrgets3.forEach(tasrget3 => {
+            let data3 = []
+            labels3.forEach(month3 => {
+                let total3 = res_1[tasrget3][month3] || "0.00"
+                data3.push(total3)
             })
-            datasets.push({
-                label: tasrget,
-                data,
-                backgroundColor: backgroundColor[color_index],
-                borderColor: borderColor[color_index],
+            datasets3.push({
+                label: tasrget3,
+                data: data3,
+                backgroundColor: backgroundColor3[color_index3],
+                borderColor: borderColor3[color_index3],
                 borderWidth: 1
             })
 
-            color_index = color_index+1
+            color_index3 = color_index3+1
         })
 
 
-        let data = { labels, datasets }
+        let data3 = { labels:labels3, datasets:datasets3 }
+        // console.log("datasets3 = "+ datasets3) 
+        // console.log(JSON.stringify(data3)) 
         
-        var ctx = document.getElementById('myChartBar2');
-        var myChartBar2 = new Chart(ctx, {
+        var ctx3 = document.getElementById('myChartBar3');
+        var myChartBar3 = new Chart(ctx3, {
             type: 'bar',
-            data ,
+            data: data3 ,
             options: {
                 maintainAspectRatio: false,
                 scales: {
@@ -649,41 +738,41 @@
 
 
         
-        const dom_date = document.querySelectorAll('.date_th')
-        dom_date.forEach((elem)=>{
+        // const dom_date = document.querySelectorAll('.date_th')
+        // dom_date.forEach((elem)=>{
 
-            const my_date = elem.textContent
-            const date = new Date(my_date)
-            const result = date.toLocaleDateString('th-TH', {
+        //     const my_date = elem.textContent
+        //     const date = new Date(my_date)
+        //     const result = date.toLocaleDateString('th-TH', {
 
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
+        //     year: 'numeric',
+        //     month: 'long',
+        //     day: 'numeric',
 
-            }) 
-            elem.textContent=result
-        })
+        //     }) 
+        //     elem.textContent=result
+        // })
         
-        $.extend(true, $.fn.dataTable.defaults, {
-            "language": {
-                    "sProcessing": "กำลังดำเนินการ...",
-                    "sLengthMenu": "แสดง _MENU_ รายการ",
-                    "sZeroRecords": "ไม่พบข้อมูล",
-                    "sInfo": "แสดงรายการ _START_ ถึง _END_ จาก _TOTAL_ รายการ",
-                    "sInfoEmpty": "แสดงรายการ 0 ถึง 0 จาก 0 รายการ",
-                    "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกรายการ)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ค้นหา:",
-                    "sUrl": "",
-                    "oPaginate": {
-                                    "sFirst": "เริ่มต้น",
-                                    "sPrevious": "ก่อนหน้า",
-                                    "sNext": "ถัดไป",
-                                    "sLast": "สุดท้าย"
-                    }
-            }
-        });
-        $('.table').DataTable();
+        // $.extend(true, $.fn.dataTable.defaults, {
+        //     "language": {
+        //             "sProcessing": "กำลังดำเนินการ...",
+        //             "sLengthMenu": "แสดง _MENU_ รายการ",
+        //             "sZeroRecords": "ไม่พบข้อมูล",
+        //             "sInfo": "แสดงรายการ _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+        //             "sInfoEmpty": "แสดงรายการ 0 ถึง 0 จาก 0 รายการ",
+        //             "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกรายการ)",
+        //             "sInfoPostFix": "",
+        //             "sSearch": "ค้นหา:",
+        //             "sUrl": "",
+        //             "oPaginate": {
+        //                             "sFirst": "เริ่มต้น",
+        //                             "sPrevious": "ก่อนหน้า",
+        //                             "sNext": "ถัดไป",
+        //                             "sLast": "สุดท้าย"
+        //             }
+        //     }
+        // });
+        // $('.table').DataTable();
 
 
     </script>

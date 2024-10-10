@@ -6,22 +6,23 @@
     require_once '../../connect.php';
 
     $id = $_SESSION['id'];
-    // echo $id;
     $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `ul_id` = '$id'");
     $check_id->execute();
     $row = $check_id->fetch(PDO::FETCH_ASSOC);
     extract($row);
     
     // echo '<pre>' . print_r($_SESSION["shopping_tp"], TRUE) . '</pre>';
-    $total = 0;
+    $total=0;
+    $totalNet=0;
+    $deduct=0;
     foreach ($_SESSION['shopping_tp'] as $key => $value) { 
+        $totalNet=$totalNet+(($value['item_tpquan']*$value['item_tpprice'])-$value['item_tpdeduct']);
+        $deduct=$deduct+($value['item_tpdeduct']);
         $total=$total+($value['item_tpquan']*$value['item_tpprice']);
     }
 
     try{
         if(isset($_POST["save_order"])){
-
-            // $odr = $_POST["orderer"];
             $name = $_POST["name"];
             $phone = $_POST["phone"];
             $date = $_POST["date"];
@@ -31,8 +32,8 @@
             $quan_pp = $_POST["quan_pp"];
 
 
-            $sql = $db->prepare("INSERT INTO `travel_orderlist`(`tol_date`, `tol_quan`, `tol_cus`, `tol_phone`, `tol_tp1`, `tol_tp2`, `tol_tp3`,`tol_totalp`)
-                                VALUES ('$date','$quan_pp','$name','$phone','$tp1','$tp2','$tp3','$total')");
+            $sql = $db->prepare("INSERT INTO `travel_orderlist`(`tol_date`, `tol_quan`, `tol_cus`, `tol_phone`, `tol_tp1`, `tol_tp2`, `tol_tp3`,`tol_totalp`,`tol_deduct`,`tol_totalNet`)  
+                                VALUES ('$date','$quan_pp','$name','$phone','$tp1','$tp2','$tp3','$total','$deduct','$totalNet')");
             $sql->execute();
 
             $tols = $db->prepare("SELECT * FROM `travel_orderlist`");
@@ -49,9 +50,16 @@
                 
                 $tpname = $value["item_tpname"];
                 $tpprice = $value['item_tpquan']*$value['item_tpprice']; 
+                $tpdeduct = $value["item_tpdeduct"];
+                $tpNprice = $tpprice - $tpdeduct;
 
-                $sql = $db->prepare("INSERT INTO `travel_orderlist_detail`(`tod_name`, `tod_price`, `tol_id`)
-                                    VALUES ('$tpname', $tpprice, '$tol_id')");
+                $check_type = $db->prepare("SELECT `tp_type` FROM `travel_pack` WHERE `tp_name` = '$tpname'");
+                $check_type->execute();
+                $row = $check_type->fetch(PDO::FETCH_ASSOC);
+                extract($row);
+
+                $sql = $db->prepare("INSERT INTO `travel_orderlist_detail`(`tod_type`, `tod_name`, `tod_price`, `tod_deduct`, `tod_Nprice`, `tol_id`)
+                                    VALUES ('$tp_type','$tpname', $tpprice, '$tpdeduct', $tpNprice, '$tol_id')");
                 $sql->execute();
             }
 
