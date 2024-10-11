@@ -82,7 +82,7 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการขายสินค้า</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการท่องเที่ยวชุมชน</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
@@ -174,7 +174,7 @@
                                     }
                                     $dataResult3 = json_encode($arr3);
 
-
+                                    
                                     
                                 }
                             ?>
@@ -199,6 +199,56 @@
                                         <div class="card-body">
                                             <!-- <div class="chart-area"> -->
                                                 <!-- <canvas id="myChartBar3" ></canvas> -->
+                                            <!-- </div> -->
+                                            <!-- <div class="table-responsive scrollbar"> -->
+                                                <table width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr align="center" style="font-size: 1rem;">
+                                                            <th>จำนวนกลุ่มนักท่องเที่ยว</th>
+                                                            <th>ชื่อโปรแกรม</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php 
+                                                            try{
+                                                                $stmt4 = $db->query("SELECT * FROM (
+                                                                    (SELECT \"เกาะเสร็จ\" as \"trip\", COUNT(`tol_tp1`) as \"count\"
+                                                                    FROM `travel_orderlist`
+                                                                    WHERE `tol_tp1` NOT LIKE \"\" AND MONTH(`tol_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date'))
+                                                                    UNION 
+                                                                    (SELECT \"วิถีชุมชนพุมเรียง\" as \"trip\", COUNT(`tol_tp2`) as \"count\"
+                                                                    FROM `travel_orderlist`
+                                                                    WHERE `tol_tp2` NOT LIKE \"\" AND MONTH(`tol_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date'))
+                                                                    UNION 
+                                                                    (SELECT \"ตามรอยท่านพุทธทาส\" as \"trip\", COUNT(`tol_tp3`) as \"count\"
+                                                                    FROM `travel_orderlist` 
+                                                                    WHERE `tol_tp3` NOT LIKE \"\" AND MONTH(`tol_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date'))
+                                                                    )`tb1` 
+                                                                    ORDER BY `tb1`.count DESC");
+                                                                $stmt4->execute();
+                                                                $tps = $stmt4->fetchAll();
+
+                                                                if (empty($tps)) {
+                                                                echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
+                                                                } else {
+                                                                    foreach($tps as $tp)  {
+                                                                        $trip = $tp['trip'];
+                                                                        $count = $tp['count'];
+                                                        ?>
+                                                        <tr align="center" style="font-size: 0.8em;">
+                                                           
+                                                            
+                                                            <td style="font-size: 1rem;"><?php   if(empty($count)){ echo "0"; }else{ echo  $count;}?></td>
+                                                            <td style="font-size: 1rem;"><?php   if(empty($trip)){ echo "0"; }else{ echo  $trip;}?></td>
+                                                        </tr>
+                                                        <?php       }
+                                                                }
+                                                            } catch(PDOException $e) {
+                                                                echo "Connection failed: " . $e->getMessage();
+                                                            }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
                                             <!-- </div> -->
                                         </div>
                                     </div>
