@@ -413,7 +413,7 @@
                 url : "../../api/id_mem.php",
                 data : {id:id_mem,function:'id_mem'},     
                 success: function(data){
-                    console.log("price = ",data);
+                    //console.log("price = ",data);
                     data.forEach(item => {
                         // console.log("cusname = ",item.odr_name);
                         // console.log("cusphone = ",item.odr_phone);

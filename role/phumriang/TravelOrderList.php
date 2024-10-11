@@ -80,7 +80,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>การจอง</title>
+    <title>การท่องเที่ยว</title>
 
     <link rel="icon" type="image/png" href="img/store-solid.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -107,7 +107,7 @@
                         <div class="col-lg-5">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 text-center">
-                                    <h5 class="m-0 font-weight-bold text-primary">รายละเอียดการจอง</h5>
+                                    <h5 class="m-0 font-weight-bold text-primary">รายละเอียดการท่องเที่ยว</h5>
                                 </div>
                                 <div class="card-body">
                                     <form action="?" method="POST" enctype="multipart/form-data">
@@ -157,6 +157,14 @@
                                                 </label>
                                                 <input type="number" class="form-control" id="tpquan" name="tpquan" step="1" min="1" style="border-radius: 30px;" required>
                                             </div>
+                                            <!-- <div class="col-md-3 mb-2">
+                                                <label class="form-label">หน่วย &nbsp&nbsp&nbsp
+                                                </label>
+                                                <input type="number" class="form-control" id="tpunit" name="tpunit" style="border-radius: 30px;" required readonly>
+                                            </div> -->
+                                            
+                                        </div>
+                                        <div class="row mb-3">
                                             <div class="col-md-5">
                                                 <label class="form-label">ยอดหักเข้ากลุ่ม (บาท) &nbsp&nbsp&nbsp
                                                 </label>
@@ -181,7 +189,7 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="card-header py-3 text-center mb-4">
-                                        <h5 class="m-0 font-weight-bold text-primary">สรุปการจอง
+                                        <h5 class="m-0 font-weight-bold text-primary">สรุปการท่องเที่ยว
                                     </div>
                                     <form action="Check_Add_TravelOrderList.php" method="post">
                                         <div class="row mb-3">
@@ -230,9 +238,9 @@
                                                 <input type="text" class="form-control" id="phone" name="phone" minlength="10" maxlength="10"style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-4">
-                                                <label class="form-label">วันที่ทำการจอง</label>
+                                                <label class="form-label">วันที่ทำการท่องเที่ยว</label>
                                                 <?php $date = date('Y-m-d'); ?>
-                                                <input type="date" class="form-control" name="date" min="<?= $date; ?>" style="border-radius: 30px;" required>
+                                                <input type="date" class="form-control" name="date"  style="border-radius: 30px;" required>
                                             </div>
                                             
                                         </div>
@@ -251,7 +259,7 @@
                                                         <th>ราคา</th>
                                                         <th>ราคารวม</th>
                                                         <th>หักเข้ากลุ่ม</th>
-                                                        <th>คงเหลือ</th>
+                                                        <th>รายได้ชุมชน</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -288,7 +296,7 @@
                                                     </tr>
                                                     <?php
                                                     }else{
-                                                        echo "<p><td colspan='4' class='text-center'>ยังไม่มีข้อมูลรายละเอียดการจอง</td></p>";
+                                                        echo "<p><td colspan='4' class='text-center'>ยังไม่มีข้อมูลรายละเอียดการท่องเที่ยว</td></p>";
                                                     }
                                                     ?>
                                                 </tbody>

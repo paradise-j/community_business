@@ -76,7 +76,9 @@
                                 <option value="ซาเล้ง">ซาเล้ง</option>
                                 <option value="วิทยากร">วิทยากร</option>
                                 <option value="เรือ">เรือ</option>
+                                <option value="แพเปียก">แพเปียก</option>
                                 <option value="ฐานผลิตภัณฑ์ชุมชน">ฐานผลิตภัณฑ์ชุมชน</option>
+                                <option value="ฐานอนุรักษ์">ฐานอนุรักษ์</option>
                                 <option value="อาหาร">อาหาร</option>
                                 <option value="ธนาคารปู">ธนาคารปู</option>
                             </select>
@@ -205,14 +207,15 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">ชื่อแพ็คเกจการท่องเที่ยว</label>
-                                                                <!-- <input type="text" required class="form-control" id="tp_type" name="tp_type" value="<?= $tp['tp_type'];?>" style="border-radius: 30px;"> -->
                                                                 <select class="form-control" aria-label="Default select example" id="tp_type" name="tp_type" style="border-radius: 30px;" required>
                                                                     <option selected disabled>กรุณาเลือกแพ็คเกจ....</option>
                                                                     <option value="โฮมสเตย์">โฮมสเตย์</option>
                                                                     <option value="ซาเล้ง">ซาเล้ง</option>
                                                                     <option value="วิทยากร">วิทยากร</option>
                                                                     <option value="เรือ">เรือ</option>
+                                                                    <option value="แพเปียก">แพเปียก</option>
                                                                     <option value="ฐานผลิตภัณฑ์ชุมชน">ฐานผลิตภัณฑ์ชุมชน</option>
+                                                                    <option value="ฐานอนุรักษ์">ฐานอนุรักษ์</option>
                                                                     <option value="อาหาร">อาหาร</option>
                                                                     <option value="ธนาคารปู">ธนาคารปู</option>
                                                                 </select>

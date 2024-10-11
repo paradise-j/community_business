@@ -173,6 +173,9 @@
                                         $arr3[] = $row;
                                     }
                                     $dataResult3 = json_encode($arr3);
+
+
+                                    
                                 }
                             ?>
                             <div class="md-2">
@@ -194,27 +197,13 @@
                                             <h5 class="m-0 font-weight-bold text-primary">สรุปโปรแกรมท่องเที่ยวที่นิยม</h5>
                                         </div>
                                         <div class="card-body">
-                                            <div class="chart-area">
+                                            <!-- <div class="chart-area"> -->
                                                 <!-- <canvas id="myChartBar3" ></canvas> -->
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-8 col-lg-4">
-                                    <div class="card shadow">
-                                        <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดรายได้ที่เข้ากลุ่ม แยกตามประเภท package</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-area">
-                                                <canvas id="myChartBar3" ></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
                                             <h5 class="m-0 font-weight-bold text-primary">สรุปยอดรายได้ทั้งหมดในแต่ละเดือน</h5>
@@ -226,14 +215,29 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row mt-4">
+                                
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปรายได้แยกตามแพ็คเกจ</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปรายได้ทั้งหมดแยกตามแพ็คเกจ</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
                                                 <canvas id="myChartBar" ></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-4">
+                                    <div class="card shadow">
+                                        <div class="card-header py-3">
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดรายได้ที่หักเข้ากลุ่ม แยกตามแพ็คเกจ</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="chart-area">
+                                                <canvas id="myChartBar3" ></canvas>
                                             </div>
                                         </div>
                                     </div>
