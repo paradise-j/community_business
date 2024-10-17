@@ -88,23 +88,6 @@
                             <form action="" method="post">
                                 <div class="row mt-2">
                                     <div class="col-md-3"></div>
-                                    <!-- <label class="col-form-label">ชื่อสินค้า</label>
-                                    <div class="col-md-2">
-                                        <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
-                                            <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
-                                            <?php 
-                                                // $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='CM005'");
-                                                // $stmt->execute();
-                                                // $mfs = $stmt->fetchAll();
-                                                
-                                                // foreach($mfs as $mf){
-                                            ?>
-                                            <option value="<?= $mf['mf_name']?>"><?= $mf['mf_name']?></option>
-                                            <?php
-                                                // }
-                                            ?>
-                                        </select>
-                                    </div> -->
                                     <label for="inputState" class="form-label mt-2">ตั้งแต่วันที่</label>
                                     <div class="col-md-2">
                                         <input type="date" style="border-radius: 30px;" id="start_date" name="start_date" class="form-control" required>
@@ -128,9 +111,9 @@
                                     // echo $Gname ;
                                     $count = 1;
 
-                                    $stmt2 = $db->query("SELECT SUM(travel_orderlist.tol_totalp) as total , MONTH(`tol_date`) as month 
+                                    $stmt2 = $db->query("SELECT SUM(`tol_totalNet`) as total , MONTH(`tol_date`) as month 
                                                         FROM `travel_orderlist`
-                                                        INNER JOIN `travel_orderlist_detail` ON travel_orderlist.tol_id = travel_orderlist_detail.tol_id
+                                                        
                                                         WHERE MONTH(`tol_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
                                                         GROUP BY MONTH(`tol_date`)"); 
                                     $stmt2->execute();
@@ -179,7 +162,8 @@
                                 }
                             ?>
                             <div class="md-2">
-                                <h5 class="m-0 font-weight-bold text-primary text-center">ช่วงเวลาที่กำหนดตั้งแต่ 
+                                <h5 class="m-0 font-weight-bold text-primary text-center">ช่วงเวลาที่กำหนดตั้งแต่</h5>
+                                <h4 class="m-0 font-weight-bold text-indigo text-center">
                                     <?php 
                                     if(empty($start_date) and empty($end_date)){
                                         echo "ยังไม่กำหนดช่วงเวลา";
@@ -187,7 +171,7 @@
                                         echo  thai_date_fullmonth(strtotime($start_date))." ถึง ".thai_date_fullmonth(strtotime($end_date));
                                     }
                                     ?> 
-                                </h5>
+                                </h4>
                             </div>
                             
                             <div class="row mt-4">
@@ -431,16 +415,16 @@
             data: {
                 labels: my_label02,
                 datasets: [{
-                    label: "ยอดขายสุทธิ",
+                    label: "ยอดรายได้ทั้งหมด",
                     lineTension: 0,
-                    backgroundColor: "rgba(78, 115, 223, 0.07)",
-                    borderColor: "rgba(78, 115, 223, 1)",
+                    backgroundColor: "rgba(138, 78, 223, 0.07)",
+                    borderColor: "rgba(138, 78, 223, 1)",
                     pointRadius: 5,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointBackgroundColor: "rgba(138, 78, 223, 1)",
+                    pointBorderColor: "rgba(138, 78, 223, 1)",
                     pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBackgroundColor: "rgba(138, 78, 223, 1)",
+                    pointHoverBorderColor: "rgba(138, 78, 223, 1)",
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
                     data: my_data02,

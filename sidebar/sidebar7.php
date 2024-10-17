@@ -29,12 +29,12 @@
                 <a class="collapse-item" href="manage_unit.php">1.ข้อมูลหน่วยนับ</a>
                 <a class="collapse-item" href="Product.php">2.ข้อมูลสินค้าชุมชน</a>
                 <a class="collapse-item" href="material.php">3.ข้อมูลวัตถุดิบ</a>
-                <a class="collapse-item" href="Fixed_assets.php">4.ข้อมูลสินทรัพย์ถาวร</a>
-                <a class="collapse-item" href="user_regis.php">5.ข้อมูลทะเบียนสมาชิก</a>
+                <!-- <a class="collapse-item" href="Fixed_assets.php">4.ข้อมูลสินทรัพย์ถาวร</a> -->
+                <a class="collapse-item" href="user_regis.php">4.ข้อมูลทะเบียนสมาชิก</a>
                 <!-- <a class="collapse-item" href="grower_regis.php">6.ข้อมูลทะเบียนลูกสวน</a> -->
-                <a class="collapse-item" href="Travel_package.php">6.ข้อมูลแพ็คเกจการท่องเที่ยว</a>
-                <a class="collapse-item" href="orderer.php">7.ข้อมูลผู้สั่งซื้อ</a>
-                <a class="collapse-item" href="InExType.php">8.ข้อมูลรายการรายรับ-รายจ่าย</a>
+                <a class="collapse-item" href="Travel_package.php">5.ข้อมูลแพ็คเกจการท่องเที่ยว</a>
+                <a class="collapse-item" href="orderer.php">6.ข้อมูลผู้ลูกค้า</a>
+                <a class="collapse-item" href="InExType.php">7.ข้อมูลรายการรายรับ-รายจ่าย</a>
             </div>
         </div>
     </li>
@@ -53,7 +53,7 @@
         </div>
     </li> -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="manufacture.php">
             <i class="fas fa-seedling"></i>
             <span>การผลิตสินค้า</span></a>
@@ -64,7 +64,7 @@
         <a class="nav-link" href="SaleList.php">
             <i class="fas fa-store"></i>
             <span>การซื้อ-ขายสิ้นค้า</span></a>
-    </li>
+    </li> -->
 
 
 
@@ -75,6 +75,12 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="InEx.php">
+            <i class="fas fa-money-bill"></i>
+            <span>รายรับ-รายจ่าย</span></a>
+    </li>
+
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMN"
             aria-expanded="true" aria-controls="collapseMN">
             <i class="fas fa-money-bill"></i>
@@ -84,12 +90,11 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="InEx.php">1.รายรับ-รายจ่าย</a>
                 <a class="collapse-item" href="Cus_credit.php">2.แหล่งเงินทุน - คืนทุน</a> 
-                <!-- สนับสนุน ยืม คืน -->
-                <!-- <a class="collapse-item" href="Cus_credit.php">3.ลูกค้าเครดิต</a> -->
-                <!-- <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a> -->
+                <a class="collapse-item" href="Cus_credit.php">3.ลูกค้าเครดิต</a>
+                <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- <li class="nav-item">
         <a class="nav-link" href="PlanFollow.php">
