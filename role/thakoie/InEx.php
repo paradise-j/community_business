@@ -94,7 +94,7 @@
                             <label for="" class="col-form-label">ประเภทรายการ</label>
                             <select class="form-control" aria-label="Default select example" id="type" name="type" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกประเภท....</option>n
-                                <option value="รายจ่าย">รายรับ</option>
+                                <option value="รายรับ">รายรับ</option>
                                 <option value="รายจ่าย">รายจ่าย</option>
                             </select>
                         </div>

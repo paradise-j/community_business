@@ -142,6 +142,7 @@
         } 
     ?>
 
+
     <div id="wrapper">
         <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -155,6 +156,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินค้าชุมชน</a>
+                                <a href="../../export/export-data-product.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#ImportModal"><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         

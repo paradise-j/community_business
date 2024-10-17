@@ -167,7 +167,7 @@
                                                 <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM002'");
+                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM001'");
                                                         $stmt->execute();
                                                         $mfs = $stmt->fetchAll();
                                                         

@@ -4,13 +4,13 @@
 
     $id = $_SESSION['id'];
     $stmt = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `user_id` = :user_id");
-    $stmt->bindParam(':user_id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':user_id', $id, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     extract($result);
 
     $stmt2 = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = :user_id");
-    $stmt2->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $stmt2->execute();
     $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
     extract($check_group);

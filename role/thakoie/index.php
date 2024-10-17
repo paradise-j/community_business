@@ -183,14 +183,26 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php 
+                                                        $id = $_SESSION['id'];
+                                                        $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                                        $check_id->execute();
+                                                        $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                                        extract($row1);
+                                                        // echo $user_id;
+            
+                                                        $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                                        $check_group->execute();
+                                                        $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                                        extract($row2);
+                                                        // echo $group_id;
                                                         $stmt = $db->query("SELECT MONTH(mf_data.mf_date) as month , mf_data.mf_name , mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price FROM `mf_data` 
                                                                             INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
-                                                                            WHERE mf_data.group_id = 'CM002' 
+                                                                            WHERE mf_data.group_id = '$group_id' 
                                                                             GROUP BY mf_data.mf_name; ");
                                                         $stmt->execute();
                                                         $ggs = $stmt->fetchAll();
                                                         if (!$ggs) {
-                                                            echo "<p><td colspan='6' class='text-center'>No data available</td></p>";
+                                                            echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
                                                         } else {
                                                         foreach($ggs as $gg)  {  
                                                     ?>
