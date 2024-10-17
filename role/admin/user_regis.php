@@ -253,6 +253,7 @@
                                     <thead>
                                         <tr align="center">
                                             <!-- <th>เลขทะเบียน</th> -->
+                                            <th>ชื่อกลุ่ม</th>
                                             <th>ชื่อ-สกุล</th>
                                             <th></th>
                                             <!-- <th></th> -->
@@ -273,7 +274,7 @@
                                              foreach($users as $user)  {  
                                         ?>
                                         <tr>
-                                            <!-- <td align="center"><?= $user['user_id']; ?></td> -->
+                                            <td align="center"><?= $user['group_name']; ?></td>
                                             <td align="center"><?= $user['user_Fname']." ".$user['user_Lname']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $user['user_id']?>">ดูข้อมูล</button>

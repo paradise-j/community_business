@@ -113,7 +113,7 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar4.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -186,6 +186,9 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                            <div class="col text-left">
+                                <a href="SaleList.php" class="btn btn-secondary" style="border-radius: 30px;"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</a>
                             </div>
                         </div>
                         <div class="col-lg-7">

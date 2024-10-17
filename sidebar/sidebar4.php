@@ -61,7 +61,7 @@
 
 
     <li class="nav-item">
-        <a class="nav-link" href="Sale.php">
+        <a class="nav-link" href="SaleList.php">
             <i class="fas fa-store"></i>
             <span>การซื้อ-ขายสิ้นค้า</span></a>
     </li>
@@ -73,8 +73,14 @@
             <i class="fas fa-taxi"></i>
             <span>การท่องเที่ยวและบริการ</span></a>
     </li> -->
-
+    
     <li class="nav-item">
+        <a class="nav-link" href="InEx.php">
+            <i class="fas fa-money-bill"></i>
+            <span>รายรับ-รายจ่าย</span></a>
+    </li>
+
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMN"
             aria-expanded="true" aria-controls="collapseMN">
             <i class="fas fa-money-bill"></i>
@@ -83,13 +89,13 @@
         <div id="collapseMN" class="collapse" aria-labelledby="headingMN" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="InEx.php">1.รายรับ-รายจ่าย</a>
-                <!-- <a class="collapse-item" href="Cus_credit.php">2.แหล่งเงินทุน - คืนทุน</a>  -->
-                <!-- สนับสนุน ยืม คืน -->
+                <a class="collapse-item" href="Cus_credit.php">2.แหล่งเงินทุน - คืนทุน</a> 
+                สนับสนุน ยืม คืน
                 <a class="collapse-item" href="Cus_credit.php">3.ลูกค้าเครดิต</a>
-                <!-- <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a> -->
+                <a class="collapse-item" href="Share_regis.php">ข้อมูลหุ้น</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- <li class="nav-item">
         <a class="nav-link" href="PlanFollow.php">

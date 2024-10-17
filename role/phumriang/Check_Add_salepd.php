@@ -137,8 +137,6 @@
                                     VALUES ('$pdname', $quantity, $pricekg, $price, '$sale_id')");
                 $sql->execute();
 
-                // echo "pdname = ".$pdname."<br>" ;
-                // echo "quantity = ".$quantity."<br>" ;
 
                 $mfs = $db->prepare("SELECT `mf_id`,`mf_quan` FROM `mf_data` WHERE `mf_name` = '$pdname'");
                 $mfs->execute();
@@ -146,10 +144,6 @@
                 extract($row);
 
                 $New_mf_quan = $mf_quan - $quantity ;
-
-                // echo $mf_id." " ;
-                // echo $mf_quan." " ;
-                // echo $New_mf_quan."<br>" ;
 
                 $mfs = $db->prepare("UPDATE `mf_data` SET `mf_quan`= $New_mf_quan WHERE `mf_id` = '$mf_id'");
                 $mfs->execute();

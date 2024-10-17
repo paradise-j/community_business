@@ -425,21 +425,7 @@
             });
         });
 
-        
-        // const dom_date = document.querySelectorAll('.date_th')
-        // dom_date.forEach((elem)=>{
-
-        //     const my_date = elem.textContent
-        //     const date = new Date(my_date)
-        //     const result = date.toLocaleDateString('th-TH', {
-
-        //     year: 'numeric',
-        //     month: 'long',
-        //     day: 'numeric',
-
-        //     }) 
-        //     elem.textContent=result
-        // })
+    
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {

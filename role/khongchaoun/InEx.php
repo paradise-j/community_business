@@ -121,7 +121,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/sidebar4.php');?> <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -241,8 +241,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
