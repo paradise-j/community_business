@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
   // Pie Chart Example
   async function get_total_InEx() {
-    const res = await fetch("/community_business/api/get_InEx_All.php");
+    const res = await fetch("/community_business/api/get_InEx_phumriang.php");
     const json = await res.json()
     return json;
   }

@@ -303,14 +303,20 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
     <script src="vendor/chart.js/Chart.min.js"></script>
     <script src="js/demo/chartjs-plugin-datalabels.min.js"></script>
+     <!-- <script type="text-jsvascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js" 
+            integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script> -->
 
 
     <script>
@@ -441,8 +447,7 @@
                     display: true
                 }
                 
-            },
-            plugins: {ChartDataLabels : true}
+            }
             
         });
 
