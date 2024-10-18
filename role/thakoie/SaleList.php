@@ -162,10 +162,13 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>รหัสการขาย</th>
+                                            <!-- <th>รหัสการขาย</th> -->
                                             <th>วันทีขายสินค้า</th>
-                                            
-                                            <th></th>
+                                            <th>ชือสินค้า</th>
+                                            <th>จำนวนที่ขาย</th>
+                                            <th>ราคา</th>
+                                            <th>ประเถท</th>
+                                            <th>ช่องทาง</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -197,13 +200,17 @@
                                         <tr>
                                             
                                             
-                                            <td align="center"><?= $tol['sale_id']; ?></td>
+                                            <!-- <td align="center"><?= $tol['sale_id']; ?></td> -->
                                             <td align="center" class="date_th"><?= $tol['sale_date']; ?></td>
-                                            <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $tol['sale_id']?>">ดูข้อมูล</button>
+                                            <td align="center"><?= $tol['sd_pdname']; ?></td>
+                                            <td align="center"><?= $tol['sd_quantity']; ?></td>
+                                            <td align="center"><?= $tol['sd_pdname']; ?></td>
+                                            <td align="center"><?= $tol['sd_pdname']; ?></td>
+                                            <!-- <td align="center"> -->
+                                                <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $tol['sale_id']?>">ดูข้อมูล</button> -->
                                                 <!-- <a href="Edit_tol.php?edit_id=<?= $tol['tol_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
-                                                <a data-id="<?= $tol['sale_id']; ?>" href="?delete=<?= $tol['sale_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
-                                            </td>
+                                                <!-- <a data-id="<?= $tol['sale_id']; ?>" href="?delete=<?= $tol['sale_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a> -->
+                                            <!-- </td> -->
                                         </tr>
 
                                         <div class="modal fade" id="showdataModal<?= $tol['sale_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
