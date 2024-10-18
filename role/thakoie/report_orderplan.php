@@ -139,12 +139,26 @@
                                     $end_date = $_POST["end_date"];
                                     $Gname = $_POST["Gname"];
                                     // echo $Gname ;
+
+                                    $id = $_SESSION['id'];
+                                    $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                    $check_id->execute();
+                                    $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                    extract($row1);
+                                    // echo $user_id;
+
+                                    $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                    $check_group->execute();
+                                    $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                    extract($row2);
+                                    // echo $group_id;
+
                                     $count = 1;
 
                                     $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$check_group'
+                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$group_id'
                                                          GROUP BY MONTH(sale_date)"); 
                                     $stmt2->execute();
 
@@ -173,7 +187,7 @@
                                     $stmt3 = $db->query("SELECT salesdetail.sd_pdname, SUM(salesdetail.sd_price) as total , MONTH(sales.sale_date) as month
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$check_group'
+                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$group_id'
                                                          GROUP BY salesdetail.sd_pdname , MONTH(sales.sale_date)");
                                     $stmt3->execute();
 

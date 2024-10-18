@@ -230,7 +230,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสสินผู้สั่งซื้อ : </b><?= $odr['odr_id']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสผู้สั่งซื้อ : </b><?= $odr['odr_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>กลุ่มวิสาหกิจชุมชน : </b><?= $odr['group_name']; ?></label>

@@ -37,7 +37,7 @@
         </div>
     </li>
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsepd"
             aria-expanded="true" aria-controls="collapsepd">
             <i class="fas fa-seedling"></i>
@@ -49,13 +49,14 @@
                 <a class="collapse-item" href="receivePD.php">2.การรับเข้าสินค้าจากแหล่งอื่น</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
-    <!-- <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="manufacture.php">
             <i class="fas fa-seedling"></i>
             <span>การผลิตสินค้า</span></a>
-    </li> -->
+    </li>
+
 
 
     <li class="nav-item">

@@ -175,16 +175,15 @@
                         <div class="row mb-3">
                             <div class="col-md-7">
                                 <label for="" class="col-form-label">สิทธิ์การใช้งาน</label>
-                                <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกสิทธิ์การใช้งาน....</option>
-                                <option value="4">วสช.ชีววิถีคลองชะอุ่น</option>
+                                <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required readonly>
+                                <option selected value="3">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                             </select>
                             </div>
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">ชื่อผุ้ใช้งาน</label>
-                                <input type="text" required class="form-control" name="username" value="ku" style="border-radius: 30px;" readonly>
+                                <input type="text" required class="form-control" name="username" value="tk" style="border-radius: 30px;" readonly>
                             </div>
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">รหัสผ่าน</label>
@@ -514,6 +513,51 @@
 
 
     <script>
+        // $(".delete-btn").click(function(e) {
+        //     var userId = $(this).data('id');
+        //     // console.log(userId);
+        //     e.preventDefault();
+        //     deleteConfirm(userId);
+        // })
+
+        // function deleteConfirm(userId) {
+        //     Swal.fire({
+        //         title: 'ลบข้อมูล',
+        //         text: "คุณแน่ใจใช่หรือไม่ที่จบลบข้อมูลนี้",
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'ลบข้อมูล',
+        //         showLoaderOnConfirm: true,
+        //         preConfirm: function() {
+        //             return new Promise(function(resolve) {
+        //                 $.ajax({
+        //                         url: 'user_regis.php',
+        //                         type: 'GET',
+        //                         data: 'delete=' + userId,
+        //                     })
+        //                     .done(function() {
+        //                         Swal.fire({
+        //                             title: 'สำเร็จ',
+        //                             text: 'ลบข้อมูลเรียบร้อยแล้ว',
+        //                             icon: 'success',
+        //                         }).then(() => {
+        //                             document.location.href = 'user_regis.php';
+        //                         })
+        //                     })
+        //                     .fail(function() {
+        //                         Swal.fire({
+        //                             title: 'ไม่สำเร็จ',
+        //                             text: 'ลบข้อมูลไม่สำเร็จ',
+        //                             icon: 'danger',
+        //                         })
+        //                         window.location.reload();
+        //                     });
+        //             });
+        //         },
+        //     });
+        // }
+        
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
             // console.log(userId);

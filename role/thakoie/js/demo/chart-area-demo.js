@@ -142,7 +142,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
         datasets: [{
           label: "ยอดขายสินค้า",
           lineTension: 0,
-          backgroundColor: "rgba(78, 115, 223, 0.07)",
+          backgroundColor: "rgba(78, 115, 223, 0.3)",
           borderColor: "rgba(78, 115, 223, 1)",
           pointRadius: 5,
           pointBackgroundColor: "rgba(78, 115, 223, 1)",

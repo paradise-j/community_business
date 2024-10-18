@@ -48,17 +48,17 @@
 									เข้าสู่ระบบ
 								</button>
 							</div>
-							<div class="form-group d-md-flex">
+							<!-- <div class="form-group d-md-flex"> -->
 								<!-- <div class="w-50">
 									<label class="checkbox-wrap checkbox-primary">Remember Me
 										<input type="checkbox" checked />
 										<span class="checkmark"></span>
 									</label>
 								</div> -->
-								<div class="w-100 text-md-right">
+								<!-- <div class="w-100 text-md-right">
 									<a href="#" style="color: #fff">ลืมรหัสผ่าน</a>
 								</div>
-							</div>
+							</div> -->
 						</form>
 					</div>
 				</div>

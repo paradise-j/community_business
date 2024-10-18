@@ -149,7 +149,7 @@
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายภาพรวมในแต่ละปี</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายภาพรวมในแต่ละเดือน</h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -162,10 +162,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xl-8 col-lg-7">
+                            <div class="col-xl-7 col-lg-7">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">สรุปยอดการเปรียบเทียบระหว่างยอดขายรวมกับค่าใช้จ่ายในการผลิตรวม</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">สรุปยอดกำไรรวมจากยอดขายสินค้าสะสม (ในปีปัจจุบัน)</h6>
                                     </div>
                                     <div class="card-body">
                                         <!-- <div class="chart-bar">
@@ -175,10 +175,14 @@
                                             <table class="table" id="dataTable" width="100%" cellspacing="0" >
                                                 <thead>
                                                     <tr align="center" style="font-size: 0.8em;">
-                                                        <th>เดือน</th>
+                                                        <!-- <th>เดือน</th> -->
                                                         <th>ชื่อรายการ</th>
-                                                        <th>ยอดต้นทุนรวม</th>
-                                                        <th>ยอดขายรวม</th>
+                                                        <th>ต้นทุนรวมสะสม (บาท)</th>
+                                                        <th>จำนวนคงเหลือ</th>
+                                                        <th>จำนวนที่ขายไป</th>
+                                                        <th>ยอดขายรวมสะสม (บาท)</th>
+                                                        <th>กำไรรวม (บาท)</th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -195,10 +199,12 @@
                                                         $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
                                                         extract($row2);
                                                         // echo $group_id;
-                                                        $stmt = $db->query("SELECT MONTH(mf_data.mf_date) as month , mf_data.mf_name , mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price FROM `mf_data` 
+                                                        $stmt = $db->query("SELECT mf_data.mf_name ,mf_data.mf_unit, mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price , mf_data.mf_quan , 
+                                                                            SUM(salesdetail.sd_quantity) as sd_quantity , (SUM(salesdetail.sd_price) - mf_data.mf_price) as profit
+                                                                            FROM `mf_data` 
                                                                             INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
                                                                             WHERE mf_data.group_id = '$group_id' 
-                                                                            GROUP BY mf_data.mf_name; ");
+                                                                            GROUP BY mf_data.mf_name");
                                                         $stmt->execute();
                                                         $ggs = $stmt->fetchAll();
                                                         if (!$ggs) {
@@ -207,10 +213,13 @@
                                                         foreach($ggs as $gg)  {  
                                                     ?>
                                                     <tr align="center" style="font-size: 0.8em;">
-                                                        <td><?= $gg['month']; ?></td>
+                                                        <!-- <td><?= $gg['month']; ?></td> -->
                                                         <td><?= $gg['mf_name']; ?></td>
                                                         <td><?= $gg['mf_price']; ?></td>
+                                                        <td><?= $gg['mf_quan']." ".$gg['mf_unit']; ?></td>
+                                                        <td><?= $gg['sd_quantity']." ".$gg['mf_unit']; ?></td>
                                                         <td><?= $gg['sum_price']; ?></td>
+                                                        <td><?= $gg['profit']; ?></td>
                                                     </tr>
                                                     <?php }
                                                         } ?>
