@@ -2,8 +2,9 @@
     header('Content-Type: application/json; charset=utf-8');
     require_once('../connect.php');
 
+    $date = date('Y');
     $result = $db->query("SELECT MONTH(`sale_date`) as month, SUM(`sale_Nprice`) as total
-                          FROM `sales` WHERE `group_id` = 'CM001' GROUP BY MONTH(`sale_date`)");
+                          FROM `sales` WHERE `group_id` = 'CM001' and YEAR(`sale_date`) = '$date' GROUP BY MONTH(`sale_date`) ");
     $result->execute();
 
     $arr = array();

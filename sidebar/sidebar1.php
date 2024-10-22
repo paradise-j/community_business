@@ -73,13 +73,13 @@
             <span>การท่องเที่ยวและบริการ</span></a>
     </li> -->
     
-    <!-- <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="InEx.php">
             <i class="fas fa-money-bill"></i>
             <span>รายรับ-รายจ่าย</span></a>
-    </li> -->
+    </li>
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMN"
             aria-expanded="true" aria-controls="collapseMN">
             <i class="fas fa-money-bill"></i>
@@ -92,7 +92,7 @@
                 <a class="collapse-item" href="Cus_credit.php">3.ลูกค้าเครดิต</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
     <!-- <li class="nav-item">
         <a class="nav-link" href="PlanFollow.php">
@@ -124,13 +124,13 @@
     </li> -->
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="report_orderplan.php">
         <i class="fas fa-solid fa-clipboard-list"></i>
             <span>ออกรายงาน</span></a>
-    </li>
+    </li> -->
 
-    <!-- <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
             aria-expanded="true" aria-controls="collapseReport">
             <i class="fas fa-solid fa-clipboard-list"></i>
@@ -138,10 +138,13 @@
         </a>
         <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="report_orderplan.php">สรุปยอดการขายสินค้า</a>
+                <a class="collapse-item" href="report_orderplan.php">การขาย/กำไร/ต้นทุน</a>
+                <a class="collapse-item" href="report_orderplan.php">ประเภท/ช่องทางการขาย</a>
+                <a class="collapse-item" href="report_orderplan.php">ราคาวัตถุดิบ</a>
+                <a class="collapse-item" href="report_orderplan.php">รายรับ-รายจ่าย</a>
             </div>
         </div>
-    </li> -->
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

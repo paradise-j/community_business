@@ -186,9 +186,11 @@
                                             extract($row2);
                                             // echo $group_id;
 
-                                            $stmt = $db->query("SELECT * FROM `salesdetail` 
+                                            $stmt = $db->query("SELECT sales.sale_date as \"date\", salesdetail.sd_pdname as \"pdname\", SUM(salesdetail.sd_quantity) as \"sum\" , 
+                                                                        salesdetail.sd_price as \"price\" , sales.sale_type as \"type\" , sales.sale_typeEx as \"typeEx\"
+                                                                FROM `salesdetail` 
                                                                 INNER JOIN `sales` ON sales.sale_id = salesdetail.sale_id
-                                                                WHERE sales.group_id = '$group_id' GROUP BY salesdetail.sale_id ");
+                                                                WHERE sales.group_id = '$group_id' GROUP BY salesdetail.sale_id");
                                             $stmt->execute();
                                             $tols = $stmt->fetchAll();
                                             $count = 1;
@@ -201,11 +203,12 @@
                                             
                                             
                                             <!-- <td align="center"><?= $tol['sale_id']; ?></td> -->
-                                            <td align="center" class="date_th"><?= $tol['sale_date']; ?></td>
-                                            <td align="center"><?= $tol['sd_pdname']; ?></td>
-                                            <td align="center"><?= $tol['sd_quantity']; ?></td>
-                                            <td align="center"><?= $tol['sd_pdname']; ?></td>
-                                            <td align="center"><?= $tol['sd_pdname']; ?></td>
+                                            <td align="center" class="date_th"><?= $tol['date']; ?></td>
+                                            <td align="center"><?= $tol['pdname']; ?></td>
+                                            <td align="center"><?= $tol['sum']; ?></td>
+                                            <td align="center"><?= $tol['price']; ?></td>
+                                            <td align="center"><?= $tol['type']; ?></td>
+                                            <td align="center"><?= $tol['typeEx']; ?></td>
                                             <!-- <td align="center"> -->
                                                 <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $tol['sale_id']?>">ดูข้อมูล</button> -->
                                                 <!-- <a href="Edit_tol.php?edit_id=<?= $tol['tol_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
