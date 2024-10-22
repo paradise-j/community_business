@@ -209,11 +209,6 @@
                                             <td align="center"><?= $tol['price']; ?></td>
                                             <td align="center"><?= $tol['type']; ?></td>
                                             <td align="center"><?= $tol['typeEx']; ?></td>
-                                            <!-- <td align="center"> -->
-                                                <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $tol['sale_id']?>">ดูข้อมูล</button> -->
-                                                <!-- <a href="Edit_tol.php?edit_id=<?= $tol['tol_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
-                                                <!-- <a data-id="<?= $tol['sale_id']; ?>" href="?delete=<?= $tol['sale_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a> -->
-                                            <!-- </td> -->
                                         </tr>
 
                                         <div class="modal fade" id="showdataModal<?= $tol['sale_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
