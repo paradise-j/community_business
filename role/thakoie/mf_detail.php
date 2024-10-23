@@ -117,8 +117,9 @@
                         <div class="col-lg-4">
                             <div class="row">
                                 <div class="card shadow mb-3">
+                                    <!-- <i class="fas fa-solid fa-circle-1"></i> -->
                                     <div class="card-header py-3 text-center">
-                                        <h5 class="m-0 font-weight-bold text-primary">สินค้าที่ต้องการผลิต</h5>
+                                        <h5 class="m-0 font-weight-bold text-primary">1.สินค้าที่ต้องการผลิต</h5>
                                     </div>
                                     <div class="card-body">
                                         <form action="?" method="POST">
@@ -165,7 +166,7 @@
                             <div class="row">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 text-center">
-                                        <h5 class="m-0 font-weight-bold text-primary">รายละเอียดวัตถุดิบที่ใช้ในการผลิตสินค้า</h5>
+                                        <h5 class="m-0 font-weight-bold text-primary">2.รายละเอียดวัตถุดิบที่ใช้ในการผลิตสินค้า</h5>
                                     </div>
                                     <div class="card-body">
                                         <form action="?" method="POST">
@@ -231,7 +232,7 @@
                             <div class="card shadow mb-2">
                                 <div class="card-body">
                                     <div class="card-header py-3 text-center mb-4">
-                                        <h5 class="m-0 font-weight-bold text-primary">สรุปการผลิตสินค้า</h5>
+                                        <h5 class="m-0 font-weight-bold text-primary">3.สรุปการผลิตสินค้า</h5>
                                     </div>
                                     <form action="Check_Add_mfDetail.php" method="post">
                                         <div class="row mb-3">
