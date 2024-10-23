@@ -8,8 +8,8 @@
         if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"'; 
     }
  
-    $fileName = "Data-Product_".date('Y-m-d').".xls"; 
-    $fields = array('ชื่อสินค้า', 'หน่วยนับ'); 
+    $fileName = "Data-material_".date('Y-m-d').".xls"; 
+    $fields = array('ชื่อวัตถุดิบ', 'หน่วยนับ'); 
     $excelData = implode("\t", array_values($fields))."\n"; 
     
     $id = $_SESSION['id'];
@@ -25,15 +25,15 @@
     $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
     extract($check_group);
 
-    $query = $db->query("SELECT `pd_name`,`pd_unit` FROM `product` WHERE `group_id` = '$group_id'"); 
+    $query = $db->query("SELECT `mat_name`,`mat_unit` FROM `material` WHERE `group_id` = '$group_id'"); 
     $query->execute();
-    $pds = $query->fetchAll();
+    $mats = $query->fetchAll();
 
-    if (!$pds) {
+    if (!$mats) {
         $excelData .= 'ไม่มีข้อมูล...'. "\n";
     } else {
-        foreach($pds as $pd){
-            $lineData = array($pd['pd_name'], $pd['pd_unit']); 
+        foreach($mats as $mat){
+            $lineData = array($mat['mat_name'], $mat['mat_unit']); 
             array_walk($lineData, 'filterData'); 
             $excelData .= implode("\t", array_values($lineData)) . "\n"; 
         }

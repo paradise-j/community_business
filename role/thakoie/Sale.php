@@ -243,7 +243,7 @@
                                                 <option selected disabled>กรุณาเลือก....</option>    
                                                     <option value="เครดิต">เครดิต</option>
                                                     <option value="เงินสด">เงินสด</option>
-                                                    <option value="แจกฟรี">แจกฟรี</option>
+                                                    <option value="ให้ฟรี">ให้ฟรี</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">

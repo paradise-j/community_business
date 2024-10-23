@@ -1,5 +1,5 @@
 <?php
-    require_once '../connect.php';
+    require_once '../../connect.php';
     session_start();
 
     function filterData(&$str){ 

@@ -8,8 +8,8 @@
         if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"'; 
     }
  
-    $fileName = "Data-Product_".date('Y-m-d').".xls"; 
-    $fields = array('ชื่อสินค้า', 'หน่วยนับ'); 
+    $fileName = "Data-Fixed_assets_".date('Y-m-d').".xls"; 
+    $fields = array('ชื่อสินทรัพย์ถาวร', 'ราคา(บาท)', 'ที่ตั้ง', 'แหล่งที่มา'); 
     $excelData = implode("\t", array_values($fields))."\n"; 
     
     $id = $_SESSION['id'];
@@ -25,15 +25,15 @@
     $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
     extract($check_group);
 
-    $query = $db->query("SELECT `pd_name`,`pd_unit` FROM `product` WHERE `group_id` = '$group_id'"); 
+    $query = $db->query("SELECT `fa_name`,`fa_price`,`fa_location`,`location222` FROM `fixed_asset` WHERE `group_id` = '$group_id'"); 
     $query->execute();
-    $pds = $query->fetchAll();
+    $fas = $query->fetchAll();
 
-    if (!$pds) {
+    if (!$fas) {
         $excelData .= 'ไม่มีข้อมูล...'. "\n";
     } else {
-        foreach($pds as $pd){
-            $lineData = array($pd['pd_name'], $pd['pd_unit']); 
+        foreach($fas as $fa){
+            $lineData = array($fa['fa_name'], number_format($fa['fa_price'],2), $fa['fa_location'], $fa['location222']); 
             array_walk($lineData, 'filterData'); 
             $excelData .= implode("\t", array_values($lineData)) . "\n"; 
         }

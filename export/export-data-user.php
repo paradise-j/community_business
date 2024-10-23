@@ -8,8 +8,8 @@
         if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"'; 
     }
  
-    $fileName = "Data-Product_".date('Y-m-d').".xls"; 
-    $fields = array('ชื่อสินค้า', 'หน่วยนับ'); 
+    $fileName = "Data-Fixed_assets_".date('Y-m-d').".xls"; 
+    $fields = array('ชื่อ', 'นามสกุล', 'ที่อยู่', 'ตำบล', 'อำเภอ', 'จังหวัด', 'รหัสไปรษณีย์', 'เบอร์โทรศัพท์', 'ชื่อผู้ใช้งานระบบ', 'รหัสผ่าน'); 
     $excelData = implode("\t", array_values($fields))."\n"; 
     
     $id = $_SESSION['id'];
@@ -25,15 +25,20 @@
     $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
     extract($check_group);
 
-    $query = $db->query("SELECT `pd_name`,`pd_unit` FROM `product` WHERE `group_id` = '$group_id'"); 
+    $query = $db->query("SELECT * FROM `user_data`
+                        INNER JOIN `user_login` on user_data.user_id = user_login.user_id
+                        INNER JOIN `group_comen` on user_data.group_id = group_comen.group_id 
+                        WHERE user_data.group_id = '$group_id'"); 
     $query->execute();
-    $pds = $query->fetchAll();
+    $users = $query->fetchAll();
 
-    if (!$pds) {
+    if (!$users) {
         $excelData .= 'ไม่มีข้อมูล...'. "\n";
     } else {
-        foreach($pds as $pd){
-            $lineData = array($pd['pd_name'], $pd['pd_unit']); 
+        foreach($users as $user){
+            $lineData = array($user['user_Fname'], $user['user_Lname'], $user['user_num'], $user['user_subdis'], 
+                              $user['user_dis'], $user['user_pv'], $user['user_zip'], $user['user_phone'],
+                              $user['ul_username'], $user['ul_password']); 
             array_walk($lineData, 'filterData'); 
             $excelData .= implode("\t", array_values($lineData)) . "\n"; 
         }

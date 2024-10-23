@@ -165,6 +165,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลวัตถุดิบ</a>
+                                <a href="../../export/export-data-material.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
