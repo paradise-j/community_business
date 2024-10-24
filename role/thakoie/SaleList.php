@@ -24,7 +24,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `travel_orderlist` WHERE `tol_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `sales` WHERE `sale_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -40,7 +40,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=Travel.php");
+            header("refresh:1; url=SaleList.php");
         }
     }
 ?>
@@ -169,6 +169,7 @@
                                             <th>ราคา</th>
                                             <th>ประเถท</th>
                                             <th>ช่องทาง</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -186,7 +187,7 @@
                                             extract($row2);
                                             // echo $group_id;
 
-                                            $stmt = $db->query("SELECT sales.sale_date as \"date\", salesdetail.sd_pdname as \"pdname\", SUM(salesdetail.sd_quantity) as \"sum\" , 
+                                            $stmt = $db->query("SELECT sales.sale_id , sales.sale_date as \"date\", salesdetail.sd_pdname as \"pdname\", SUM(salesdetail.sd_quantity) as \"sum\" , 
                                                                         salesdetail.sd_price as \"price\" , sales.sale_type as \"type\" , sales.sale_typeEx as \"typeEx\"
                                                                 FROM `salesdetail` 
                                                                 INNER JOIN `sales` ON sales.sale_id = salesdetail.sale_id
@@ -209,6 +210,7 @@
                                             <td align="center"><?= $tol['price']; ?></td>
                                             <td align="center"><?= $tol['type']; ?></td>
                                             <td align="center"><?= $tol['typeEx']; ?></td>
+                                            <td align="center"><a data-id="<?= $tol['sale_id']; ?>" href="?delete=<?= $tol['sale_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบข้อมูล</a></td>
                                         </tr>
 
                                         <div class="modal fade" id="showdataModal<?= $tol['sale_id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -402,7 +404,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'Travel.php',
+                                url: 'SaleList.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -412,7 +414,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'Travel.php';
+                                    document.location.href = 'SaleList.php';
                                 })
                             })
                             .fail(function() {

@@ -95,29 +95,30 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดประเภท/ช่องทางการขายของสินค้า</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดราคาของวัตถุดิบ</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
-                                <div class="row mt-2">
+                                <div class="row text-center">
                                     <div class="col-md-2"></div>
-                                    <label class="col-form-label">ชื่อสินค้า</label>
+                                    <!-- <div class="col-md-2"></div>
+                                    <label class="col-form-label">ชื่อวัตถุดิบ</label>
                                     <div class="col-md-2">
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
-                                            <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
+                                            <option selected disabled>กรุณาเลือกชื่อวัตถุดิบ....</option> -->
                                             <?php 
-                                                $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='$group_id'");
-                                                $stmt->execute();
-                                                $mfs = $stmt->fetchAll();
+                                                // $stmt = $db->query("SELECT * FROM `material` WHERE `group_id` = '$group_id'");
+                                                // $stmt->execute();
+                                                // $mfs = $stmt->fetchAll();
                                                 
-                                                foreach($mfs as $mf){
+                                                // foreach($mfs as $mf){
                                             ?>
-                                            <option value="<?= $mf['mf_name']?>"><?= $mf['mf_name']?></option>
+                                            <!-- <option value="<?= $mf['mat_name']?>"><?= $mf['mat_name']?></option> -->
                                             <?php
-                                                }
+                                                // }
                                             ?>
-                                        </select>
-                                    </div>
+                                        <!-- </select>
+                                    </div> -->
                                     <label for="inputState" class="form-label mt-2">ตั้งแต่วันที่</label>
                                     <div class="col-md-2">
                                         <input type="date" style="border-radius: 30px;" id="start_date" name="start_date" class="form-control" required>
@@ -155,26 +156,12 @@
 
                                     $count = 1;
 
-                                    // $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
-                                    //                      FROM `sales` 
-                                    //                      INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                    //                      WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$group_id'
-                                    //                      GROUP BY MONTH(sale_date)"); 
-                                    // $stmt2->execute();
-
-                                    // $arr2 = array();
-                                    // while($row = $stmt2->fetch(PDO::FETCH_ASSOC)){
-                                    //     $arr2[] = $row;
-                                    // }
-                                    // $dataResult2 = json_encode($arr2);
-
-                                    // echo $dataResult2 ;
-
-                                    $stmt1 = $db->query("SELECT MONTH(sales.sale_date) as \"month\" ,  sales.sale_type as \"Ntype\" , COUNT( sales.sale_type) as \"count\"
-                                                         FROM `sales` 
-                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id
-                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND salesdetail.sd_pdname = '$Gname' AND `group_id` = '$group_id'
-                                                         GROUP BY  MONTH(sales.sale_date) , sales.sale_type");
+                                    $stmt1 = $db->query("SELECT MONTH(`md_date`) AS \"month\",`md_name`,SUM(`md_price`) AS \"total\"
+                                                        FROM `mfd_matdetail`
+                                                        INNER JOIN `mf_data_detail` ON mfd_matdetail.mfd_id = mf_data_detail.mfd_id
+                                                        INNER JOIN `mf_data` ON mf_data_detail.mf_id = mf_data.mf_id
+                                                        WHERE MONTH(`md_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND mf_data.group_id = '$group_id'
+                                                        GROUP BY MONTH(`md_date`), `md_name`");
                                     $stmt1->execute();
 
                                     $arr = array();
@@ -184,22 +171,22 @@
                                     $dataResult = json_encode($arr);
 
 
-                                    $stmt3 = $db->query("SELECT MONTH(sales.sale_date) as \"month\" ,  sales.sale_typeEx AS \"typeEx\", COUNT( sales.sale_type) as \"count\"
-                                                         FROM `sales` 
-                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id
-                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND salesdetail.sd_pdname = '$Gname' AND `group_id` = '$group_id'
-                                                         GROUP BY  MONTH(sales.sale_date) , sales.sale_type");
-                                    $stmt3->execute();
+                                    // $stmt3 = $db->query("SELECT MONTH(sales.sale_date) as \"month\" ,  sales.sale_typeEx AS \"typeEx\", COUNT( sales.sale_type) as \"count\"
+                                    //                      FROM `sales` 
+                                    //                      INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id
+                                    //                      WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND salesdetail.sd_pdname = '$Gname' AND `group_id` = '$group_id'
+                                    //                      GROUP BY  MONTH(sales.sale_date) , sales.sale_type");
+                                    // $stmt3->execute();
 
-                                    $arr3 = array();
-                                    while($row = $stmt3->fetch(PDO::FETCH_ASSOC)){
-                                        $arr3[] = $row;
-                                    }
-                                    $dataResult3 = json_encode($arr3);
+                                    // $arr3 = array();
+                                    // while($row = $stmt3->fetch(PDO::FETCH_ASSOC)){
+                                    //     $arr3[] = $row;
+                                    // }
+                                    // $dataResult3 = json_encode($arr3);
                                 }
                             ?>
                             <div class="md-2">
-                                <h4 class="m-0 font-weight-bold text-primary text-center">ช่วงเวลาที่กำหนดตั้งแต่ 
+                                <h4 class="m-0 font-weight-bold text-purple text-center">ช่วงเวลาที่กำหนดตั้งแต่ 
                                     <?php 
                                     if(empty($start_date) and empty($end_date)){
                                         echo "ยังไม่กำหนดช่วงเวลา";
@@ -208,18 +195,18 @@
                                     }
                                     ?> 
                                 </h4>
-                                <h5 class="m-0 font-weight-bold text-purple text-center">ชื่อสินค้า : 
+                                <!-- <h5 class="m-0 font-weight-bold text-purple text-center">ชื่อวัตถุดิบ :  -->
                                     <?php 
-                                    if(empty($Gname)){
-                                        echo "ยังไม่กำหนดสินค้า";
-                                    }else{
-                                        echo  $Gname;
-                                    }
+                                    // if(empty($Gname)){
+                                    //     echo "ยังไม่กำหนดวัตถุดิบ";
+                                    // }else{
+                                    //     echo  $Gname;
+                                    // }
                                     ?> 
-                                </h5>
+                                <!-- </h5> -->
                                 
                             </div>
-                            <div class="row mt-4">
+                            <div class="row mt-2">
                                 <!-- <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
@@ -232,10 +219,10 @@
                                         </div>
                                     </div>
                                 </div> -->
-                                <div class="col-xl-6 col-lg-8">
+                                <div class="col-xl-12 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดประเภทการขายสินค้าทั้งหมดในแต่ละเดือน (บาท)</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดราคาของวัตถุดิบทั้งหมดในแต่ละเดือน (บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -244,7 +231,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-lg-4">
+                                <!-- <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
                                             <h5 class="m-0 font-weight-bold text-primary">สรุปยอดช่องทางการขายสินค้าทั้งหมดในแต่ละเดือน (บาท)</h5>
@@ -255,7 +242,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -336,11 +323,10 @@
         }
 
         // ============================================= myChartBar =============================================
-        // const my_dataAll = <?= $dataResult; ?> ; 
         const my_dataAll = <?= $dataResult; ?> ; 
         let res = []
         my_dataAll.forEach(obj => {
-            let type = obj['Ntype']
+            let md_name = obj['md_name']
             let month = ''
             switch (obj['month']) {
                 case "1" :
@@ -381,10 +367,10 @@
                     break; 
             }
 
-            let total = obj['count']
-            res[type] = res[type] || []
-            res[type][month] = res[type][month] || []
-            res[type][month] = total
+            let total = obj['total']
+            res[md_name] = res[md_name] || []
+            res[md_name][month] = res[md_name][month] || []
+            res[md_name][month] = total
         })
 
         var my_data = [];
@@ -440,7 +426,6 @@
         } 
 
         console.log("my_data = "+ my_data);
-        // console.log("my_label = "+ my_label);
         console.log("Unique_month = "+ Unique_month);
         console.log("------------------------------------------------");
 
@@ -500,168 +485,168 @@
         });
 
         // ============================================= myChartBar3 =============================================
-        const my_dataAll3 = <?= $dataResult3; ?> ; 
+        // const my_dataAll3 = <?= $dataResult3; ?> ; 
 
 
-        let res_1 = []
-        my_dataAll3.forEach(obj => {
-            let type = obj['typeEx']
-            let month = ''
-            switch (obj['month']) {
-                case "1" :
-                    month ='มกราคม'
-                    break;
-                case "2" :
-                    month ='กุมภาพันธ์'
-                    break;
-                case "3" :
-                    month ='มีนาคม'
-                    break;
-                case "4" :
-                    month ='เมษายน'
-                    break;
-                case "5" :
-                    month ='พฤษภาคม'
-                    break;
-                case "6" :
-                    month ='มิถุนายน'
-                    break;
-                case "7" :
-                    month ='กรกฎาคม'
-                    break;
-                case "8" :
-                    month ='สิงหาคม'
-                    break;
-                case "9" :
-                    month ='กันยายน'
-                    break;
-                case "10" :
-                    month ='ตุลาคม'
-                    break;
-                case "11" :
-                    month ='พฤศจิกายน'
-                    break;
-                case "12" :
-                    month ='ธันวาคม'
-                    break; 
-            }
+        // let res_1 = []
+        // my_dataAll3.forEach(obj => {
+        //     let type = obj['typeEx']
+        //     let month = ''
+        //     switch (obj['month']) {
+        //         case "1" :
+        //             month ='มกราคม'
+        //             break;
+        //         case "2" :
+        //             month ='กุมภาพันธ์'
+        //             break;
+        //         case "3" :
+        //             month ='มีนาคม'
+        //             break;
+        //         case "4" :
+        //             month ='เมษายน'
+        //             break;
+        //         case "5" :
+        //             month ='พฤษภาคม'
+        //             break;
+        //         case "6" :
+        //             month ='มิถุนายน'
+        //             break;
+        //         case "7" :
+        //             month ='กรกฎาคม'
+        //             break;
+        //         case "8" :
+        //             month ='สิงหาคม'
+        //             break;
+        //         case "9" :
+        //             month ='กันยายน'
+        //             break;
+        //         case "10" :
+        //             month ='ตุลาคม'
+        //             break;
+        //         case "11" :
+        //             month ='พฤศจิกายน'
+        //             break;
+        //         case "12" :
+        //             month ='ธันวาคม'
+        //             break; 
+        //     }
 
-            let count = obj['count']
-            res_1[type] = res_1[type] || []
-            res_1[type][month] = res_1[type][month] || []
-            res_1[type][month] = count
-        })
+        //     let count = obj['count']
+        //     res_1[type] = res_1[type] || []
+        //     res_1[type][month] = res_1[type][month] || []
+        //     res_1[type][month] = count
+        // })
 
-        var my_data3 = [];
-        var my_label3 = [];
-        var Unique_month3 = [];
-        my_dataAll3.forEach(item => {
-            my_data3.push(item.count);
-            switch (item.month) {
-                case "1" :
-                    my_label3.push('มกราคม')
-                    break;
-                case "2" :
-                    my_label3.push('กุมภาพันธ์')
-                    break;
-                case "3" :
-                    my_label3.push('มีนาคม')
-                    break;
-                case "4" :
-                    my_label3.push('เมษายน')
-                    break;
-                case "5" :
-                    my_label3.push('พฤษภาคม')
-                    break;
-                case "6" :
-                    my_label3.push('มิถุนายน')
-                    break;
-                case "7" :
-                    my_label3.push('กรกฎาคม')
-                    break;
-                case "8" :
-                    my_label3.push('สิงหาคม')
-                    break;
-                case "9" :
-                    my_label3.push('กันยายน')
-                    break;
-                case "10" :
-                    my_label3.push('ตุลาคม')
-                    break;
-                case "11" :
-                    my_label3.push('พฤศจิกายน')
-                    break;
-                case "12" :
-                    my_label3.push('ธันวาคม')
-                    break; 
-            }
+        // var my_data3 = [];
+        // var my_label3 = [];
+        // var Unique_month3 = [];
+        // my_dataAll3.forEach(item => {
+        //     my_data3.push(item.count);
+        //     switch (item.month) {
+        //         case "1" :
+        //             my_label3.push('มกราคม')
+        //             break;
+        //         case "2" :
+        //             my_label3.push('กุมภาพันธ์')
+        //             break;
+        //         case "3" :
+        //             my_label3.push('มีนาคม')
+        //             break;
+        //         case "4" :
+        //             my_label3.push('เมษายน')
+        //             break;
+        //         case "5" :
+        //             my_label3.push('พฤษภาคม')
+        //             break;
+        //         case "6" :
+        //             my_label3.push('มิถุนายน')
+        //             break;
+        //         case "7" :
+        //             my_label3.push('กรกฎาคม')
+        //             break;
+        //         case "8" :
+        //             my_label3.push('สิงหาคม')
+        //             break;
+        //         case "9" :
+        //             my_label3.push('กันยายน')
+        //             break;
+        //         case "10" :
+        //             my_label3.push('ตุลาคม')
+        //             break;
+        //         case "11" :
+        //             my_label3.push('พฤศจิกายน')
+        //             break;
+        //         case "12" :
+        //             my_label3.push('ธันวาคม')
+        //             break; 
+        //     }
             
-        });
+        // });
 
-        for( var i=0; i<my_label3.length; i++ ) {
-            if ( Unique_month3.indexOf( my_label3[i] ) < 0 ) {
-            Unique_month3.push( my_label3[i] );
-            }
-        } 
-        console.log("my_data3 = "+ my_data3);
-        // console.log("my_label3 = "+ my_label3);
-        console.log("Unique_month3 = "+ Unique_month3);
-
-
-        function getRandomArbitrary(min, max) {
-            return Math.floor(Math.random() * (max - min) + min);
-        }
+        // for( var i=0; i<my_label3.length; i++ ) {
+        //     if ( Unique_month3.indexOf( my_label3[i] ) < 0 ) {
+        //     Unique_month3.push( my_label3[i] );
+        //     }
+        // } 
+        // console.log("my_data3 = "+ my_data3);
+        // // console.log("my_label3 = "+ my_label3);
+        // console.log("Unique_month3 = "+ Unique_month3);
 
 
-        let backgroundColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
-
-        let borderColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
-
-        let labels3 = Unique_month3
-        let datasets3 = []
-        let tasrgets3 = Object.keys(res_1)
+        // function getRandomArbitrary(min, max) {
+        //     return Math.floor(Math.random() * (max - min) + min);
+        // }
 
 
-        let color_index3 = 0
+        // let backgroundColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
 
-        tasrgets3.forEach(tasrget3 => {
-            let data3 = []
-            labels3.forEach(month3 => {
-                let total3 = res_1[tasrget3][month3] || "0.00"
-                data3.push(total3)
-            })
-            datasets3.push({
-                label: tasrget3,
-                data: data3,
-                backgroundColor: backgroundColor3[color_index3],
-                borderColor: borderColor3[color_index3],
-                borderWidth: 1
-            })
+        // let borderColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
 
-            color_index3 = color_index3+1
-        })
+        // let labels3 = Unique_month3
+        // let datasets3 = []
+        // let tasrgets3 = Object.keys(res_1)
 
 
-        let data3 = { labels:labels3, datasets:datasets3 }
-        // console.log("datasets3 = "+ datasets3) 
-        // console.log(JSON.stringify(data3)) 
+        // let color_index3 = 0
+
+        // tasrgets3.forEach(tasrget3 => {
+        //     let data3 = []
+        //     labels3.forEach(month3 => {
+        //         let total3 = res_1[tasrget3][month3] || "0.00"
+        //         data3.push(total3)
+        //     })
+        //     datasets3.push({
+        //         label: tasrget3,
+        //         data: data3,
+        //         backgroundColor: backgroundColor3[color_index3],
+        //         borderColor: borderColor3[color_index3],
+        //         borderWidth: 1
+        //     })
+
+        //     color_index3 = color_index3+1
+        // })
+
+
+        // let data3 = { labels:labels3, datasets:datasets3 }
+        // // console.log("datasets3 = "+ datasets3) 
+        // // console.log(JSON.stringify(data3)) 
         
-        var ctx3 = document.getElementById('myChartBar2');
-        var myChartBar2 = new Chart(ctx3, {
-            type: 'bar',
-            data: data3 ,
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                legend: {
-                    display: true
-                }
-            }
-        });
+        // var ctx3 = document.getElementById('myChartBar2');
+        // var myChartBar2 = new Chart(ctx3, {
+        //     type: 'bar',
+        //     data: data3 ,
+        //     options: {
+        //         maintainAspectRatio: false,
+        //         scales: {
+        //             y: {
+        //                 beginAtZero: true
+        //             }
+        //         },
+        //         legend: {
+        //             display: true
+        //         }
+        //     }
+        // });
 
 
         

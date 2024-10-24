@@ -106,7 +106,7 @@
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
                                             <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
                                             <?php 
-                                                $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='CM001'");
+                                                $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='$group_id'");
                                                 $stmt->execute();
                                                 $mfs = $stmt->fetchAll();
                                                 

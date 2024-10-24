@@ -88,7 +88,7 @@
         <div id="collapseMN" class="collapse" aria-labelledby="headingMN" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="InEx.php">1.รายรับ-รายจ่าย</a>
-                <a class="collapse-item" href="Cus_credit.php">2.แหล่งเงินทุนสนับสนุน</a> 
+                <!-- <a class="collapse-item" href="Cus_credit.php">2.แหล่งเงินทุนสนับสนุน</a>  -->
                 <a class="collapse-item" href="Cus_credit.php">3.ลูกค้าเครดิต</a>
             </div>
         </div>
