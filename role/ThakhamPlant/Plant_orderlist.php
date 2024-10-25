@@ -196,14 +196,18 @@
                                     <thead>
                                         <tr align="center">
                                             <th>วันที่สั่งซื้อ</th>
-                                            <!-- <th>รหัสการสั่งซื้อ</th> -->
+                                            <th>รหัสการสั่งซื้อ</th>
                                             <th>ผู้สั่ง</th>
+                                            <th>ชื่อผัก</th>
+                                            <th>จำนวน (กิโลกรัม)</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `plant_orderlist` INNER JOIN `orderer` ON plant_orderlist.odr_id = orderer.odr_id; ");
+                                            $stmt = $db->query("SELECT * FROM `plant_orderlist_detail` 
+                                                                INNER JOIN `plant_orderlist` ON plant_orderlist.pld_id = plant_orderlist_detail.pld_id
+                                                                INNER JOIN `orderer` ON plant_orderlist.odr_id = orderer.odr_id");
                                             $stmt->execute();
                                             $plds = $stmt->fetchAll();
                                             $count = 1;
@@ -216,11 +220,14 @@
                                             
                                             <!-- <td align="center"><?= $pld['pld_date']; ?></td> -->
                                             <td class="date_th"><?= $pld['pld_date']; ?></td>
-                                            <td><?= $pld['odr_name']; ?></td>
+                                            <td align="center"><?= $pld['pld_id']; ?></td>
+                                            <td align="center"><?= $pld['odr_name']; ?></td>
+                                            <td align="center"><?= $pld['pod_name']; ?></td>
+                                            <td align="center"><?= $pld['pod_quan']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pld['pld_id']?>">ดูข้อมูล</button>
-                                                <a href="Edit_pld.php?edit_id=<?= $pld['pld_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a>
-                                                <a data-id="<?= $pld['pld_id']; ?>" href="?delete=<?= $pld['pld_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pld['pld_id']?>">ดูข้อมูล</button> -->
+                                                <!-- <a href="Edit_pld.php?edit_id=<?= $pld['pld_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
+                                                <a data-id="<?= $pld['pld_id']; ?>" href="?delete=<?= $pld['pld_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบข้อมูล</a>
                                             </td>
                                         </tr>
 
@@ -299,8 +306,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>

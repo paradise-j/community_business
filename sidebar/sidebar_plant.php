@@ -1,12 +1,10 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="index.php"><i class="fas fa-fw fa-tachometer-alt"></i>วสช.กลุ่มเกษตรกรทำสวนผสมผสานแบบยั่งยืนบางท่าข้าม</a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
 
@@ -16,7 +14,6 @@
             <span>หน้าหลัก</span></a>
     </li>
 
-    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
             aria-expanded="true" aria-controls="collapseOne">
@@ -25,53 +22,15 @@
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <a class="collapse-item" href="Manage_G_agc.php">1.ข้อมูลกลุ่มวิสาหกิจ</a> -->
                 <a class="collapse-item" href="manage_unit.php">1.ข้อมูลหน่วยนับ</a>
                 <a class="collapse-item" href="Product.php">2.ข้อมูลสินค้าชุมชน</a>
-                <!-- <a class="collapse-item" href="material.php">3.ข้อมูลวัตถุดิบ</a> -->
                 <a class="collapse-item" href="Fixed_assets.php">3.ข้อมูลสินทรัพย์ถาวร</a>
                 <a class="collapse-item" href="user_regis.php">4.ข้อมูลทะเบียนสมาชิก</a>
                 <a class="collapse-item" href="grower_regis.php">5.ข้อมูลทะเบียนลูกสวน</a>
-                <!-- <a class="collapse-item" href="Travel_package.php">7.ข้อมูลแพ็คเกจการท่องเที่ยว</a> -->
                 <a class="collapse-item" href="orderer.php">6.ข้อมูลผู้สั่งซื้อ</a>
             </div>
         </div>
     </li>
-
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsepd"
-            aria-expanded="true" aria-controls="collapsepd">
-            <i class="fas fa-seedling"></i>
-            <span>คลังสินค้าชุมชน</span>
-        </a>
-        <div id="collapsepd" class="collapse" aria-labelledby="headingpd" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="manufacture.php">1.การผลิตสินค้าชุมชน</a>
-                <a class="collapse-item" href="receivePD.php">2.การรับเข้าสินค้าจากแหล่งอื่น</a>
-            </div>
-        </div>
-    </li> -->
-
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="manufacture.php">
-            <i class="fas fa-seedling"></i>
-            <span>การผลิตสินค้า</span></a>
-    </li> -->
-
-
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Sale.php">
-            <i class="fas fa-store"></i>
-            <span>การซื้อ-ขายสิ้นค้า</span></a>
-    </li> -->
-
-
-
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Travel.php">
-            <i class="fas fa-taxi"></i>
-            <span>การท่องเที่ยวและบริการ</span></a>
-    </li> -->
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMN"
@@ -90,12 +49,6 @@
         </div>
     </li>
 
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="PlanFollow.php">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>วางแผนและติดตามการผลิต</span></a>
-    </li> -->
-
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlan"
             aria-expanded="true" aria-controls="collapsePlan">
@@ -108,23 +61,10 @@
                 <a class="collapse-item" href="PlanFollow.php">2.วางแผนแการเพาะปลูก</a>
                 <a class="collapse-item" href="Bproduce.php">3.รับซื้อผลผลิต</a>
                 <a class="collapse-item" href="Export_products.php">4.ส่งออกผลผลิต</a>
-                <a class="collapse-item" href="Follow_purchase.php">5.ติดตามผลการรับซื้อ</a>
+                <!-- <a class="collapse-item" href="Follow_purchase.php">5.ติดตามผลการรับซื้อ</a> -->
             </div>
         </div>
     </li>
-
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Planning_results.php">
-            <i class="fas fa-taxi"></i>
-            <span>สรุปผลการวางแผนและติดตามผลผลิตพืช</span></a>
-    </li> -->
-
-    <!-- Nav Item - Tables -->
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="Report.php">
-        <i class="fas fa-solid fa-clipboard-list"></i>
-            <span>ออกรายงาน</span></a>
-    </li> -->
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"

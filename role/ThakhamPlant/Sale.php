@@ -430,7 +430,6 @@
                         // console.log("cusphone = ",item.odr_phone);
                         $('#cus').val(item.odr_name); 
                         $('#phone').val(item.odr_phone); 
-
                     })
                 }
             });

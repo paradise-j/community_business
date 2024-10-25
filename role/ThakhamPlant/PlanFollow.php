@@ -104,7 +104,7 @@
                             <div class="col">
                                 <div class="mb-2">
                                     <label for="" class="col-form-label">รหัสการสั่งซื้อ</label>
-                                    <select class="form-control" aria-label="Default select example" id="pld_id" name="pld_id" style="border-radius: 30px;" required>
+                                    <select class="form-control" aria-label="Default select example" id="pldid" name="pldid" style="border-radius: 30px;" required>
                                         <option selected disabled>เลือกรหัสการสั่งซื้อ....</option>
                                         <?php 
                                             $stmt = $db->query("SELECT * FROM `plant_orderlist`");
@@ -118,6 +118,25 @@
                                             }
                                         ?>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="" class="col-form-label" style="color:red;">รายการการสั่งซื้อคงเหลือ</label>
+                                    <label for="" class="col-form-label" id="result" name="result" style="color:red;">
+                                        <?php 
+                                            // $stmt = $db->query("SELECT * FROM `plant_orderlist_detail` WHERE `pld_id` = 'POL0020'");
+                                            // $stmt->execute();
+                                            // $plds = $stmt->fetchAll();
+                                            
+                                            // foreach($plds as $pld){
+                                            //     echo "<br>";
+                                            //     echo "&nbsp&nbsp&nbsp&nbsp&nbsp".$pld['pod_name']."  ".$pld['pod_quan']."  กิโลกรัม";
+                                            // }
+                                        ?>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -160,29 +179,24 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อผัก</label>
                             <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
-                            <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
+                            <select class="form-control" aria-label="Default select example" id="veg_name" name="veg_name" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกผัก....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT `pd_id` as veget_id ,`pd_name` as veget_name  FROM `product` WHERE `group_id` = 'CM007'");
-                                    $stmt->execute();
-                                    $vgs = $stmt->fetchAll();
-                                    
-                                    foreach($vgs as $vg){
-                                ?>
-                                <option value="<?= $vg['veget_name']?>"><?= $vg['veget_name']?></option>
-                                <?php
-                                    }
-                                ?>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">เป้าหมายการผลิต &nbsp&nbsp&nbsp
+                                <label style="color:red;" >** หน่วยเป็น กิโลกรัม **</label>
+                            </label>
+                            <input type="text" required class="form-control" name="target" style="border-radius: 30px;">
                         </div>
                         <div class="mb-2">
                             <?php $date = date('Y-m-d'); ?>
                             <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
-                            <input type="date" required class="form-control" name="Sdate" id="Sdate" min="<?= $date; ?>" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="Sdate" id="Sdate"  style="border-radius: 30px;">
                         </div>
                         <div class="mb-2">
                             <label for="" class="col-form-label">วันที่เก็บเกี่ยว</label>
-                            <input type="date" required class="form-control" name="Edate" id="Edate" min="<?= $date; ?>" style="border-radius: 30px;">
+                            <input type="date" required class="form-control" name="Edate" id="Edate"  style="border-radius: 30px;">
                         </div>
                         <!-- <div class="row mb-2">
                                 <div class="col mb-2">
@@ -195,15 +209,7 @@
                                 </div>
                         </div>
                         -->
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">เป้าหมายการผลิต &nbsp&nbsp&nbsp
-                                <label style="color:red;" >** หน่วยเป็น กิโลกรัม **</label>
-                            </label>
-                            <input type="text" required class="form-control" name="target" style="border-radius: 30px;">
-                        </div>
-                        <!-- <div class="d-flex justify-content-end">
-                            <button class="btn btn-success add_item mb-2" style="border-radius: 30px; font-size: 0.8rem;"><i class="fas fa-plus"></i></button>
-                        </div> -->
+                        
                         
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -250,17 +256,26 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
+                                            <th>รหัสคำสั่งซื้อ</th>
                                             <th>วันที่วางแผน</th>
-                                            <th>ชื่อผัก</th>
+                                            <th>ชื่อลูกค้า</th>
+                                            <th>จำนวนที่สั่งซื้อ (ก.ก.)</th>
                                             <th>ผู้รับผิดชอบ</th>
+                                            <th>ชื่อผัก</th>
+                                            <th>จำนวนที่รับผิดชอบ (ก.ก.)</th>
+                                            
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT `plant_id`,`plant_name`,`plant_target`,`plant_date`,`plant_harvest`,`plant_grower`,`plant_status`,`pld_id`,grower.gw_name
-                                                                FROM `planting` 
-                                                                INNER JOIN `grower` ON grower.gw_id = planting.plant_grower");
+                                            $stmt = $db->query("SELECT plant_orderlist.pld_id ,planting.plant_date ,orderer.odr_name , `pod_quan` , grower.gw_name , planting.plant_name , planting.plant_target
+                                                                FROM `plant_orderlist_detail` 
+                                                                INNER JOIN `plant_orderlist` ON plant_orderlist.pld_id = plant_orderlist_detail.pld_id
+                                                                INNER JOIN `planting` ON planting.pld_id = plant_orderlist_detail.pld_id
+                                                                INNER JOIN `grower` ON grower.gw_id = planting.plant_grower
+                                                                INNER JOIN `orderer` ON orderer.odr_id = plant_orderlist.odr_id
+                                                                GROUP BY plant_orderlist.pld_id , orderer.odr_name , planting.plant_name , grower.gw_name");
                                             $stmt->execute();
                                             $plants = $stmt->fetchAll();
                                             $count = 1;
@@ -270,13 +285,17 @@
                                              foreach($plants as $plant)  {  
                                         ?>
                                         <tr>
+                                            <td align="center"><?= $plant['pld_id']; ?></td>
                                             <td align="center" class="date_th"><?= $plant['plant_date']; ?></td>
-                                            <td align="center"><?= $plant['plant_name']; ?></td>
+                                            <td align="center"><?= $plant['odr_name']; ?></td>
+                                            <td align="center"><?= $plant['pod_quan']; ?></td>
                                             <td><?= $plant['gw_name']; ?></td>
+                                            <td align="center"><?= $plant['plant_name']; ?></td>
+                                            <td align="center"><?= $plant['plant_target']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>">ดูข้อมูล</button>
+                                                <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $plant['plant_id']?>">ดูข้อมูล</button> -->
                                                 <!-- <a href="Edit_plant.php?edit_id=<?= $plant['plant_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.9rem;" name="edit">แก้ไข</a> -->
-                                                <a data-id="<?= $plant['plant_id']; ?>" href="?delete=<?= $plant['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบ</a>
+                                                <a data-id="<?= $plant['plant_id']; ?>" href="?delete=<?= $plant['plant_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.9rem;">ลบข้อมูล</a>
                                             </td>
                                         </tr>
 
@@ -399,8 +418,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
@@ -418,6 +437,36 @@
                  success: function(data){
                     // console.log(data);
                      $('#g_id').val(data);
+                 }
+             });
+         });
+
+         $('#pldid').change(function(){
+             var pldid = $(this).val();
+            //  console.log(id_veg);
+             $.ajax({
+                 type : "post",
+                 url : "../../api/veg_name.php",
+                 data : {id:pldid,function:'pld_id'},     
+                 success: function(data){
+                    console.log(data);
+                    $('#veg_name').html(data);
+                 }
+             });
+         });
+
+         $('#pldid').change(function(){
+             var pldid = $(this).val();
+             console.log(pldid);
+             $.ajax({
+                 type : "post",
+                 url : "../../api/result.php",
+                 data : {id:pldid,function:'pld_id'},     
+                 success: function(data){
+                    console.log(data);
+                    // data.forEach(item => {
+                        // document.getElementById("result").innerHTML = item.pod_name+" "+item.pod_quan; 
+                    // })
                  }
              });
          });
