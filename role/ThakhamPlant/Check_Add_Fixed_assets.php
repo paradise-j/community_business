@@ -8,7 +8,7 @@
         $fa_name = $_POST['fa_name'];
         $fa_price = $_POST['fa_price'];
         $fa_location = $_POST['fa_location'];
-        $fa_location222 = $_POST['fa_location222']; 
+        $fa_source = $_POST['source'];
         $group = $_POST['group'];
 
         $pd = $db->prepare("SELECT `fa_name` FROM `fixed_asset` WHERE `group_id` = '$group'");
@@ -24,7 +24,7 @@
         if(!in_array("$fa_name", $check)){
             // echo "Match not found";
             $sql = $db->prepare("INSERT INTO `fixed_asset`(`fa_name`, `fa_price`, `fa_location`, `location222`, `group_id`)
-                             VALUES ('$fa_name','$fa_price','$fa_location','$fa_location222','$group')");
+                             VALUES ('$fa_name','$fa_price','$fa_location','$fa_source','$group')");
             $sql->execute();
 
             if ($sql) {

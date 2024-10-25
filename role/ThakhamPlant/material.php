@@ -8,9 +8,20 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `material` WHERE `mat_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +37,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=Product.php");
+            header("refresh:1; url=material.php");
         }
     }
 ?>
@@ -67,27 +78,34 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_product.php" method="POST" enctype="multipart/form-data">
+                    <form action="Check_Add_material.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $gcs = $stmt->fetchAll();
-                                    
-                                    foreach($gcs as $gc){
-                                ?>
-                                <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option>
-                                <?php
-                                    }
-                                ?>
+                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
+                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อวัตถุดิบ</label>
                             <input type="text" required class="form-control" name="mname" style="border-radius: 30px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">หน่วย</label>
+                            <!-- <input type="text" required class="form-control" name="unit" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
+                                <<?php 
+                                    $stmt = $db->query("SELECT * FROM `unit` WHERE `group_id` = 'CM001'");
+                                    $stmt->execute();
+                                    $units = $stmt->fetchAll();
+                                    
+                                    foreach($units as $unit){
+                                ?>
+                                <option value="<?= $unit['unit_name']?>"><?= $unit['unit_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
                         <!-- <div class="mb-3">
                             <label for="" class="col-form-label">หน่วยนับ</label>
@@ -133,7 +151,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -145,6 +163,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลวัตถุดิบ</a>
+                                <a href="../../export/export-data-material.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -160,8 +179,22 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;
+
                                             $stmt = $db->query("SELECT material.mat_id , material.mat_name, material.group_id , group_comen.group_name as group_name 
-                                                                FROM `material` INNER JOIN `group_comen` ON group_comen.group_id = material.group_id");
+                                                                FROM `material` INNER JOIN `group_comen` ON group_comen.group_id = material.group_id
+                                                                WHERE material.group_id = '$group_id'");
                                             $stmt->execute();
                                             $mats = $stmt->fetchAll();
                                             $count = 1;
@@ -297,23 +330,15 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
 
     <script>
-        let imgInput = document.getElementById('imgInput');
-        let previewImg = document.getElementById('previewImg');
-
-        imgInput.onchange = evt => {
-            const [file] = imgInput.files;
-                if (file) {
-                    previewImg.src = URL.createObjectURL(file)
-            }
-        }
+       
 
  
 
@@ -335,7 +360,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'Product.php',
+                                url: 'material.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -345,7 +370,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'Product.php';
+                                    document.location.href = 'material.php';
                                 })
                             })
                             .fail(function() {
@@ -399,7 +424,16 @@
             }
         });
         $('.table').DataTable();
+        
+        let imgInput = document.getElementById('imgInput');
+        let previewImg = document.getElementById('previewImg');
 
+        imgInput.onchange = evt => {
+            const [file] = imgInput.files;
+                if (file) {
+                    previewImg.src = URL.createObjectURL(file)
+            }
+        }
 
     </script>
 

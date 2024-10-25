@@ -9,8 +9,9 @@
         $fa_name = $_POST['fa_name'];
         $fa_price = $_POST['fa_price'];
         $fa_location = $_POST['fa_location'];
+        $fa_source = $_POST['fa_source'];
 
-        $sql = $db->prepare("UPDATE `fixed_asset` SET `fa_name`='$fa_name' , `fa_price` = '$fa_price' , `fa_location` = '$fa_location'
+        $sql = $db->prepare("UPDATE `fixed_asset` SET `fa_name`='$fa_name' , `fa_price` = '$fa_price' , `fa_location` = '$fa_location', `location222` = '$fa_source'
                              WHERE `fa_id`='$fa_id'");
         $sql->execute();
 

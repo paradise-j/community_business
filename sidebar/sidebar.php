@@ -133,9 +133,10 @@
         </a>
         <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="report_orderplan.php">สรุปยอดการขายสินค้า</a>
-                <a class="collapse-item" href="report_Plant.php">สรุปยอดการขายผัก</a>
-                <a class="collapse-item" href="report_Plant.php">สรุปผลการวางแผนพืช</a>
+                <a class="collapse-item" href="report_orderplan.php">การขาย/กำไร/ต้นทุน</a>
+                <a class="collapse-item" href="report_type.php">ประเภท/ช่องทางการขาย</a>
+                <a class="collapse-item" href="report_material.php">ราคาวัตถุดิบ</a>
+                <a class="collapse-item" href="report_InEx.php">รายรับ-รายจ่าย</a>
             </div>
         </div>
     </li>

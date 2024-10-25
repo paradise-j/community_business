@@ -126,9 +126,19 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="report_orderplan.php">
-        <i class="fas fa-solid fa-clipboard-list"></i>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
+            aria-expanded="true" aria-controls="collapseReport">
+            <i class="fas fa-solid fa-clipboard-list"></i>
             <span>ออกรายงาน</span></a>
+        </a>
+        <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="report_orderplan.php">การขาย/กำไร/ต้นทุน</a>
+                <a class="collapse-item" href="report_type.php">ประเภท/ช่องทางการขาย</a>
+                <a class="collapse-item" href="report_material.php">ราคาวัตถุดิบ</a>
+                <a class="collapse-item" href="report_InEx.php">รายรับ-รายจ่าย</a>
+            </div>
+        </div>
     </li>
 
     <!-- <li class="nav-item">

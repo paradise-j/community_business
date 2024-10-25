@@ -3,13 +3,18 @@
 <?php 
     session_start();
     require_once "../../connect.php";
+
     // echo "1";
     if (isset($_POST['submit'])) {
         // echo "1";
-        $userid = $_POST['userid']; 
+        // $userid = $_POST['userid']; 
         $Fname = $_POST['Fname']; 
         $Lname = $_POST['Lname']; 
         $phone = $_POST['phone']; 
+
+        $userid = $_POST['userid']; 
+        $username = $_POST['username'];
+        $password = $_POST['password'];
         // $perid = $_POST['perid'];
         // $address = $_POST['address']; echo "address = ".$address." ";
 
@@ -47,7 +52,10 @@
                                                     WHERE `user_id`='$userid'");
         $sql->execute();
 
-        if ($sql) {
+        $sql2 = $db->prepare("UPDATE `user_login` SET `ul_username`='$username',`ul_password`='$password' WHERE `user_id`='$userid'"); 
+        $sql2->execute();
+
+        if ($sql && sql2) {
             $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อยแล้ว";
             echo "<script>
                 $(document).ready(function() {

@@ -8,9 +8,22 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = :user_id");
+    $stmt2->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->prepare("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = :group_id");
+    $stmt3->bindParam(':group_id', $group_id, PDO::PARAM_INT);
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `fa_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `fixed_asset` WHERE `fa_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +39,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=Product.php");
+            header("refresh:1; url=Fixed_assets.php");
         }
     }
 ?>
@@ -71,8 +84,7 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <option selected value="CM007">วสช.วสช.กลุ่มเกษตรกรทำสวนผสมผสานแบบยั่งยืนบางท่าข้าม</option>
+                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -88,8 +100,8 @@
                             <input type="text"  class="form-control" name="fa_location" style="border-radius: 30px;" required>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="col-form-label">แหล่งที่มา</label>
-                            <input type="text"  class="form-control" name="fa_location222" style="border-radius: 30px;" required>
+                            <label for="" class="col-form-label">ที่มาของสินทรัพย์ถาวร</label>
+                            <input type="text"  class="form-control" name="source" style="border-radius: 30px;" required>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
@@ -118,7 +130,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar_plant.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -130,6 +142,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินทรัพย์ถาวร</a>
+                                <a href="../../export/export-data-Fixed_assets.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -144,7 +157,6 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-
                                             $id = $_SESSION['id'];
                                             $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
                                             $check_id->execute();
@@ -158,7 +170,7 @@
                                             extract($row2);
                                             // echo $group_id;
 
-                                            $stmt = $db->query("SELECT fixed_asset.fa_id , fixed_asset.fa_date , fixed_asset.fa_name , fixed_asset.fa_price , fixed_asset.fa_location, fixed_asset.location222,
+                                            $stmt = $db->query("SELECT fixed_asset.fa_id , fixed_asset.fa_date , fixed_asset.fa_name , fixed_asset.fa_price , fixed_asset.fa_location,  fixed_asset.location222,
                                                                     fixed_asset.group_id , group_comen.group_name as group_name
                                                                 FROM `fixed_asset` 
                                                                 INNER JOIN `group_comen` ON fixed_asset.group_id  = group_comen.group_id
@@ -208,7 +220,7 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่ตั้ง : </b><?= $pd['fa_location']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>แหล่งที่มา : </b><?= $pd['location222']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่มาของสินทรัพย์ถาวร : </b><?= $pd['location222']; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -246,8 +258,8 @@
                                                                 <input type="text" required class="form-control" id="fa_location" name="fa_location" value="<?= $pd['fa_location'];?>" style="border-radius: 30px;">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="" class="col-form-label">แหล่งที่มา</label>
-                                                                <input type="text" required class="form-control" id="fa_location222" name="fa_location222" value="<?= $pd['fa_location222'];?>" style="border-radius: 30px;">
+                                                                <label for="" class="col-form-label">ที่มาของสินทรัพย์ถาวร</label>
+                                                                <input type="text" required class="form-control" id="fa_source" name="fa_source" value="<?= $pd['location222'];?>" style="border-radius: 30px;">
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" name="submit" class="btn btn-warning" style="border-radius: 30px;">แก้ไขข้อมูล</button>
@@ -286,8 +298,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
@@ -315,7 +327,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'Product.php',
+                                url: 'Fixed_assets.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -325,7 +337,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'Product.php';
+                                    document.location.href = 'Fixed_assets.php';
                                 })
                             })
                             .fail(function() {

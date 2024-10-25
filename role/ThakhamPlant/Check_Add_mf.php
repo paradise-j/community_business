@@ -4,37 +4,6 @@
     session_start();
     require_once "../../connect.php";
 
-    // if (isset($_POST['submit'])) {
-    //     $pdname = $_POST['pdname'];
-    //     $quan = $_POST['quan'];
-    //     $cost = $_POST['cost'];
-    //     $date = $_POST['date'];
-    //     $avgprice = $cost/$quan;
-
-    
-    //     $sql = $db->prepare("INSERT INTO `mf_data`(`mf_date`, `mf_name`, `mf_cost`, `mf_quan`, `mf_tocost`)
-    //                                        VALUES ('$date','$pdname','$cost','$quan','$avgprice')");
-    //     $sql->execute();
-
-    //     if ($sql) {
-    //         $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อยแล้ว";
-    //         echo "<script>
-    //         $(document).ready(function() {
-    //             Swal.fire({
-    //             title: 'สำเร็จ',
-    //             text: 'เพิ่มข้อมูลเรียบร้อยแล้ว',
-    //             icon: 'success',
-    //             timer: 5000,
-    //             showConfirmButton: false
-    //             });
-    //         })
-    //         </script>";
-    //         header("refresh:1; url=manufacture.php");
-    //     } else {
-    //         $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
-    //         header("location: manufacture.php");
-    //     }
-    // }
 
     if (isset($_POST['submit'])) {
         $pdname = $_POST['pdname'];

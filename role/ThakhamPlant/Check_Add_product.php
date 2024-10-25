@@ -14,7 +14,7 @@
         $extension = explode('.', $img['name']);
         $fileActExt = strtolower(end($extension));
         $fileNew = rand() . "." . $fileActExt; 
-        $filePath = '../admin/uploads/product/'.$fileNew;
+        $filePath = 'uploads/product/'.$fileNew;
 
         $pd = $db->prepare("SELECT `pd_name` FROM `product` WHERE `group_id` = '$group'");
         $pd->execute();

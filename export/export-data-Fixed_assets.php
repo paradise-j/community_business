@@ -12,15 +12,8 @@
     $fields = array('ชื่อสินทรัพย์ถาวร', 'ราคา(บาท)', 'ที่ตั้ง', 'แหล่งที่มา'); 
     $excelData = implode("\t", array_values($fields))."\n"; 
     
-    $id = $_SESSION['id'];
-    $stmt = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `user_id` = :user_id");
-    $stmt->bindParam(':user_id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    extract($result);
-
-    $stmt2 = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = :user_id");
-    $stmt2->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
     $stmt2->execute();
     $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
     extract($check_group);

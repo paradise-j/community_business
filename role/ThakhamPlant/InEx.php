@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `inex_comen` WHERE `inex_id` = '$delete_id'");
@@ -26,7 +37,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=InEx.php");
         }
     }
 ?>
@@ -41,7 +52,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Infor_Group_agriculturist</title>
+    <title>ข้อมูลรายรับ - รายจ่าย</title>
 
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -70,8 +81,7 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <option selected value="CM007">วสช.วสช.กลุ่มเกษตรกรทำสวนผสมผสานแบบยั่งยืนบางท่าข้าม</option>
+                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -81,14 +91,17 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">ประเภทรายการ</label>
                             <select class="form-control" aria-label="Default select example" id="type" name="type" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกประเภท....</option>
-                                <option value="1">รายรับ</option>
-                                <option value="2">รายจ่าย</option>
+                                <option selected disabled>กรุณาเลือกประเภท....</option>n
+                                <option value="รายรับ">รายรับ</option>
+                                <option value="รายจ่าย">รายจ่าย</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">รายการ</label>
-                            <input type="text" required class="form-control" name="name" style="border-radius: 30px;">
+                            <!-- <input type="text" required class="form-control" name="nameInEX" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="nameInEX" name="nameInEX" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกรายการ....</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">จำนวนเงิน (บาท)</label>
@@ -118,7 +131,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar_plant.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -130,6 +143,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลรายรับ-รายจ่าย</a>
+                                <a href="../../export/export-data-InEx.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -157,9 +171,9 @@
                                             $check_group->execute();
                                             $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
                                             extract($row2);
-                                            // echo $group_id;
+                                            // echo $group_id
 
-                                            $stmt = $db->query("SELECT * FROM `inex_data` INNER JOIN `group_comen` ON inex_data.group_id = group_comen.group_id 
+                                            $stmt = $db->query("SELECT * FROM `inex_data` INNER JOIN `group_comen` ON inex_data.group_id = group_comen.group_id
                                                                 WHERE inex_data.group_id = '$group_id'");
                                             $stmt->execute();
                                             $inexs = $stmt->fetchAll();
@@ -173,7 +187,7 @@
                                             <td><?= $inex['inex_name']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $inex['inex_id']?>">ดูข้อมูล</button>
-                                                <!-- <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit">แก้ไข</a> -->
+                                                <a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit">แก้ไข</a>
                                                 <a data-id="<?= $inex['inex_id']; ?>" href="?delete=<?= $inex['inex_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบ</a>
                                             </td>
                                             <!-- <td align="center"><a href="Edit_inex.php?edit_id=<?= $inex['inex_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: .75rem;" name="edit"><i class="fas fa-edit"></i></a></td> -->
@@ -238,8 +252,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
@@ -251,6 +265,21 @@
             e.preventDefault();
             deleteConfirm(userId);
         })
+
+        $('#type').change(function(){
+            var id_type = $(this).val();
+            console.log(id_type);
+            $.ajax({
+                type : "post",
+                url : "../../api/typeInEx.php",
+                data : {id:id_type,function:'type'},     
+                success: function(data){
+                //    console.log(data);
+                    $('#nameInEX').html(data);
+                }
+            });
+        });
+
 
         function deleteConfirm(userId) {
             Swal.fire({
@@ -264,7 +293,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: 'information_G_agc.php',
+                                url: 'InEx.php',
                                 type: 'GET',
                                 data: 'delete=' + userId,
                             })
@@ -274,7 +303,7 @@
                                     text: 'ลบข้อมูลเรียบร้อยแล้ว',
                                     icon: 'success',
                                 }).then(() => {
-                                    document.location.href = 'information_G_agc.php';
+                                    document.location.href = 'InEx.php';
                                 })
                             })
                             .fail(function() {
@@ -289,6 +318,8 @@
                 },
             });
         }
+
+        
         
         $.extend(true, $.fn.dataTable.defaults, {
             "language": {

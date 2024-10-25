@@ -8,25 +8,16 @@
     }
     require_once '../../connect.php';
 
-    $id = $_SESSION['id'];
-    $stmt = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `user_id` = :user_id");
-    $stmt->bindParam(':user_id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    extract($result);
-
-    $stmt2 = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = :user_id");
-    $stmt2->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
     $stmt2->execute();
     $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
     extract($check_group);
 
-    $stmt3 = $db->prepare("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = :group_id");
-    $stmt3->bindParam(':group_id', $group_id, PDO::PARAM_INT);
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
     $stmt3->execute();
     $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
     extract($check_groupsb);
-
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];

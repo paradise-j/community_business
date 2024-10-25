@@ -7,10 +7,21 @@
         exit;
     }
     require_once '../../connect.php';
+    
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `unit` WHERE `unit_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -29,6 +40,7 @@
             header("refresh:1; url=manage_unit.php");
         }
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,31 +83,14 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <option selected value="CM007">วสช.วสช.กลุ่มเกษตรกรทำสวนผสมผสานแบบยั่งยืนบางท่าข้าม</option>
+                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">ชื่อหน่วยนับ</label>
                             <input type="text" required class="form-control" name="unit_name" style="border-radius: 30px;">
                         </div>
-                        <!-- <div class="mb-3">
-                            <label for="" class="col-form-label">หน่วยนับ</label>
-                            <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
-                                <option value="กรัม">กรัม</option>
-                                <option value="กิโลกรัม">กิโลกรัม</option>
-                                <option value="กระปุก">กระปุก</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 text-center">
-                            <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImg" alt="">
-                        </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-7">
-                            <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
-                            <input type="file" class="form-control" id="imgInput" style="border-radius: 30px;" name="img" required>
-                        </div> -->
+                        
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
@@ -123,7 +118,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar_plant.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -150,7 +145,6 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-
                                             $id = $_SESSION['id'];
                                             $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
                                             $check_id->execute();
@@ -275,25 +269,16 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
 
     <script>
-        let imgInput = document.getElementById('imgInput');
-        let previewImg = document.getElementById('previewImg');
-
-        imgInput.onchange = evt => {
-            const [file] = imgInput.files;
-                if (file) {
-                    previewImg.src = URL.createObjectURL(file)
-            }
-        }
-
- 
+        
+        
 
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
@@ -377,6 +362,16 @@
             }
         });
         $('.table').DataTable();
+        
+        let imgInput = document.getElementById('imgInput');
+        let previewImg = document.getElementById('previewImg');
+
+        imgInput.onchange = evt => {
+            const [file] = imgInput.files;
+                if (file) {
+                    previewImg.src = URL.createObjectURL(file)
+            }
+        }
 
 
     </script>

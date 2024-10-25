@@ -1,10 +1,21 @@
 <?php 
     session_start();
-    // if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
-    //     header("location: ../../index.php");
-    //     exit;
-    // }
+    if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 6){
+        header("location: ../../index.php");
+        exit;
+    }
     require_once '../../connect.php';
+
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
 ?>
 
 <!DOCTYPE html>
@@ -31,29 +42,63 @@
 
     <body id="page-top">
         <div id="wrapper">  
-            <?php include('../../sidebar/sidebar_plant.php');?> <!-- Sidebar -->
+            <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <?php include('../../topbar/topbar2.php');?> <!-- Topbar -->
                     <div class="container-fluid">
+                    <?php
+                        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+                        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+                        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+                        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+                            global $dayTH,$monthTH;   
+                            // $thai_date_return = date("j",$time);   
+                            // $thai_date_return.=" ".$monthTH[date("n",$time)];   
+                            $thai_date_return.= " ".(date("Y",$time)+543);   
+                            return $thai_date_return;   
+                        } 
+                    ?>
                         <div class="row">
-                            <div class="col-xl-4 col-md-6 mb-4">
+                            <?php $date = date('Y-m-d'); ?>
+                            <?php //$date2 = date('Y'); echo $date2; ?>
+                            <div class="col text-center"><h1 class="text-dark center">สรุปยอดขายภาพรวมในการดำเนินงานในปี พ.ศ. <?= thai_date_fullmonth(strtotime($date));?></h1></div>
+                        </div>
+                        <?php
+                            $id = $_SESSION['id'];
+                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                            $check_id->execute();
+                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                            extract($row1);
+                            // echo $user_id;
+
+                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                            $check_group->execute();
+                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                            extract($row2);
+                            // echo $group_id;
+                        ?>
+                        <div class="row">
+                        
+
+                            <!-- <div class="col-xl-4 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-lg font-weight-bold text-success text-uppercase mb-1">จำนวนสมาชิก</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"> -->
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data`");
-                                                    $stmt->execute();
-                                                    $users = $stmt->fetchAll();
-                                                    foreach($users as $user){
-                                                        echo $user['total'];
-                                                    }
+                                                    // $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data` WHERE `group_id` = '$group_id'");
+                                                    // $stmt->execute();
+                                                    // $users = $stmt->fetchAll();
+                                                    // foreach($users as $user){
+                                                    //     echo $user['total'];
+                                                    // }
                                                 ?>
-                                                คน
-                                                </div>
+                                                <!-- คน -->
+                                                <!-- </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -61,55 +106,85 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
+                            
                             <div class="col-xl-4 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">ผักทั้งหมดในชุมชน</div>
+                                                <div class="text-lg font-weight-bold text-success text-uppercase mb-1">สินค้าทั้งหมด</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product` WHERE `group_id` = 'CM007'");
+                                                    $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product` WHERE `group_id` = '$group_id'");
                                                     $stmt->execute();
-                                                    $vegs = $stmt->fetchAll();
-                                                    foreach($vegs as $veg){
-                                                        echo $veg['total'];
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo $pd['total'];
                                                     }
                                                 ?>
-                                                ชนิด
+                                                รายการ
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-leaf fa-2x text-gray-300"></i>
-                                                <!-- <i class='fas bx bxs-leaf text-gray-300'></i> -->
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card border-left-info shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">ออเดอร์การสั่งของ</div>
+                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">ยอดขายรวมสะสม</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`group_id`) as total FROM `group_comen`");
+                                                    $stmt = $db->prepare("SELECT  SUM(salesdetail.sd_price) as sum_price
+                                                                          FROM `mf_data` 
+                                                                          INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
+                                                                          WHERE mf_data.group_id = '$group_id'");
                                                     $stmt->execute();
-                                                    $agcs = $stmt->fetchAll();
-                                                    foreach($agcs as $agc){
-                                                        echo $agc['total'];
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo number_format($pd['sum_price'],2); 
                                                     }
                                                 ?>
-                                                ออเดอร์
+                                                บาท
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-solid fa-clipboard-list fa-2x text-gray-300"></i>
-                                                <!-- <i class="fa-solid fa-clipboard-list"></i> -->
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-purple shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-lg font-weight-bold text-purple text-uppercase mb-1">กำไรรวมสะสม</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT  (SUM(salesdetail.sd_price) - mf_data.mf_price) as profit
+                                                                          FROM `mf_data` 
+                                                                          INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
+                                                                          WHERE mf_data.group_id = '$group_id'");
+                                                    $stmt->execute();
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo number_format($pd['profit'],2); 
+                                                    }
+                                                ?>
+                                                บาท
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -122,21 +197,21 @@
                             <div class="col-xl-4 col-lg-5">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดจำนวนผักแต่ละชนิด</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดรายรับ-รายจ่าย ภาพรวมทั้งหมด</h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="chart-pie pt-4 pb-2">
                                             <canvas id="myPieChart"></canvas>
                                         </div>
-                                        <!-- <div class="mt-4 text-center small">
+                                        <div class="mt-4 text-center small">
                                             <span class="mr-2">
-                                                <i class="fas fa-circle text-primary"></i> รายได้
+                                                <i class="fas fa-circle text-success"></i> รายรับ
                                             </span>
                                             <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i> รายจ่าย
+                                                <i class="fas fa-circle text-danger"></i> รายจ่าย
                                             </span>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +221,7 @@
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายในแต่ละเดือน</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายภาพรวมในแต่ละเดือน</h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -159,14 +234,82 @@
                         </div>
 
                         <div class="row">
-                            <!-- bar Chart -->
-                            <div class="col-xl-8 col-lg-7">
+                            <div class="col-xl-7 col-lg-7">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">สรุปยอดการส่งของตามออร์เดอ</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดกำไรรวมจากยอดขายสินค้าสะสม (บาท)</h6>
                                     </div>
                                     <div class="card-body">
-                                        <div class="chart-bar">
+                                        <!-- <div class="chart-bar">
+                                            <canvas id="myBarChart"></canvas>
+                                        </div> -->
+                                        <div class="table-responsive scrollbar">
+                                            <table class="table" id="dataTable" width="100%" cellspacing="0" >
+                                                <thead>
+                                                    <tr align="center" style="font-size: 0.8em;">
+                                                        <!-- <th>เดือน</th> -->
+                                                        <th>ชื่อรายการ</th>
+                                                        <th>ต้นทุนรวมสะสม</th>
+                                                        <th>จำนวนคงเหลือ</th>
+                                                        <th>จำนวนที่ขายไป</th>
+                                                        <th>ยอดขายรวมสะสม</th>
+                                                        <th>กำไรรวม</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                        $id = $_SESSION['id'];
+                                                        $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                                        $check_id->execute();
+                                                        $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                                        extract($row1);
+                                                        // echo $user_id;
+            
+                                                        $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                                        $check_group->execute();
+                                                        $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                                        extract($row2);
+                                                        // echo $group_id;
+                                                        $stmt = $db->query("SELECT mf_data.mf_name ,mf_data.mf_unit, mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price , mf_data.mf_quan , 
+                                                                            SUM(salesdetail.sd_quantity) as sd_quantity , (SUM(salesdetail.sd_price) - mf_data.mf_price) as profit
+                                                                            FROM `mf_data` 
+                                                                            INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
+                                                                            WHERE mf_data.group_id = '$group_id' 
+                                                                            GROUP BY mf_data.mf_name");
+                                                        $stmt->execute();
+                                                        $ggs = $stmt->fetchAll();
+                                                        if (!$ggs) {
+                                                            echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
+                                                        } else {
+                                                        foreach($ggs as $gg)  {  
+                                                    ?>
+                                                    <tr align="center" style="font-size: 0.8em;">
+                                                        <!-- <td><?= $gg['month']; ?></td> -->
+                                                        <td><?= $gg['mf_name']; ?></td>
+                                                        <td><?= $gg['mf_price']; ?></td>
+                                                        <td><?= $gg['mf_quan']." ".$gg['mf_unit']; ?></td>
+                                                        <td><?= $gg['sd_quantity']." ".$gg['mf_unit']; ?></td>
+                                                        <td><?= $gg['sum_price']; ?></td>
+                                                        <td><?= $gg['profit']; ?></td>
+                                                    </tr>
+                                                    <?php }
+                                                        } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-7">
+                                <div class="card shadow">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดกำไรภาพรวมในปุัจจุบัน</h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="chart-area">
                                             <canvas id="myBarChart"></canvas>
                                         </div>
                                     </div>
