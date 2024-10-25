@@ -153,11 +153,10 @@
 
                                     $count = 1;
 
-                                    $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
-                                                         FROM `sales` 
-                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$group_id'
-                                                         GROUP BY MONTH(sale_date)"); 
+                                    $stmt2 = $db->query("SELECT MONTH(`px_date`) as \"month\" , SUM(`px_total`) as \"total\"
+                                                         FROM `Plant_export` 
+                                                         WHERE MONTH(`px_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         GROUP BY MONTH(`px_date`)"); 
                                     $stmt2->execute();
 
                                     $arr2 = array();
@@ -168,11 +167,10 @@
 
                                     // echo $dataResult2 ;
 
-                                    $stmt1 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
-                                                         FROM `sales` 
-                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND salesdetail.sd_pdname = '$Gname'
-                                                         GROUP BY MONTH(sale_date)");
+                                    $stmt1 = $db->query("SELECT MONTH(`px_date`) as \"month\" , SUM(`px_total`) as \"total\"
+                                                         FROM `Plant_export` 
+                                                         WHERE MONTH(`px_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `px_name` = '$Gname'
+                                                         GROUP BY MONTH(`px_date`)");
                                     $stmt1->execute();
 
                                     $arr = array();
@@ -182,11 +180,10 @@
                                     $dataResult = json_encode($arr);
 
 
-                                    $stmt3 = $db->query("SELECT salesdetail.sd_pdname, SUM(salesdetail.sd_price) as total , MONTH(sales.sale_date) as month
-                                                         FROM `sales` 
-                                                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$group_id'
-                                                         GROUP BY salesdetail.sd_pdname , MONTH(sales.sale_date)");
+                                    $stmt3 = $db->query("SELECT MONTH(`px_date`) as \"month\" , `px_name` as \"name\" , SUM(`px_total`) as \"total\"
+                                                         FROM `Plant_export` 
+                                                         WHERE MONTH(`px_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         GROUP BY MONTH(`px_date`), `px_name`");
                                     $stmt3->execute();
 
                                     $arr3 = array();
@@ -211,11 +208,11 @@
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าทั้งหมดในแต่ละเดือน (บาท)</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายผักทั้งหมดในแต่ละเดือน (บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
-                                                <canvas id="myAreaChart" ></canvas>
+                                                <canvas id="myChartBar1" ></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -223,7 +220,7 @@
                                 <div class="col-xl-6 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าที่ต้องการทราบ (บาท)</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายผักที่ต้องการทราบ (บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -238,7 +235,7 @@
                                 <div class="col-xl-12 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าตามชนิดในแต่ละเดือน (บาท)</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายผักตามชนิดในแต่ละเดือน (บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -326,76 +323,74 @@
             });
         }
 
-// ============================================= myAreaChart =============================================
-        const my_dataAll2 = <?= $dataResult2; ?> ; 
-        // comsole.log("my_dataAll2 = "+ my_dataAll2);
-        var my_data02 = [];
-        var my_label02 = [];
-        my_dataAll2.forEach(item => {
-            my_data02.push(item.total);
+// ============================================= myChartBar001 =============================================
+        const my_dataAll001 = <?= $dataResult2; ?> ; 
+        var my_data001 = [];
+        var my_label001 = [];
+        var Unique_label001 = [];
+        my_dataAll001.forEach(item => {
+            my_data001.push(item.total);
             switch (item.month) {
                 case "1" :
-                    my_label02.push('มกราคม')
+                    my_label001.push('มกราคม')
                     break;
                 case "2" :
-                    my_label02.push('กุมภาพันธ์')
+                    my_label001.push('กุมภาพันธ์')
                     break;
                 case "3" :
-                    my_label02.push('มีนาคม')
+                    my_label001.push('มีนาคม')
                     break;
                 case "4" :
-                    my_label02.push('เมษายน')
+                    my_label001.push('เมษายน')
                     break;
                 case "5" :
-                    my_label02.push('พฤษภาคม')
+                    my_label001.push('พฤษภาคม')
                     break;
                 case "6" :
-                    my_label02.push('มิถุนายน')
+                    my_label001.push('มิถุนายน')
                     break;
                 case "7" :
-                    my_label02.push('กรกฎาคม')
+                    my_label001.push('กรกฎาคม')
                     break;
                 case "8" :
-                    my_label02.push('สิงหาคม')
+                    my_label001.push('สิงหาคม')
                     break;
                 case "9" :
-                    my_label02.push('กันยายน')
+                    my_label001.push('กันยายน')
                     break;
                 case "10" :
-                    my_label02.push('ตุลาคม')
+                    my_label001.push('ตุลาคม')
                     break;
                 case "11" :
-                    my_label02.push('พฤศจิกายน')
+                    my_label001.push('พฤศจิกายน')
                     break;
                 case "12" :
-                    my_label02.push('ธันวาคม')
+                    my_label001.push('ธันวาคม')
                     break; 
             }
             
         });
-        // console.log("my_data02 = "+ my_data02);
-        // console.log("my_label02 = "+ my_label02);
 
+        for( var i=0; i<my_label001.length; i++ ) {
+            if ( Unique_label001.indexOf( my_label001[i] ) < 0 ) {
+            Unique_label001.push( my_label001[i] );
+            }
+        } 
+
+        console.log("my_data001 = "+ my_data001);
+        console.log("my_label001 = "+ my_label001);
+        console.log("Unique_label001 = "+ Unique_label001);
         
-        var ctx = document.getElementById("myAreaChart");
-        var myAreaChart = new Chart(ctx, {
-            type: 'line',
+        var ctx = document.getElementById('myChartBar1');
+        var myChartBar1 = new Chart(ctx, {
+            type: 'bar',
             data: {
-                labels: my_label02,
+                labels: Unique_label001,
                 datasets: [{
-                    label: "ยอดขายสุทธิ",
-                    lineTension: 0,
-                    backgroundColor: "rgba(78, 115, 223, 0.07)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 5,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: my_data02,
+                label: "ยอดขายผัก",
+                backgroundColor: "#2a86e9",
+                borderColor: "#2a86e9",
+                data: my_data001
                 }],
             },
             options: {
@@ -408,15 +403,11 @@
                 legend: {
                     display: true
                 }
-                
-            },
-            plugins: {ChartDataLabels : true}
-            
+            }
         });
 
         // ============================================= myChartBar =============================================
         const my_dataAll = <?= $dataResult; ?> ; 
-        // comsole.log("my_dataAll2 = "+ my_dataAll2);
         var my_data1 = [];
         var my_label1 = [];
         var Unique_label = [];
@@ -469,9 +460,6 @@
             }
         } 
 
-        // console.log("my_data1 = "+ my_data1);
-        // console.log("my_label1 = "+ my_label1);
-        // console.log("Unique_label = "+ Unique_label);
         
         var ctx = document.getElementById('myChartBar');
         var myChartBar = new Chart(ctx, {
@@ -499,12 +487,12 @@
         });
 
         // ============================================= myChartBar3 =============================================
-        const my_dataAll3 = <?= $dataResult3; ?> ; 
+        const my_dataAll2 = <?= $dataResult3; ?> ; 
 
 
         let res_1 = []
-        my_dataAll3.forEach(obj => {
-            let sd_pdname = obj['sd_pdname']
+        my_dataAll2.forEach(obj => {
+            let name = obj['name']
             let month = ''
             switch (obj['month']) {
                 case "1" :
@@ -546,16 +534,16 @@
             }
 
             let total = obj['total']
-            res_1[sd_pdname] = res_1[sd_pdname] || []
-            res_1[sd_pdname][month] = res_1[sd_pdname][month] || []
-            res_1[sd_pdname][month] = total
+            res_1[name] = res_1[name] || []
+            res_1[name][month] = res_1[name][month] || []
+            res_1[name][month] = total
         })
         // console.log(res_1)
 
         var my_data3 = [];
         var my_label3 = [];
         var Unique_month3 = [];
-        my_dataAll3.forEach(item => {
+        my_dataAll2.forEach(item => {
             my_data3.push(item.total);
             switch (item.month) {
                 case "1" :

@@ -2,10 +2,10 @@
     require_once '../connect.php';
     header('Content-Type: application/json; charset=utf-8');
 
-    $stmt2 = $db->query("SELECT MONTH(`inex_date`) as \"month\" , `inex_type` as \"type\", SUM(`inex_price`) as \"total\"
-                        FROM `inex_data` 
-                        WHERE MONTH(`inex_date`) BETWEEN MONTH('2024-01-01') AND MONTH('2024-12-23') AND `group_id` = 'CM001'
-                        GROUP BY MONTH(`inex_date`),`inex_type`"); 
+    $stmt2 = $db->query("SELECT MONTH(`px_date`) as \"month\" , `px_name` as \"name\" ,SUM(`px_total`) as \"total\"
+                        FROM `Plant_export` 
+                        WHERE MONTH(`px_date`) BETWEEN MONTH('2024-01-01') AND MONTH('2024-12-01')
+                        GROUP BY MONTH(`px_date`) , `px_name`"); 
     $stmt2->execute();
 
     $arr = array();

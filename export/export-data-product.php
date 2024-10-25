@@ -14,7 +14,6 @@
     
     $user_id = $_SESSION['user_id'];
     $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
-    // $stmt2->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt2->execute();
     $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
     extract($check_group);
