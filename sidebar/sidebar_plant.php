@@ -74,10 +74,11 @@
         </a>
         <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="report_orderplan.php">การขาย/กำไร/ต้นทุน</a>
-                <a class="collapse-item" href="report_type.php">ประเภท/ช่องทางการขาย</a>
-                <a class="collapse-item" href="report_material.php">ราคาวัตถุดิบ</a>
-                <a class="collapse-item" href="report_InEx.php">รายรับ-รายจ่าย</a>
+                <a class="collapse-item" href="report_orderplan.php">ยอดขายผัก</a>
+                <a class="collapse-item" href="report_order-export.php">ยอดสั่งซื้อ/ส่งออก</a>
+                <!-- <a class="collapse-item" href="report_type.php">เปรียบเทียบราคารับซื้อ-ส่งออก</a> -->
+                <a class="collapse-item" href="report_material.php">ยอดขายผักแต่ละผู้ซื้อ</a>
+                <!-- <a class="collapse-item" href="report_InEx.php">ยอดการวางแผน/ส่งออก</a> -->
             </div>
         </div>
     </li>

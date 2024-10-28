@@ -181,10 +181,6 @@
                                             <h5 class="m-0 font-weight-bold text-primary">สรุปโปรแกรมท่องเที่ยวที่นิยม</h5>
                                         </div>
                                         <div class="card-body">
-                                            <!-- <div class="chart-area"> -->
-                                                <!-- <canvas id="myChartBar3" ></canvas> -->
-                                            <!-- </div> -->
-                                            <!-- <div class="table-responsive scrollbar"> -->
                                                 <table width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr align="center" style="font-size: 1rem;">
@@ -277,9 +273,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
-
-                            
                         </div>
                     </div>
 

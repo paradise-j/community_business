@@ -93,7 +93,7 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการขาย/กำไร/ต้นทุน ของสินค้า</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการขายผัก</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
@@ -194,7 +194,8 @@
                                 }
                             ?>
                             <div class="md-2">
-                                <h5 class="m-0 font-weight-bold text-primary text-center">ช่วงเวลาที่กำหนดตั้งแต่ 
+                                <h4 class="m-0 font-weight-bold text-primary text-center">ช่วงเวลาที่กำหนดตั้งแต่</h4>
+                                <h5 class="m-0 font-weight-bold text-purple text-center">
                                     <?php 
                                     if(empty($start_date) and empty($end_date)){
                                         echo "ยังไม่กำหนดช่วงเวลา";
@@ -468,8 +469,8 @@
                 labels: Unique_label,
                 datasets: [{
                 label: "<?= $Gname ?>",
-                backgroundColor: "#2a86e9",
-                borderColor: "#2a86e9",
+                backgroundColor: "#8450ca",
+                borderColor: "#8450ca",
                 data: my_data1
                 }],
             },
@@ -488,7 +489,6 @@
 
         // ============================================= myChartBar3 =============================================
         const my_dataAll2 = <?= $dataResult3; ?> ; 
-
 
         let res_1 = []
         my_dataAll2.forEach(obj => {

@@ -1,7 +1,10 @@
 <?php
+    
     require_once '../connect.php';
     session_start();
 
+    header('Content-Type: application/json; charset=utf-8');
+    
     function filterData(&$str){ 
         $str = preg_replace("/\t/", "\\t", $str); 
         $str = preg_replace("/\r?\n/", "\\n", $str); 
@@ -33,11 +36,11 @@
 
     }
 
+    
     header("Content-Type: application/vnd.ms-excel"); 
     header("Content-Disposition: attachment; filename=\"$fileName\""); 
     
     echo $excelData; 
     
     exit;
-
 ?>

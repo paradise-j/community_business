@@ -226,8 +226,13 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            <th>รหัสที่รับซื้อ</th>
-                                            <th>รายการที่รับซื้อ</th>
+                                            <th>รหัสคำสั่งซื้อ</th>
+                                            <th>วันที่รับซื้อ</th>
+                                            <th>ชื่อลูกสวน</th>
+                                            <th>ผลผลิตที่รับซื้อ</th>
+                                            <th>ปริมาณที่รับซื้อ</th>
+                                            <th>ราคาต่อกิโลกรัม</th>
+                                            <th>ราคาสุทธิ</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -243,10 +248,15 @@
                                              foreach($bps as $bp)  {  
                                         ?>
                                         <tr>
-                                            <td><?= $bp['bp_id']; ?></td>
+                                            <td><?= $bp['bp_order_id']; ?></td>
+                                            <td align="center" class="date_th"><?= $bp['bp_date']; ?></td>
+                                            <td><?= $bp['gw_name']; ?></td>
                                             <td><?= $bp['veget_name']; ?></td>
+                                            <td><?= $bp['bp_quan']." กิโลกรัม"; ?></td>
+                                            <td><?= $bp['bp_pricekg']." บาท"; ?></td>
+                                            <td><?= $bp['bp_totalprice']." บาท"; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>">ดูข้อมูล</button>
+                                                <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>">ดูข้อมูล</button> -->
                                                 <!-- <a href="Edit_bp.php?edit_id=<?= $bp['bp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
                                                 <a data-id="<?= $bp['bp_id']; ?>" href="?delete=<?= $bp['bp_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบข้อมูล</i></a>
                                             </td>
@@ -317,8 +327,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
@@ -351,6 +361,18 @@
 
             // });
         });
+        
+        $('#grower').change(function(){
+             var id_gw = $(this).val();
+             $.ajax({
+                 type : "post",
+                 url : "../../api/grower.php",
+                 data : {id:id_gw,function:'grower'},     
+                 success: function(data){
+                     $('#gw_name').val(data);
+                 }
+             });
+         });
 
 
         $(".delete-btn").click(function(e) {
@@ -397,39 +419,43 @@
             });
         }
         
-        // $.extend(true, $.fn.dataTable.defaults, {
-        //     "language": {
-        //             "sProcessing": "กำลังดำเนินการ...",
-        //             "sLengthMenu": "แสดง _MENU_ รายการ",
-        //             "sZeroRecords": "ไม่พบข้อมูล",
-        //             "sInfo": "แสดงรายการ _START_ ถึง _END_ จาก _TOTAL_ รายการ",
-        //             "sInfoEmpty": "แสดงรายการ 0 ถึง 0 จาก 0 รายการ",
-        //             "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกรายการ)",
-        //             "sInfoPostFix": "",
-        //             "sSearch": "ค้นหา:",
-        //             "sUrl": "",
-        //             "oPaginate": {
-        //                             "sFirst": "เริ่มต้น",
-        //                             "sPrevious": "ก่อนหน้า",
-        //                             "sNext": "ถัดไป",
-        //                             "sLast": "สุดท้าย"
-        //             }
-        //     }
-        // });
-        // $('.table').DataTable();
+       
+        const dom_date = document.querySelectorAll('.date_th')
+        dom_date.forEach((elem)=>{
 
+            const my_date = elem.textContent
+            const date = new Date(my_date)
+            const result = date.toLocaleDateString('th-TH', {
 
-         $('#grower').change(function(){
-             var id_gw = $(this).val();
-             $.ajax({
-                 type : "post",
-                 url : "../../api/grower.php",
-                 data : {id:id_gw,function:'grower'},     
-                 success: function(data){
-                     $('#gw_name').val(data);
-                 }
-             });
-         });
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+
+            }) 
+            elem.textContent=result
+        })
+
+        $.extend(true, $.fn.dataTable.defaults, {
+            "language": {
+                    "sProcessing": "กำลังดำเนินการ...",
+                    "sLengthMenu": "แสดง _MENU_ รายการ",
+                    "sZeroRecords": "ไม่พบข้อมูล",
+                    "sInfo": "แสดงรายการ _START_ ถึง _END_ จาก _TOTAL_ รายการ",
+                    "sInfoEmpty": "แสดงรายการ 0 ถึง 0 จาก 0 รายการ",
+                    "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกรายการ)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ค้นหา:",
+                    "sUrl": "",
+                    "oPaginate": {
+                                    "sFirst": "เริ่มต้น",
+                                    "sPrevious": "ก่อนหน้า",
+                                    "sNext": "ถัดไป",
+                                    "sLast": "สุดท้าย"
+                    }
+            }
+        });
+        $('.table').DataTable();
+
          
 
 

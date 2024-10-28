@@ -30,18 +30,17 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
 
   async function get_total_goat() {
-    const res = await fetch("/community_business/api/get_order-export.php");
+    const res = await fetch("/community_business/api/get_total-package_phumriang.php");
     const json = await res.json()
     return json;
   }
 
-  var ctx = document.getElementById("myBarChart");
-  const my_dataAll2 = await get_total_goat();
+  var ctx = document.getElementById("myChartBar1");
+  const my_dataAll = await get_total_goat();
 
-
-  let res_1 = []
-  my_dataAll2.forEach(obj => {
-      let name = obj['veg_name']
+  let res = []
+  my_dataAll.forEach(obj => {
+      let type = obj['type']
       let month = ''
       switch (obj['month']) {
           case "1" :
@@ -82,67 +81,68 @@ window.addEventListener('DOMContentLoaded', async (event) => {
               break; 
       }
 
-      let total = obj.export_quan
-      res_1[name] = res_1[name] || []
-      res_1[name][month] = res_1[name][month] || []
-      res_1[name][month] = total
+      let total = obj['total']
+      res[type] = res[type] || []
+      res[type][month] = res[type][month] || []
+      res[type][month] = total
   })
-  console.log(res_1)
 
-  var my_data3 = [];
-  var my_label3 = [];
-  var Unique_month3 = [];
-  my_dataAll2.forEach(item => {
-      my_data3.push(item.export_quan);
+  var my_data = [];
+  var my_label = [];
+  var Unique_month = [];
+  my_dataAll.forEach(item => {
+      my_data.push(item.total);
       switch (item.month) {
           case "1" :
-              my_label3.push('มกราคม')
+              my_label.push('มกราคม')
               break;
           case "2" :
-              my_label3.push('กุมภาพันธ์')
+              my_label.push('กุมภาพันธ์')
               break;
           case "3" :
-              my_label3.push('มีนาคม')
+              my_label.push('มีนาคม')
               break;
           case "4" :
-              my_label3.push('เมษายน')
+              my_label.push('เมษายน')
               break;
           case "5" :
-              my_label3.push('พฤษภาคม')
+              my_label.push('พฤษภาคม')
               break;
           case "6" :
-              my_label3.push('มิถุนายน')
+              my_label.push('มิถุนายน')
               break;
           case "7" :
-              my_label3.push('กรกฎาคม')
+              my_label.push('กรกฎาคม')
               break;
           case "8" :
-              my_label3.push('สิงหาคม')
+              my_label.push('สิงหาคม')
               break;
           case "9" :
-              my_label3.push('กันยายน')
+              my_label.push('กันยายน')
               break;
           case "10" :
-              my_label3.push('ตุลาคม')
+              my_label.push('ตุลาคม')
               break;
           case "11" :
-              my_label3.push('พฤศจิกายน')
+              my_label.push('พฤศจิกายน')
               break;
           case "12" :
-              my_label3.push('ธันวาคม')
+              my_label.push('ธันวาคม')
               break; 
       }
       
   });
 
-  for( var i=0; i<my_label3.length; i++ ) {
-      if ( Unique_month3.indexOf( my_label3[i] ) < 0 ) {
-      Unique_month3.push( my_label3[i] );
+  for( var i=0; i<my_label.length; i++ ) {
+      if ( Unique_month.indexOf( my_label[i] ) < 0 ) {
+      Unique_month.push( my_label[i] );
       }
   } 
 
-  console.log("my_data3 = "+ my_data3);
-  console.log("Unique_month3 = "+ Unique_month3);
+  console.log("my_data01 = "+ my_data);
+  // console.log("my_label = "+ my_label);
+  console.log("Unique_month01 = "+ Unique_month);
+  console.log("------------------------------------------------");
 
 
   function getRandomArbitrary(min, max) {
@@ -150,13 +150,13 @@ window.addEventListener('DOMContentLoaded', async (event) => {
   }
 
 
-  let backgroundColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+  let backgroundColor = ["#87be7e","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6"]
 
-  let borderColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+  let borderColor = ["#87be7e","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6"]
 
-  let labels = Unique_month3
+  let labels = Unique_month
   let datasets = []
-  let tasrgets = Object.keys(res_1)
+  let tasrgets = Object.keys(res)
 
 
   let color_index = 0
@@ -164,7 +164,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
   tasrgets.forEach(tasrget => {
       let data = []
       labels.forEach(month => {
-          let total = res_1[tasrget][month] || "0.00"
+          let total = res[tasrget][month] || "0.00"
           data.push(total)
       })
       datasets.push({
@@ -180,12 +180,12 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
 
   let data = { labels, datasets }
-  console.log("data = "+ data);
-  
-  var ctx = document.getElementById('myBarChart');
-  var myBarChart = new Chart(ctx, {
+  // console.log("data = "+ data)
+
+  var ctx = document.getElementById('myChartBar1');
+  var myChartBar1 = new Chart(ctx, {
       type: 'bar',
-      data: data ,
+      data ,
       options: {
           maintainAspectRatio: false,
           scales: {

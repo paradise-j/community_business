@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
 
   async function get_total_goat() {
-    const res = await fetch("/community_business/api/get_order-export.php");
+    const res = await fetch("/community_business/api/get_export.php");
     const json = await res.json()
     return json;
   }
@@ -150,9 +150,9 @@ window.addEventListener('DOMContentLoaded', async (event) => {
   }
 
 
-  let backgroundColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+  let backgroundColor = ["#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae"]
 
-  let borderColor = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+  let borderColor = ["#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae"]
 
   let labels = Unique_month3
   let datasets = []
@@ -182,8 +182,8 @@ window.addEventListener('DOMContentLoaded', async (event) => {
   let data = { labels, datasets }
   console.log("data = "+ data);
   
-  var ctx = document.getElementById('myBarChart');
-  var myBarChart = new Chart(ctx, {
+  var ctx = document.getElementById('myBarChart2');
+  var myBarChart2 = new Chart(ctx, {
       type: 'bar',
       data: data ,
       options: {

@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
   
     async function get_sale_All() {
       // const res = await fetch("api/get_sale_All.php");
-      const res = await fetch("/community_business/api/get_sale_thakoie.php");
+      const res = await fetch("/community_business/api/get_sale_bangkham.php");
       const json = await res.json()
       return json;
     }

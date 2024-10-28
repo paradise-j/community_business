@@ -203,14 +203,21 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
+                                            <th>รหัสคำสั่งซื้อ</th>
                                             <th>วันที่ส่งออก</th>
-                                            <th>รายการที่ส่งออกผลผลิต</th>
+                                            <th>ชื่อลูกค้า</th>
+                                            <th>ผลผลิตส่งออก</th>
+                                            <th>ปริมาณส่งออก</th>
+                                            <th>ราคาต่อกิโลกรัม</th>
+                                            <th>ราคาสุทธิ</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM Plant_export");
+                                            $stmt = $db->query("SELECT `px_date`, orderer.odr_name,`px_name`,`px_quan`,`px_price`,`px_total`,`pld_id`
+                                                                FROM `Plant_export`
+                                                                INNER JOIN `orderer` ON Plant_export.odr_id = orderer.odr_id");
                                             $stmt->execute();
                                             $pxs = $stmt->fetchAll();
                                             $count = 1;
@@ -220,10 +227,15 @@
                                              foreach($pxs as $px)  {  
                                         ?>
                                         <tr>
+                                            <td><?= $px['pld_id']; ?></td>
                                             <td align="center" class="date_th"><?= $px['px_date']; ?></td>
+                                            <td><?= $px['odr_name']; ?></td>
                                             <td><?= $px['px_name']; ?></td>
+                                            <td><?= $px['px_quan']; ?></td>
+                                            <td><?= $px['px_price']; ?></td>
+                                            <td><?= $px['px_total']; ?></td>
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $px['px_id']?>">ดูข้อมูล</i></button>
+                                                <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $px['px_id']?>">ดูข้อมูล</i></button> -->
                                                 <!-- <a href="Edit_px.php?edit_id=<?= $px['px_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
                                                 <a data-id="<?= $px['px_id']; ?>" href="?delete=<?= $px['px_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบข้อมูล</i></a>
                                             </td>
@@ -288,8 +300,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>

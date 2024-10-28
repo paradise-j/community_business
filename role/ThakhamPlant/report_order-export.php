@@ -93,11 +93,11 @@
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดราคาของวัตถุดิบ</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการสั่งซื้อ/ส่งออก</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
-                                <div class="row text-center">
+                                <div class="row mt-2">
                                     <div class="col-md-3"></div>
                                     <label for="inputState" class="form-label mt-2">ตั้งแต่วันที่</label>
                                     <div class="col-md-2">
@@ -134,22 +134,50 @@
 
                                     $count = 1;
 
-                                    $stmt1 = $db->query("SELECT  MONTH(`px_date`) as \"month\", orderer.odr_name as \"name\" ,Plant_export.px_quan as \"total\"
-                                                        FROM `Plant_export`
-                                                        INNER JOIN `orderer` ON Plant_export.odr_id = orderer.odr_id
-                                                        WHERE MONTH(`px_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
-                                                        GROUP BY MONTH(`px_date`), orderer.odr_name");
-                                    $stmt1->execute();
+                                    $stmt2 = $db->query("SELECT MONTH(plant_orderlist.pld_date) as \"month\" ,  `pod_name` , SUM(`pod_quan`) as \"total\"
+                                                        FROM `plant_orderlist_detail` 
+                                                        INNER JOIN `plant_orderlist` ON plant_orderlist.pld_id = plant_orderlist_detail.pld_id
+                                                        WHERE MONTH(plant_orderlist.pld_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                        GROUP BY MONTH(plant_orderlist.pld_date),`pod_name`"); 
+                                    $stmt2->execute();
 
-                                    $arr = array();
-                                    while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
-                                        $arr[] = $row;
+                                    $arr2 = array();
+                                    while($row = $stmt2->fetch(PDO::FETCH_ASSOC)){
+                                        $arr2[] = $row;
                                     }
-                                    $dataResult = json_encode($arr);
+                                    $dataResult2 = json_encode($arr2);
+
+                                    // echo $dataResult2 ;
+
+                                    // $stmt1 = $db->query("SELECT MONTH(`px_date`) as \"month\" , SUM(`px_total`) as \"total\"
+                                    //                      FROM `Plant_export` 
+                                    //                      WHERE MONTH(`px_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `px_name` = '$Gname'
+                                    //                      GROUP BY MONTH(`px_date`)");
+                                    // $stmt1->execute();
+
+                                    // $arr = array();
+                                    // while($row = $stmt1->fetch(PDO::FETCH_ASSOC)){
+                                    //     $arr[] = $row;
+                                    // }
+                                    // $dataResult = json_encode($arr);
+
+
+                                    $stmt3 = $db->query("SELECT MONTH(`px_date`) as month, `px_name`,SUM(`px_total`) as total
+                                            FROM `Plant_export` 
+                                            WHERE MONTH(`px_date`) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                            GROUP BY MONTH(`px_date`),`px_name`");
+                                    $stmt3->execute();
+
+                                    $arr3 = array();
+                                    while($row = $stmt3->fetch(PDO::FETCH_ASSOC)){
+                                        $arr3[] = $row;
+                                    }
+                                    $dataResult3 = json_encode($arr3);
                                 }
                             ?>
                             <div class="md-2">
-                                <h4 class="m-0 font-weight-bold text-purple text-center">ช่วงเวลาที่กำหนดตั้งแต่ 
+                                <h4 class="m-0 font-weight-bold text-primary text-center">ช่วงเวลาที่กำหนดตั้งแต่</h4>
+                                <h5 class="m-0 font-weight-bold text-purple text-center">
                                     <?php 
                                     if(empty($start_date) and empty($end_date)){
                                         echo "ยังไม่กำหนดช่วงเวลา";
@@ -157,26 +185,25 @@
                                         echo  thai_date_fullmonth(strtotime($start_date))." ถึง ".thai_date_fullmonth(strtotime($end_date));
                                     }
                                     ?> 
-                                </h4>
-                                
+                                </h5>
                             </div>
-                            <div class="row mt-2">
-                                <!-- <div class="col-xl-6 col-lg-4">
+                            <div class="row mt-4">
+                                <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดช่องทางการขายสินค้าทั้งหมดในแต่ละเดือน (บาท)</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดการสั่งซื้อในแต่ละเดือน(บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
-                                                <canvas id="myAreaChart" ></canvas>
+                                                <canvas id="myChartBar1" ></canvas>
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
-                                <div class="col-xl-12 col-lg-8">
+                                </div>
+                                <div class="col-xl-6 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายผักของผู้ซื้อทั้งหมดในแต่ละเดือน(บาท)</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดการส่งออกในแต่ละเดือน(บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -185,18 +212,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-xl-6 col-lg-4">
-                                    <div class="card shadow">
-                                        <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดช่องทางการขายสินค้าทั้งหมดในแต่ละเดือน (บาท)</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="chart-area">
-                                                <canvas id="myChartBar2" ></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -276,11 +291,179 @@
             });
         }
 
-        // ============================================= myChartBar =============================================
-        const my_dataAll = <?= $dataResult; ?> ; 
-        let res = []
-        my_dataAll.forEach(obj => {
-            let name = obj['name']
+// ============================================= myChartBar001 =============================================
+    const my_dataAll001 = <?= $dataResult2; ?> ; 
+
+    let res_1 = []
+    my_dataAll001.forEach(obj => {
+        let pod_name = obj['pod_name']
+        let month = ''
+        switch (obj['month']) {
+            case "1" :
+                month ='มกราคม'
+                break;
+            case "2" :
+                month ='กุมภาพันธ์'
+                break;
+            case "3" :
+                month ='มีนาคม'
+                break;
+            case "4" :
+                month ='เมษายน'
+                break;
+            case "5" :
+                month ='พฤษภาคม'
+                break;
+            case "6" :
+                month ='มิถุนายน'
+                break;
+            case "7" :
+                month ='กรกฎาคม'
+                break;
+            case "8" :
+                month ='สิงหาคม'
+                break;
+            case "9" :
+                month ='กันยายน'
+                break;
+            case "10" :
+                month ='ตุลาคม'
+                break;
+            case "11" :
+                month ='พฤศจิกายน'
+                break;
+            case "12" :
+                month ='ธันวาคม'
+                break; 
+        }
+
+        let total = obj['total']
+        res_1[pod_name] = res_1[pod_name] || []
+        res_1[pod_name][month] = res_1[pod_name][month] || []
+        res_1[pod_name][month] = total
+    })
+
+    var my_data3 = [];
+    var my_label3 = [];
+    var Unique_month3 = [];
+    my_dataAll001.forEach(item => {
+        my_data3.push(item.total);
+        switch (item.month) {
+            case "1" :
+                my_label3.push('มกราคม')
+                break;
+            case "2" :
+                my_label3.push('กุมภาพันธ์')
+                break;
+            case "3" :
+                my_label3.push('มีนาคม')
+                break;
+            case "4" :
+                my_label3.push('เมษายน')
+                break;
+            case "5" :
+                my_label3.push('พฤษภาคม')
+                break;
+            case "6" :
+                my_label3.push('มิถุนายน')
+                break;
+            case "7" :
+                my_label3.push('กรกฎาคม')
+                break;
+            case "8" :
+                my_label3.push('สิงหาคม')
+                break;
+            case "9" :
+                my_label3.push('กันยายน')
+                break;
+            case "10" :
+                my_label3.push('ตุลาคม')
+                break;
+            case "11" :
+                my_label3.push('พฤศจิกายน')
+                break;
+            case "12" :
+                my_label3.push('ธันวาคม')
+                break; 
+        }
+        
+    });
+
+    for( var i=0; i<my_label3.length; i++ ) {
+        if ( Unique_month3.indexOf( my_label3[i] ) < 0 ) {
+        Unique_month3.push( my_label3[i] );
+        }
+    } 
+    console.log("my_data3 = "+ my_data3);
+    console.log("Unique_month3 = "+ Unique_month3);
+
+
+    function getRandomArbitrary(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+
+    let backgroundColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+
+    let borderColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
+
+    let labels3 = Unique_month3
+    let datasets3 = []
+    let tasrgets3 = Object.keys(res_1)
+
+
+    let color_index3 = 0
+
+    tasrgets3.forEach(tasrget3 => {
+        let data3 = []
+        labels3.forEach(month3 => {
+            let total3 = res_1[tasrget3][month3] || "0.00"
+            data3.push(total3)
+        })
+        datasets3.push({
+            label: tasrget3,
+            data: data3,
+            backgroundColor: backgroundColor3[color_index3],
+            borderColor: borderColor3[color_index3],
+            borderWidth: 1
+        })
+
+        color_index3 = color_index3+1
+    })
+
+
+    let data3 = { labels:labels3, datasets:datasets3 }
+    // console.log("datasets3 = "+ datasets3) 
+    // console.log(JSON.stringify(data3)) 
+    
+    var ctx3 = document.getElementById('myChartBar1');
+    var myChartBar1 = new Chart(ctx3, {
+        type: 'bar',
+        data: data3 ,
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0
+                    }
+                }]
+            },
+            legend: {
+                display: true
+            }
+        }
+    });
+
+
+        // ============================================= myChartBar3 =============================================
+        const my_dataAll2 = <?= $dataResult3; ?> ; 
+
+        let res_2 = []
+        my_dataAll2.forEach(obj => {
+            let px_name = obj['px_name']
             let month = ''
             switch (obj['month']) {
                 case "1" :
@@ -322,66 +505,65 @@
             }
 
             let total = obj['total']
-            res[name] = res[name] || []
-            res[name][month] = res[name][month] || []
-            res[name][month] = total
+            res_2[px_name] = res_2[px_name] || []
+            res_2[px_name][month] = res_2[px_name][month] || []
+            res_2[px_name][month] = total
         })
+        // console.log(res_2)
 
-        var my_data = [];
-        var my_label = [];
-        var Unique_month = [];
-        my_dataAll.forEach(item => {
-            my_data.push(item.total);
+        var my_data3 = [];
+        var my_label3 = [];
+        var Unique_month3 = [];
+        my_dataAll2.forEach(item => {
+            my_data3.push(item.total);
             switch (item.month) {
                 case "1" :
-                    my_label.push('มกราคม')
+                    my_label3.push('มกราคม')
                     break;
                 case "2" :
-                    my_label.push('กุมภาพันธ์')
+                    my_label3.push('กุมภาพันธ์')
                     break;
                 case "3" :
-                    my_label.push('มีนาคม')
+                    my_label3.push('มีนาคม')
                     break;
                 case "4" :
-                    my_label.push('เมษายน')
+                    my_label3.push('เมษายน')
                     break;
                 case "5" :
-                    my_label.push('พฤษภาคม')
+                    my_label3.push('พฤษภาคม')
                     break;
                 case "6" :
-                    my_label.push('มิถุนายน')
+                    my_label3.push('มิถุนายน')
                     break;
                 case "7" :
-                    my_label.push('กรกฎาคม')
+                    my_label3.push('กรกฎาคม')
                     break;
                 case "8" :
-                    my_label.push('สิงหาคม')
+                    my_label3.push('สิงหาคม')
                     break;
                 case "9" :
-                    my_label.push('กันยายน')
+                    my_label3.push('กันยายน')
                     break;
                 case "10" :
-                    my_label.push('ตุลาคม')
+                    my_label3.push('ตุลาคม')
                     break;
                 case "11" :
-                    my_label.push('พฤศจิกายน')
+                    my_label3.push('พฤศจิกายน')
                     break;
                 case "12" :
-                    my_label.push('ธันวาคม')
+                    my_label3.push('ธันวาคม')
                     break; 
             }
             
         });
 
-        for( var i=0; i<my_label.length; i++ ) {
-            if ( Unique_month.indexOf( my_label[i] ) < 0 ) {
-            Unique_month.push( my_label[i] );
+        for( var i=0; i<my_label3.length; i++ ) {
+            if ( Unique_month3.indexOf( my_label3[i] ) < 0 ) {
+            Unique_month3.push( my_label3[i] );
             }
         } 
 
-        console.log("my_data = "+ my_data);
-        console.log("Unique_month = "+ Unique_month);
-        console.log("------------------------------------------------");
+        // console.log("Unique_month3 = "+ Unique_month3);
 
 
         function getRandomArbitrary(min, max) {
@@ -389,13 +571,13 @@
         }
 
 
-        let backgroundColor = ["#87be7e","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6"]
+        let backgroundColor = ["#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae"]
 
-        let borderColor = ["#87be7e","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6"]
+        let borderColor = ["#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f","#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae"]
 
-        let labels = Unique_month
+        let labels = Unique_month3
         let datasets = []
-        let tasrgets = Object.keys(res)
+        let tasrgets = Object.keys(res_2)
 
 
         let color_index = 0
@@ -403,7 +585,7 @@
         tasrgets.forEach(tasrget => {
             let data = []
             labels.forEach(month => {
-                let total = res[tasrget][month] || "0.00"
+                let total = res_2[tasrget][month] || "0.00"
                 data.push(total)
             })
             datasets.push({
@@ -419,8 +601,7 @@
 
 
         let data = { labels, datasets }
-        // console.log("data = "+ data)
-
+        
         var ctx = document.getElementById('myChartBar');
         var myChartBar = new Chart(ctx, {
             type: 'bar',
@@ -428,179 +609,19 @@
             options: {
                 maintainAspectRatio: false,
                 scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0
+                        }
+                    }]
                 },
                 legend: {
                     display: true
                 }
             }
         });
-
-        // ============================================= myChartBar3 =============================================
-        // const my_dataAll3 = <?= $dataResult3; ?> ; 
-
-
-        // let res_1 = []
-        // my_dataAll3.forEach(obj => {
-        //     let type = obj['typeEx']
-        //     let month = ''
-        //     switch (obj['month']) {
-        //         case "1" :
-        //             month ='มกราคม'
-        //             break;
-        //         case "2" :
-        //             month ='กุมภาพันธ์'
-        //             break;
-        //         case "3" :
-        //             month ='มีนาคม'
-        //             break;
-        //         case "4" :
-        //             month ='เมษายน'
-        //             break;
-        //         case "5" :
-        //             month ='พฤษภาคม'
-        //             break;
-        //         case "6" :
-        //             month ='มิถุนายน'
-        //             break;
-        //         case "7" :
-        //             month ='กรกฎาคม'
-        //             break;
-        //         case "8" :
-        //             month ='สิงหาคม'
-        //             break;
-        //         case "9" :
-        //             month ='กันยายน'
-        //             break;
-        //         case "10" :
-        //             month ='ตุลาคม'
-        //             break;
-        //         case "11" :
-        //             month ='พฤศจิกายน'
-        //             break;
-        //         case "12" :
-        //             month ='ธันวาคม'
-        //             break; 
-        //     }
-
-        //     let count = obj['count']
-        //     res_1[type] = res_1[type] || []
-        //     res_1[type][month] = res_1[type][month] || []
-        //     res_1[type][month] = count
-        // })
-
-        // var my_data3 = [];
-        // var my_label3 = [];
-        // var Unique_month3 = [];
-        // my_dataAll3.forEach(item => {
-        //     my_data3.push(item.count);
-        //     switch (item.month) {
-        //         case "1" :
-        //             my_label3.push('มกราคม')
-        //             break;
-        //         case "2" :
-        //             my_label3.push('กุมภาพันธ์')
-        //             break;
-        //         case "3" :
-        //             my_label3.push('มีนาคม')
-        //             break;
-        //         case "4" :
-        //             my_label3.push('เมษายน')
-        //             break;
-        //         case "5" :
-        //             my_label3.push('พฤษภาคม')
-        //             break;
-        //         case "6" :
-        //             my_label3.push('มิถุนายน')
-        //             break;
-        //         case "7" :
-        //             my_label3.push('กรกฎาคม')
-        //             break;
-        //         case "8" :
-        //             my_label3.push('สิงหาคม')
-        //             break;
-        //         case "9" :
-        //             my_label3.push('กันยายน')
-        //             break;
-        //         case "10" :
-        //             my_label3.push('ตุลาคม')
-        //             break;
-        //         case "11" :
-        //             my_label3.push('พฤศจิกายน')
-        //             break;
-        //         case "12" :
-        //             my_label3.push('ธันวาคม')
-        //             break; 
-        //     }
-            
-        // });
-
-        // for( var i=0; i<my_label3.length; i++ ) {
-        //     if ( Unique_month3.indexOf( my_label3[i] ) < 0 ) {
-        //     Unique_month3.push( my_label3[i] );
-        //     }
-        // } 
-        // console.log("my_data3 = "+ my_data3);
-        // // console.log("my_label3 = "+ my_label3);
-        // console.log("Unique_month3 = "+ Unique_month3);
-
-
-        // function getRandomArbitrary(min, max) {
-        //     return Math.floor(Math.random() * (max - min) + min);
-        // }
-
-
-        // let backgroundColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
-
-        // let borderColor3 = ["#c33e22","#ec9206","#eef73e","#87be7e","#2aa251","#17d1ae","#256ae3","#8450ca","#ef34f6","#ec396e","#6a4903","#9f9f9f"]
-
-        // let labels3 = Unique_month3
-        // let datasets3 = []
-        // let tasrgets3 = Object.keys(res_1)
-
-
-        // let color_index3 = 0
-
-        // tasrgets3.forEach(tasrget3 => {
-        //     let data3 = []
-        //     labels3.forEach(month3 => {
-        //         let total3 = res_1[tasrget3][month3] || "0.00"
-        //         data3.push(total3)
-        //     })
-        //     datasets3.push({
-        //         label: tasrget3,
-        //         data: data3,
-        //         backgroundColor: backgroundColor3[color_index3],
-        //         borderColor: borderColor3[color_index3],
-        //         borderWidth: 1
-        //     })
-
-        //     color_index3 = color_index3+1
-        // })
-
-
-        // let data3 = { labels:labels3, datasets:datasets3 }
-        // // console.log("datasets3 = "+ datasets3) 
-        // // console.log(JSON.stringify(data3)) 
-        
-        // var ctx3 = document.getElementById('myChartBar2');
-        // var myChartBar2 = new Chart(ctx3, {
-        //     type: 'bar',
-        //     data: data3 ,
-        //     options: {
-        //         maintainAspectRatio: false,
-        //         scales: {
-        //             y: {
-        //                 beginAtZero: true
-        //             }
-        //         },
-        //         legend: {
-        //             display: true
-        //         }
-        //     }
-        // });
 
 
         

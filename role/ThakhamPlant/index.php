@@ -142,14 +142,11 @@
                                                 <div class="text-lg font-weight-bold text-info text-uppercase mb-1">ยอดขายรวมสะสม</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT  SUM(salesdetail.sd_price) as sum_price
-                                                                          FROM `mf_data` 
-                                                                          INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
-                                                                          WHERE mf_data.group_id = '$group_id'");
+                                                    $stmt = $db->prepare("SELECT SUM(`px_total`) as total FROM `Plant_export`");
                                                     $stmt->execute();
                                                     $pds = $stmt->fetchAll();
                                                     foreach($pds as $pd){
-                                                        echo number_format($pd['sum_price'],2); 
+                                                        echo number_format($pd['total'],2); 
                                                     }
                                                 ?>
                                                 บาท
@@ -170,14 +167,19 @@
                                                 <div class="text-lg font-weight-bold text-purple text-uppercase mb-1">กำไรรวมสะสม</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                    $stmt = $db->prepare("SELECT  (SUM(salesdetail.sd_price) - mf_data.mf_price) as profit
-                                                                          FROM `mf_data` 
-                                                                          INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
-                                                                          WHERE mf_data.group_id = '$group_id'");
+                                                    $stmt = $db->prepare("SELECT 
+                                                                            COALESCE(px_total, 0) AS px_total,
+                                                                            COALESCE(bp_total, 0) AS bp_total,
+                                                                            (COALESCE(px_total, 0) - COALESCE(bp_total, 0)) AS total
+                                                                        FROM (
+                                                                            SELECT 
+                                                                                (SELECT SUM(px_total) FROM Plant_export) AS px_total,
+                                                                                (SELECT SUM(bp_totalprice) FROM bproduce) AS bp_total
+                                                                        ) AS totals");
                                                     $stmt->execute();
                                                     $pds = $stmt->fetchAll();
                                                     foreach($pds as $pd){
-                                                        echo number_format($pd['profit'],2); 
+                                                        echo number_format($pd['total'],2); 
                                                     }
                                                 ?>
                                                 บาท
@@ -221,7 +223,7 @@
                                 <div class="card shadow mb-4">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายภาพรวมในแต่ละเดือน</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดส่งออกผักภาพรวมในแต่ละเดือน</h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -234,78 +236,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-xl-7 col-lg-7">
+                            <div class="col-xl-6 col-lg-7">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดกำไรรวมจากยอดขายสินค้าสะสม (บาท)</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายผักแต่ละผู้ซื้อภาพรวมในปุัจจุบัน(บาท)</h6>
                                     </div>
                                     <div class="card-body">
-                                        <!-- <div class="chart-bar">
-                                            <canvas id="myBarChart"></canvas>
-                                        </div> -->
-                                        <div class="table-responsive scrollbar">
-                                            <table class="table" id="dataTable" width="100%" cellspacing="0" >
-                                                <thead>
-                                                    <tr align="center" style="font-size: 0.8em;">
-                                                        <!-- <th>เดือน</th> -->
-                                                        <th>ชื่อรายการ</th>
-                                                        <th>ต้นทุนรวมสะสม</th>
-                                                        <th>จำนวนคงเหลือ</th>
-                                                        <th>จำนวนที่ขายไป</th>
-                                                        <th>ยอดขายรวมสะสม</th>
-                                                        <th>กำไรรวม</th>
-                                                        
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php 
-                                                        $id = $_SESSION['id'];
-                                                        $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
-                                                        $check_id->execute();
-                                                        $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
-                                                        extract($row1);
-                                                        // echo $user_id;
-            
-                                                        $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
-                                                        $check_group->execute();
-                                                        $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
-                                                        extract($row2);
-                                                        // echo $group_id;
-                                                        $stmt = $db->query("SELECT mf_data.mf_name ,mf_data.mf_unit, mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price , mf_data.mf_quan , 
-                                                                            SUM(salesdetail.sd_quantity) as sd_quantity , (SUM(salesdetail.sd_price) - mf_data.mf_price) as profit
-                                                                            FROM `mf_data` 
-                                                                            INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
-                                                                            WHERE mf_data.group_id = '$group_id' 
-                                                                            GROUP BY mf_data.mf_name");
-                                                        $stmt->execute();
-                                                        $ggs = $stmt->fetchAll();
-                                                        if (!$ggs) {
-                                                            echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
-                                                        } else {
-                                                        foreach($ggs as $gg)  {  
-                                                    ?>
-                                                    <tr align="center" style="font-size: 0.8em;">
-                                                        <!-- <td><?= $gg['month']; ?></td> -->
-                                                        <td><?= $gg['mf_name']; ?></td>
-                                                        <td><?= $gg['mf_price']; ?></td>
-                                                        <td><?= $gg['mf_quan']." ".$gg['mf_unit']; ?></td>
-                                                        <td><?= $gg['sd_quantity']." ".$gg['mf_unit']; ?></td>
-                                                        <td><?= $gg['sum_price']; ?></td>
-                                                        <td><?= $gg['profit']; ?></td>
-                                                    </tr>
-                                                    <?php }
-                                                        } ?>
-                                                </tbody>
-                                            </table>
+                                        <div class="chart-bar">
+                                            <canvas id="myBarChart2"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-5 col-lg-7">
+                            <div class="col-xl-6 col-lg-7">
                                 <div class="card shadow">
                                     <!-- Card Header - Dropdown -->
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดกำไรภาพรวมในปุัจจุบัน</h6>
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดการส่งออกผักแต่ละชนิดภาพรวมในปุัจจุบัน(บาท)</h6>
                                     </div>
                                     <!-- Card Body -->
                                     <div class="card-body">
@@ -344,5 +291,6 @@
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
         <script src="js/demo/chart-bar-demo.js"></script>
+        <script src="js/demo/chart-bar2-demo.js"></script>
     </body>
 </html>

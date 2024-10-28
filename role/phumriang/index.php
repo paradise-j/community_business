@@ -5,6 +5,18 @@
         exit;
     }
     require_once '../../connect.php';
+
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +43,29 @@
 
     <body id="page-top">
         <div id="wrapper">  
-            <?php include('../../sidebar/sidebar7.php');?> <!-- Sidebar -->
+            <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <?php include('../../topbar/topbar2.php');?> <!-- Topbar -->
                     <div class="container-fluid">
+                    <?php
+                        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+                        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+                        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+                        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+                            global $dayTH,$monthTH;   
+                            // $thai_date_return = date("j",$time);   
+                            // $thai_date_return.=" ".$monthTH[date("n",$time)];   
+                            $thai_date_return.= " ".(date("Y",$time)+543);   
+                            return $thai_date_return;   
+                        } 
+                    ?>
+                        <div class="row">
+                            <?php $date = date('Y-m-d'); ?>
+                            <?php //$date2 = date('Y'); echo $date2; ?>
+                            <div class="col text-center"><h1 class="text-dark center">สรุปยอดขายภาพรวมในการดำเนินงานในปี พ.ศ. <?= thai_date_fullmonth(strtotime($date));?></h1></div>
+                        </div>
                         <?php
                             $id = $_SESSION['id'];
                             $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
@@ -51,41 +81,12 @@
                             // echo $group_id;
                         ?>
                         <div class="row">
-                        
-
                             <div class="col-xl-4 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-success text-uppercase mb-1">จำนวนสมาชิก</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php
-                                                    $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data` WHERE `group_id` = '$group_id'");
-                                                    $stmt->execute();
-                                                    $users = $stmt->fetchAll();
-                                                    foreach($users as $user){
-                                                        echo $user['total'];
-                                                    }
-                                                ?>
-                                                คน
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-                            <div class="col-xl-4 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">แพ็คเกจทั้งหมด</div>
+                                                <div class="text-lg font-weight-bold text-success text-uppercase mb-1">แพ็คเกจทั้งหมด</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
                                                     $stmt = $db->prepare("SELECT COUNT(`tp_id`) as total FROM `travel_pack`");
@@ -105,111 +106,165 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- Pie Chart -->
-                            <div class="col-xl-4 col-lg-5">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดรายรับ-รายจ่าย ภาพรวมทั้งหมด</h6>
-                                    </div>
-                                    <!-- Card Body -->
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-info shadow h-100 py-2">
                                     <div class="card-body">
-                                        <div class="chart-pie pt-4 pb-2">
-                                            <canvas id="myPieChart"></canvas>
-                                        </div>
-                                        <div class="mt-4 text-center small">
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i> รายรับ
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-danger"></i> รายจ่าย
-                                            </span>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">ยอดขายรวมสะสม</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT
+                                                                            SUM(travel_orderlist_detail.tod_Nprice) as \"total\"
+                                                                        FROM
+                                                                        `travel_orderlist_detail`
+                                                                        INNER JOIN `travel_orderlist` ON travel_orderlist.tol_id = travel_orderlist_detail.tol_id");
+                                                    $stmt->execute();
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo number_format($pd['total'],2); 
+                                                    }
+                                                ?>
+                                                บาท
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Area Chart -->
-                            <div class="col-xl-8 col-lg-7">
-                                <div class="card shadow mb-4">
-                                    <!-- Card Header - Dropdown -->
-                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดรายได้หลักภาพรวมทั้งหมด (ยอดทั้งหมดที่ยังไม่หักเข้ากลุ่ม) </h6>
-                                    </div>
-                                    <!-- Card Body -->
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-purple shadow h-100 py-2">
                                     <div class="card-body">
-                                        <div class="chart-area">
-                                            <canvas id="myAreaChart"></canvas>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-lg font-weight-bold text-purple text-uppercase mb-1">กำไรรวมสะสม</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT
+                                                                            (SUM(travel_orderlist_detail.tod_Nprice))-(SUM(travel_orderlist_detail.tod_deduct)) as \"total\"
+                                                                        FROM
+                                                                        `travel_orderlist_detail`
+                                                                        INNER JOIN `travel_orderlist` ON travel_orderlist.tol_id = travel_orderlist_detail.tol_id");
+                                                    $stmt->execute();
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo number_format($pd['total'],2); 
+                                                    }
+                                                ?>
+                                                บาท
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
-                            <div class="col-xl-8 col-lg-7">
-                                <div class="card shadow mb-4">
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="card shadow">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">สรุปยอดการเปรียบเทียบระหว่างยอดขายรวมกับค่าใช้จ่ายในการผลิตรวม</h6>
+                                        <h5 class="m-0 font-weight-bold text-primary">สรุปโปรแกรมท่องเที่ยวที่นิยม</h5>
                                     </div>
                                     <div class="card-body">
-                                        <!-- <div class="chart-bar">
-                                            <canvas id="myBarChart"></canvas>
-                                        </div> -->
-                                        <div class="table-responsive scrollbar">
-                                            <table class="table" id="dataTable" width="100%" cellspacing="0" >
+                                            <table width="100%" cellspacing="0">
                                                 <thead>
-                                                    <tr align="center" style="font-size: 0.8em;">
-                                                        <th>เดือน</th>
-                                                        <th>ชื่อรายการ</th>
-                                                        <th>ยอดต้นทุนรวม</th>
-                                                        <th>ยอดขายรวม</th>
+                                                    <tr align="center" style="font-size: 1rem;">
+                                                        <th>จำนวนกลุ่มนักท่องเที่ยว</th>
+                                                        <th>ชื่อโปรแกรม</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT MONTH(mf_data.mf_date) as month , mf_data.mf_name , mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price FROM `mf_data` 
-                                                                            INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
-                                                                            WHERE mf_data.group_id = 'CM005' 
-                                                                            GROUP BY mf_data.mf_name");
-                                                        $stmt->execute();
-                                                        $ggs = $stmt->fetchAll();
-                                                        if (!$ggs) {
+                                                        try{
+                                                            $stmt4 = $db->query("SELECT * FROM (
+                                                                (SELECT \"เกาะเสร็จ\" as \"trip\", COUNT(`tol_tp1`) as \"count\"
+                                                                FROM `travel_orderlist`
+                                                                WHERE `tol_tp1` NOT LIKE \"\")
+                                                                UNION 
+                                                                (SELECT \"วิถีชุมชนพุมเรียง\" as \"trip\", COUNT(`tol_tp2`) as \"count\"
+                                                                FROM `travel_orderlist`
+                                                                WHERE `tol_tp2` NOT LIKE \"\")
+                                                                UNION 
+                                                                (SELECT \"ตามรอยท่านพุทธทาส\" as \"trip\", COUNT(`tol_tp3`) as \"count\"
+                                                                FROM `travel_orderlist` 
+                                                                WHERE `tol_tp3` NOT LIKE \"\")
+                                                                )`tb1` 
+                                                                ORDER BY `tb1`.count DESC");
+                                                            $stmt4->execute();
+                                                            $tps = $stmt4->fetchAll();
+
+                                                            if (empty($tps)) {
                                                             echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
-                                                        } else {
-                                                        foreach($ggs as $gg)  {  
+                                                            } else {
+                                                                foreach($tps as $tp)  {
+                                                                    $trip = $tp['trip'];
+                                                                    $count = $tp['count'];
                                                     ?>
                                                     <tr align="center" style="font-size: 0.8em;">
-                                                        <td>
-                                                            <?php
-                                                                echo $gg['month'] == 1 ? "มกราคม" : 
-                                                                    ($gg['month'] == 2 ? "กุมภาพันธ์" : 
-                                                                    ($gg['month'] == 3 ? "มีนาคม" : 
-                                                                    ($gg['month'] == 4 ? "เมษายน" : 
-                                                                    ($gg['month'] == 5 ? "พฤษภาคม" :
-                                                                    ($gg['month'] == 6 ? "มิถุนายน" : 
-                                                                    ($gg['month'] == 7 ? "กรกฎาคม" : 
-                                                                    ($gg['month'] == 8 ? "สิงหาคม" : 
-                                                                    ($gg['month'] == 9 ? "กันยายน" : 
-                                                                    ($gg['month'] == 10 ? "ตุลาคม" : 
-                                                                    ($gg['month'] == 11 ? "พฤศจิกายน" : "ธันวาคม"))))))))));
-                                                            ?>
-                                                        </td>
-                                                        <td><?= $gg['mf_name']; ?></td>
-                                                        <td><?= $gg['mf_price']; ?></td>
-                                                        <td><?= $gg['sum_price']; ?></td>
+                                                        
+                                                        
+                                                        <td style="font-size: 1rem;"><?php   if(empty($count)){ echo "0"; }else{ echo  $count;}?></td>
+                                                        <td style="font-size: 1rem;"><?php   if(empty($trip)){ echo "0"; }else{ echo  $trip;}?></td>
                                                     </tr>
-                                                    <?php }
-                                                        } ?>
+                                                    <?php       }
+                                                            }
+                                                        } catch(PDOException $e) {
+                                                            echo "Connection failed: " . $e->getMessage();
+                                                        }
+                                                    ?>
                                                 </tbody>
                                             </table>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-lg-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h5 class="m-0 font-weight-bold text-primary">สรุปยอดรายได้ทั้งหมดในแต่ละเดือน</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myAreaChart" ></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row mt-4">
+                            
+                            <div class="col-xl-6 col-lg-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h5 class="m-0 font-weight-bold text-primary">สรุปรายได้ทั้งหมดแยกตามแพ็คเกจ</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myChartBar1" ></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h5 class="m-0 font-weight-bold text-primary">สรุปยอดรายได้ที่หักเข้ากลุ่ม แยกตามแพ็คเกจ</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myChartBar2" ></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>    
                 <?php include('../../footer/footer.php');?> <!-- Footer -->
@@ -236,7 +291,7 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/chart-area-demo.js"></script>
-        <script src="js/demo/chart-pie-demo.js"></script>
-        <script src="js/demo/chart-bar-demo.js"></script>
+        <script src="js/demo/chart-bar1-demo.js"></script>
+        <script src="js/demo/chart-bar2-demo.js"></script>
     </body>
 </html>

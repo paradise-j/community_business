@@ -1,4 +1,5 @@
 <?php
+    
     require_once '../connect.php';
     session_start();
 
@@ -38,6 +39,7 @@
 
     }
 
+    header('Content-Type: application/json; charset=TIS-620');
     header("Content-Type: application/vnd.ms-excel"); 
     header("Content-Disposition: attachment; filename=\"$fileName\""); 
     

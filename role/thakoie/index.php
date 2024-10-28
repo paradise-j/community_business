@@ -16,6 +16,7 @@
     $stmt3->execute();
     $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
     extract($check_groupsb);
+    echo $check_groupsb;
 ?>
 
 <!DOCTYPE html>

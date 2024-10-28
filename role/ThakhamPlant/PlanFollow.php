@@ -121,25 +121,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-1">
-                            <div class="col">
-                                <div class="mb-2">
-                                    <label for="" class="col-form-label" style="color:red;">รายการการสั่งซื้อคงเหลือ</label>
-                                    <label for="" class="col-form-label" id="result" name="result" style="color:red;">
-                                        <?php 
-                                            // $stmt = $db->query("SELECT * FROM `plant_orderlist_detail` WHERE `pld_id` = 'POL0020'");
-                                            // $stmt->execute();
-                                            // $plds = $stmt->fetchAll();
-                                            
-                                            // foreach($plds as $pld){
-                                            //     echo "<br>";
-                                            //     echo "&nbsp&nbsp&nbsp&nbsp&nbsp".$pld['pod_name']."  ".$pld['pod_quan']."  กิโลกรัม";
-                                            // }
-                                        ?>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- <div class="row mb-1"> -->
+                            <!-- <div class="col"> -->
+                                <!-- <div class="mb-2"> -->
+                                    <!-- <label for="" class="col-form-label" style="color:red;">รายการการสั่งซื้อคงเหลือ</label> -->
+                                    <!-- <br> -->
+                                    <!-- &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="" class="col-form-label" id="list1" name="list1" style="color:red;">ยังไม่ได้เลือกรายการสั่งซื้อ</label> -->
+                                    <!-- <br>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="" class="col-form-label" id="list2" name="list" style="color:red;"></label>
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="" class="col-form-label" id="list3" name="list" style="color:red;"></label>
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="" class="col-form-label" id="list4" name="list" style="color:red;"></label>
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label for="" class="col-form-label" id="list5" name="list" style="color:red;"></label> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
                         <div id="show_item">
                             <div class="row mb-1">
                                 <div class="col-md-4">
@@ -449,7 +447,7 @@
                  url : "../../api/veg_name.php",
                  data : {id:pldid,function:'pld_id'},     
                  success: function(data){
-                    console.log(data);
+                    // console.log(data);
                     $('#veg_name').html(data);
                  }
              });
@@ -457,15 +455,21 @@
 
          $('#pldid').change(function(){
              var pldid = $(this).val();
-             console.log(pldid);
+            //  console.log(pldid);
              $.ajax({
                  type : "post",
                  url : "../../api/result.php",
-                 data : {id:pldid,function:'pld_id'},     
+                 data : {id:pldid,function:'pld_id2'},     
                  success: function(data){
                     console.log(data);
+                    // let list1 = document.getElementById("list1");
+                    // data.forEach(myFunction);
+                    // let list2 = document.getElementById("list2");
+                    // function myFunction(item, index) {
+                        // list1 += index+1 + ": " + item['pod_name'] +" จำนวน "+item['pod_quan']+" กิโลกรัม"+"<br>"; 
+                    // }
                     // data.forEach(item => {
-                        // document.getElementById("result").innerHTML = item.pod_name+" "+item.pod_quan; 
+                    //     list1.innerHTML = item.pod_name+" "+item.pod_quan;
                     // })
                  }
              });

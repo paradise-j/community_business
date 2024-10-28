@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
   
     async function get_sale_All() {
       // const res = await fetch("api/get_sale_All.php");
-      const res = await fetch("/community_business/api/get_travel_All.php");
+      const res = await fetch("/community_business/api/get_sale_phumriang.php");
       const json = await res.json()
       return json;
     }
@@ -41,8 +41,6 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     var Unique_label = [];
 
     data.forEach(item => {
-      // console.log("my_data = "+ item.month);
-      // console.log("my_data = "+ item.total);
       switch (item.month) {
           case "1 ":
               my_data1.push(item.total)
@@ -142,7 +140,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
         datasets: [{
           label: "ยอดขายสินค้า",
           lineTension: 0,
-          backgroundColor: "rgba(78, 115, 223, 0.07)",
+          backgroundColor: "rgba(78, 115, 223, 0.3)",
           borderColor: "rgba(78, 115, 223, 1)",
           pointRadius: 5,
           pointBackgroundColor: "rgba(78, 115, 223, 1)",
