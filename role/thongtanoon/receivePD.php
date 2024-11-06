@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `receivepd` WHERE `rp_id` = '$delete_id'");
@@ -70,19 +81,8 @@
                     <form action="Check_Add_receivePD.php" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    $stmt->execute();
-                                    $gcs = $stmt->fetchAll();
-                                    
-                                    foreach($gcs as $gc){
-                                ?>
-                                <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option>
-                                <?php
-                                    }
-                                ?>
+                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
+                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืชบ้านทุ่งตาหนอน</option>
                             </select>
                         </div>
                         <div class="mb-2">
@@ -137,7 +137,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -164,8 +164,24 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT receivepd.rp_id , receivepd.rp_date, receivepd.rp_name ,receivepd.rp_quan,receivepd.rp_price,receivepd.rp_cost, receivepd.rp_img, receivepd.group_id , group_comen.group_name as group_name 
-                                                                FROM `receivepd` INNER JOIN `group_comen` ON group_comen.group_id = receivepd.group_id");
+
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;
+
+                                            $stmt = $db->query("SELECT receivepd.rp_id , receivepd.rp_date, receivepd.rp_name ,receivepd.rp_quan,receivepd.rp_price,
+                                                                        receivepd.rp_cost, receivepd.rp_img, receivepd.group_id , group_comen.group_name as group_name 
+                                                                FROM `receivepd` INNER JOIN `group_comen` ON group_comen.group_id = receivepd.group_id
+                                                                WHERE receivepd.group_id = '$group_id'");
                                             $stmt->execute();
                                             $rps = $stmt->fetchAll();
                                             $count = 1;

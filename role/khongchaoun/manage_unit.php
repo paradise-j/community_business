@@ -7,6 +7,17 @@
         exit;
     }
     require_once '../../connect.php';
+    
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
@@ -29,6 +40,7 @@
             header("refresh:1; url=manage_unit.php");
         }
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +83,6 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
                                 <option selected value="CM002">วสช.ชีววิถีคลองชะอุ่น</option>
                             </select>
                         </div>
@@ -107,7 +118,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar4.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->

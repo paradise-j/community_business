@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
@@ -50,13 +61,13 @@
         //     }
         // }
 
-        $pd = $db->prepare("SELECT `mf_name` as Namepd FROM `mf_data` WHERE `mf_id` = '$pdname'");
+        $pd = $db->prepare("SELECT `mf_name` as Namepd , `mf_quan` FROM `mf_data` WHERE `mf_id` = '$pdname'");
         $pd->execute();
         $row = $pd->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        if($_POST["pricepd"] < $_POST["pdcost"]){
-            $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
+        if($_POST["quantity"] > $mf_quan){
+            $_SESSION['error'] = 'ยอดสินค้าของท่านไม่เพียงพอ';
             header("refresh:2; url=Sale.php");
         }else{
             $item_array = array(
@@ -71,7 +82,7 @@
             exit;
         }
     }
-
+    
     if(isset($_GET['action'])){
         if($_GET['action']=="delete"){
             $id = $_GET["id"];
@@ -113,11 +124,12 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
+
                     <div class="row">
                         <div class="col-lg-5">
                             <div class="card shadow mb-4">
@@ -146,7 +158,7 @@
                                                 <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM004'");
+                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM001'");
                                                         $stmt->execute();
                                                         $mfs = $stmt->fetchAll();
                                                         
@@ -167,7 +179,7 @@
                                             <!-- <div class="col-md-1"></div> -->
                                             <div class="col-md-4">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="number" class="form-control" id="pricepd" name="pricepd" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="pricepd" name="pricepd" min="1" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">จำนวนที่ขาย</label>
@@ -185,6 +197,9 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                            <div class="col text-left">
+                                <a href="SaleList.php" class="btn btn-secondary" style="border-radius: 30px;"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</a>
                             </div>
                         </div>
                         <div class="col-lg-7">
@@ -219,6 +234,7 @@
                                                 <option selected disabled>กรุณาเลือก....</option>    
                                                     <option value="เครดิต">เครดิต</option>
                                                     <option value="เงินสด">เงินสด</option>
+                                                    <option value="ให้ฟรี">ให้ฟรี</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">

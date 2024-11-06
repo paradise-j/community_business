@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `orderer` WHERE `odr_id` = '$delete_id'");
@@ -70,20 +81,8 @@
                     <form action="Check_Add_orderer.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required>
-                                <!-- <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option> -->
-                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืช</option>
-                                <?php 
-                                    // $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    // $stmt->execute();
-                                    // $gcs = $stmt->fetchAll();
-                                    
-                                    // foreach($gcs as $gc){
-                                ?>
-                                <!-- <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option> -->
-                                <?php
-                                    // }
-                                ?>
+                            <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
+                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืชบ้านทุ่งตาหนอน</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -92,7 +91,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
-                            <input type="tel" class="form-control" maxlength="10" minlength="9" name="odr_phone" style="border-radius: 30px;" required>
+                            <input type="text" class="form-control" maxlength="10" minlength="10" name="odr_phone" style="border-radius: 30px;" required>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -158,7 +157,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -170,6 +169,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลผู้สั่งซื้อ</a>
+                                <a href="../../export/export-data-orderer.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -184,10 +184,24 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+                                            // echo $group_id;
+
                                             $stmt = $db->query("SELECT orderer.odr_id , orderer.odr_name , orderer.odr_phone ,
                                                                     orderer.group_id , group_comen.group_name as group_name
                                                                 FROM `orderer` 
-                                                                INNER JOIN `group_comen` ON orderer.group_id  = group_comen.group_id");
+                                                                INNER JOIN `group_comen` ON orderer.group_id  = group_comen.group_id
+                                                                WHERE orderer.group_id = '$group_id'");
                                             $stmt->execute();
                                             $odrs = $stmt->fetchAll();
                                             $count = 1;
@@ -215,7 +229,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสสินผู้สั่งซื้อ : </b><?= $odr['odr_id']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสผู้สั่งซื้อ : </b><?= $odr['odr_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>กลุ่มวิสาหกิจชุมชน : </b><?= $odr['group_name']; ?></label>
@@ -294,8 +308,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
@@ -395,6 +409,7 @@
                 url : "../../address.php",
                 data : {id:id_provnce,function:'provinces'},     
                 success: function(data){
+                    console.log(data);
                     $('#amphures').html(data);
                     $('#districts').html(' ');
                     $('#zipcode').val(' ');

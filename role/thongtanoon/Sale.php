@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
@@ -50,13 +61,13 @@
         //     }
         // }
 
-        $pd = $db->prepare("SELECT `mf_name` as Namepd FROM `mf_data` WHERE `mf_id` = '$pdname'");
+        $pd = $db->prepare("SELECT `mf_name` as Namepd , `mf_quan` FROM `mf_data` WHERE `mf_id` = '$pdname'");
         $pd->execute();
         $row = $pd->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        if($_POST["pricepd"] < $_POST["pdcost"]){
-            $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
+        if($_POST["quantity"] > $mf_quan){
+            $_SESSION['error'] = 'ยอดสินค้าของท่านไม่เพียงพอ';
             header("refresh:2; url=Sale.php");
         }else{
             $item_array = array(
@@ -71,7 +82,7 @@
             exit;
         }
     }
-
+    
     if(isset($_GET['action'])){
         if($_GET['action']=="delete"){
             $id = $_GET["id"];
@@ -113,11 +124,12 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
+
                     <div class="row">
                         <div class="col-lg-5">
                             <div class="card shadow mb-4">
@@ -146,7 +158,7 @@
                                                 <select class="form-control" aria-label="Default select example"  id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                     <option selected disabled>กรุณาเลือก....</option>
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `mf_data`");
+                                                        $stmt = $db->query("SELECT * FROM `mf_data` WHERE group_id = 'CM001'");
                                                         $stmt->execute();
                                                         $mfs = $stmt->fetchAll();
                                                         
@@ -167,7 +179,7 @@
                                             <!-- <div class="col-md-1"></div> -->
                                             <div class="col-md-4">
                                                 <label class="form-label">ราคาขาย</label>
-                                                <input type="number" class="form-control" id="pricepd" min="" name="pricepd" style="border-radius: 30px;" required>
+                                                <input type="number" class="form-control" id="pricepd" name="pricepd" min="1" style="border-radius: 30px;" required>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="form-label">จำนวนที่ขาย</label>
@@ -186,6 +198,9 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="col text-left">
+                                <a href="SaleList.php" class="btn btn-secondary" style="border-radius: 30px;"><i class="fa-solid fa-arrow-left"></i>&nbsp&nbsp&nbspย้อนกลับ</a>
+                            </div>
                         </div>
                         <div class="col-lg-7">
                             <div class="card shadow mb-4">
@@ -195,22 +210,19 @@
                                     </div>
                                     <form action="Check_Add_salepd.php" method="post">
                                         <div class="row mb-3">
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-3">
                                                 <!-- <label class="form-label" name="phone"></label> -->
                                                 <input type="text" class="form-control" id="id_mem" name="id_mem" style="border-radius: 30px;" placeholder="เบอร์โทรศัพท์">
                                             </div>
-                                            <div class="col-md-3">
-                                                <button class="btn-primary " style="border-radius: 30px; font-size: 0.9rem;" type="submit" id="show_dataMem" name="show_dataMem">ค้นหาข้อมูลสมาชิก</button>
+                                            <div class="col-md-3 mb-3">
+                                                <button class="btn btn-primary " style="border-radius: 30px; font-size: 0.9rem;" id="show_dataMem" name="show_dataMem">ค้นหาข้อมูลสมาชิก</button>
                                             </div>
-                                            
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-8">
-                                                <label class="form-label" name="cus">ชื่อผู้ซื้อ</label>
+                                            <div class="col-md-3 mb-3">
+                                                <!-- <label class="form-label" name="cus">ชื่อผู้ซื้อ</label> -->
                                                 <input type="text" class="form-control" id="cus" name="cus" style="border-radius: 30px;" readonly>
                                             </div>
-                                            <div class="col-md-4">
-                                                <label class="form-label" name="phone">เบอร์โทรศัพท์</label>
+                                            <div class="col-md-3 mb-3">
+                                                <!-- <label class="form-label" name="phone">เบอร์โทรศัพท์</label> -->
                                                 <input type="text" class="form-control" id="phone" name="phone" style="border-radius: 30px;" readonly>
                                             </div>
                                         </div>
@@ -222,6 +234,7 @@
                                                 <option selected disabled>กรุณาเลือก....</option>    
                                                     <option value="เครดิต">เครดิต</option>
                                                     <option value="เงินสด">เงินสด</option>
+                                                    <option value="ให้ฟรี">ให้ฟรี</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
@@ -373,18 +386,16 @@
         }
 
         $('#pdname').change(function(){
-            var id_pname = $(this).val();
-            console.log("pd = ",id_pname);
+            var id_pAll2 = $(this).val();
+            console.log("pd2 = ",id_pAll2);
             $.ajax({
                 type : "post",
-                url : "../../api/pdname.php",
-                data : {id:id_pname,function:'pdname'},     
+                url : "../../api/pdAll.php",
+                data : {id:id_pAll2,function:'pdAll'},     
                 success: function(data){
-                    // console.log("price = ",data);
-                    $('#pdcost').val(data); 
-                    $('#pricepd').val(data);
-                    // $('#unit').val(data);
 
+                    console.log("pdcost = ",data);
+                    $('#pdcost').val(data);
                 }
             });
         });
@@ -397,6 +408,8 @@
                 url : "../../api/pdunit.php",
                 data : {id:id_pname,function:'pdunit'},     
                 success: function(data){
+
+                    console.log("unit = ",data);
                     $('#unit').val(data);
 
                 }
@@ -405,24 +418,20 @@
 
         $('#show_dataMem').click(function(){
             var id_mem = $('#id_mem').val();
-            // console.log("id_mem = ",id_mem);
+            console.log("id_mem = ",id_mem);
             $.ajax({
                 type : "post",
                 url : "../../api/id_mem.php",
                 data : {id:id_mem,function:'id_mem'},     
                 success: function(data){
-                    // console.log("price = ",data);
+                    console.log("price = ",data);
                     data.forEach(item => {
-                        // console.log("cusname = ",item.cus_name);
-                        // console.log("cusphone = ",item.cus_phone);
+                        // console.log("cusname = ",item.odr_name);
+                        // console.log("cusphone = ",item.odr_phone);
                         $('#cus').val(item.odr_name); 
                         $('#phone').val(item.odr_phone); 
 
                     })
-                    
-                    
-                    // $('#phone').val(data[1]);
-
                 }
             });
         });

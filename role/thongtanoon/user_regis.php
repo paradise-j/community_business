@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         echo $delete_id;
@@ -72,22 +83,9 @@
                         <div class="row mb-1">
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
-                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required readonly>
-                                    <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืช</option>
-                                <!-- <option selected disabled>กรุณาเลือกวืสาหกิจชุมชข....</option> -->
-                                <?php 
-                                    // $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    // $stmt->execute();
-                                    // $cms = $stmt->fetchAll();
-                                    
-                                    // foreach($cms as $cm){
-                                ?>
-                                <!-- <option value="<?= $cm['group_id']?>"><?= $cm['group_name']?></option> -->
-                                <?php
-                                    // }
-                                ?>
-                                <!-- <option value="other">อื่น ๆ </option> -->
-                            </select>
+                                <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
+                                    <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืชบ้านทุ่งตาหนอน</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -124,20 +122,15 @@
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
-                                <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
-                                <input type="text" required class="form-control" name="phone" style="border-radius: 30px;">
+                                <label for="" class="col-form-label">เบอร์โทรศัพท์ &nbsp&nbsp&nbsp
+                                    <label style="color:red;" >** ไม่ต้องใส่ (-) **</label>
+                                </label>
+                                <input type="text" required class="form-control" name="phone" maxlength="10" style="border-radius: 30px;">
                             </div>
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">บ้านเลขที่</label>
                                 <input type="text" required class="form-control" name="address" style="border-radius: 30px;">
                             </div>
-                        </div>
-                        <div class="row mb-1">
-                            <!-- <div class="col-md-5">
-                                <label for="" class="col-form-label">เลขประจำตัวประชาชน</label>
-                                <input type="text" required class="form-control" name="perid"  minlength="13" maxlength="13" style="border-radius: 30px;">
-                            </div> -->
-                            
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
@@ -180,12 +173,19 @@
                         <div class="row mb-3">
                             <div class="col-md-7">
                                 <label for="" class="col-form-label">สิทธิ์การใช้งาน</label>
-                                <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกสิทธิ์การใช้งาน....</option>
-                                <option value="1">ประธานกลุ่มวิสากิจชุมชน</option>
-                                <option value="2">สมาชิกทั่วไป</option>
-                                <!-- <option value="5">ผู้ดูแลระบบ</option> -->
+                                <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required readonly>
+                                <option selected value="5">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืชบ้านทุ่งตาหนอน</option>
                             </select>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">ชื่อผุ้ใช้งาน</label>
+                                <input type="text" required class="form-control" name="username" value="tn" style="border-radius: 30px;" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="" class="col-form-label">รหัสผ่าน</label>
+                                <input type="text" required class="form-control" name="password" style="border-radius: 30px;">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -218,7 +218,7 @@
     </div>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+         <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -230,7 +230,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสมาชิก</a>
-                                <a href="#" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#ImportModal"><i class="fas fa-download fa-sm text-white-50"></i> เพิ่มข้อมูลจาก Excel</a>
+                                <a href="../../export/export-data-user.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -247,7 +247,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
+                                        <?php 
                                             $id = $_SESSION['id'];
                                             $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
                                             $check_id->execute();
@@ -259,11 +259,12 @@
                                             $check_group->execute();
                                             $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
                                             extract($row2);
-                                            // echo $group_id;     
-
+                                            // echo $group_id;            
+                                            
                                             
                                             $stmt = $db->query("SELECT * FROM `user_data`
                                                                 INNER JOIN `user_login` on user_data.user_id = user_login.user_id
+                                                                INNER JOIN `group_comen` on user_data.group_id = group_comen.group_id 
                                                                 WHERE user_data.group_id = '$group_id'");
                                             $stmt->execute();
                                             $users = $stmt->fetchAll();
@@ -292,6 +293,9 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อกลุ่มวิสาหกิจ : </b><?= $user['group_name']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อ-สกุล : </b><?= $user['user_Fname']." ".$user['user_Lname']; ?></label>
                                                         </div>
                                                         <!-- <div class="mb-2">
@@ -299,6 +303,9 @@
                                                         </div> -->
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ที่อยู่ : </b><?= $user['user_num']." ตำบล".$user['user_subdis']." อำเภอ".$user['user_dis']." จังหวัด".$user['user_pv']." รหัสไปรษณีย์ ".$user['user_zip']; ?></label>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>เบอร์โทรศัพท์ : </b><?= $user['user_phone']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผู้ใช้งาน : </b><?= $user['ul_username']; ?></label>
@@ -340,114 +347,117 @@
                                                         <form action="Check_edit_user.php" method="POST">
                                                             <div class="mb-1">
                                                                 <label for="" class="col-form-label">รหัสสมาชิก</label>
-                                                                <input type="text" required class="form-control" id="userid" name="Productid" value="<?= $user['user_id'];?>" style="border-radius: 30px;" readonly>
+                                                                <input type="text" class="form-control" id="userid" name="userid" value="<?= $user['user_id'];?>" style="border-radius: 30px;" required readonly>
                                                             </div>
                                                             <div class="row mb-1">
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">ชื่อ</label>
-                                                                    <input type="text" required class="form-control" name="Fname" value="<?= $user['user_Fname'];?>" style="border-radius: 30px;">
+                                                                    <input type="text" class="form-control" name="Fname" value="<?= $user['user_Fname'];?>" style="border-radius: 30px;" required>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">สกุล</label>
-                                                                    <input type="text" required class="form-control" name="Lname" value="<?= $user['user_Lname'];?>" style="border-radius: 30px;">
+                                                                    <input type="text" class="form-control" name="Lname" value="<?= $user['user_Lname'];?>" style="border-radius: 30px;" required>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-1">
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">เบอร์โทรศัพท์</label>
-                                                                    <input type="tel" required class="form-control" name="phone" value="<?= $user['user_phone'];?>" style="border-radius: 30px;">
+                                                                    <input type="tel" class="form-control" name="phone" maxlength="10" value="<?= $user['user_phone'];?>" style="border-radius: 30px;" required>
                                                                 </div>
-                                                                <!-- <div class="col-md-6">
-                                                                    <label for="" class="col-form-label">บ้านเลขที่</label>
-                                                                    <input type="text" required class="form-control" name="address" value="<?= $user['user_num'];?>" style="border-radius: 30px;">
-                                                                </div> -->
                                                             </div>
                                                             <div class="row mb-1">
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">ชื่อผู้ใช้งาน</label>
-                                                                    <input type="text" required class="form-control" name="phone" value="<?= $user['ul_username'];?>" style="border-radius: 30px;">
+                                                                    <input type="text" required class="form-control" name="username" value="<?= $user['ul_username'];?>" style="border-radius: 30px;">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">รหัสผ่าน</label>
-                                                                    <input type="text" required class="form-control" name="address" value="<?= $user['ul_password'];?>" style="border-radius: 30px;">
+                                                                    <input type="text" required class="form-control" name="password" value="<?= $user['ul_password'];?>" style="border-radius: 30px;">
                                                                 </div>
                                                             </div>
                                                             <!-- <div class="row mb-1">
+                                                                <div class="col-md-7">
+                                                                    <label for="" class="col-form-label">บ้านเลขที่</label>
+                                                                    <input type="text" class="form-control" name="address" value="<?= $user['user_num'];?>" style="border-radius: 30px;" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-1">
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">จังหวัด</label>
-                                                                    <select class="form-control" aria-label="Default select example" id="provinces2" name="provinces2" style="border-radius: 30px;" required>
-                                                                    <option selected disabled><?= $user['user_pv'];?></option>
+                                                                    <select class="form-control" aria-label="Default select example" id="pv33" name="pv33" style="border-radius: 30px;" required>
+                                                                    <option selected><?= $user['user_pv'];?></option>
                                                                     <?php 
-                                                                        $stmt = $db->query("SELECT * FROM `provinces`");
-                                                                        $stmt->execute();
-                                                                        $pvs = $stmt->fetchAll();
+                                                                        // $stmt = $db->query("SELECT * FROM `provinces`");
+                                                                        // $stmt->execute();
+                                                                        // $pvs = $stmt->fetchAll();
                                                                         
-                                                                        foreach($pvs as $pv){
+                                                                        // foreach($pvs as $pv){
                                                                     ?>
                                                                     <option value="<?= $pv['id']?>"><?= $pv['name_th']?></option>
                                                                     <?php
-                                                                        }
+                                                                        // }
                                                                     ?>
                                                                 </select>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label for="" class="col-form-label">อำเภอ</label>
-                                                                    <select class="form-control" aria-label="Default select example" id="amphures2" name="amphures2" style="border-radius: 30px;" required>
-                                                                        <option selected disabled><?= $user['user_dis'];?></option>
+                                                                    <select class="form-control" aria-label="Default select example" id="ap33" name="ap33" style="border-radius: 30px;" required>
+                                                                        <option value="<?= $pv['id']?>" selected><?= $user['user_dis'];?></option>
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col-md-7">
                                                                     <label for="" class="col-form-label">ตำบล</label>
-                                                                    <select class="form-control" aria-label="Default select example" id="districts2" name="districts2" style="border-radius: 30px;" required>
-                                                                    <option selected disabled ><?= $user['user_subdis'];?></option>
+                                                                    <select class="form-control" aria-label="Default select example" id="dt33" name="dt33" style="border-radius: 30px;" required>
+                                                                    <option value="<?= $pv['id']?>" selected ><?= $user['user_subdis'];?></option>
                                                                 </select>
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <label for="firstname" class="col-form-label">รหัสไปรษณีย์</label>
-                                                                    <input type="text" required class="form-control" id="zipcode2" name="zipcode2" value="<?= $user['user_zip'];?>"style="border-radius: 30px;">
+                                                                    <input type="text" class="form-control" id="zc33" name="zc33" value="<?= $user['user_zip'];?>"style="border-radius: 30px;"required>
                                                                 </div>
                                                             </div> -->
 
                                                             <!-- <script>
-                                                                $('#provinces2').change(function(){
-                                                                    var id_provnce2 = $(this).val();
-                                                                    console.log("id_provnce2 = "+id_provnce2);
+                                                                $('#pv_edit').change(function(){
+                                                                    var id_pv_edit = $(this).val();
+
+                                                                    console.log("id_pv_edit = "+id_pv_edit);
                                                                     $.ajax({
                                                                         type : "post",
-                                                                        url : "../../address2.php",
-                                                                        data : {id:id_provnce2,function:'provinces2'},     
+                                                                        url : "../../address33.php",
+                                                                        data : {id:id_pv33,function:'pv33'},     
                                                                         success: function(data){
                                                                             console.log(data);
-                                                                            $('#amphures2').html(data);
-                                                                            $('#districts2').html(' ');
-                                                                            $('#zipcode2').val(' ');
+                                                                            $('#ap33').html(data);
+                                                                            $('#dt33').html(' ');
+                                                                            $('#zc33').val(' ');
                                                                         }
                                                                     });
                                                                 });
 
-                                                                $('#amphures2').change(function(){
-                                                                    var id_amphures = $(this).val();
+                                                                $('#ap33').change(function(){
+                                                                    var id_ap33 = $(this).val();
                                                                     $.ajax({
                                                                         type : "post",
-                                                                        url : "../../address2.php",
-                                                                        data : {id:id_amphures,function:'amphures2'},
+                                                                        url : "../../address33.php",
+                                                                        data : {id:id_ap33,function:'ap33'},
                                                                         success: function(data){
-                                                                            $('#districts2').html(data);
-                                                                            $('#zipcode2').val(' ');
+                                                                            $('#dt33').html(data);
+                                                                            $('#zc33').val(' ');
                                                                         }
                                                                     });
                                                                 });
 
-                                                                $('#districts2').change(function(){
-                                                                    var id_districts = $(this).val();
+                                                                $('#dt33').change(function(){
+                                                                    var id_dt33 = $(this).val();
                                                                     $.ajax({
                                                                         type : "post",
-                                                                        url : "../../address2.php",
-                                                                        data : {id:id_districts,function:'districts2'},
+                                                                        url : "../../address33.php",
+                                                                        data : {id:id_dt33,function:'dt33'},
                                                                         success: function(data){
-                                                                            $('#zipcode2').val(data)
+                                                                            $('#zc33').val(data)
                                                                         }
                                                                     });
                                                                 });
@@ -493,14 +503,59 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
 
     <script>
+        // $(".delete-btn").click(function(e) {
+        //     var userId = $(this).data('id');
+        //     // console.log(userId);
+        //     e.preventDefault();
+        //     deleteConfirm(userId);
+        // })
+
+        // function deleteConfirm(userId) {
+        //     Swal.fire({
+        //         title: 'ลบข้อมูล',
+        //         text: "คุณแน่ใจใช่หรือไม่ที่จบลบข้อมูลนี้",
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'ลบข้อมูล',
+        //         showLoaderOnConfirm: true,
+        //         preConfirm: function() {
+        //             return new Promise(function(resolve) {
+        //                 $.ajax({
+        //                         url: 'user_regis.php',
+        //                         type: 'GET',
+        //                         data: 'delete=' + userId,
+        //                     })
+        //                     .done(function() {
+        //                         Swal.fire({
+        //                             title: 'สำเร็จ',
+        //                             text: 'ลบข้อมูลเรียบร้อยแล้ว',
+        //                             icon: 'success',
+        //                         }).then(() => {
+        //                             document.location.href = 'user_regis.php';
+        //                         })
+        //                     })
+        //                     .fail(function() {
+        //                         Swal.fire({
+        //                             title: 'ไม่สำเร็จ',
+        //                             text: 'ลบข้อมูลไม่สำเร็จ',
+        //                             icon: 'danger',
+        //                         })
+        //                         window.location.reload();
+        //                     });
+        //             });
+        //         },
+        //     });
+        // }
+        
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
             // console.log(userId);
@@ -566,7 +621,6 @@
             }
         });
         $('.table').DataTable();
-
 
         $('#provinces').change(function(){
             var id_provnce = $(this).val();

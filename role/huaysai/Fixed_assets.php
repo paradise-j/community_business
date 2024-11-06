@@ -8,6 +8,19 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = :user_id");
+    $stmt2->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->prepare("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = :group_id");
+    $stmt3->bindParam(':group_id', $group_id, PDO::PARAM_INT);
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `fixed_asset` WHERE `fa_id` = '$delete_id'");
@@ -71,8 +84,7 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <option selected value="CM006">วสช.ศูนย์เรียนรู้บ้านห้วยทราย</option>
+                                <option selected value="CM002">วสช.ชีววิถีคลองชะอุ่น</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -118,7 +130,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar8.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -130,6 +142,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินทรัพย์ถาวร</a>
+                                <a href="../../export/export-data-Fixed_assets.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -285,8 +298,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>

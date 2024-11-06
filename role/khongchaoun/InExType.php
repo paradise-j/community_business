@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `inextype` WHERE `int_id` = '$delete_id'");
@@ -71,8 +82,7 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                <option selected value="CM004">วสช.ส่งเสริมอาชีพเกษตรกรชาวสวนยาง</option>
+                                <option selected value="CM002">วสช.ชีววิถีคลองชะอุ่น</option>
                             </select>
                         </div>
                         
@@ -116,7 +126,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -143,21 +153,20 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            // $id = $_SESSION['id'];
-                                            // $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
-                                            // $check_id->execute();
-                                            // $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
-                                            // extract($row1);
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
 
-                                            // $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
-                                            // $check_group->execute();
-                                            // $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
-                                            // extract($row2);
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
 
                                             $stmt = $db->query("SELECT inextype.int_id , inextype.int_name, inextype.group_id , group_comen.group_name as group_name 
                                                                 FROM `inextype` INNER JOIN `group_comen` ON group_comen.group_id = inextype.group_id
-                                                                -- WHERE inextype.group_id = '$group_id'
-                                                                ");
+                                                                WHERE inextype.group_id = '$group_id'");
                                             $stmt->execute();
                                             $ints = $stmt->fetchAll();
                                             $count = 1;
@@ -301,23 +310,7 @@
 
 
     <script>
-        let imgInput = document.getElementById('imgInput');
-        let previewImg = document.getElementById('previewImg');
 
-        imgInput.onchange = evt => {
-            const [file] = imgInput.files;
-                if (file) {
-                    previewImg.src = URL.createObjectURL(file)
-            }
-        }
-
- 
-
-        $(".delete-btn").click(function(e) {
-            var userId = $(this).data('id');
-            e.preventDefault();
-            deleteConfirm(userId);
-        })
 
         function deleteConfirm(userId) {
             Swal.fire({
@@ -396,7 +389,23 @@
         });
         $('.table').DataTable();
 
+        let imgInput = document.getElementById('imgInput');
+        let previewImg = document.getElementById('previewImg');
 
+        imgInput.onchange = evt => {
+            const [file] = imgInput.files;
+                if (file) {
+                    previewImg.src = URL.createObjectURL(file)
+            }
+        }
+
+ 
+
+        $(".delete-btn").click(function(e) {
+            var userId = $(this).data('id');
+            e.preventDefault();
+            deleteConfirm(userId);
+        })
     </script>
 
 </body>

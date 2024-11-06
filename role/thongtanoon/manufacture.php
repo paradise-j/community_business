@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `mf_data` WHERE `mf_id` = '$delete_id'");
@@ -77,18 +88,17 @@
                             <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกสินค้า....</option>
                                 <?php 
-                                    $stmt = $db->query("SELECT `pd_name` FROM `product`");
+                                    $stmt = $db->query("SELECT `pd_name` FROM `product` WHERE `group_id` = 'CM001'");
                                     $stmt->execute();
                                     $pds = $stmt->fetchAll();
                                     
                                     foreach($pds as $pd){
                                 ?>
-                                <option value="<?= $pd['pd_name']?>"><?= $pd['pd_name']?></option>
+                                <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
                                 <?php
                                     }
                                 ?>
                             </select>
-                            <!-- <input type="text" required class="form-control" name="pdname" style="border-radius: 30px;"> -->
                         </div>
                         <div class="row mb-3">
                                 <div class="col-md-8">
@@ -119,221 +129,76 @@
                         </div>
                         <div class="row">
                             <div class="col text-center">
-                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าน้ำ -------------</label>
+                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าน้ำ - ค่าไฟ -------------</label>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
+                                <label class="col-form-label">ค่าน้ำ จำนวนเงิน(บาท)</label>
                                 <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                             </div>
                             <div class="col-md-6">
-                                <label class="col-form-label">จำนวนเงิน</label>
+                                <label class="col-form-label">ค่าไฟ จำนวนเงิน(บาท)</label>
                                 <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col text-center">
-                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าไฟ -------------</label>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div>
+                        
                         <!-- ======================================================================ค่าวัตถุดิบหลัก ======================================================================================== -->
                         <div class="row">
                             <div class="col text-center">
                                 <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- ค่าวัตถุดิบหลัก -------------</label>
                             </div>
                         </div>
+                        <div id="show_item">
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="col-form-label">วัตถุดิบ</label>
+                                    <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                        <option selected disabled>เลือกวัตถุดิบ....</option>
+                                        <?php 
+                                            $stmt = $db->query("SELECT * FROM `material`");
+                                            $stmt->execute();
+                                            $mats = $stmt->fetchAll();
+                                            
+                                            foreach($mats as $mat){
+                                        ?>
+                                        <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
+                                        <?php
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="col-form-label">ปริมาณ</label>
+                                    <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;"required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="col-form-label">หน่วย</label>
+                                    <input type="text"  class="form-control" name="unit"  style="border-radius: 30px;" required readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="col-form-label">จำนวนเงิน</label>
+                                    <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;"required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col text-right">
+                                    <button  class="btn btn-success add_item_btn" style="border-radius: 30px; font-size: 0.8rem;">เพิ่มวัตถุดิบ</button>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="row mb-3">
+                            <div class="col-md-7">
+                                <label class="col-form-label">ค่าหีบห่อ บรรจุภัณฑ์ จำนวนเงิน (บาท)</label>
+                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
+                            </div>
                             <div class="col-md-5">
-                                <label class="col-form-label">รายการวัตถุดิบที่ 1</label>
-                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
-                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
-                                    <?php 
-                                        $stmt = $db->query("SELECT * FROM `material`");
-                                        $stmt->execute();
-                                        $mats = $stmt->fetchAll();
-                                        
-                                        foreach($mats as $mat){
-                                    ?>
-                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="col-form-label">จำนวนเงิน</label>
+                                <label class="col-form-label">อื่น ๆ จำนวนเงิน (บาท)</label>
                                 <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-5">
-                                <label class="col-form-label">รายการวัตถุดิบที่ 2</label>
-                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
-                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
-                                    <?php 
-                                        $stmt = $db->query("SELECT * FROM `material`");
-                                        $stmt->execute();
-                                        $mats = $stmt->fetchAll();
-                                        
-                                        foreach($mats as $mat){
-                                    ?>
-                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-5">
-                                <label class="col-form-label">รายการวัตถุดิบที่ 3</label>
-                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
-                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
-                                    <?php 
-                                        $stmt = $db->query("SELECT * FROM `material`");
-                                        $stmt->execute();
-                                        $mats = $stmt->fetchAll();
-                                        
-                                        foreach($mats as $mat){
-                                    ?>
-                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-5">
-                                <label class="col-form-label">รายการวัตถุดิบที่ 4</label>
-                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
-                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
-                                    <?php 
-                                        $stmt = $db->query("SELECT * FROM `material`");
-                                        $stmt->execute();
-                                        $mats = $stmt->fetchAll();
-                                        
-                                        foreach($mats as $mat){
-                                    ?>
-                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-5">
-                                <label class="col-form-label">รายการวัตถุดิบที่ 5</label>
-                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
-                                    <option selected disabled>เลือกรายการวัตถุดิบ....</option>
-                                    <?php 
-                                        $stmt = $db->query("SELECT * FROM `material`");
-                                        $stmt->execute();
-                                        $mats = $stmt->fetchAll();
-                                        
-                                        foreach($mats as $mat){
-                                    ?>
-                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
-                                    <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div><label class="col-form-label">อื่น ๆ </label>
-                        <div class="row mb-3">
-                            
-                            <div class="col-md-4">
-                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <!-- ======================================================================ค่าหีบห่อ บรรจุภัณฑ์ ======================================================================================== -->
-                        <div class="row">
-                            <div class="col text-center">
-                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">---------- ค่าหีบห่อ บรรจุภัณฑ์ ----------</label>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="col-form-label">จำนวนหน่วยที่ใช้งาน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col text-center">
-                                <label class="col-form-label " style="color: black; font-size: 1.1rem;">------------- อื่น ๆ  -------------</label>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-5">
-                                <label class="col-form-label">รายการอื่น ๆ  </label>
-                                <input type="text" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label">ปริมาณวัตถุดิบ</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="col-form-label">จำนวนเงิน</label>
-                                <input type="number" required class="form-control" name="quan" step="0.01" style="border-radius: 30px;">
-                            </div>
-                        </div>
+                    
                         <div class="mb-3">
                             <label for="" class="col-form-label">ปัญหาในการผลิต</label>
                             <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
@@ -376,7 +241,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -387,7 +252,9 @@
                         </div>
                         <div class="row mt-4 ml-2">
                             <div class="col">
-                                <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a>
+                                <!-- <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a> -->
+                                <a href="mf_detail.php" class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a>
+                                <a href="../../export/export-data-manufacture.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -396,14 +263,29 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
+                                            <th>วันที่ผลิต</th>
                                             <th>รายการผลิต</th>
+                                            <th>จำนวนคงเหลือสะสม</th>
                                             <th></th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `mf_data`");
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+
+                                            $stmt = $db->query("SELECT * FROM `mf_data` INNER JOIN `group_comen` ON group_comen.group_id = mf_data.group_id 
+                                                                WHERE mf_data.group_id = '$group_id' ");
                                             $stmt->execute();
                                             $mfs = $stmt->fetchAll();
                                             $count = 1;
@@ -413,8 +295,10 @@
                                              foreach($mfs as $mf)  {  
                                         ?>
                                         <tr>
+                                            <td class="date_th"><?= $mf['mf_date']; ?></td>
                                             <td><?= $mf['mf_name']; ?></td>
-                                            <!-- <td class="date_th"><?= $mf['mf_date']; ?></td> -->
+                                            <td><?= $mf['mf_quan']." ".$mf['mf_unit']; ?></td>
+                                            
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">ดูข้อมูล</i></button>
                                                 <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">แก้ไข</i></button>
@@ -444,10 +328,10 @@
                                                             <label class="col-form-label" type="number" style="font-size: 1.25rem;"><b>จำนวน : </b><?= number_format($mf['mf_quan'],2)." ".$mf['mf_unit']; ?> </label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนรวม : </b><?= number_format($mf['mf_cost']);?> บาท</label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนรวม : </b><?= number_format($mf['mf_price']);?> บาท</label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($mf['mf_cost']/$mf['mf_quan'],2)." "."บาท"; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ราคาทุนต่อหน่วย : </b><?= number_format($mf['mf_cost'],2)." "."บาท"; ?></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -482,13 +366,64 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-
+    <!-- <script>
+        $(document).ready(function(){
+            $(".add_item_btn").click(function(e){
+                e.preventDefault();
+                $("#show_item").prepend(`
+                    <div class="row-xl">
+                        <div class="row">
+                            <div class="col-xl-3">
+                                <label class="col-form-label">วัตถุดิบ</label>
+                                <select class="form-control" aria-label="Default select example" id="g_name" name="g_name" style="border-radius: 30px;" required>
+                                    <option selected disabled>เลือกวัตถุดิบ....</option>
+                                    <?php 
+                                        // $stmt = $db->query("SELECT * FROM `material`");
+                                        // $stmt->execute();
+                                        // $mats = $stmt->fetchAll();
+                                        
+                                        // foreach($mats as $mat){
+                                    ?>
+                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
+                                    <?php
+                                        // }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-xl-3">
+                                <label class="col-form-label">ปริมาณ</label>
+                                <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;"required>
+                            </div>
+                            <div class="col-xl-3">
+                                <label class="col-form-label">หน่วย</label>
+                                <input type="text"  class="form-control" name="unit"  style="border-radius: 30px;" required readonly>
+                            </div>
+                            <div class="col-xl-3">
+                                <label class="col-form-label">จำนวนเงิน</label>
+                                <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;"required>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col text-right">
+                                <button  class="btn btn-danger remove_item_btn" style="border-radius: 30px; font-size: 0.8rem;">ลบวัตถุดิบ</button>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        });
+        $(document).on('click', '.remove_item_btn', function(e){
+            e.preventDefault();
+            let row_item = $(this).parent().parent().parent();
+            $(row_item).remove();
+        });
+    </script> -->
     <script>
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
@@ -573,6 +508,7 @@
         });
         $('.table').DataTable();
 
+        
 
     </script>
 

@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `mf_data` WHERE `mf_id` = '$delete_id'");
@@ -77,7 +88,7 @@
                             <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกสินค้า....</option>
                                 <?php 
-                                    $stmt = $db->query("SELECT `pd_name` FROM `product`");
+                                    $stmt = $db->query("SELECT `pd_name` FROM `product` WHERE `group_id` = 'CM001'");
                                     $stmt->execute();
                                     $pds = $stmt->fetchAll();
                                     
@@ -230,7 +241,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar6.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -243,6 +254,7 @@
                             <div class="col">
                                 <!-- <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a> -->
                                 <a href="mf_detail.php" class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a>
+                                <a href="../../export/export-data-manufacture.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -251,16 +263,29 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
+                                            <th>วันที่ผลิต</th>
                                             <th>รายการผลิต</th>
-                                            <th>จำนวน</th>
-                                            <th>วันที่ผลิตล่าสุด</th>
+                                            <th>จำนวนคงเหลือสะสม</th>
                                             <th></th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `mf_data`");
+                                            $id = $_SESSION['id'];
+                                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                            $check_id->execute();
+                                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                            extract($row1);
+                                            // echo $user_id;
+
+                                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                            $check_group->execute();
+                                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                            extract($row2);
+
+                                            $stmt = $db->query("SELECT * FROM `mf_data` INNER JOIN `group_comen` ON group_comen.group_id = mf_data.group_id 
+                                                                WHERE mf_data.group_id = '$group_id' ");
                                             $stmt->execute();
                                             $mfs = $stmt->fetchAll();
                                             $count = 1;
@@ -270,9 +295,10 @@
                                              foreach($mfs as $mf)  {  
                                         ?>
                                         <tr>
+                                            <td class="date_th"><?= $mf['mf_date']; ?></td>
                                             <td><?= $mf['mf_name']; ?></td>
                                             <td><?= $mf['mf_quan']." ".$mf['mf_unit']; ?></td>
-                                            <td class="date_th"><?= $mf['mf_date']; ?></td>
+                                            
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">ดูข้อมูล</i></button>
                                                 <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">แก้ไข</i></button>
@@ -340,8 +366,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>

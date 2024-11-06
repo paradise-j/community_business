@@ -10,49 +10,45 @@
         $name = $_POST['name'];
         $quan = $_POST['quan'];
         $price = $_POST['price'];
-        $order_id = $_POST['order_id'];
+        $pldID = $_POST['pldID'];
         $problem = $_POST['problem'];
         $total = $quan*$price;
 
 
 
         $pb = $db->prepare("INSERT INTO `bproduce`(`bp_date`, `veget_name`, `bp_quan`, `bp_pricekg`, `bp_totalprice`, `gw_id`, `bp_order_id`, `bp_problem`)
-                            VALUES  ('$date','$name','$quan','$price','$total','$g_id','$order_id','$problem')");
+                                         VALUES  ('$date','$name','$quan','$price','$total','$g_id','$pldID','$problem')");
         $pb->execute();
 
         
-        $vegN_check = $db->prepare("SELECT `veget_name` FROM `vegetable`");
-        $vegN_check->execute();
+        // $vegN_check = $db->prepare("SELECT `pd_id`, `pd_name` FROM `product` WHERE `group_id` = 'CM007'");
+        // $vegN_check->execute();
 
-        $check = array();
-        while ($row = $vegN_check->fetch(PDO::FETCH_ASSOC)){
-            $name = $row["veget_name"];
-            array_push($check,$name);
+        // $check = array();
+        // while ($row = $vegN_check->fetch(PDO::FETCH_ASSOC)){
+        //     $name = $row["veget_name"];
+        //     array_push($check,$name);
             
-        }
-        if(!in_array("$rpname", $check)){
-            $veg = $db->prepare("INSERT INTO `vegetable`(`veget_name`, `veget_quian`)  VALUES  ('$name','$quan')");
-            $veg->execute();
-        }else{
+        // }
+        // if(!in_array("$rpname", $check)){
+        //     $veg = $db->prepare("INSERT INTO `vegetable`(`veget_name`, `veget_quian`)  VALUES  ('$name','$quan')");
+        //     $veg->execute();
+        // }else{
 
-            $vegQ_check = $db->prepare("SELECT `veget_quian` FROM `vegetable` WHERE `veget_name`='$name'");
-            $vegQ_check->execute();
-            $row = $vegQ_check->fetch(PDO::FETCH_ASSOC)
-            extract($row);
+        //     $vegQ_check = $db->prepare("SELECT `veget_quian` FROM `vegetable` WHERE `veget_name`='$name'");
+        //     $vegQ_check->execute();
+        //     $row = $vegQ_check->fetch(PDO::FETCH_ASSOC)
+        //     extract($row);
 
-            $Nquan = $veget_quian + $quan;
+        //     $Nquan = $veget_quian + $quan;
 
-            $veg = $db->prepare("UPDATE `vegetable` SET `veget_quian`='$Nquan' WHERE `veget_name`='$name'");
-            $veg->execute();
+        //     $veg = $db->prepare("UPDATE `vegetable` SET `veget_quian`='$Nquan' WHERE `veget_name`='$name'");
+        //     $veg->execute();
 
             
-        }
+        // }
 
-        
-
-
-
-        if ($pb && $veg) {
+        if ($pb) {
             $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อย";
             echo "<script>
                 $(document).ready(function() {

@@ -5,30 +5,34 @@
     require_once "../../connect.php";
 
     if (isset($_POST['submit'])) {
-        $materialid = $_POST['materialid'];
-        $materialname = $_POST['materialname'];
+        // $g_id = $_POST['group'];
+        $unitid = $_POST['unitid']; 
+        $unitname = $_POST['unitname'];
 
-        $sql = $db->prepare("UPDATE `material` SET `mat_name`='$materialname'
-                             WHERE `mat_id`='$materialid'");
-        $sql->execute();
 
-        if ($sql) {
-            $_SESSION['success'] = "สำเร็จ";
+        $pb = $db->prepare("UPDATE `unit` SET `unit_name`='$unitname'
+                            WHERE `unit_id` ='$unitid'");
+        $pb->execute();
+
+
+        if ($pb) {
+            $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อย";
             echo "<script>
                 $(document).ready(function() {
                     Swal.fire({
                         title: 'สำเร็จ',
-                        text: 'แก้ไขข้อมูลเรียบร้อยแล้ว',
+                        text: 'เพิ่มข้อมูลเรียบร้อย',
                         icon: 'success',
                         timer: 5000,
                         showConfirmButton: false
                     });
                 })
             </script>";
-            header("refresh:1; url=material.php");
+            header("refresh:1; url=manage_unit.php");
         } else {
             $_SESSION['error'] = "เพิ่มข้อมูลเรียบร้อยไม่สำเร็จ";
-            header("location: material.php");
+            header("location: manage_unit.php");
         }
+            
     }
 ?>

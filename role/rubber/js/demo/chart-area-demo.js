@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
   
     async function get_sale_All() {
       // const res = await fetch("api/get_sale_All.php");
-      const res = await fetch("/community_business/api/get_sale_All.php");
+      const res = await fetch("/community_business/api/get_sale_rubber.php");
       const json = await res.json()
       return json;
     }
@@ -140,9 +140,9 @@ window.addEventListener('DOMContentLoaded', async (event) => {
       data: {
         labels: Unique_label,
         datasets: [{
-          label: "ยอดขายสินค้า",
+          // label: "ยอดขายสินค้า",
           lineTension: 0,
-          backgroundColor: "rgba(78, 115, 223, 0.07)",
+          backgroundColor: "rgba(78, 115, 223, 0.3)",
           borderColor: "rgba(78, 115, 223, 1)",
           pointRadius: 5,
           pointBackgroundColor: "rgba(78, 115, 223, 1)",
@@ -197,7 +197,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
           }],
         },
         legend: {
-          display: true
+          display: false
         },
         tooltips: {
           backgroundColor: "rgb(255,255,255)",

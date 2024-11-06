@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         echo $delete_id;
@@ -72,9 +83,8 @@
                         <div class="row mb-1">
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
-                                <select class="form-control" aria-label="Default select example" id="group_id" name="group_id" style="border-radius: 30px;" required readonly>
-                                    <option selected disabled>กรุณาเลือกกลุ่มวิสาหกิจชุมชน....</option>
-                                    <option selected value="CM002">วสช.ชีววิถีคลองชะอุ่น</option>
+                                <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
+                                    <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
                                 </select>
                             </div>
                         </div>
@@ -163,9 +173,8 @@
                         <div class="row mb-3">
                             <div class="col-md-7">
                                 <label for="" class="col-form-label">สิทธิ์การใช้งาน</label>
-                                <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกสิทธิ์การใช้งาน....</option>
-                                <option value="4">วสช.ชีววิถีคลองชะอุ่น</option>
+                                <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required readonly>
+                                <option selected value="4">วสช.ชีววิถีคลองชะอุ่น</option>
                             </select>
                             </div>
                         </div>
@@ -209,7 +218,7 @@
     </div>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar4.php');?> <!-- Sidebar -->
+         <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -221,7 +230,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสมาชิก</a>
-                                <a href="#" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#ImportModal"><i class="fas fa-download fa-sm text-white-50"></i> เพิ่มข้อมูลจาก Excel</a>
+                                <a href="../../export/export-data-user.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -502,6 +511,51 @@
 
 
     <script>
+        // $(".delete-btn").click(function(e) {
+        //     var userId = $(this).data('id');
+        //     // console.log(userId);
+        //     e.preventDefault();
+        //     deleteConfirm(userId);
+        // })
+
+        // function deleteConfirm(userId) {
+        //     Swal.fire({
+        //         title: 'ลบข้อมูล',
+        //         text: "คุณแน่ใจใช่หรือไม่ที่จบลบข้อมูลนี้",
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'ลบข้อมูล',
+        //         showLoaderOnConfirm: true,
+        //         preConfirm: function() {
+        //             return new Promise(function(resolve) {
+        //                 $.ajax({
+        //                         url: 'user_regis.php',
+        //                         type: 'GET',
+        //                         data: 'delete=' + userId,
+        //                     })
+        //                     .done(function() {
+        //                         Swal.fire({
+        //                             title: 'สำเร็จ',
+        //                             text: 'ลบข้อมูลเรียบร้อยแล้ว',
+        //                             icon: 'success',
+        //                         }).then(() => {
+        //                             document.location.href = 'user_regis.php';
+        //                         })
+        //                     })
+        //                     .fail(function() {
+        //                         Swal.fire({
+        //                             title: 'ไม่สำเร็จ',
+        //                             text: 'ลบข้อมูลไม่สำเร็จ',
+        //                             icon: 'danger',
+        //                         })
+        //                         window.location.reload();
+        //                     });
+        //             });
+        //         },
+        //     });
+        // }
+        
         $(".delete-btn").click(function(e) {
             var userId = $(this).data('id');
             // console.log(userId);

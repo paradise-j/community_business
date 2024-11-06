@@ -8,7 +8,37 @@
     }
     require_once '../../connect.php';
 
-    
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb); 
+
+    if(isset($_POST["add_product"])){
+        $pdname = $_POST["pdname"];
+        $pd_name = $db->prepare("SELECT `pd_name` FROM `product` WHERE `pd_id` = '$pdname'");
+        $pd_name->execute();
+        $row = $pd_name->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
+        $pd_unit = $db->prepare("SELECT `pd_unit` FROM `product` WHERE `pd_id` = '$pdname'");
+        $pd_unit->execute();
+        $row = $pd_unit->fetch(PDO::FETCH_ASSOC);
+        extract($row);
+
+
+        $item_array_product = array(
+            'item_name'       =>     $pd_name,
+            'item_unit'       =>     $pd_unit
+            );
+            $_SESSION["product_cart"][] =  $item_array_product;
+        header("location:mf_detail.php");
+    }
 
 
     if(isset($_POST["add_sale"])){
@@ -76,73 +106,123 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar4.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 text-center">
-                                    <h5 class="m-0 font-weight-bold text-primary">รายละเอียดการผลิตสินค้า</h5>
-                                </div>
-                                <div class="card-body">
-                                    <form action="?" method="POST">
-                                        <?php if(isset($_SESSION['error'])) { ?>
-                                            <div class="alert alert-danger" role="alert">
-                                                <?php 
-                                                    echo $_SESSION['error'];
-                                                    unset($_SESSION['error']);
-                                                ?>
-                                            </div>
-                                        <?php } ?>
-                                        <div class="row mt-2">
-                                            <!-- <div class="col text-center">
-                                                <label style="color:red;" >**** ในกรณีในเดือนนั้นขายแพะไม่ครบทุกประเภท ให้ระบุค่า 0 ลงในประเภทแพะที่ไม่ได้ขาย ****</label>
-                                            </div> -->
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-7">
-                                                <label class="col-form-label">วัตถุดิบ</label>
-                                                <select class="form-control" aria-label="Default select example" id="mfname" name="mfname" style="border-radius: 30px;" required>
-                                                    <option selected disabled>เลือกวัตถุดิบ....</option>
+                            <div class="row">
+                                <div class="card shadow mb-3">
+                                    <!-- <i class="fas fa-solid fa-circle-1"></i> -->
+                                    <div class="card-header py-3 text-center">
+                                        <h5 class="m-0 font-weight-bold text-primary">1.สินค้าที่ต้องการผลิต</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="?" method="POST">
+                                            <?php if(isset($_SESSION['error'])) { ?>
+                                                <div class="alert alert-danger" role="alert">
                                                     <?php 
-                                                        $stmt = $db->query("SELECT * FROM `material` WHERE group_id = 'CM002'");
-                                                        $stmt->execute();
-                                                        $mats = $stmt->fetchAll();
-                                                        
-                                                        foreach($mats as $mat){
+                                                        echo $_SESSION['error'];
+                                                        unset($_SESSION['error']);
                                                     ?>
-                                                    <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
-                                                    <?php
-                                                        }
+                                                </div>
+                                            <?php } ?>
+                                            <div class="row mb-4">
+                                                <div class="col-md-6">
+                                                    <label class="col-form-label">ชื่อสินค้าที่ต้องการผลิต</label>
+                                                    <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
+                                                        <option selected disabled>กรุณาเลือกสินค้า....</option>
+                                                        <?php 
+                                                            $stmt = $db->query("SELECT * FROM `product`  WHERE group_id = 'CM001'");
+                                                            $stmt->execute();
+                                                            $pds = $stmt->fetchAll();
+                                                            
+                                                            foreach($pds as $pd){
+                                                        ?>
+                                                        <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="" class="col-form-label">หน่วยนับ</label>
+                                                    <input type="text"  class="form-control" name="pdunit" id="pdunit" style="border-radius: 30px;" required readonly>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col text-right">
+                                                    <button class="btn btn-primary" style="border-radius: 30px;" type="submit" name="add_product">เพิ่มสินค้า</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3 text-center">
+                                        <h5 class="m-0 font-weight-bold text-primary">2.รายละเอียดวัตถุดิบที่ใช้ในการผลิตสินค้า</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="?" method="POST">
+                                            <?php if(isset($_SESSION['error'])) { ?>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <?php 
+                                                        echo $_SESSION['error'];
+                                                        unset($_SESSION['error']);
                                                     ?>
-                                                </select>
+                                                </div>
+                                            <?php } ?>
+                                            <div class="row mt-2">
+                                                <!-- <div class="col text-center">
+                                                    <label style="color:red;" >**** ในกรณีในเดือนนั้นขายแพะไม่ครบทุกประเภท ให้ระบุค่า 0 ลงในประเภทแพะที่ไม่ได้ขาย ****</label>
+                                                </div> -->
                                             </div>
-                                            <div class="col-md-5">
-                                                <label class="col-form-label">ปริมาณ</label>
-                                                <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;"required>
+                                            <div class="row mb-2">
+                                                <div class="col-md-7">
+                                                    <label class="col-form-label">วัตถุดิบ</label>
+                                                    <select class="form-control" aria-label="Default select example" id="mfname" name="mfname" style="border-radius: 30px;" required>
+                                                        <option selected disabled>เลือกวัตถุดิบ....</option>
+                                                        <?php 
+                                                            $stmt = $db->query("SELECT * FROM `material` WHERE group_id = 'CM001'");
+                                                            $stmt->execute();
+                                                            $mats = $stmt->fetchAll();
+                                                            
+                                                            foreach($mats as $mat){
+                                                        ?>
+                                                        <option value="<?= $mat['mat_id']?>"><?= $mat['mat_name']?></option>
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="col-form-label">ปริมาณ</label>
+                                                    <input type="number"  class="form-control" name="quan" step="0.01" style="border-radius: 30px;"required>
+                                                </div>
+                                                
                                             </div>
-                                            
-                                        </div>
-                                        <div class="row mb-5">
-                                            <div class="col-md-1"></div>
-                                            <div class="col-md-5">
-                                                <label class="col-form-label">หน่วย</label>
-                                                <input type="text"  class="form-control" name="unit" id="unit" style="border-radius: 30px;" required readonly>
+                                            <div class="row mb-3">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-5">
+                                                    <label class="col-form-label">หน่วย</label>
+                                                    <input type="text"  class="form-control" name="unit" id="unit" style="border-radius: 30px;" required readonly>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label class="col-form-label">จำนวนเงิน</label>
+                                                    <input type="number"  class="form-control" name="price" step="0.01" style="border-radius: 30px;"required>
+                                                </div>
                                             </div>
-                                            <div class="col-md-5">
-                                                <label class="col-form-label">จำนวนเงิน</label>
-                                                <input type="number"  class="form-control" name="price" step="0.01" style="border-radius: 30px;"required>
+                                            <div class="row">
+                                                <div class="col text-right">
+                                                    <button class="btn btn-primary" style="border-radius: 30px;" type="submit" name="add_sale">เพิ่มรายการ</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col text-right">
-                                                <button class="btn btn-primary" style="border-radius: 30px;" type="submit" name="add_sale">เพิ่มรายการ</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +230,7 @@
                             <div class="card shadow mb-2">
                                 <div class="card-body">
                                     <div class="card-header py-3 text-center mb-4">
-                                        <h5 class="m-0 font-weight-bold text-primary">สรุปการผลิตสินค้า</h5>
+                                        <h5 class="m-0 font-weight-bold text-primary">3.สรุปการผลิตสินค้า</h5>
                                     </div>
                                     <form action="Check_Add_mfDetail.php" method="post">
                                         <div class="row mb-3">
@@ -161,20 +241,15 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="" class="col-form-label">ชื่อสินค้าที่ผลิต</label>
-                                                <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
-                                                    <option selected disabled>กรุณาเลือกสินค้า....</option>
-                                                    <?php 
-                                                        $stmt = $db->query("SELECT * FROM `product`  WHERE group_id = 'CM002'");
-                                                        $stmt->execute();
-                                                        $pds = $stmt->fetchAll();
-                                                        
-                                                        foreach($pds as $pd){
-                                                    ?>
-                                                    <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
-                                                    <?php
+                                                <?php
+                                                    if(!empty($_SESSION["product_cart"])){
+                                                        foreach ($_SESSION['product_cart'] as $key => $value) {
+                                                            $pd_name = $value['item_name'];
+                                                            $pd_unit = $value['item_unit'];
                                                         }
-                                                    ?>
-                                                </select>
+                                                    }
+                                                ?>
+                                                <input type="text"  class="form-control" name="pdname" id="pdname" value="<?= $pd_name;?>" style="border-radius: 30px;" required readonly>
                                             </div>
                                             
                                             <div class="col-md-3">
@@ -183,7 +258,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="" class="col-form-label">หน่วยนับ</label>
-                                                <input type="text"  class="form-control" name="pdunit" id="pdunit" style="border-radius: 30px;" required readonly>
+                                                <input type="text"  class="form-control" name="pdunit" id="pdunit" value="<?= $pd_unit;?>" style="border-radius: 30px;" required readonly>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -211,7 +286,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="col-form-label">อื่น ๆ จำนวนเงิน (บาท)</label>
-                                                <input type="number" required class="form-control" name="other" step="0.01" style="border-radius: 30px;">
+                                                <input type="number" required class="form-control" name="other" step="0.01" min="0" value="0" style="border-radius: 30px;">
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="" class="col-form-label">ปัญหาในการผลิต</label>
@@ -277,6 +352,7 @@
                                                     ?>
                                                 </tbody>
                                                 <!-- <?php echo '<pre>' . print_r($_SESSION["material_cart"], TRUE) . '</pre>'; ?>  -->
+                                                 <!-- <?php echo '<pre>' . print_r($_SESSION["product_cart"], TRUE) . '</pre>'; ?>  -->
                                             </table>
                                         </div>
                                         <div class="row mt-4 mb-4">

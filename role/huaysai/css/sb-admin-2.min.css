@@ -8890,6 +8890,11 @@ a.text-dark:focus,
 a.text-dark:hover {
   color: #373840 !important;
 }
+
+.text-purple {
+  color: #6f42c1 !important;
+}
+
 .text-body {
   color: #858796 !important;
 }
@@ -9250,6 +9255,12 @@ a:focus {
 }
 .border-bottom-warning {
   border-bottom: 0.25rem solid #f6c23e !important;
+}
+.border-left-purple {
+  border-left: 0.25rem solid #6f42c1 !important;
+}
+.border-bottom-purple {
+  border-bottom: 0.25rem solid #6f42c1 !important;
 }
 .border-left-danger {
   border-left: 0.25rem solid #e74a3b !important;

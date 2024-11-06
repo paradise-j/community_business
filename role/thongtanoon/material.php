@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `material` WHERE `mat_id` = '$delete_id'");
@@ -67,23 +78,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="Check_Add_material.php" method="POST" >
+                    <form action="Check_Add_material.php" method="POST">
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
-                            <!-- <input type="text" required class="form-control" name="mname" value="CM001" style="border-radius: 30px;" readonly> -->
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                            <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืช</option>
-                                <?php 
-                                    // $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    // $stmt->execute();
-                                    // $gcs = $stmt->fetchAll();
-                                    
-                                    // foreach($gcs as $gc){
-                                ?>
-                                <!-- <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option> -->
-                                <?php
-                                    // }
-                                ?>
+                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืชบ้านทุ่งตาหนอน</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -91,23 +90,40 @@
                             <input type="text" required class="form-control" name="mname" style="border-radius: 30px;">
                         </div>
                         <div class="mb-3">
+                            <label for="" class="col-form-label">หน่วย</label>
+                            <!-- <input type="text" required class="form-control" name="unit" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
+                                <<?php 
+                                    $stmt = $db->query("SELECT * FROM `unit` WHERE `group_id` = 'CM001'");
+                                    $stmt->execute();
+                                    $units = $stmt->fetchAll();
+                                    
+                                    foreach($units as $unit){
+                                ?>
+                                <option value="<?= $unit['unit_name']?>"><?= $unit['unit_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <!-- <div class="mb-3">
                             <label for="" class="col-form-label">หน่วยนับ</label>
                             <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
                                 <option value="กรัม">กรัม</option>
                                 <option value="กิโลกรัม">กิโลกรัม</option>
-                                <option value="กระปุก">ลิตร</option>
-                                <option value="กระปุก">มิลลิลิตร</option>
+                                <option value="กระปุก">กระปุก</option>
                             </select>
                         </div>
-                        <!-- <div class="col-md-1 text-center">
+                        <div class="col-md-1 text-center">
                             <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImg" alt="">
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-7">
                             <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
                             <input type="file" class="form-control" id="imgInput" style="border-radius: 30px;" name="img" required>
-                        </div>  -->
+                        </div> -->
                         <div class="modal-footer">
                             <button type="submit" name="submit" class="btn btn-primary" style="border-radius: 30px;">เพิ่มข้อมูล</button>
                         </div>
@@ -135,7 +151,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -147,6 +163,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลวัตถุดิบ</a>
+                                <a href="../../export/export-data-material.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -162,7 +179,6 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-
                                             $id = $_SESSION['id'];
                                             $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
                                             $check_id->execute();
@@ -236,10 +252,10 @@
                                                         <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                     </div>
                                                     <div class="modal-body mt-1">
-                                                        <form action="Check_edit_material.php" method="POST" enctype="multipart/form-data">
+                                                        <form action="Check_edit_product.php" method="POST" enctype="multipart/form-data">
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">รหัสสินค้า</label>
-                                                                <input type="text" required class="form-control" id="materialid" name="materialid" value="<?= $mat['mat_id'];?>" style="border-radius: 30px;" readonly>
+                                                                <input type="text" required class="form-control" id="Productid" name="Productid" value="<?= $mat['mat_id'];?>" style="border-radius: 30px;" readonly>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
@@ -247,11 +263,11 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">ชื่อวัตถุดิบ</label>
-                                                                <input type="text" required class="form-control" id="materialname" name="materialname" value="<?= $mat['mat_name'];?>" style="border-radius: 30px;">
+                                                                <input type="text" required class="form-control" id="Productname" name="Productname" value="<?= $mat['mat_name'];?>" style="border-radius: 30px;">
                                                             </div>
                                                             <!-- <div class="mb-3">
                                                                 <label for="" class="col-form-label">หน่วยนับ</label>
-                                                                <select class="form-control" aria-label="Default select example" id="materialunit" name="materialunit" style="border-radius: 30px;" required>
+                                                                <select class="form-control" aria-label="Default select example" id="Productunit" name="Productunit" style="border-radius: 30px;" required>
                                                                     <option selected disabled><?= $mat['mat_unit'];?></option>
                                                                     <option value="กรัม">กรัม</option>
                                                                     <option value="กิโลกรัม">กิโลกรัม</option>
@@ -314,23 +330,15 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
 
     <script>
-        let imgInput = document.getElementById('imgInput');
-        let previewImg = document.getElementById('previewImg');
-
-        imgInput.onchange = evt => {
-            const [file] = imgInput.files;
-                if (file) {
-                    previewImg.src = URL.createObjectURL(file)
-            }
-        }
+       
 
  
 
@@ -416,7 +424,16 @@
             }
         });
         $('.table').DataTable();
+        
+        let imgInput = document.getElementById('imgInput');
+        let previewImg = document.getElementById('previewImg');
 
+        imgInput.onchange = evt => {
+            const [file] = imgInput.files;
+                if (file) {
+                    previewImg.src = URL.createObjectURL(file)
+            }
+        }
 
     </script>
 

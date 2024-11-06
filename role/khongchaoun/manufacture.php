@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `mf_data` WHERE `mf_id` = '$delete_id'");
@@ -77,7 +88,7 @@
                             <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกสินค้า....</option>
                                 <?php 
-                                    $stmt = $db->query("SELECT `pd_name` FROM `product`");
+                                    $stmt = $db->query("SELECT `pd_name` FROM `product` WHERE `group_id` = 'CM001'");
                                     $stmt->execute();
                                     $pds = $stmt->fetchAll();
                                     
@@ -230,7 +241,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar4.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -243,6 +254,7 @@
                             <div class="col">
                                 <!-- <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a> -->
                                 <a href="mf_detail.php" class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit">เพิ่มข้อมูลการรอบการผลิตสินค้าชุมชน</a>
+                                <a href="../../export/export-data-manufacture.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -253,7 +265,7 @@
                                         <tr align="center">
                                             <th>วันที่ผลิต</th>
                                             <th>รายการผลิต</th>
-                                            <th>จำนวนคงเหลือ</th>
+                                            <th>จำนวนคงเหลือสะสม</th>
                                             <th></th>
 
                                         </tr>

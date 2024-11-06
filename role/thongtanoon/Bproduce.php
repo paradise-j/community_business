@@ -10,7 +10,7 @@
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
-        $deletestmt = $db->query("DELETE FROM `bp_comen` WHERE `bp_id` = '$delete_id'");
+        $deletestmt = $db->query("DELETE FROM `bproduce` WHERE `bp_id` = '$delete_id'");
         $deletestmt->execute();
         
         if ($deletestmt) {
@@ -26,7 +26,7 @@
                     });
                 })
             </script>";
-            header("refresh:1; url=information_G_agc.php");
+            header("refresh:1; url=Bproduce.php");
         }
     }
 ?>
@@ -41,7 +41,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>วางแผนและติดตามการผลิต</title>
+    <title>การรับซื้อผลผลิตจากเกษตรกร</title>
 
     <link rel="icon" type="image/png" href="img/undraw_posting_photo.svg"/>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -68,8 +68,21 @@
                 <div class="modal-body">
                     <form action="Check_Add_Bproduce.php" method="POST">
                         <div class="mb-3">
-                            <label for="" class="col-form-label">รหัสคำสั่งซื้อ</label>
-                            <input type="text" required class="form-control"  id="order_id" name="order_id" style="border-radius: 30px;">
+                            <label for="" class="col-form-label">รหัสการสั่งซื้อ</label>
+                            <select class="form-control" aria-label="Default select example" id="pldID" name="pldID" style="border-radius: 30px;" required>
+                                <option selected disabled>เลือกรหัสการสั่งซื้อ....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT * FROM `plant_orderlist`");
+                                    $stmt->execute();
+                                    $plds = $stmt->fetchAll();
+                                    
+                                    foreach($plds as $pld){
+                                ?>
+                                <option value="<?= $pld['pld_id']?>"><?= $pld['pld_id']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
                         <div class="mb-1">
                             <?php $date = date('Y-m-d'); ?>
@@ -124,7 +137,7 @@
                                     
                                     foreach($pds as $pd){
                                 ?>
-                                <option value="<?= $pd['pd_id']?>"><?= $pd['pd_name']?></option>
+                                <option value="<?= $pd['pd_name']?>"><?= $pd['pd_name']?></option>
                                 <?php
                                     }
                                 ?>
@@ -202,13 +215,14 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
+                                            <th>รหัสที่รับซื้อ</th>
                                             <th>รายการที่รับซื้อ</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php 
-                                            $stmt = $db->query("SELECT * FROM `bproduce`");
+                                            $stmt = $db->query("SELECT * FROM `bproduce` INNER JOIN `grower` ON grower.gw_id = bproduce.gw_id");
                                             $stmt->execute();
                                             $bps = $stmt->fetchAll();
                                             $count = 1;
@@ -219,6 +233,7 @@
                                         ?>
                                         <tr>
                                             <td><?= $bp['bp_id']; ?></td>
+                                            <td><?= $bp['veget_name']; ?></td>
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $bp['bp_id']?>">ดูข้อมูล</button>
                                                 <!-- <a href="Edit_bp.php?edit_id=<?= $bp['bp_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
@@ -240,7 +255,7 @@
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>วันที่รับซื้อผลผลิต : </b><?= thai_date_fullmonth(strtotime($bp['bp_date'])) ; ?></label>
                                                         </div>
                                                         <div class="mb-2">
-                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อเจ้าของสวน : </b><?= $bp['gw_id']; ?></label>
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อเจ้าของสวน : </b><?= $bp['gw_name']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>ผลผลิตที่รับซื้อ : </b><?= $bp['veget_name']; ?></label>

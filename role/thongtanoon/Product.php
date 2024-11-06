@@ -2,11 +2,22 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php 
     session_start();
-    if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 3){
+    if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 1){
         header("location: ../../index.php");
         exit;
     }
     require_once '../../connect.php';
+
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
 
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
@@ -31,6 +42,7 @@
     }
 ?>
 <!DOCTYPE html>
+<!-- <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"> -->
 <html lang="en">
 
 <head>
@@ -71,18 +83,7 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืช</option>
-                                <?php 
-                                    // $stmt = $db->query("SELECT * FROM `group_comen`");
-                                    // $stmt->execute();
-                                    // $gcs = $stmt->fetchAll();
-                                    
-                                    // foreach($gcs as $gc){
-                                ?>
-                                <!-- <option value="<?= $gc['group_id']?>"><?= $gc['group_name']?></option> -->
-                                <?php
-                                    // }
-                                ?>
+                                <option selected value="CM003">วสช.กลุ่มสมุนไพรภายใต้โครงการอนุรักษ์พันธุกรรมพืชบ้านทุ่งตาหนอน</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -93,14 +94,17 @@
                             <label for="" class="col-form-label">หน่วยนับ</label>
                             <select class="form-control" aria-label="Default select example" id="unit" name="unit" style="border-radius: 30px;" required>
                                 <option selected disabled>กรุณาเลือกหน่วยนับ....</option>
-                                <option value="กรัม">กรัม</option>
-                                <option value="กิโลกรัม">กิโลกรัม</option>
-                                <option value="กระปุก">กระปุก</option>
-                                <option value="ก้อน">ก้อน</option>
-                                <option value="ขวด">ขวด</option>
-                                <option value="หลอด">หลอด</option>
-
-                                <!-- <option value="กรัม">กรัม</option> -->
+                                <<?php 
+                                    $stmt = $db->query("SELECT * FROM `unit` WHERE `group_id` = 'CM001'");
+                                    $stmt->execute();
+                                    $units = $stmt->fetchAll();
+                                    
+                                    foreach($units as $unit){
+                                ?>
+                                <option value="<?= $unit['unit_name']?>"><?= $unit['unit_name']?></option>
+                                <?php
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div class="col-md-1 text-center">
@@ -137,8 +141,9 @@
         } 
     ?>
 
+
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -150,6 +155,7 @@
                         <div class="row mt-4 ml-2">
                             <div class="col">
                                 <a class="btn btn-primary" style="border-radius: 30px; font-size: .8rem;" type="submit" data-toggle="modal" data-target="#AddGroupModal">เพิ่มข้อมูลสินค้าชุมชน</a>
+                                <a href="../../export/export-data-product.php" class="btn btn-sm btn-success shadow-sm" style="border-radius: 25px; font-size: .8rem;" type="submit" ><i class="fas fa-solid fa-file-export fa-sm text-white-50"></i></i> ส่งออกข้อมูลเป็น Excel</a>
                             </div>
                         </div>
                         
@@ -177,10 +183,10 @@
                                             $check_group->execute();
                                             $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
                                             extract($row2);
-
+                                            // echo $group_id;
                                             $stmt = $db->query("SELECT product.pd_id , product.pd_date, product.pd_name, product.pd_unit , product.pd_img, product.group_id , group_comen.group_name as group_name 
                                                                 FROM `product` INNER JOIN `group_comen` ON group_comen.group_id = product.group_id
-                                                                WHERE product.group_id = '$group_id' ");
+                                                                WHERE product.group_id = '$group_id'");
                                             $stmt->execute();
                                             $pds = $stmt->fetchAll();
                                             $count = 1;
@@ -191,7 +197,7 @@
                                         ?>
                                         <tr align="center">
                                             <td width="200px"><?= $pd['pd_name']; ?></td>
-                                            <td width="150px"><img class="rounded" width="100%" src="../admin/uploads/product/<?= $pd['pd_img']; ?>" alt=""></td>
+                                            <td width="150px"><img class="rounded" width="100%" src="uploads/product/<?= $pd['pd_img']; ?>" alt=""></td>
                                             <!-- <td class="date_th"><?= $pd['pd_date']; ?></td> -->
                                             <td align="center">
                                                 <button class="btn btn-info" style="border-radius: 30px; font-size: 0.9rem;" data-toggle="modal" data-target="#showdataModal<?= $pd['pd_id']?>">ดูข้อมูล</button>
@@ -222,7 +228,7 @@
                                                         </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพสินค้าชุมชน : </b> </label><br>
-                                                            <img class="rounded" width="50%" src="uploads/<?= $pd['pd_img']; ?>" alt="">
+                                                            <img class="rounded" width="50%" src="uploads/product/<?= $pd['pd_img']; ?>" alt="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,19 +260,30 @@
                                                             <div class="mb-3">
                                                                 <label for="" class="col-form-label">หน่วยนับ</label>
                                                                 <select class="form-control" aria-label="Default select example" id="Productunit" name="Productunit" style="border-radius: 30px;" required>
-                                                                    <option selected disabled><?= $pd['pd_unit'];?></option>
-                                                                    <option value="กรัม">กรัม</option>
-                                                                    <option value="กิโลกรัม">กิโลกรัม</option>
-                                                                    <option value="กระปุก">กระปุก</option>
+                                                                    <option selected value="<?= $pd['pd_unit']?>"><?= $pd['pd_unit'];?></option>
+                                                                    <?php 
+                                                                        $stmt = $db->query("SELECT * FROM `unit`");
+                                                                        $stmt->execute();
+                                                                        $units = $stmt->fetchAll();
+                                                                        
+                                                                        foreach($units as $unit){
+                                                                    ?>
+                                                                    <option value="<?= $unit['unit_name']?>"><?= $unit['unit_name']?></option>
+                                                                    <?php
+                                                                        }
+                                                                    ?>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-1 text-center">
                                                                 <img loading="lazy" width="175px" style="border-radius: 20px;" id="previewImgEdit" alt="">
                                                             </div>
-                                                            <div class="col-md-1"></div>
+                                                            <div class="mb-2">
+                                                                <label class="col-form-label" style="font-size: 1.25rem;"><b>รูปภาพสินค้าชุมชน : </b> </label><br>
+                                                                <img class="rounded" width="50%" src="uploads/product/<?= $pd['pd_img']; ?>" alt="">
+                                                            </div>
                                                             <div class="col-md-7">
                                                                 <label for="img" class="form-label">อัปโหลดรูปภาพ</label>
-                                                                <input type="file" class="form-control" id="imgInputEdit" style="border-radius: 30px;" name="img" required>
+                                                                <input type="file" class="form-control" id="imgInputEdit" style="border-radius: 30px;" name="img">
                                                             </div>
                                                             <script>
                                                                 let imgInputEdit = document.getElementById('imgInputEdit');
@@ -316,8 +333,8 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../bootrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>

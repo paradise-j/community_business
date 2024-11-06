@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `planting` WHERE `plant_id` = '$delete_id'");
@@ -89,8 +100,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="Check_Add_Plan.php" method="POST">
-                        <!-- <div class="row mb-1">
-                            <div class="col-md-5">
+                        <div class="row mb-1">
+                            <div class="col">
                                 <div class="mb-2">
                                     <label for="" class="col-form-label">รหัสการสั่งซื้อ</label>
                                     <select class="form-control" aria-label="Default select example" id="pld_id" name="pld_id" style="border-radius: 30px;" required>
@@ -109,34 +120,6 @@
                                     </select>
                                 </div>
                             </div>
-                        </div> -->
-                        
-                        <div class="mb-2">
-                            <?php $date = date('Y-m-d'); ?>
-                            <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
-                            <input type="date" required class="form-control" name="Sdate" id="Sdate" min="<?= $date; ?>" style="border-radius: 30px;">
-                        </div>
-                        <div class="mb-2">
-                            <label for="" class="col-form-label">วันที่เก็บเกี่ยว</label>
-                            <input type="date" required class="form-control" name="Edate" id="Edate" min="<?= $date; ?>" style="border-radius: 30px;">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="col-form-label">ชื่อผัก</label>
-                            <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
-                            <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
-                                <option selected disabled>กรุณาเลือกผัก....</option>
-                                <?php 
-                                    $stmt = $db->query("SELECT `pd_id` as veget_id ,`pd_name` as veget_name  FROM `product` WHERE `group_id` = 'CM007'");
-                                    $stmt->execute();
-                                    $vgs = $stmt->fetchAll();
-                                    
-                                    foreach($vgs as $vg){
-                                ?>
-                                <option value="<?= $vg['veget_name']?>"><?= $vg['veget_name']?></option>
-                                <?php
-                                    }
-                                ?>
-                            </select>
                         </div>
                         <div id="show_item">
                             <div class="row mb-1">
@@ -173,7 +156,35 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        
+                        <div class="mb-3">
+                            <label for="" class="col-form-label">ชื่อผัก</label>
+                            <!-- <input type="text" required class="form-control" name="name" style="border-radius: 30px;"> -->
+                            <select class="form-control" aria-label="Default select example" id="name" name="name" style="border-radius: 30px;" required>
+                                <option selected disabled>กรุณาเลือกผัก....</option>
+                                <?php 
+                                    $stmt = $db->query("SELECT `pd_id` as veget_id ,`pd_name` as veget_name  FROM `product` WHERE `group_id` = 'CM007'");
+                                    $stmt->execute();
+                                    $vgs = $stmt->fetchAll();
+                                    
+                                    foreach($vgs as $vg){
+                                ?>
+                                <option value="<?= $vg['veget_name']?>"><?= $vg['veget_name']?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <?php $date = date('Y-m-d'); ?>
+                            <label for="" class="col-form-label">วันที่เริ่มต้นปลูก</label>
+                            <input type="date" required class="form-control" name="Sdate" id="Sdate" min="<?= $date; ?>" style="border-radius: 30px;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="" class="col-form-label">วันที่เก็บเกี่ยว</label>
+                            <input type="date" required class="form-control" name="Edate" id="Edate" min="<?= $date; ?>" style="border-radius: 30px;">
+                        </div>
+                        <!-- <div class="row mb-2">
                                 <div class="col mb-2">
                                     <label for="" class="col-form-label">ละติจูด ของแปลงที่ปลูก</label>
                                     <input type="text" required class="form-control" name="latitude" id="latitude" style="border-radius: 30px;">
@@ -183,7 +194,7 @@
                                     <input type="text" required class="form-control" name="longitude" id="longitude" style="border-radius: 30px;">
                                 </div>
                         </div>
-                       
+                        -->
                         <div class="mb-3">
                             <label for="" class="col-form-label">เป้าหมายการผลิต &nbsp&nbsp&nbsp
                                 <label style="color:red;" >** หน่วยเป็น กิโลกรัม **</label>
@@ -219,7 +230,7 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
@@ -239,7 +250,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr align="center">
-                                            
+                                            <th>วันที่วางแผน</th>
                                             <th>ชื่อผัก</th>
                                             <th>ผู้รับผิดชอบ</th>
                                             <th></th>
@@ -259,7 +270,7 @@
                                              foreach($plants as $plant)  {  
                                         ?>
                                         <tr>
-                                            
+                                            <td align="center" class="date_th"><?= $plant['plant_date']; ?></td>
                                             <td align="center"><?= $plant['plant_name']; ?></td>
                                             <td><?= $plant['gw_name']; ?></td>
                                             <td align="center">
@@ -276,7 +287,7 @@
                                                         <h4 class="modal-title" id="exampleModalLabel">รายละเอียดข้อมูลการวางแผนการปลูก</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="mb-2">
+                                                    <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>รหัสคำสั่งซื้อ : </b><?= $plant['pld_id']; ?></label>
                                                         </div>
                                                         <div class="mb-2">
@@ -294,17 +305,18 @@
                                                         <div class="mb-2">
                                                             <label class="col-form-label" id="date_th" style="font-size: 1.25rem;"><b>วันที่เก็บผลผลิต : </b><?= thai_date_fullmonth(strtotime($plant['plant_harvest'])); ?></label>
                                                         </div>
-                                                        
-                                                        
                                                         <?php 
                                                             $gw_id = $plant['plant_grower'];
-                                                            $stmt = $db->query("SELECT  SUM(`bp_quan`) as total  FROM `bproduce` WHERE `gw_id` = '$gw_id'");
+                                                            $pl_name = $plant['plant_name']; 
+                                                            $stmt = $db->query("SELECT  SUM(`bp_quan`) as total  FROM `bproduce` WHERE `gw_id` = '$gw_id' and `veget_name` = '$pl_name'");
                                                             $stmt->execute();
                                                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
                                                             extract($row);
                                                             $Newtotal = ($total*100)/$plant['plant_target'];
                                                         ?>
-                                                        
+                                                        <div class="mb-2">
+                                                            <label class="col-form-label" style="font-size: 1.25rem;"><b>ชื่อผัก : </b><?= $plant['plant_name']; ?></label>
+                                                        </div>
                                                         <div class="mb-2">
                                                             <label class="col-form-label" style="font-size: 1.25rem;"><b>เป้าหมายการผลิต : </b><?= $plant['plant_target']." "."กิโลกรัม"; ?></label>
                                                         </div>

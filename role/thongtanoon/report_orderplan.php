@@ -8,6 +8,17 @@
     }
     require_once '../../connect.php';
 
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+
     if (isset($_GET['delete'])) {
         $delete_id = $_GET['delete'];
         $deletestmt = $db->query("DELETE FROM `product` WHERE `pd_id` = '$delete_id'");
@@ -75,14 +86,14 @@
     ?>
 
     <div id="wrapper">
-        <?php include('../../sidebar/sidebar2.php');?> <!-- Sidebar -->
+        <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 text-center">
-                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการขายสินค้า</h4>
+                            <h4 class="m-0 font-weight-bold text-primary">สรุปยอดการขาย/กำไร/ต้นทุน ของสินค้า</h4>
                         </div>
                         <div class="card-body">
                             <form action="" method="post">
@@ -93,13 +104,13 @@
                                         <select class="form-control" aria-label="Default select example" id="Gname" name="Gname" style="border-radius: 30px;">
                                             <option selected disabled>กรุณาเลือกชื่อสินค้า....</option>
                                             <?php 
-                                                $stmt = $db->query("SELECT * FROM `mf_data`");
+                                                $stmt = $db->query("SELECT * FROM `mf_data` WHERE `group_id` ='$group_id'");
                                                 $stmt->execute();
-                                                $pds = $stmt->fetchAll();
+                                                $mfs = $stmt->fetchAll();
                                                 
-                                                foreach($pds as $pd){
+                                                foreach($mfs as $mf){
                                             ?>
-                                            <option value="<?= $pd['mf_name']?>"><?= $pd['mf_name']?></option>
+                                            <option value="<?= $mf['mf_name']?>"><?= $mf['mf_name']?></option>
                                             <?php
                                                 }
                                             ?>
@@ -126,12 +137,26 @@
                                     $end_date = $_POST["end_date"];
                                     $Gname = $_POST["Gname"];
                                     // echo $Gname ;
+
+                                    $id = $_SESSION['id'];
+                                    $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                    $check_id->execute();
+                                    $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                    extract($row1);
+                                    // echo $user_id;
+
+                                    $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                    $check_group->execute();
+                                    $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                    extract($row2);
+                                    // echo $group_id;
+
                                     $count = 1;
 
                                     $stmt2 = $db->query("SELECT SUM(sales.sale_Nprice) as total , MONTH(sale_date) as month 
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         WHERE MONTH(sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$group_id'
                                                          GROUP BY MONTH(sale_date)"); 
                                     $stmt2->execute();
 
@@ -160,7 +185,7 @@
                                     $stmt3 = $db->query("SELECT salesdetail.sd_pdname, SUM(salesdetail.sd_price) as total , MONTH(sales.sale_date) as month
                                                          FROM `sales` 
                                                          INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
-                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date')
+                                                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('$start_date') AND MONTH('$end_date') AND `group_id` = '$group_id'
                                                          GROUP BY salesdetail.sd_pdname , MONTH(sales.sale_date)");
                                     $stmt3->execute();
 
@@ -186,7 +211,7 @@
                                 <div class="col-xl-6 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าทั้งหมดในแต่ละเดือน</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าทั้งหมดในแต่ละเดือน (บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -198,7 +223,7 @@
                                 <div class="col-xl-6 col-lg-8">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าที่ต้องการทราบ</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary text-center">สรุปยอดขายสินค้าที่ต้องการทราบ (บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -213,7 +238,7 @@
                                 <div class="col-xl-12 col-lg-4">
                                     <div class="card shadow">
                                         <div class="card-header py-3">
-                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าตามชนิดในแต่ละเดือน</h5>
+                                            <h5 class="m-0 font-weight-bold text-primary">สรุปยอดขายสินค้าตามชนิดในแต่ละเดือน (บาท)</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="chart-area">
@@ -579,8 +604,6 @@
             }
         } 
 
-        // console.log("my_data3 = "+ my_data3);
-        // console.log("my_label3 = "+ my_label3);
         console.log("Unique_month3 = "+ Unique_month3);
 
 
@@ -617,33 +640,13 @@
             color_index = color_index+1
         })
 
-        
 
         let data = { labels, datasets }
         
         var ctx = document.getElementById('myChartBar2');
         var myChartBar2 = new Chart(ctx, {
             type: 'bar',
-            data,
-            // data: {
-            //     labels: Unique_month3,
-            //     datasets: [{
-            //         label: "<?= $Gname ?>",
-            //         backgroundColor: "#2a86e9",
-            //         borderColor: "#2a86e9",
-            //         data: my_data3
-            //     },{
-            //         label: "<?= $Gname ?>",
-            //         backgroundColor: "#2a86e9",
-            //         borderColor: "#2a86e9",
-            //         data: my_data3
-            //     },{
-            //         label: "<?= $Gname ?>",
-            //         backgroundColor: "#2a86e9",
-            //         borderColor: "#2a86e9",
-            //         data: my_data3
-            //     }],
-            // },
+            data ,
             options: {
                 maintainAspectRatio: false,
                 scales: {
