@@ -9,6 +9,6 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         echo $row["mf_cost"];
         exit();
-    // }
+    }
     
 ?>

@@ -38,7 +38,7 @@
                                 $_SESSION['permission'] = $dbrole;
                                 $_SESSION['user_id'] = $dbuser_id;
                                 $_SESSION['success'] = "DirectorNFC... Successfully Login...";
-                                header("location: role/director/index.php");
+                                header("location: role/nfc/index.php");
                             break;
                             case '3':
                                 $_SESSION['id'] = $dbid;

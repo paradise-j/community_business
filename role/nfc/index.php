@@ -1,329 +1,352 @@
-<?php
-    require_once '../../connect.php';
+<?php 
     session_start();
+    if(!isset($_SESSION["username"]) and !isset($_SESSION["password"]) and $_SESSION["permission"] != 6){
+        header("location: ../../index.php");
+        exit;
+    }
+    require_once '../../connect.php';
+
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+    // echo $group_sb;
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
+    // echo $group_sb;
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>ระบบจัดการข้อมูลร้านค้ารัฐวิสาหกิจชุมชน</title>
 
-  <title>ระบบจองคิวทันตกรรมทับปุด</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-  
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" href="img/home.png">
+        <!-- Custom fonts for this template-->
+        <link rel="icon" type="image/png" href="img/home-solid.svg">
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
 
-  <!-- Google Fonts -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> -->
-  <link href="https://fonts.googleapis.com/css?family=Kanit:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">  
+        <!-- Custom styles for this template-->
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    </head>
 
-  <!-- Vendor CSS Files -->
-  <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="../../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="../../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="../../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <body id="page-top">
+        <div id="wrapper">  
+            <?php include('../../sidebar/'.$group_sb.'.php'); ?>  <!-- Sidebar -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <?php include('../../topbar/topbar2.php');?> <!-- Topbar -->
+                    <div class="container-fluid">
+                    <?php
+                        $dayTH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+                        $monthTH = [null,'มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+                        $monthTH_brev = [null,'ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
-  <!-- Template Main CSS File -->
-  <link href="../../assets/css/style.css" rel="stylesheet">
+                        function thai_date_fullmonth($time){   // 19 ธันวาคม 2556
+                            global $dayTH,$monthTH;   
+                            // $thai_date_return = date("j",$time);   
+                            // $thai_date_return.=" ".$monthTH[date("n",$time)];   
+                            $thai_date_return.= " ".(date("Y",$time)+543);   
+                            return $thai_date_return;   
+                        } 
+                    ?>
+                        <div class="row">
+                            <?php $date = date('Y-m-d'); ?>
+                            <?php //$date2 = date('Y'); echo $date2; ?>
+                            <div class="col text-center"><h1 class="text-dark center">สรุปยอดขายภาพรวมในการดำเนินงานในปี พ.ศ. <?= thai_date_fullmonth(strtotime($date));?></h1></div>
+                        </div>
+                        <?php
+                            $id = $_SESSION['id'];
+                            $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                            $check_id->execute();
+                            $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                            extract($row1);
+                            // echo $user_id;
 
-</head>
+                            $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                            $check_group->execute();
+                            $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                            extract($row2);
+                            // echo $group_id;
+                        ?>
+                        <div class="row">
+                        
 
-<body>
-    <!-- ======= topbar ======= -->
-    <?php include('../../topbar/topbar.php');?>
-    <!-- ======= Header ======= -->
-    <?php include('../../header/header.php');?>
+                            <!-- <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-lg font-weight-bold text-success text-uppercase mb-1">จำนวนสมาชิก</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"> -->
+                                                <?php
+                                                    // $stmt = $db->prepare("SELECT COUNT(`user_id`) as total FROM `user_data` WHERE `group_id` = '$group_id'");
+                                                    // $stmt->execute();
+                                                    // $users = $stmt->fetchAll();
+                                                    // foreach($users as $user){
+                                                    //     echo $user['total'];
+                                                    // }
+                                                ?>
+                                                <!-- คน -->
+                                                <!-- </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-    <div class="container">
-      <h1>ยินดีต้อนรับสู่ ทันตกรรมทับปุด</h1>
-      <a href="register.php" class="reserve-btn scrollto">จองคิวทันที</a>
-    </div>
-  </section>
+                            
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-lg font-weight-bold text-success text-uppercase mb-1">สินค้าทั้งหมด</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT COUNT(`pd_id`) as total FROM `product`");
+                                                    $stmt->execute();
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo $pd['total'];
+                                                    }
+                                                ?>
+                                                รายการ
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-info shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-lg font-weight-bold text-info text-uppercase mb-1">ยอดขายรวมสะสม</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT  SUM(salesdetail.sd_price) as sum_price
+                                                                          FROM `mf_data` 
+                                                                          INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
+                                                                        --   WHERE mf_data.group_id = '$group_id'
+                                                                          ");
+                                                    $stmt->execute();
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo number_format($pd['sum_price'],2); 
+                                                    }
+                                                ?>
+                                                บาท
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-purple shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-lg font-weight-bold text-purple text-uppercase mb-1">กำไรรวมสะสม</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php
+                                                    $stmt = $db->prepare("SELECT  (SUM(salesdetail.sd_price) - mf_data.mf_price) as profit
+                                                                          FROM `mf_data` 
+                                                                          INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
+                                                                        --   WHERE mf_data.group_id = '$group_id'
+                                                                          ");
+                                                    $stmt->execute();
+                                                    $pds = $stmt->fetchAll();
+                                                    foreach($pds as $pd){
+                                                        echo number_format($pd['profit'],2); 
+                                                    }
+                                                ?>
+                                                บาท
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-brands fa-product-hunt fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-  <main id="main">
+                        <div class="row">
+                            <!-- Pie Chart -->
+                            <div class="col-xl-4 col-lg-5">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดรายรับ-รายจ่าย ภาพรวมทั้งหมด</h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="chart-pie pt-4 pb-2">
+                                            <canvas id="myPieChart"></canvas>
+                                        </div>
+                                        <div class="mt-4 text-center small">
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-success"></i> รายรับ
+                                            </span>
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-danger"></i> รายจ่าย
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-    <!-- ======= Why Us Section ======= -->
-    <section id="why-us" class="why-us">
-      <div class="container">
+                            <!-- Area Chart -->
+                            <div class="col-xl-8 col-lg-7">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดขายภาพรวมในแต่ละเดือน</h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myAreaChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        <div class="row">
-          <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="content">
-              <h3>ทำไมคุณต้องเลือก ???<br>ทันตกรรมทับปุด</h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
-              </p>
-              <div class="text-center">
-                <a href="#" class="more-btn">ข้อมูลเพิ่มเติม <i class="bx bx-chevron-right"></i></a>
-              </div>
+                        <div class="row">
+                            <div class="col-xl-7 col-lg-7">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดกำไรรวมจากยอดขายสินค้าสะสม (บาท)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- <div class="chart-bar">
+                                            <canvas id="myBarChart"></canvas>
+                                        </div> -->
+                                        <div class="table-responsive scrollbar">
+                                            <table class="table" id="dataTable" width="100%" cellspacing="0" >
+                                                <thead>
+                                                    <tr align="center" style="font-size: 0.8em;">
+                                                        <!-- <th>เดือน</th> -->
+                                                        <th>ชื่อรายการ</th>
+                                                        <th>ต้นทุนรวมสะสม</th>
+                                                        <th>จำนวนคงเหลือ</th>
+                                                        <th>จำนวนที่ขายไป</th>
+                                                        <th>ยอดขายรวมสะสม</th>
+                                                        <th>กำไรรวม</th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                        $id = $_SESSION['id'];
+                                                        $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE user_login.user_id = '$id'");
+                                                        $check_id->execute();
+                                                        $row1 = $check_id->fetch(PDO::FETCH_ASSOC);
+                                                        extract($row1);
+                                                        // echo $user_id;
+            
+                                                        $check_group = $db->prepare("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+                                                        $check_group->execute();
+                                                        $row2 = $check_group->fetch(PDO::FETCH_ASSOC);
+                                                        extract($row2);
+                                                        // echo $group_id;
+                                                        $stmt = $db->query("SELECT mf_data.mf_name ,mf_data.mf_unit, mf_data.mf_price , SUM(salesdetail.sd_price) as sum_price , mf_data.mf_quan , 
+                                                                            SUM(salesdetail.sd_quantity) as sd_quantity , (SUM(salesdetail.sd_price) - mf_data.mf_price) as profit
+                                                                            FROM `mf_data` 
+                                                                            INNER JOIN `salesdetail` ON mf_data.mf_name = salesdetail.sd_pdname 
+                                                                            -- WHERE mf_data.group_id = '$group_id' 
+                                                                            GROUP BY mf_data.mf_name");
+                                                        $stmt->execute();
+                                                        $ggs = $stmt->fetchAll();
+                                                        if (!$ggs) {
+                                                            echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
+                                                        } else {
+                                                        foreach($ggs as $gg)  {  
+                                                    ?>
+                                                    <tr align="center" style="font-size: 0.8em;">
+                                                        <!-- <td><?= $gg['month']; ?></td> -->
+                                                        <td><?= $gg['mf_name']; ?></td>
+                                                        <td><?= $gg['mf_price']; ?></td>
+                                                        <td><?= $gg['mf_quan']." ".$gg['mf_unit']; ?></td>
+                                                        <td><?= $gg['sd_quantity']." ".$gg['mf_unit']; ?></td>
+                                                        <td><?= $gg['sum_price']; ?></td>
+                                                        <td><?= $gg['profit']; ?></td>
+                                                    </tr>
+                                                    <?php }
+                                                        } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-7">
+                                <div class="card shadow">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-dark">สรุปยอดกำไรภาพรวมในปุัจจุบัน</h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="chart-area">
+                                            <canvas id="myBarChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                <?php include('../../footer/footer.php');?> <!-- Footer -->
             </div>
-          </div>
-          <div class="col-lg-8 d-flex align-items-stretch">
-            <div class="icon-boxes d-flex flex-column justify-content-center">
-              <div class="row">
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-receipt"></i>
-                    <h4>Corporis voluptates sit</h4>
-                    <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-cube-alt"></i>
-                    <h4>Ullamco laboris ladore pan</h4>
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-                  </div>
-                </div>
-                <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
-                    <i class="bx bx-images"></i>
-                    <h4>Labore consequatur</h4>
-                    <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
-                  </div>
-                </div>
-              </div>
-            </div><!-- End .content-->
-          </div>
         </div>
 
-      </div>
-    </section><!-- End Why Us Section -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container-fluid">
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <div class="row">
-          <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
-            <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox play-btn mb-4"></a>
-          </div>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-          <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-            <h3>เกี่ยวกับ</h3>
-            <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi. Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-fingerprint"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-            </div>
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
 
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-gift"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-            </div>
-
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-atom"></i></div>
-              <h4 class="title"><a href="">Dine Pad</a></h4>
-              <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-    <!-- End About Section -->
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>ประเภทการบริการ</h2>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-2 col-md-6 d-flex align-items-stretch"></div>
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-heartbeat"></i></div>
-              <h4><a href="">ทันตกรรมทั่วไป</a></h4>
-              <p>ถอนฟัน ขูนหินปูน ผ่าฟันขุด อุดฟัน รักษารากฟัน ปรึกษาทันตแพทย์</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-pills"></i></div>
-              <h4><a href="">ทันตกรรมความงาม</a></h4>
-              <p>ดัดฟัน ครอบฟัน ฟันครอบ เครือบสีฟัน ปรึกษาทันตแพทย์</p>
-            </div>
-          </div>
-        </div>
-        <div class="row mb-5">
-
-        </div>
-      </div>
-    </section>
-    <!-- End Services Section -->
-
-    <!-- ======= Doctors Section ======= -->
-    <section id="doctors" class="doctors">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>ทีมคณะแพทย์</h2>
-        </div>
-        <div class="row">
-
-          <div class="col-lg-6">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Medical Officer</span>
-                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6 mt-4 mt-lg-0">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-2.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Anesthesiologist</span>
-                <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6 mt-4">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-3.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cardiology</span>
-                <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6 mt-4">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-4.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Neurosurgeon</span>
-                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-    <!-- End Doctors Section -->
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container">
-        <div class="section-title">
-          <h2>การติดต่อ</h2>
-        </div>
-      </div>
-
-      <div>
-        <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3945.8013279471406!2d98.6326831!3d8.518661!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3051059e47a70897%3A0xfdea44c74d815278!2z4LiE4Lil4Li04LiZ4Li04LiB4LiX4Lix4LiZ4LiV4LiB4Lij4Lij4Lih4LiX4Lix4Lia4Lib4Li44LiU!5e0!3m2!1sth!2sth!4v1699038224208!5m2!1sth!2sth" frameborder="0" allowfullscreen></iframe>
-        </div>
-
-      <div class="container">
-        <div class="row mt-5 center">
-          <div class="col-lg-1"></div>
-          <div class="col-lg-4">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>ตรงข้ามตลาดเทศบาลตำบลทับปุด 6/19 หมู่ 1 ต.ทับปุด อ.ทับปุด จ.พังงา รหัสไปรษณีย์ 82180</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-lg-3">
-            <div class="info">
-              <div class="email">
-                <i class="bi bi-envelope"></i>
-                <h4>Email:</h4>
-                <p>tubpud_11@gmail.com</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3">
-            <div class="info">
-              <div class="phone">
-                <i class="bi bi-phone"></i>
-                <h4>Call:</h4>
-                <p>062-375-3324</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End Contact Section -->
-  </main>
-  <!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <?php include('../../footer/footer.php');?>
-
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- Vendor JS Files -->
-  <script src="../../assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../../assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="../../assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="../../assets/js/main.js"></script>
-
-</body>
-
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
+        <script src="js/demo/chart-bar-demo.js"></script>
+    </body>
 </html>
