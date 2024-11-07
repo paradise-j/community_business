@@ -82,7 +82,7 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
+                                <option selected value="CM007">วสช.กลุ่มเกษตรกรทำสวนผสมผสานแบบยั่งยืนบางท่าข้าม</option>
                             </select>
                         </div>
                         <div class="mb-3">

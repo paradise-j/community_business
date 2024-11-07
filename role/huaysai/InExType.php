@@ -82,7 +82,7 @@
                         <div class="mb-3">
                             <label for="" class="col-form-label">กลุ่มวิสาหกิจชุมชน</label>
                             <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                <option selected value="CM002">วสช.ชีววิถีคลองชะอุ่น</option>
+                                <option selected value="CM006">วสช.ศูนย์เรียนรู้บ้านห้วยทราย</option>
                             </select>
                         </div>
                         

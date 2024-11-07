@@ -84,7 +84,7 @@
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
                                 <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                    <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
+                                    <option selected value="CM002">วสช.ชีววิถีคลองชะอุ่น</option>
                                 </select>
                             </div>
                         </div>

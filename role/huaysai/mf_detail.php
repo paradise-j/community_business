@@ -135,7 +135,7 @@
                                                     <select class="form-control" aria-label="Default select example" id="pdname" name="pdname" style="border-radius: 30px;" required>
                                                         <option selected disabled>กรุณาเลือกสินค้า....</option>
                                                         <?php 
-                                                            $stmt = $db->query("SELECT * FROM `product`  WHERE group_id = 'CM001'");
+                                                            $stmt = $db->query("SELECT * FROM `product`  WHERE group_id = 'CM006'");
                                                             $stmt->execute();
                                                             $pds = $stmt->fetchAll();
                                                             
@@ -187,7 +187,7 @@
                                                     <select class="form-control" aria-label="Default select example" id="mfname" name="mfname" style="border-radius: 30px;" required>
                                                         <option selected disabled>เลือกวัตถุดิบ....</option>
                                                         <?php 
-                                                            $stmt = $db->query("SELECT * FROM `material` WHERE group_id = 'CM001'");
+                                                            $stmt = $db->query("SELECT * FROM `material` WHERE group_id = 'CM006'");
                                                             $stmt->execute();
                                                             $mats = $stmt->fetchAll();
                                                             
@@ -237,7 +237,7 @@
                                             <div class=col-md-3">
                                                 <?php $date = date('Y-m-d'); ?>
                                                 <label for="" class="col-form-label">วันที่ในการผลิต</label>
-                                                <input type="date" required class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;">
+                                                <input type="date" required class="form-control" name="date"  style="border-radius: 30px;">
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="" class="col-form-label">ชื่อสินค้าที่ผลิต</label>

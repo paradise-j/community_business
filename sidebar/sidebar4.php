@@ -25,15 +25,12 @@
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <a class="collapse-item" href="Manage_G_agc.php">1.ข้อมูลกลุ่มวิสาหกิจ</a> -->
                 <a class="collapse-item" href="manage_unit.php">1.ข้อมูลหน่วยนับ</a>
                 <a class="collapse-item" href="Product.php">2.ข้อมูลสินค้าชุมชน</a>
                 <a class="collapse-item" href="material.php">3.ข้อมูลวัตถุดิบ</a>
                 <a class="collapse-item" href="Fixed_assets.php">4.ข้อมูลสินทรัพย์ถาวร</a>
                 <a class="collapse-item" href="user_regis.php">5.ข้อมูลทะเบียนสมาชิก</a>
-                <!-- <a class="collapse-item" href="grower_regis.php">6.ข้อมูลทะเบียนลูกสวน</a> -->
-                <!-- <a class="collapse-item" href="Travel_package.php">7.ข้อมูลแพ็คเกจการท่องเที่ยว</a> -->
-                <a class="collapse-item" href="orderer.php">8.ข้อมูลผู้สั่งซื้อ</a>
+                <a class="collapse-item" href="orderer.php">7.ข้อมูลผู้สั่งซื้อ</a>
                 <a class="collapse-item" href="InExType.php">8.ข้อมูลรายการรายรับ-รายจ่าย</a>
             </div>
         </div>

@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
 
   async function get_total_goat() {
-    const res = await fetch("/community_business/api/get_profit_khongchaoun.php");
+    const res = await fetch("/community_business/api/get_profit_huaysai.php");
     const json = await res.json()
     return json;
   }

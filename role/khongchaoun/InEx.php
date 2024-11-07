@@ -274,7 +274,7 @@
                 url : "../../api/typeInEx.php",
                 data : {id:id_type,function:'type'},     
                 success: function(data){
-                //    console.log(data);
+                   console.log(data);
                     $('#nameInEX').html(data);
                 }
             });

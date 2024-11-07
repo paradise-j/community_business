@@ -284,7 +284,8 @@
                                             $stmt = $db->query("SELECT * FROM `user_data`
                                                                 INNER JOIN `user_login` on user_data.user_id = user_login.user_id
                                                                 INNER JOIN `group_comen` on user_data.group_id = group_comen.group_id 
-                                                                WHERE user_data.group_id = '$group_id'");
+                                                                -- WHERE user_data.group_id = '$group_id'
+                                                                ");
                                             $stmt->execute();
                                             $users = $stmt->fetchAll();
                                             $count = 1;

@@ -84,7 +84,7 @@
                             <div class="col-md-12">
                                 <label for="" class="col-form-label">ชื่อกลุ่มวืสาหกิจชุมชข</label>
                                 <select class="form-control" aria-label="Default select example" id="group" name="group" style="border-radius: 30px;" required readonly>
-                                    <option selected value="CM001">วสช.แปรรูปอาหารตำบลท่าเคย</option>
+                                    <option selected value="CM006">วสช.ศูนย์เรียนรู้บ้านห้วยทราย</option>
                                 </select>
                             </div>
                         </div>
@@ -174,14 +174,14 @@
                             <div class="col-md-7">
                                 <label for="" class="col-form-label">สิทธิ์การใช้งาน</label>
                                 <select class="form-control" aria-label="Default select example" id="permission" name="permission" style="border-radius: 30px;" required readonly>
-                                <option selected value="4">วสช.ชีววิถีคลองชะอุ่น</option>
+                                <option selected value="8">วสช.ศูนย์เรียนรู้บ้านห้วยทราย</option>
                             </select>
                             </div>
                         </div>
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">ชื่อผุ้ใช้งาน</label>
-                                <input type="text" required class="form-control" name="username" value="ku" style="border-radius: 30px;" readonly>
+                                <input type="text" required class="form-control" name="username" value="hs" style="border-radius: 30px;" readonly>
                             </div>
                             <div class="col-md-6">
                                 <label for="" class="col-form-label">รหัสผ่าน</label>

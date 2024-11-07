@@ -32,7 +32,7 @@
         $zipcode = $_POST['zipcode'];
 
         $permission = $_POST['permission']; 
-        $group_id = $_POST['group_id']; 
+        $group_id = $_POST['group']; 
         $username = $_POST['username']; 
         $password = $_POST['password']; 
         $new_username = $username.$phone ;
