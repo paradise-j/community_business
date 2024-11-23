@@ -5,12 +5,16 @@
     session_start();
     require_once '../../connect.php';
 
-    // $id = $_SESSION['id'];
-    // echo $id;
-    // $check_id = $db->prepare("SELECT `user_id` FROM `user_login` WHERE `ul_id` = '$id'");
-    // $check_id->execute();
-    // $row = $check_id->fetch(PDO::FETCH_ASSOC);
-    // extract($row);
+    $user_id = $_SESSION['user_id'];
+    $stmt2 = $db->query("SELECT `group_id` FROM `user_data` WHERE `user_id` = '$user_id'");
+    $stmt2->execute();
+    $check_group = $stmt2->fetch(PDO::FETCH_ASSOC);
+    extract($check_group);
+
+    $stmt3 = $db->query("SELECT `group_sb` FROM `group_comen` WHERE `group_id` = '$group_id'");
+    $stmt3->execute();
+    $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
+    extract($check_groupsb);
     
     // echo '<pre>' . print_r($_SESSION["material_cart"], TRUE) . '</pre>';
 
@@ -41,7 +45,7 @@
             $price = $total+$lbprice+$water+$elec+$fuel+$package+$other;
             $cost = $price/$pdquan;
 
-            $group_id = 'CM001';
+            // $group_id = 'CM004';
 
             // echo $price;
             $mf = $db->prepare("SELECT `mf_name` FROM `mf_data`");
@@ -92,6 +96,9 @@
                     $sql = $db->prepare("INSERT INTO `mfd_matdetail`(`md_name`, `md_quan`, `md_unit`, `md_price`, `mfd_id`) 
                                         VALUES ('$pdname', $quantity, '$unit', $price, '$mfd_id')");
                     $sql->execute();
+
+                    $sql2 = $db->prepare("INSERT INTO `Formula`(`fml_name`,`mf_id`, `group_id`) VALUES ('$pdname', '$mf_id', '$group_id')");
+                    $sql2->execute();
                 }
 
                 unset($_SESSION["material_cart"]);
@@ -164,6 +171,9 @@
                     $sql = $db->prepare("INSERT INTO `mfd_matdetail`(`md_name`, `md_quan`, `md_unit`, `md_price`, `mfd_id`) 
                                         VALUES ('$pdname', $quantity, '$unit', $price, '$mfd_id')");
                     $sql->execute();
+
+                    $sql2 = $db->prepare("INSERT INTO `Formula`(`fml_name`,`mf_id`, `group_id`) VALUES ('$pdname', '$mf_id', '$group_id')");
+                    $sql2->execute();
                 }
 
                 unset($_SESSION["material_cart"]);
