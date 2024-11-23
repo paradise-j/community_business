@@ -266,6 +266,8 @@
                                             <th>วันที่ผลิต</th>
                                             <th>รายการผลิต</th>
                                             <th>จำนวนคงเหลือสะสม</th>
+                                            <th>ราคาทุนรวม</th>
+                                            <th>ราคาทุนต่อหน่วย</th>
                                             <th></th>
 
                                         </tr>
@@ -294,15 +296,18 @@
                                             } else {
                                              foreach($mfs as $mf)  {  
                                         ?>
-                                        <tr>
+                                        <tr align="center">
                                             <td class="date_th"><?= $mf['mf_date']; ?></td>
                                             <td><?= $mf['mf_name']; ?></td>
                                             <td><?= $mf['mf_quan']." ".$mf['mf_unit']; ?></td>
+                                            <td><?= $mf['mf_price']." บาท"; ?></td>
+                                            <td><?= $mf['mf_cost']." บาท"; ?></td>
                                             
                                             <td align="center">
-                                                <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">ดูข้อมูล</i></button>
-                                                <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">แก้ไข</i></button>
+                                                <!-- <button class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">ดูข้อมูล</i></button> -->
+                                                <!-- <button class="btn btn-warning" style="border-radius: 30px; font-size: 0.8rem;" data-toggle="modal" data-target="#showdataModal<?= $mf['mf_id']?>">แก้ไข</i></button> -->
                                                 <!-- <a href="Edit_pd.php?edit_id=<?= $mf['mf_id']; ?>" class="btn btn-warning " style="border-radius: 30px; font-size: 0.8rem;" name="edit"><i class="fas fa-edit"></i></a> -->
+                                                <a href="mf_agian.php?mf_id=<?= $mf['mf_id']; ?>" class="btn btn-info" style="border-radius: 30px; font-size: 0.8rem;">ผลิตซ้ำ</a>
                                                 <a data-id="<?= $mf['mf_id']; ?>" href="?delete=<?= $mf['mf_id']; ?>" class="btn btn-danger delete-btn" style="border-radius: 30px; font-size: 0.8rem;">ลบ</a>
                                             </td>
                                         </tr>
