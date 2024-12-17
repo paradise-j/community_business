@@ -28,10 +28,16 @@
         $row = $Formula->fetch(PDO::FETCH_ASSOC);
         extract($row);
 
-        $mf_data = $db->query("SELECT * FROM `mf_data` WHERE `mf_id` = '$id'");
+        $mf_data = $db->query("SELECT `fml_name` FROM `Formula` WHERE `mf_id` = '$id'");
         $mf_data->execute();
-        $row1 = $mf_data->fetch(PDO::FETCH_ASSOC);
-        extract($row1);
+
+        // $check_fml = array();
+        // while ($row = $mf_data->fetch(PDO::FETCH_ASSOC)){
+        //     $name = $row["fml_name"];
+        //     array_push($check_fml,$name);
+            
+        // }
+        // print_r($check_fml);
     }
     
 
@@ -78,7 +84,7 @@
                                     <div class="card-header py-3 text-center mb-2">
                                         <h5 class="m-0 font-weight-bold text-primary">สรุปการผลิตสินค้า</h5>
                                     </div>
-                                    <form action="Check_Add_mfDetail.php" method="post">
+                                    <form action="Check_Add_mfagian.php" method="post">
                                         <div class="row mb-2">
                                             <div class="col-md-2"></div>
                                             <div class=col-md-3">
@@ -129,7 +135,7 @@
                                         <div class="row mb-2">    
                                             <div class="col-md-3">
                                                 <label for="" class="col-form-label">ปัญหาในการผลิต</label>
-                                                <select class="form-control" aria-label="Default select example" name="problem" style="border-radius: 30px;" required>
+                                                <select class="form-control" aria-label="Default select example" name="problem" style="border-radius: 30px;" required >
                                                     <option selected disabled>เลือกปัญหาในการผลิต....</option>
                                                     <option value="ไม่พบปัญหา">ไม่พบปัญหา</option>
                                                     <option value="หนี้สิน-เงินทุน">หนี้สิน-เงินทุน</option>
@@ -142,7 +148,30 @@
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <?php 
+                                            $fml_name = 1;
+                                            $fml_quan = 1;
+                                            $fml_price = 1;
+                                            while ($row1 = $mf_data->fetch(PDO::FETCH_ASSOC)) {
+                                                echo '<div class="row mb-1">';
+                                                    echo '<div class="col-md-2">';
+                                                        echo '<label class="col-form-label">วัตถุดิบ</label>';
+                                                        echo '<input class="form-control" type="text" name="fml_name'.$fml_name.'" value="'.$row1["fml_name"].'" style="border-radius: 30px;" readonly>';
+                                                    echo '</div>';
+                                                    echo '<div class="col-md-1">';
+                                                        echo '<label class="col-form-label">ปริมาณ</label>';
+                                                        echo '<input class="form-control" type="text" name="fml_quan'.$fml_quan.'" value="" style="border-radius: 30px;">';   
+                                                    echo '</div>';
+                                                    echo '<div class="col-md-1">';
+                                                        echo '<label class="col-form-label">ราคา</label>';
+                                                        echo '<input class="form-control" type="text" name="fml_price'.$fml_price.'" value="" style="border-radius: 30px;">';   
+                                                    echo '</div>';
+                                                echo '</div>';
+                                                $fml_name+=1 ;
+                                                $fml_quan+=1 ;
+                                                $fml_price+=1 ;
+                                            }
+                                        ?>
                                         <div class="row mt-4 mb-4">
                                             <div class="col text-right">
                                                 <!-- <a href="mf_detail.php?type=submit" class="btn btn-blue" style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</a> -->
