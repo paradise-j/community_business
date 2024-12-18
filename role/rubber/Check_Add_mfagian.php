@@ -16,9 +16,9 @@
     $check_groupsb = $stmt3->fetch(PDO::FETCH_ASSOC);
     extract($check_groupsb);
     
-    // echo '<pre>' . print_r($_SESSION["material_cart"], TRUE) . '</pre>';
+    // echo '<pre>' . print_r($_SESSION["materialagain_cart"], TRUE) . '</pre>';
 
-    foreach ($_SESSION['material_cart'] as $key => $value){
+    foreach ($_SESSION['materialagain_cart'] as $key => $value){
         $total=$total+($value['item_price']);
     }
     try {
@@ -56,7 +56,7 @@
                 array_push($check,$name);
                 
             }
-            if (!in_array("$pdname", $check)) {
+            if (!in_array($pdname, $check)) {
                 
                 $sql = $db->prepare("INSERT INTO `mf_data`(`mf_date`, `mf_name`, `mf_unit`, `mf_quan`, `mf_price`, `mf_cost`, `group_id`)
                                                 VALUES ('$date','$pdname', '$pdunit', $pdquan , $price, $cost ,'$group_id')");
@@ -86,22 +86,21 @@
                 }
 
 
-                foreach ($_SESSION['material_cart'] as $key => $value){  
+                foreach ($_SESSION['materialagain_cart'] as $key => $value){  
                         
-                    $pdname = $value["item_name"]; 
+                    $fml = $value["item_name"]; 
                     $quantity = $value["item_quantity"]; 
                     $unit = $value["item_unit"]; 
                     $price = $value["item_price"]; 
 
                     $sql = $db->prepare("INSERT INTO `mfd_matdetail`(`md_name`, `md_quan`, `md_unit`, `md_price`, `mfd_id`) 
-                                        VALUES ('$pdname', $quantity, '$unit', $price, '$mfd_id')");
+                                        VALUES ('$fml', $quantity, '$unit', $price, '$mfd_id')");
                     $sql->execute();
 
-                    $sql2 = $db->prepare("INSERT INTO `Formula`(`fml_name`,`mf_id`, `group_id`) VALUES ('$pdname', '$mf_id', '$group_id')");
-                    $sql2->execute();
+                    
                 }
 
-                unset($_SESSION["material_cart"]);
+                unset($_SESSION["materialagain_cart"]);
                 if ($sql) {
                     $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อย";
                     echo "<script>
@@ -161,22 +160,22 @@
                 }
 
 
-                foreach ($_SESSION['material_cart'] as $key => $value){  
+                foreach ($_SESSION['materialagain_cart'] as $key => $value){  
                         
-                    $pdname = $value["item_name"]; 
+                    $fml = $value["item_name"]; 
                     $quantity = $value["item_quantity"]; 
                     $unit = $value["item_unit"]; 
                     $price = $value["item_price"]; 
 
                     $sql = $db->prepare("INSERT INTO `mfd_matdetail`(`md_name`, `md_quan`, `md_unit`, `md_price`, `mfd_id`) 
-                                        VALUES ('$pdname', $quantity, '$unit', $price, '$mfd_id')");
+                                        VALUES ('$fml', $quantity, '$unit', $price, '$mfd_id')");
                     $sql->execute();
 
-                    $sql2 = $db->prepare("INSERT INTO `Formula`(`fml_name`,`mf_id`, `group_id`) VALUES ('$pdname', '$mf_id', '$group_id')");
-                    $sql2->execute();
+                    // $sql2 = $db->prepare("INSERT INTO `Formula`(`fml_name`,`mf_id`, `group_id`) VALUES ('$fml', '$mf_id', '$group_id')");
+                    // $sql2->execute();
                 }
 
-                unset($_SESSION["material_cart"]);
+                unset($_SESSION["materialagain_cart"]);
                 if ($sql) {
                     $_SESSION['success'] = "เพิ่มข้อมูลเรียบร้อย";
                     echo "<script>
