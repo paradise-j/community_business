@@ -138,10 +138,26 @@
     </li> -->
 
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportAll"
+            aria-expanded="true" aria-controls="collapseReportAll">
+            <i class="fas fa-solid fa-clipboard-list"></i>
+            <span>ออกรายงานทั้งหมด</span></a>
+        </a>
+        <div id="collapseReportAll" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="report_orderplanAll.php">การขาย/กำไร/ต้นทุน</a>
+                <a class="collapse-item" href="report_typeAll.php">ประเภท/ช่องทางการขาย</a>
+                <a class="collapse-item" href="report_materialAll.php">ราคาวัตถุดิบ</a>
+                <a class="collapse-item" href="report_InExAll.php">รายรับ-รายจ่าย</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
             aria-expanded="true" aria-controls="collapseReport">
             <i class="fas fa-solid fa-clipboard-list"></i>
-            <span>ออกรายงาน</span></a>
+            <span>ออกรายงานเลือกกลุ่ม</span></a>
         </a>
         <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
