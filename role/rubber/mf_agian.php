@@ -22,6 +22,7 @@
 
     if (isset($_REQUEST['mf_id'])) {
         $id = $_REQUEST['mf_id'];
+        $_SESSION['mf_id'] = $id;
 
         $Formula = $db->query("SELECT * FROM `Formula` WHERE `mf_id` = '$id'");
         $Formula->execute();
@@ -30,19 +31,49 @@
 
         $mf_data = $db->query("SELECT `fml_name` FROM `Formula` WHERE `mf_id` = '$id'");
         $mf_data->execute();
+        $count = $mf_data->rowCount();
 
-        // $check_fml = array();
-        // while ($row = $mf_data->fetch(PDO::FETCH_ASSOC)){
-        //     $name = $row["fml_name"];
-        //     array_push($check_fml,$name);
-            
-        // }
-        // print_r($check_fml);
+        $mf_check = $db->query("SELECT `mf_name`,`mf_unit` FROM `mf_data` WHERE `mf_id`= '$id'");
+        $mf_check->execute();
+        $check = $mf_check->fetch(PDO::FETCH_ASSOC);
+        extract($check);
     }
-    
 
-    
+    if(isset($_POST["add_fml"])){
+        $unit = 'กิโลกรัม';
+        if($_POST["price"] < $_POST["cost"]){
+            $_SESSION['error'] = 'ไม่สามารถขายสินค้าต่ำกว่าราคาทุนได้';
+            header("refresh:2; url=mf_agian.php");
+        }else{
+            $maxindex = $_SESSION["fml_indexmax"];
+            for ($i=1; $i <= $maxindex ; $i++) { 
+                $item_array = array(
+                    'item_name'       =>     $_POST["fml_name".$i],
+                    'item_quantity'      =>     $_POST["fml_quan".$i],
+                    'item_unit'       =>     $unit,
+                    'item_price'         =>     $_POST["fml_price".$i]
+                );
+                $_SESSION["materialagain_cart"][] =  $item_array;
+            }
+            header("location:mf_agian.php?mf_id=".$_SESSION['mf_id']);
+            exit;
+        }
+    }
+
+    // echo '<pre>' . print_r($_SESSION["materialagain_cart"], TRUE) . '</pre>';
 ?>
+
+
+<!-- 888b     d888 8888888888               d8888  .d8888b.         d8888 8888888 888b    888  -->
+<!-- 8888b   d8888 888                     d88888 d88P  Y88b       d88888   888   8888b   888  -->
+<!-- 88888b.d88888 888                    d88P888 888    888      d88P888   888   88888b  888  -->
+<!-- 888Y88888P888 8888888               d88P 888 888            d88P 888   888   888Y88b 888  -->
+<!-- 888 Y888P 888 888                  d88P  888 888  88888    d88P  888   888   888 Y88b888  -->
+<!-- 888  Y8P  888 888                 d88P   888 888    888   d88P   888   888   888  Y88888  -->
+<!-- 888   "   888 888                d8888888888 Y88b  d88P  d8888888888   888   888   Y8888  -->
+<!-- 888       888 888      88888888 d88P     888  "Y8888P88 d88P     888 8888888 888    Y888  -->
+                                                                                                                                                                           
+                                                                                      
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,7 +109,51 @@
                 <?php include('../../topbar/topbar2.php');?>  <!-- Topbar -->
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <div class="card shadow mb-2">
+                                <div class="card-body">
+                                    <div class="card-header py-3 text-center mb-2">
+                                        <h5 class="m-0 font-weight-bold text-primary">รายการวัตถุดิบ</h5>
+                                    </div>
+                                    <form action="?" method="post">
+                                        <?php 
+                                            $fml_index = 0;
+                                            while ($row1 = $mf_data->fetch(PDO::FETCH_ASSOC)) {
+                                                $fml_index+=1 ;
+                                                echo '<div class="row mb-1">';
+                                                    echo '<div class="col-md-6">';
+                                                        echo '<label class="col-form-label">วัตถุดิบ</label>';
+                                                        echo '<input class="form-control" type="text" name="fml_name'.$fml_index.'" value="'.$row1["fml_name"].'" style="border-radius: 30px;" readonly>';
+                                                        // echo '<input class="form-control" type="text" name="fml_name" value="'.$row1["fml_name"].'" style="border-radius: 30px;" readonly>';
+                                                    echo '</div>';
+                                                    echo '<div class="col-md-3">';
+                                                        echo '<label class="col-form-label">ปริมาณ</label>';
+                                                        echo '<input class="form-control" type="text" name="fml_quan'.$fml_index.'" value="" style="border-radius: 30px;">';   
+                                                        // echo '<input class="form-control" type="text" name="fml_quan" value="" style="border-radius: 30px;">';   
+                                                    echo '</div>';
+                                                    echo '<div class="col-md-3">';
+                                                        echo '<label class="col-form-label">ราคา</label>';
+                                                        echo '<input class="form-control" type="text" name="fml_price'.$fml_index.'" value="" style="border-radius: 30px;">';   
+                                                        // echo '<input class="form-control" type="text" name="fml_price" value="" style="border-radius: 30px;">';  
+                                                    echo '</div>';
+                                                echo '</div>';
+                                                
+                                            }
+                                            // echo $fml_index;
+                                            $_SESSION["fml_indexmax"] =  $fml_index;
+
+                                        ?>
+                                        <div class="row mt-4 mb-4">
+                                            <div class="col text-right">
+                                                <!-- <a href="mf_agian.php?type=submit" class="btn btn-blue" style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</a> -->
+                                                <button class="btn btn-primary " style="border-radius: 30px;" type="submit" name="add_fml">บึนทึกรายการวัตถุดิบ</button>
+                                            </div>  
+                                        </div>
+                                    </form>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-lg-8">
                             <div class="card shadow mb-2">
                                 <div class="card-body">
                                     <div class="card-header py-3 text-center mb-2">
@@ -86,27 +161,27 @@
                                     </div>
                                     <form action="Check_Add_mfagian.php" method="post">
                                         <div class="row mb-2">
-                                            <div class="col-md-2"></div>
-                                            <div class=col-md-3">
+                                            <!-- <div class="col-md-1"></div> -->
+                                            <div class="col-md-3">
                                                 <?php $date = date('Y-m-d'); ?>
                                                 <label for="" class="col-form-label">วันที่ในการผลิต</label>
                                                 <input type="date" required class="form-control" name="date" max="<?= $date; ?>" style="border-radius: 30px;">
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <label for="" class="col-form-label">ชื่อสินค้าที่ผลิต</label>
                                                 <input type="text"  class="form-control" name="pdname" id="pdname" value="<?= $mf_name;?>" style="border-radius: 30px;" required readonly>
                                             </div>
                                             
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label for="" class="col-form-label">จำนวนที่ผลิตได้</label>
                                                 <input type="number"  class="form-control" name="pdquan" step="0.01" style="border-radius: 30px;" required>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-2">
                                                 <label for="" class="col-form-label">หน่วยนับ</label>
                                                 <input type="text"  class="form-control" name="pdunit" id="pdunit" value="<?= $mf_unit;?>" style="border-radius: 30px;" required readonly>
                                             </div>
                                         </div>
-                                        <div class="row mb-2">
+                                        <div class="row mb-1">
                                             <div class="col-md-2">
                                                 <label class="col-form-label">ค่าแรง (บาท)</label>
                                                 <input type="number"  class="form-control" name="lbprice" step="0.01" style="border-radius: 30px;" required>
@@ -119,20 +194,21 @@
                                                 <label class="col-form-label">ค่าไฟ (บาท)</label>
                                                 <input type="number" required class="form-control" name="elec" step="0.01" style="border-radius: 30px;">
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label class="col-form-label">ค่าเชื้อเพลิง (บาท)</label>
                                                 <input type="number" required class="form-control" name="fuel" step="0.01" style="border-radius: 30px;">
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <label class="col-form-label">ค่าบรรจุภัณฑ์ (บาท)</label>
                                                 <input type="number" required class="form-control" name="package" step="0.01" style="border-radius: 30px;">
                                             </div>
+                                            
+                                        </div>
+                                        <div class="row mb-1"> 
                                             <div class="col-md-2">
                                                 <label class="col-form-label">อื่น ๆ (บาท)</label>
                                                 <input type="number" required class="form-control" name="other" step="0.01" min="0" value="0" style="border-radius: 30px;">
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">    
+                                            </div>   
                                             <div class="col-md-3">
                                                 <label for="" class="col-form-label">ปัญหาในการผลิต</label>
                                                 <select class="form-control" aria-label="Default select example" name="problem" style="border-radius: 30px;" required >
@@ -148,33 +224,54 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <?php 
-                                            $fml_name = 1;
-                                            $fml_quan = 1;
-                                            $fml_price = 1;
-                                            while ($row1 = $mf_data->fetch(PDO::FETCH_ASSOC)) {
-                                                echo '<div class="row mb-1">';
-                                                    echo '<div class="col-md-2">';
-                                                        echo '<label class="col-form-label">วัตถุดิบ</label>';
-                                                        echo '<input class="form-control" type="text" name="fml_name'.$fml_name.'" value="'.$row1["fml_name"].'" style="border-radius: 30px;" readonly>';
-                                                    echo '</div>';
-                                                    echo '<div class="col-md-1">';
-                                                        echo '<label class="col-form-label">ปริมาณ</label>';
-                                                        echo '<input class="form-control" type="text" name="fml_quan'.$fml_quan.'" value="" style="border-radius: 30px;">';   
-                                                    echo '</div>';
-                                                    echo '<div class="col-md-1">';
-                                                        echo '<label class="col-form-label">ราคา</label>';
-                                                        echo '<input class="form-control" type="text" name="fml_price'.$fml_price.'" value="" style="border-radius: 30px;">';   
-                                                    echo '</div>';
-                                                echo '</div>';
-                                                $fml_name+=1 ;
-                                                $fml_quan+=1 ;
-                                                $fml_price+=1 ;
-                                            }
-                                        ?>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                <thead class="thead-light">
+                                                    <tr align="center">
+                                                        <th>ชื่อวัตถุดิบ</th>
+                                                        <th>จำนวน</th>
+                                                        <th>หน่วย</th>
+                                                        <th>จำนวนเงิน</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    if(!empty($_SESSION["materialagain_cart"])){
+                                                        $total=0;
+                                                        foreach ($_SESSION['materialagain_cart'] as $key => $value) { 
+                                                    ?>
+                                                        <tr>
+                                                            <td align="center"><?php echo $value['item_name'];?></td>
+                                                            <td align="right"><?php echo number_format($value['item_quantity'],2);?></td>
+                                                            <td align="right"> <?php echo $value['item_unit'];?></td>
+                                                            <td align="right">฿ <?php echo number_format($value['item_price'],2);?> บาท</td>
+                                                            <!-- <td align="right">฿ <?php echo number_format($value['item_pricekg']*$value['item_weight'],2);?> บาท</td> -->
+                                                            <td align="center"><a href="mf_detail.php?action=delete&id=<?php echo $key;?>">ลบรายการ</td>
+                                                        </tr>
+                                                    <?php
+                                                        $total=$total+($value['item_price']);
+                                                        }
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="3" align="right">ราคารวม</td>
+                                                        <td align="right">฿ <?php echo number_format($total, 2); ?> บาท</td>
+                                                        <td></td>
+
+                                                    </tr>
+                                                    <?php
+                                                    }else{
+                                                        echo "<p><td colspan='5' class='text-center'>ยังไม่มีข้อมูลรายละเอียดวัตถุดิบ</td></p>";
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                                <!-- <?php echo '<pre>' . print_r($_SESSION["materialagain_cart"], TRUE) . '</pre>'; ?>  -->
+                                                 <!-- <?php echo '<pre>' . print_r($_SESSION["product_cart"], TRUE) . '</pre>'; ?>  -->
+                                            </table>
+                                        </div>
                                         <div class="row mt-4 mb-4">
                                             <div class="col text-right">
-                                                <!-- <a href="mf_detail.php?type=submit" class="btn btn-blue" style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</a> -->
+                                                <!-- <a href="mf_agian.php?type=submit" class="btn btn-blue" style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการขาย</a> -->
                                                 <button class="btn btn-primary " style="border-radius: 30px;" type="submit" name="save_sale">บึนทึกรายการ</button>
                                             </div>  
                                         </div>
