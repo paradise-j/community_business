@@ -176,11 +176,6 @@
                                                     ?>
                                                 </div>
                                             <?php } ?>
-                                            <div class="row mt-2">
-                                                <!-- <div class="col text-center">
-                                                    <label style="color:red;" >**** ในกรณีในเดือนนั้นขายแพะไม่ครบทุกประเภท ให้ระบุค่า 0 ลงในประเภทแพะที่ไม่ได้ขาย ****</label>
-                                                </div> -->
-                                            </div>
                                             <div class="row mb-2">
                                                 <div class="col-md-7">
                                                     <label class="col-form-label">วัตถุดิบ</label>
