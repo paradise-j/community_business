@@ -2,10 +2,11 @@
     require_once '../connect.php';
     header('Content-Type: application/json; charset=utf-8');
 
-    $stmt2 = $db->query("SELECT MONTH(`px_date`) as \"month\" , `px_name` as \"name\" ,SUM(`px_total`) as \"total\"
-                        FROM `Plant_export` 
-                        WHERE MONTH(`px_date`) BETWEEN MONTH('2024-01-01') AND MONTH('2024-12-01')
-                        GROUP BY MONTH(`px_date`) , `px_name`"); 
+    $stmt2 = $db->query("SELECT salesdetail.sd_pdname, SUM(salesdetail.sd_price) as total , MONTH(sales.sale_date) as month
+                         FROM `sales` 
+                         INNER JOIN `salesdetail` ON sales.sale_id = salesdetail.sale_id 
+                         WHERE MONTH(sales.sale_date) BETWEEN MONTH('2024-01-01') AND MONTH('2024-12-31') AND `group_id` = 'CM002'
+                         GROUP BY salesdetail.sd_pdname , MONTH(sales.sale_date)");
     $stmt2->execute();
 
     $arr = array();
