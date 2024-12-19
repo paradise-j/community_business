@@ -169,6 +169,22 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReportTwin"
+            aria-expanded="true" aria-controls="collapseReportTwin">
+            <i class="fas fa-solid fa-clipboard-list"></i>
+            <span>ออกรายงานเลือกกลุ่ม 2 กลุ่ม</span></a>
+        </a>
+        <div id="collapseReportTwin" class="collapse" aria-labelledby="headingReport" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="report_orderplanTwin.php">การขาย/กำไร/ต้นทุน</a>
+                <a class="collapse-item" href="report_typeTwin.php">ประเภท/ช่องทางการขาย</a>
+                <a class="collapse-item" href="report_materialTwin.php">ราคาวัตถุดิบ</a>
+                <a class="collapse-item" href="report_InExTwin.php">รายรับ-รายจ่าย</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
